@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
 import java.util.ArrayList;
@@ -68,8 +71,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         Reload();
     }
 
-    public void Reload()
-    {
+    public void Reload() {
         edtUsername.setText("");
         edtPassword.setText("");
         if (sharedPreferencesre.getBoolean("Login", false) == true) {
@@ -83,7 +85,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, SoapObject, Void> {
+    public class MyAsyncTask extends AsyncTask<Void, String, Void> {
 
         ProgressDialog progressDialog;
 
@@ -105,22 +107,23 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(SoapObject... values) {
+        protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if (values != null) {
-                SoapObject user = values[0];
-                for (int i = 0; i < user.getPropertyCount(); i++) {
-                    SoapObject obj = (SoapObject) user.getProperty(i);
-
+                try {
+                    JSONArray jsonArray = new JSONArray(values[0]);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
                     SharedPreferences.Editor editor = sharedPreferencesre.edit();
-                    editor.putString("Username", obj.getProperty("TaiKhoan").toString());
-                    editor.putString("Password", obj.getProperty("MatKhau").toString());
-                    editor.putString("MaNV", obj.getProperty("MaND").toString());
-                    editor.putString("HoTen", obj.getProperty("HoTen").toString());
+                    editor.putString("Username", jsonObject.getString("TaiKhoan"));
+                    editor.putString("Password",jsonObject.getString("MatKhau"));
+                    editor.putString("MaNV", jsonObject.getString("MaND"));
+                    editor.putString("HoTen", jsonObject.getString("HoTen"));
                     editor.putBoolean("Login", true);
                     editor.commit();
 
                     Reload();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }

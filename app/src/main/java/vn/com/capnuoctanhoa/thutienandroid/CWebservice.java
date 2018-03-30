@@ -32,10 +32,7 @@ public class CWebservice {
         } catch (Exception exception) {
             response = exception.toString();
         }
-        if (Boolean.parseBoolean(response.toString()) == true)
-            return "Thành Công";
-        else
-            return "Thất Bại";
+        return response.toString();
     }
 
     @Nullable
@@ -63,7 +60,7 @@ public class CWebservice {
         return response;
     }
 
-    public SoapObject DangNhap(String Username, String Password) {
+    public String DangNhap(String Username, String Password) {
         String SOAP_ACTION = "http://tempuri.org/TT_DangNhap";
         String OPERATION_NAME = "TT_DangNhap";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -80,6 +77,6 @@ public class CWebservice {
         pi.setType(String.class);
         request.addProperty(pi);
 
-        return ExcuteReturnTable(request, SOAP_ACTION);
+        return ExcuteNonReturn(request, SOAP_ACTION);
     }
 }
