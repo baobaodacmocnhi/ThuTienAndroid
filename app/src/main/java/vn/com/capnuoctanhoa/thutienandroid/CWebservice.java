@@ -18,7 +18,7 @@ public class CWebservice {
     private final String SOAP_ADDRESS = "http://113.161.88.180:1989/service.asmx";
 
     @Nullable
-    private String ExcuteNonReturn(SoapObject request, String SOAP_ACTION) {
+    private String Excute(SoapObject request, String SOAP_ACTION) {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
 
@@ -77,6 +77,27 @@ public class CWebservice {
         pi.setType(String.class);
         request.addProperty(pi);
 
-        return ExcuteNonReturn(request, SOAP_ACTION);
+        return Excute(request, SOAP_ACTION);
     }
+
+    public String UpdateUID(String ID, String UID) {
+        String SOAP_ACTION = "http://tempuri.org/TT_UpdateUID";
+        String OPERATION_NAME = "TT_UpdateUID";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("ID");
+        pi.setValue(ID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("UID");
+        pi.setValue(UID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
 }

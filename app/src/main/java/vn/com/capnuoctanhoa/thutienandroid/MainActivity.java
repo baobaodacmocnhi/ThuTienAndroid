@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        Button btnHanhThu = (Button) findViewById(R.id.btnHanhThu);
+        btnHanhThu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*SharedPreferences sharedPreferencesre= getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
+                Toast.makeText(MainActivity.this, sharedPreferencesre.getString("UID", ""),
+                        Toast.LENGTH_LONG).show();*/
+                Intent intent = new Intent(MainActivity.this,ActivityHanhThu.class);
+                startActivity(intent);
+            }
+        });
     }
 }

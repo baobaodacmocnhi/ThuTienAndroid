@@ -18,6 +18,12 @@
             android:text="Đăng Nhập" />
 
         <Button
+            android:id="@+id/btnHanhThu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hành Thu" />
+
+        <Button
             android:id="@+id/btnDongNuoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

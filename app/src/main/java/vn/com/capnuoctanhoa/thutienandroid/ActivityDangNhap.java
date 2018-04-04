@@ -37,7 +37,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangXuat = (Button) findViewById(R.id.btnDangXuat);
         btnThoat = (Button) findViewById(R.id.btnThoat);
-        sharedPreferencesre = getSharedPreferences("my_data", MODE_PRIVATE);
+        sharedPreferencesre = getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +86,8 @@ public class ActivityDangNhap extends AppCompatActivity {
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
-
         ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
@@ -97,8 +97,6 @@ public class ActivityDangNhap extends AppCompatActivity {
             progressDialog.setMessage("Đang xử lý...");
             progressDialog.show();
         }
-
-        CWebservice ws = new CWebservice();
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -118,6 +116,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     editor.putString("Password",jsonObject.getString("MatKhau"));
                     editor.putString("MaNV", jsonObject.getString("MaND"));
                     editor.putString("HoTen", jsonObject.getString("HoTen"));
+                    editor.putString("UID", jsonObject.getString("UID"));
                     editor.putBoolean("Login", true);
                     editor.commit();
 
