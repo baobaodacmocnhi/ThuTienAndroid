@@ -20,19 +20,19 @@
         </activity>
         <activity android:name=".ActivityDangNhap" />
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name=".CFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".CFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name=".HanhThu.ActivityHanhThu"
+            android:name=".HanhThu.ActivityHanhThu2"
             android:label="@string/title_activity_hanh_thu"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

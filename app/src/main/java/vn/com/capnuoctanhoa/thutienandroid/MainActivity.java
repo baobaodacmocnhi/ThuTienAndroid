@@ -1,14 +1,12 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu2;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 /*SharedPreferences sharedPreferencesre= getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
                 Toast.makeText(MainActivity.this, sharedPreferencesre.getString("UID", ""),
                         Toast.LENGTH_LONG).show();*/
-                Intent intent = new Intent(MainActivity.this,ActivityHanhThu.class);
+                Intent intent = new Intent(MainActivity.this,ActivityHanhThu2.class);
                 startActivity(intent);
             }
         });
