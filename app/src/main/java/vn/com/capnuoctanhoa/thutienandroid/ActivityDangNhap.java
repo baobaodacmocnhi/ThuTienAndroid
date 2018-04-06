@@ -24,7 +24,7 @@ public class ActivityDangNhap extends AppCompatActivity {
     TextView txtUser;
     EditText edtUsername, edtPassword;
     Button btnDangNhap, btnDangXuat, btnThoat;
-    SharedPreferences sharedPreferencesre;
+//    SharedPreferences sharedPreferencesre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangXuat = (Button) findViewById(R.id.btnDangXuat);
         btnThoat = (Button) findViewById(R.id.btnThoat);
-        sharedPreferencesre = getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
+//        sharedPreferencesre = getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +50,12 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sharedPreferencesre.edit();
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 editor.remove("Username");
                 editor.remove("Password");
                 editor.remove("MaNV");
                 editor.remove("HoTen");
+                editor.remove("UID");
                 editor.putBoolean("Login", false);
                 editor.commit();
                 Reload();
@@ -74,8 +75,8 @@ public class ActivityDangNhap extends AppCompatActivity {
     public void Reload() {
         edtUsername.setText("");
         edtPassword.setText("");
-        if (sharedPreferencesre.getBoolean("Login", false) == true) {
-            txtUser.setText("Xin chào " + sharedPreferencesre.getString("HoTen", ""));
+        if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
+            txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
             btnDangNhap.setVisibility(View.INVISIBLE);
             btnDangXuat.setVisibility(View.VISIBLE);
         } else {
@@ -111,7 +112,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 try {
                     JSONArray jsonArray = new JSONArray(values[0]);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    SharedPreferences.Editor editor = sharedPreferencesre.edit();
+                    SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("Username", jsonObject.getString("TaiKhoan"));
                     editor.putString("Password",jsonObject.getString("MatKhau"));
                     editor.putString("MaNV", jsonObject.getString("MaND"));

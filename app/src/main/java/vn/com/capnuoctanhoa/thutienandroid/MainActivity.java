@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu2;
 
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CLocal.sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
 
         Button btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -35,5 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
+        btnDongNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,CLocal.sharedPreferencesre.getString("UID", ""), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

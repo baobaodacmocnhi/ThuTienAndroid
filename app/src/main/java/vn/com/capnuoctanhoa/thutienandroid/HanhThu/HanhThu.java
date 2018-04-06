@@ -12,14 +12,6 @@ import android.widget.Spinner;
 
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HanhThu.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HanhThu#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HanhThu extends Fragment {
     private View rootView;
     Spinner spnTimTheo;

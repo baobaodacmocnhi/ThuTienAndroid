@@ -29,7 +29,7 @@ public class CFirebaseInstanceIDService extends FirebaseInstanceIdService {
         CWebservice ws = new CWebservice();
         @Override
         protected Void doInBackground(Void... voids) {
-            sharedPreferencesre = getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
+            sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
             ws.UpdateUID(sharedPreferencesre.getString("MaNV", ""),refreshedToken);
             return null;
         }
