@@ -24,7 +24,6 @@ public class ActivityDangNhap extends AppCompatActivity {
     TextView txtUser;
     EditText edtUsername, edtPassword;
     Button btnDangNhap, btnDangXuat, btnThoat;
-//    SharedPreferences sharedPreferencesre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +36,29 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangXuat = (Button) findViewById(R.id.btnDangXuat);
         btnThoat = (Button) findViewById(R.id.btnThoat);
-//        sharedPreferencesre = getSharedPreferences(CLocal.FileName_Local, MODE_PRIVATE);
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute();
+                myAsyncTask.execute("DangNhap");
             }
         });
 
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String Username=CLocal.sharedPreferencesre.getString("Username", "");
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 editor.remove("Username");
                 editor.remove("Password");
                 editor.remove("MaNV");
                 editor.remove("HoTen");
-                editor.remove("UID");
                 editor.putBoolean("Login", false);
                 editor.commit();
                 Reload();
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute(new String[]{"DangXuat",Username});
             }
         });
 
@@ -86,7 +86,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, String, Void> {
+    public class MyAsyncTask extends AsyncTask<String, String, Void> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -100,24 +100,32 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            publishProgress(ws.DangNhap(edtUsername.getText().toString(), edtPassword.getText().toString()));
+        protected Void doInBackground(String... strings) {
+            switch (strings[0])
+            {
+                case "DangNhap":
+                    publishProgress(ws.DangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(),CLocal.sharedPreferencesre.getString("UID", "")));
+                    break;
+                case "DangXuat":
+                    publishProgress(ws.DangXuat(strings[1]));
+                    break;
+            }
+
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            if (values != null) {
+        protected void onProgressUpdate(String... strings) {
+            super.onProgressUpdate(strings);
+            if (strings != null&&(strings[0]!="true"||strings[0]!="false")) {
                 try {
-                    JSONArray jsonArray = new JSONArray(values[0]);
+                    JSONArray jsonArray = new JSONArray(strings[0]);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("Username", jsonObject.getString("TaiKhoan"));
                     editor.putString("Password",jsonObject.getString("MatKhau"));
                     editor.putString("MaNV", jsonObject.getString("MaND"));
                     editor.putString("HoTen", jsonObject.getString("HoTen"));
-                    editor.putString("UID", jsonObject.getString("UID"));
                     editor.putBoolean("Login", true);
                     editor.commit();
 

@@ -9,7 +9,6 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class CFirebaseInstanceIDService extends FirebaseInstanceIdService {
     String refreshedToken;
-    SharedPreferences sharedPreferencesre;
 
     @Override
     public void onTokenRefresh() {
@@ -20,17 +19,20 @@ public class CFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String token) {
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
+        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+        editor.putString("UID", token);
+        editor.commit();
+        MyAsyncTask myAsyncTask=new MyAsyncTask();
         myAsyncTask.execute();
     }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void>
     {
-        CWebservice ws = new CWebservice();
+
         @Override
         protected Void doInBackground(Void... voids) {
-            sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
-            ws.UpdateUID(sharedPreferencesre.getString("MaNV", ""),refreshedToken);
+            CWebservice ws=new CWebservice();
+            ws.UpdateUID(CLocal.sharedPreferencesre.getString("MaNV",""),CLocal.sharedPreferencesre.getString("UID",""));
             return null;
         }
     }

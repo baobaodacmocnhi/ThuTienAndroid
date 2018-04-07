@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +78,26 @@ public class DanhSachHanhThu extends Fragment {
 
         lstView = (ListView) rootView.findViewById(R.id.lstView);
         LoadListView();
+
+        lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putString("FileName", lstView.getItemAtPosition(i).toString());
+
+                HanhThu hanhthu = new HanhThu();
+                hanhthu.setArguments(bundle);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.idHanhThuLayout, hanhthu);
+                fragmentTransaction.commit();
+
+                TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
+                tabhost.getTabAt(1).select();
+            }
+        });
+
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,13 +159,15 @@ public class DanhSachHanhThu extends Fragment {
 
     private void LoadListView() {
         File directory = new File(CLocal.Path);
-        File[] files = directory.listFiles();
-        ArrayList<String> array = new ArrayList<>();
-        for (int i = 0; i < files.length; i++) {
-            array.add(files[i].getName());
+        if(directory.isFile()==true) {
+            File[] files = directory.listFiles();
+            ArrayList<String> array = new ArrayList<>();
+            for (int i = 0; i < files.length; i++) {
+                array.add(files[i].getName());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
+            lstView.setAdapter(adapter);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
-        lstView.setAdapter(adapter);
     }
 
 }

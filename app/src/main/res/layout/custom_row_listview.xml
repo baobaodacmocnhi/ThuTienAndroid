@@ -25,19 +25,21 @@
 
             <TextView
                 android:id="@+id/lvName1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Name1"
+                android:textAlignment="textStart"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/lvName2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Name2"
+                android:textAlignment="textEnd"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </TableRow>

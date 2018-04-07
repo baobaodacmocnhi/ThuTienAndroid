@@ -60,7 +60,7 @@ public class CWebservice {
         return response;
     }
 
-    public String DangNhap(String Username, String Password) {
+    public String DangNhap(String Username, String Password,String UID) {
         String SOAP_ACTION = "http://tempuri.org/TT_DangNhap";
         String OPERATION_NAME = "TT_DangNhap";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -77,17 +77,37 @@ public class CWebservice {
         pi.setType(String.class);
         request.addProperty(pi);
 
+        pi = new PropertyInfo();
+        pi.setName("UID");
+        pi.setValue(UID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
         return Excute(request, SOAP_ACTION);
     }
 
-    public String UpdateUID(String ID, String UID) {
+    public String DangXuat(String Username) {
+        String SOAP_ACTION = "http://tempuri.org/TT_DangXuat";
+        String OPERATION_NAME = "TT_DangXuat";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("Username");
+        pi.setValue(Username);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
+    public String UpdateUID(String MaNV, String UID) {
         String SOAP_ACTION = "http://tempuri.org/TT_UpdateUID";
         String OPERATION_NAME = "TT_UpdateUID";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
-        pi.setName("ID");
-        pi.setValue(ID);
+        pi.setName("MaNV");
+        pi.setValue(MaNV);
         pi.setType(String.class);
         request.addProperty(pi);
 
