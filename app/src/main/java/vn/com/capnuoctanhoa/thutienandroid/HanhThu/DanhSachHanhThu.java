@@ -65,6 +65,11 @@ public class DanhSachHanhThu extends Fragment {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(CLocal.CheckNetworkAvailable(getContext())==false)
+                {
+                    Toast.makeText(getActivity(),"Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String FileName = spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnFromDot.getSelectedItem().toString() + "_" + spnToDot.getSelectedItem().toString();
                 File file = new File(CLocal.Path + "/" + FileName);
                 if (file.exists()==false) {
@@ -158,16 +163,23 @@ public class DanhSachHanhThu extends Fragment {
     }
 
     private void LoadListView() {
-        File directory = new File(CLocal.Path);
-        if(directory.isFile()==true) {
-            File[] files = directory.listFiles();
-            ArrayList<String> array = new ArrayList<>();
-            for (int i = 0; i < files.length; i++) {
-                array.add(files[i].getName());
+        try {
+            File directory = new File(CLocal.Path);
+            if(directory.length()>0) {
+                File[] files = directory.listFiles();
+                ArrayList<String> array = new ArrayList<>();
+                for (int i = 0; i < files.length; i++) {
+                    array.add(files[i].getName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
+                lstView.setAdapter(adapter);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
-            lstView.setAdapter(adapter);
         }
+        catch (Exception e)
+        {
+
+        }
+
     }
 
 }

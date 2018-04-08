@@ -62,6 +62,9 @@ public class CViewAdapter extends BaseAdapter {
         holder.txtName1.setText(map.getName1());
         holder.txtName2.setText(map.getName2());
         holder.txtContent.setText(map.getContent());
+
+        convertView.setBackgroundColor(map.getBackgroundColor());
+
         return convertView;
     }
 }

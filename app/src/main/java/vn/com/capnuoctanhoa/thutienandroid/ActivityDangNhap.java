@@ -40,6 +40,11 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(CLocal.CheckNetworkAvailable(getApplicationContext())==false)
+                {
+                    Toast.makeText(ActivityDangNhap.this,"Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute("DangNhap");
             }
@@ -48,6 +53,11 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(CLocal.CheckNetworkAvailable(getApplicationContext())==false)
+                {
+                    Toast.makeText(ActivityDangNhap.this,"Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String Username=CLocal.sharedPreferencesre.getString("Username", "");
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 editor.remove("Username");

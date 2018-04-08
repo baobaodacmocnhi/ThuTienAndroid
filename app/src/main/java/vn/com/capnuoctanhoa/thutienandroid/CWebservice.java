@@ -120,6 +120,15 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
+    public String GetVersion()
+    {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetVersion";
+        String OPERATION_NAME = "TT_GetVersion";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
     public String GetDSHoaDon(String Nam, String Ky,String FromDot,String ToDot, String MaNV_HanhThu) {
         String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon";
         String OPERATION_NAME = "TT_GetDSHoaDon";

@@ -32,18 +32,24 @@ public class HanhThu extends Fragment {
     Spinner spnTimTheo;
     ListView lstView;
     String FileName;
+    JSONArray jsonArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_hanh_thu, container, false);
 
-        lstView=(ListView) rootView.findViewById(R.id.lstView);
+        lstView = (ListView) rootView.findViewById(R.id.lstView);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
             FileName = bundle.getString("FileName");
-            LoadListView(FileName);
+            try {
+                jsonArray = new JSONArray(GetFile(FileName));
+                LoadListView(jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         String[] arraySpinner = new String[]{"Tất Cả", "Chưa Thu", "Đã Thu", "Chuyển Khoản"};
@@ -53,14 +59,13 @@ public class HanhThu extends Fragment {
         spnTimTheo.setAdapter(adapter);
 
 
-
         return rootView;
     }
 
-    private void LoadListView(String fileName) {
+    private void LoadListView(JSONArray jsonArray) {
         try {
             ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
-            JSONArray jsonArray = new JSONArray(GetFile(fileName));
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CViewEntity entity = new CViewEntity();
@@ -69,10 +74,10 @@ public class HanhThu extends Fragment {
                 entity.setName1(jsonObject.getString("DANHBA"));
                 entity.setName2(jsonObject.getString("TONGCONG"));
                 entity.setContent(jsonObject.getString("SO") + " " + jsonObject.getString("DUONG"));
-
+                if (jsonObject.getString("NGAYGIAITRACH") != null || jsonObject.getString("NGAYGIAITRACH") != "")
+                    entity.setBackgroundColor(CLocal.Color_DaThu);
                 list.add(entity);
             }
-
             CViewAdapter adapter = new CViewAdapter(getActivity(), list);
             lstView.setAdapter(adapter);
         } catch (JSONException e) {

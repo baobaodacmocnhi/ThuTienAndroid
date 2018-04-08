@@ -9,15 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class ActivityHanhThu2 extends AppCompatActivity {
+public class ActivityHanhThu extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -37,7 +33,7 @@ public class ActivityHanhThu2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hanh_thu2);
+        setContentView(R.layout.activity_hanh_thu);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

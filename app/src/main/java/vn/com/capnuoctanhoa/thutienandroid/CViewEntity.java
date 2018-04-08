@@ -1,10 +1,13 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
+import android.graphics.Color;
+
 public class CViewEntity {
     private String ID;
     private String Name1;
     private String Name2;
     private String Content;
+    private int BackgroundColor=Color.TRANSPARENT;
 
     public String getID() {
         return ID;
@@ -36,5 +39,13 @@ public class CViewEntity {
 
     public void setContent(String content) {
         Content = content;
+    }
+
+    public int getBackgroundColor() {
+        return BackgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        BackgroundColor = backgroundColor;
     }
 }
