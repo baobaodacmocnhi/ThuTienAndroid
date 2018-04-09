@@ -40,9 +40,8 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(CLocal.CheckNetworkAvailable(getApplicationContext())==false)
-                {
-                    Toast.makeText(ActivityDangNhap.this,"Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.CheckNetworkAvailable(getApplicationContext()) == false) {
+                    Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -53,12 +52,11 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(CLocal.CheckNetworkAvailable(getApplicationContext())==false)
-                {
-                    Toast.makeText(ActivityDangNhap.this,"Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.CheckNetworkAvailable(getApplicationContext()) == false) {
+                    Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-                String Username=CLocal.sharedPreferencesre.getString("Username", "");
+                String Username = CLocal.sharedPreferencesre.getString("Username", "");
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 editor.remove("Username");
                 editor.remove("Password");
@@ -68,7 +66,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 editor.commit();
                 Reload();
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute(new String[]{"DangXuat",Username});
+                myAsyncTask.execute(new String[]{"DangXuat", Username});
             }
         });
 
@@ -111,10 +109,9 @@ public class ActivityDangNhap extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(String... strings) {
-            switch (strings[0])
-            {
+            switch (strings[0]) {
                 case "DangNhap":
-                    publishProgress(ws.DangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(),CLocal.sharedPreferencesre.getString("UID", "")));
+                    publishProgress(ws.DangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", "")));
                     break;
                 case "DangXuat":
                     publishProgress(ws.DangXuat(strings[1]));
@@ -127,13 +124,13 @@ public class ActivityDangNhap extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... strings) {
             super.onProgressUpdate(strings);
-            if (strings != null&&(strings[0]!="true"||strings[0]!="false")) {
+            if (strings != null && (strings[0] != "true" || strings[0] != "false")) {
                 try {
                     JSONArray jsonArray = new JSONArray(strings[0]);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("Username", jsonObject.getString("TaiKhoan"));
-                    editor.putString("Password",jsonObject.getString("MatKhau"));
+                    editor.putString("Password", jsonObject.getString("MatKhau"));
                     editor.putString("MaNV", jsonObject.getString("MaND"));
                     editor.putString("HoTen", jsonObject.getString("HoTen"));
                     editor.putBoolean("Login", true);
