@@ -2,6 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -112,6 +113,13 @@ public class DanhSachHanhThu extends Fragment {
                 return false;
             }
         });
+
+        Intent intent= getActivity().getIntent();
+        String SoHoaDon=intent.getStringExtra("SoHoaDon");
+        if(SoHoaDon!="")
+        {
+            Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
+        }
 
         return rootView;
     }

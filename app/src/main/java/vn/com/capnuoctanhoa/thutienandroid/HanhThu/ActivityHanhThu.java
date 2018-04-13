@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -54,7 +55,7 @@ public class ActivityHanhThu extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        
     }
 
     /**
