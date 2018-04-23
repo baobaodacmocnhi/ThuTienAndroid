@@ -15,7 +15,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.DanhSachHanhThu;
 
 public class CFirebaseMessagingService extends FirebaseMessagingService {
     @Override
@@ -25,6 +24,7 @@ public class CFirebaseMessagingService extends FirebaseMessagingService {
 
         Intent intent = new Intent(this, ActivityHanhThu.class);
         intent.putExtra("SoHoaDon",remoteMessage.getData().get("SoHoaDon"));
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 

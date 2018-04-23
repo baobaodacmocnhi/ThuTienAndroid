@@ -60,7 +60,7 @@ public class CWebservice {
         return response;
     }
 
-    public String DangNhap(String Username, String Password,String UID) {
+    public String DangNhap(String Username, String Password, String UID) {
         String SOAP_ACTION = "http://tempuri.org/TT_DangNhap";
         String OPERATION_NAME = "TT_DangNhap";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -120,8 +120,7 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
-    public String GetVersion()
-    {
+    public String GetVersion() {
         String SOAP_ACTION = "http://tempuri.org/TT_GetVersion";
         String OPERATION_NAME = "TT_GetVersion";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -129,7 +128,7 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
-    public String GetDSHoaDon(String Nam, String Ky,String FromDot,String ToDot, String MaNV_HanhThu) {
+    public String GetDSHoaDon(String Nam, String Ky, String FromDot, String ToDot, String MaNV_HanhThu) {
         String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon";
         String OPERATION_NAME = "TT_GetDSHoaDon";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -167,4 +166,29 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
+    public String GetDSDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc";
+        String OPERATION_NAME = "TT_GetDSDongNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaNV_DongNuoc");
+        pi.setValue(MaNV_DongNuoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("FromNgayGiao");
+        pi.setValue(FromNgayGiao);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("ToNgayGiao");
+        pi.setValue(ToNgayGiao);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
 }

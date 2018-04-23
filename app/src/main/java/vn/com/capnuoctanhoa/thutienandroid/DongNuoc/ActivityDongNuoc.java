@@ -1,5 +1,7 @@
-package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
+package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,11 +11,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+
+import android.widget.TextView;
 
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class ActivityHanhThu extends AppCompatActivity {
+public class ActivityDongNuoc extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -33,7 +41,7 @@ public class ActivityHanhThu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hanh_thu);
+        setContentView(R.layout.activity_dong_nuoc);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,14 +90,14 @@ public class ActivityHanhThu extends AppCompatActivity {
             return fragment;
         }
 
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_activity_hanh_thu2, container, false);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-//            return rootView;
-//        }
+      /*  @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_activity_dong_nuoc, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            return rootView;
+        }*/
     }
 
     /**
@@ -108,10 +116,10 @@ public class ActivityHanhThu extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    FragmentDanhSachHanhThu tab1 = new FragmentDanhSachHanhThu();
+                    FragmentDanhSachDongNuoc tab1 = new FragmentDanhSachDongNuoc();
                     return tab1;
                 case 1:
-                    FragmentHanhThu tab2 = new FragmentHanhThu();
+                    FragmentDongNuoc tab2 = new FragmentDongNuoc();
                     return tab2;
             }
             return null;
@@ -129,7 +137,7 @@ public class ActivityHanhThu extends AppCompatActivity {
                 case 0:
                     return "Danh Sách";
                 case 1:
-                    return "Hành Thu";
+                    return "Đóng Nước";
             }
             return null;
         }

@@ -3,7 +3,6 @@ package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -31,11 +30,11 @@ import vn.com.capnuoctanhoa.thutienandroid.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class DanhSachHanhThu extends Fragment {
+public class FragmentDanhSachHanhThu extends Fragment {
     private View rootView;
-    Spinner spnNam, spnKy, spnFromDot, spnToDot;
-    Button btnDownload;
-    ListView lstView;
+    private Spinner spnNam, spnKy, spnFromDot, spnToDot;
+    private Button btnDownload;
+    private  ListView lstView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class DanhSachHanhThu extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("FileName", lstView.getItemAtPosition(i).toString());
 
-                HanhThu hanhthu = new HanhThu();
+                FragmentHanhThu hanhthu = new FragmentHanhThu();
                 hanhthu.setArguments(bundle);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -116,7 +115,7 @@ public class DanhSachHanhThu extends Fragment {
 
         Intent intent= getActivity().getIntent();
         String SoHoaDon=intent.getStringExtra("SoHoaDon");
-        if(SoHoaDon!="")
+        if(SoHoaDon.equals("")==false)
         {
             Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
         }

@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this, version, Toast.LENGTH_LONG).show();
-
+                Intent intent = new Intent(MainActivity.this, ActivityDongNuoc.class);
+                startActivity(intent);
             }
         });
 

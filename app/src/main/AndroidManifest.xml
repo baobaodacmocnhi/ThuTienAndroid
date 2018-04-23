@@ -3,7 +3,7 @@
     package="vn.com.capnuoctanhoa.thutienandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -39,6 +39,10 @@
             android:name=".HanhThu.ActivityHanhThu"
             android:label="@string/title_activity_hanh_thu"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DongNuoc.ActivityDongNuoc"
+            android:label="@string/title_activity_dong_nuoc"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

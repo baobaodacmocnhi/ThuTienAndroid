@@ -27,7 +27,7 @@ import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
 import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class HanhThu extends Fragment {
+public class FragmentHanhThu extends Fragment {
     private View rootView;
     Spinner spnTimTheo;
     ListView lstView;
@@ -65,7 +65,6 @@ public class HanhThu extends Fragment {
     private void LoadListView(JSONArray jsonArray) {
         try {
             ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
-
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CViewEntity entity = new CViewEntity();
