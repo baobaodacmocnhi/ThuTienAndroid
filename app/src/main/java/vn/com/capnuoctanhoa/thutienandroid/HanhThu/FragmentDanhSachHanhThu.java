@@ -42,24 +42,24 @@ public class FragmentDanhSachHanhThu extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_danh_sach_hanh_thu, container, false);
 
         spnNam = (Spinner) rootView.findViewById(R.id.spnNam);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnNam);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnNam.setAdapter(adapter);
+//        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnNam);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spnNam.setAdapter(adapter);
 
         spnKy = (Spinner) rootView.findViewById(R.id.spnKy);
-        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnKy);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnKy.setAdapter(adapter);
+//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnKy);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spnKy.setAdapter(adapter);
 
         spnFromDot = (Spinner) rootView.findViewById(R.id.spnFromDot);
-        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnFromDot.setAdapter(adapter);
+//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spnFromDot.setAdapter(adapter);
 
         spnToDot = (Spinner) rootView.findViewById(R.id.spnToDot);
-        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnToDot.setAdapter(adapter);
+//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spnToDot.setAdapter(adapter);
 
         btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
         btnDownload.setOnClickListener(new View.OnClickListener() {
@@ -113,12 +113,12 @@ public class FragmentDanhSachHanhThu extends Fragment {
             }
         });
 
-        Intent intent= getActivity().getIntent();
-        String SoHoaDon=intent.getStringExtra("SoHoaDon");
-        if(SoHoaDon.equals("")==false)
-        {
-            Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
-        }
+//        Intent intent= getActivity().getIntent();
+//        String SoHoaDon=intent.getStringExtra("SoHoaDon");
+//        if(SoHoaDon.equals("")==false)
+//        {
+//            Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
+//        }
 
         return rootView;
     }

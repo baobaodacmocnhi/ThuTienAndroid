@@ -40,10 +40,10 @@ bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.btnKiemTra:
+            case R.id.bottom_btnKiemTra:
                 Toast.makeText(getActivity(), "kiểm tra", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.btnThem:
+            case R.id.bottom_btnThem:
                 Toast.makeText(getActivity(), "đóng nước", Toast.LENGTH_SHORT).show();
                 break;
         };
