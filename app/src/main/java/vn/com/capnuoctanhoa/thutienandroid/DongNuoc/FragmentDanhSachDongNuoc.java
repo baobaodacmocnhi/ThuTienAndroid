@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,9 @@ public class FragmentDanhSachDongNuoc extends Fragment {
 
         edtFromDate = (EditText) rootView.findViewById(R.id.edtFromDate);
         edtToDate = (EditText) rootView.findViewById(R.id.edtToDate);
+
+        edtFromDate.setText("23/04/2018");
+        edtToDate.setText("23/04/2018");
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,40 +101,48 @@ public class FragmentDanhSachDongNuoc extends Fragment {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (CLocal.CheckNetworkAvailable(getContext()) == false) {
+                    Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute();
             }
         });
 
         lstView = (ListView) rootView.findViewById(R.id.lstView);
-lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-    @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
+        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView MaDN = (TextView) view.findViewById(R.id.lvID);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("MaDN", MaDN.getText().toString());
+                Bundle bundle = new Bundle();
+                bundle.putString("MaDN", MaDN.getText().toString());
 
-        FragmentDongNuoc fragmentDongNuoc=new FragmentDongNuoc();
-        fragmentDongNuoc.setArguments(bundle);
+                FragmentDongNuoc fragmentDongNuoc = new FragmentDongNuoc();
+                fragmentDongNuoc.setArguments(bundle);
 
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_dong_nuoc, fragmentDongNuoc);
-        fragmentTransaction.commit();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_dong_nuoc, fragmentDongNuoc);
+                fragmentTransaction.commit();
+//
+//                FragmentManager fragmentManager2 = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+//                fragmentTransaction2.replace(R.id.fragment_dong_nuoc2, fragmentDongNuoc);
+//                fragmentTransaction2.commit();
 
-        TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
-        tabhost.getTabAt(1).select();
+                TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
+                tabhost.getTabAt(1).select();
 
-        return false;
-    }
-});
+                return false;
+            }
+        });
 
         return rootView;
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, String, Void>
-    {
+    public class MyAsyncTask extends AsyncTask<Void, String, Void> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -145,7 +157,7 @@ lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            publishProgress(ws.GetDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""),edtFromDate.getText().toString(),edtToDate.getText().toString()));
+            publishProgress(ws.GetDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
             return null;
         }
 
@@ -154,10 +166,10 @@ lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    JSONArray jsonArray= new JSONArray(values[0]);
+                    CLocal.jsonArray_DongNuoc = new JSONArray(values[0]);
                     ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    for (int i = 0; i < CLocal.jsonArray_DongNuoc.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonArray_DongNuoc.getJSONObject(i);
                         CViewEntity entity = new CViewEntity();
 
                         entity.setID(jsonObject.getString("MaDN"));

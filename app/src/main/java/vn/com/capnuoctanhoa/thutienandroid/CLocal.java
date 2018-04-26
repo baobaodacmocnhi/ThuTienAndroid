@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.json.JSONArray;
+
 public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
@@ -16,6 +18,7 @@ public class CLocal {
     public static int Color_ChuaThu = Color.TRANSPARENT;
     public static int Color_DaThu = Color.GREEN;
     public static int Color_ChuyenKhoan = Color.RED;
+public  static JSONArray jsonArray_DongNuoc;
 
     public static boolean CheckNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
