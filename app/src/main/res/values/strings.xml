@@ -57,4 +57,11 @@
         <item>Mục đứt</item>
         <item>Đứt</item>
     </string-array>
+    <string-array name="hanhthu_array">
+        <item>Tất Cả</item>
+        <item>Chưa Thu</item>
+        <item>Đã Thu</item>
+        <item>Chuyển Khoản</item>
+    </string-array>
+
 </resources>

@@ -18,7 +18,7 @@ public class CLocal {
     public static int Color_ChuaThu = Color.TRANSPARENT;
     public static int Color_DaThu = Color.GREEN;
     public static int Color_ChuyenKhoan = Color.RED;
-public  static JSONArray jsonArray_DongNuoc;
+    public static JSONArray jsonArray_HanhThu, jsonArray_DongNuoc;
 
     public static boolean CheckNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -28,5 +28,39 @@ public  static JSONArray jsonArray_DongNuoc;
         else
             return false;
     }
+
+    /*private void LoadListView() {
+        try {
+            File directory = new File(CLocal.Path);
+            if (directory.length() > 0) {
+                File[] files = directory.listFiles();
+                ArrayList<String> array = new ArrayList<>();
+                for (int i = 0; i < files.length; i++) {
+                    array.add(files[i].getName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
+                lstView.setAdapter(adapter);
+            }
+        } catch (Exception e) {
+        }
+    }*/
+
+        /*private String GetFile(String fileName) {
+        try {
+            FileInputStream inputStream = getContext().openFileInput(fileName);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String data = "";
+            StringBuilder builder = new StringBuilder();
+            while ((data = reader.readLine()) != null) {
+                builder.append(data);
+                builder.append("\n");
+            }
+            inputStream.close();
+            return builder.toString();
+        } catch (Exception e) {
+        }
+        return "";
+    }*/
+
 
 }

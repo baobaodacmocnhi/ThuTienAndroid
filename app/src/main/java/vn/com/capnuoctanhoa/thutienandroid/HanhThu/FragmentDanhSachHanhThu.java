@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,6 +30,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
+import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -34,7 +39,7 @@ public class FragmentDanhSachHanhThu extends Fragment {
     private View rootView;
     private Spinner spnNam, spnKy, spnFromDot, spnToDot;
     private Button btnDownload;
-    private  ListView lstView;
+    private ListView lstView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,47 +52,35 @@ public class FragmentDanhSachHanhThu extends Fragment {
 //        spnNam.setAdapter(adapter);
 
         spnKy = (Spinner) rootView.findViewById(R.id.spnKy);
-//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnKy);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spnKy.setAdapter(adapter);
-
         spnFromDot = (Spinner) rootView.findViewById(R.id.spnFromDot);
-//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spnFromDot.setAdapter(adapter);
-
         spnToDot = (Spinner) rootView.findViewById(R.id.spnToDot);
-//        adapter = new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_spinner_item, CLocal.arrayspnDot);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spnToDot.setAdapter(adapter);
 
         btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
+        lstView = (ListView) rootView.findViewById(R.id.lstView);
+
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CLocal.CheckNetworkAvailable(getContext())==false)
-                {
-                    Toast.makeText(getActivity(),"Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.CheckNetworkAvailable(getContext()) == false) {
+                    Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-                String FileName = spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnFromDot.getSelectedItem().toString() + "_" + spnToDot.getSelectedItem().toString();
+                /*String FileName = spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnFromDot.getSelectedItem().toString() + "_" + spnToDot.getSelectedItem().toString();
                 File file = new File(CLocal.Path + "/" + FileName);
-                if (file.exists()==false) {
+                if (file.exists() == false) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
-                }
-                else
-                    Toast.makeText(getActivity(),"File đã có rồi", Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(getActivity(), "File đã có rồi", Toast.LENGTH_LONG).show();*/
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute();
             }
         });
-
-        lstView = (ListView) rootView.findViewById(R.id.lstView);
-        LoadListView();
 
         lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle bundle = new Bundle();
+                /*Bundle bundle = new Bundle();
                 bundle.putString("FileName", lstView.getItemAtPosition(i).toString());
 
                 FragmentHanhThu hanhthu = new FragmentHanhThu();
@@ -99,26 +92,26 @@ public class FragmentDanhSachHanhThu extends Fragment {
                 fragmentTransaction.commit();
 
                 TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
-                tabhost.getTabAt(1).select();
+                tabhost.getTabAt(1).select();*/
             }
         });
 
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                File file = new File(CLocal.Path + "/" + lstView.getItemAtPosition(i).toString());
+               /* File file = new File(CLocal.Path + "/" + lstView.getItemAtPosition(i).toString());
                 if (file.delete() == true)
-                    LoadListView();
+                    LoadListView();*/
                 return false;
             }
         });
 
-//        Intent intent= getActivity().getIntent();
-//        String SoHoaDon=intent.getStringExtra("SoHoaDon");
-//        if(SoHoaDon.equals("")==false)
-//        {
-//            Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
-//        }
+/*        Intent intent= getActivity().getIntent();
+        String SoHoaDon=intent.getStringExtra("SoHoaDon");
+        if(SoHoaDon.equals("")==false)
+        {
+            Toast.makeText(getActivity(),SoHoaDon, Toast.LENGTH_LONG).show();
+        }*/
 
         return rootView;
     }
@@ -147,15 +140,14 @@ public class FragmentDanhSachHanhThu extends Fragment {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    FileOutputStream out = getContext().openFileOutput(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnFromDot.getSelectedItem().toString() + "_" + spnToDot.getSelectedItem().toString(), Context.MODE_PRIVATE);
+                    /*FileOutputStream out = getContext().openFileOutput(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnFromDot.getSelectedItem().toString() + "_" + spnToDot.getSelectedItem().toString(), Context.MODE_PRIVATE);
                     OutputStreamWriter writer = new OutputStreamWriter(out);
                     writer.write(values[0]);
-                    writer.close();
-                    LoadListView();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    writer.close();*/
+
+                    CLocal.jsonArray_HanhThu = new JSONArray(values[0]);
+                    LoadListView( CLocal.jsonArray_HanhThu);
+                } catch (Exception e) {
                 }
             }
         }
@@ -169,24 +161,27 @@ public class FragmentDanhSachHanhThu extends Fragment {
         }
     }
 
-    private void LoadListView() {
+    private void LoadListView(JSONArray jsonArray) {
         try {
-            File directory = new File(CLocal.Path);
-            if(directory.length()>0) {
-                File[] files = directory.listFiles();
-                ArrayList<String> array = new ArrayList<>();
-                for (int i = 0; i < files.length; i++) {
-                    array.add(files[i].getName());
-                }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
-                lstView.setAdapter(adapter);
+            ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                CViewEntity entity = new CViewEntity();
+
+                entity.setID(jsonObject.getString("SOHOADON"));
+                entity.setName1(jsonObject.getString("DANHBA"));
+                entity.setName2(jsonObject.getString("TONGCONG"));
+                entity.setContent(jsonObject.getString("SO") + " " + jsonObject.getString("DUONG"));
+                if (jsonObject.getString("NGAYGIAITRACH") != null || jsonObject.getString("NGAYGIAITRACH") != "")
+                    entity.setBackgroundColor(CLocal.Color_DaThu);
+                list.add(entity);
             }
+            CViewAdapter adapter = new CViewAdapter(getActivity(), list);
+            lstView.setAdapter(adapter);
+        } catch (Exception e) {
         }
-        catch (Exception e)
-        {
-
-        }
-
     }
+
+
 
 }
