@@ -1,10 +1,13 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +25,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class FragmentDongNuoc extends Fragment {
     private View rootView;
-    private String MaDN;
-    private BottomNavigationView bottomNavigationView;
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan,edtGhiChu;
+    private EditText edtMaDN, edtDanhBo, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtGhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnDongNuoc;
 
@@ -39,8 +41,6 @@ public class FragmentDongNuoc extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_dong_nuoc, container, false);
-
-//        bottomNavigationView = (BottomNavigationView) rootView.findViewById(R.id.bottom_navigation);
 
         edtMaDN = (EditText) rootView.findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) rootView.findViewById(R.id.edtDanhBo);
@@ -62,31 +62,6 @@ public class FragmentDongNuoc extends Fragment {
         btnKiemTra = (Button) rootView.findViewById(R.id.btnKiemTra);
         btnDongNuoc = (Button) rootView.findViewById(R.id.btnDongNuoc);
 
-        try {
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                MaDN = bundle.getString("MaDN");
-                FillDongNuoc(MaDN);
-            }
-        } catch (Exception ex) {
-        }
-
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.bottom_btnKiemTra:
-//                        Toast.makeText(getActivity(), "kiểm tra", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case R.id.bottom_btnThem:
-//                        Toast.makeText(getActivity(), "đóng nước", Toast.LENGTH_SHORT).show();
-//                        break;
-//                }
-//                ;
-//                return true;
-//            }
-//        });
-
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
         edtNgayDN.setText(currentDate.format(new Date()));
 
@@ -105,7 +80,10 @@ public class FragmentDongNuoc extends Fragment {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                if(edtMaDN.getText().toString().equals("")==false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("Kiểm Tra");
+                }
             }
         });
 
@@ -116,9 +94,17 @@ public class FragmentDongNuoc extends Fragment {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-
             }
         });
+
+        try {
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                String MaDN = bundle.getString("MaDN");
+                FillDongNuoc(MaDN);
+            }
+        } catch (Exception ex) {
+        }
 
         return rootView;
     }
@@ -134,6 +120,7 @@ public class FragmentDongNuoc extends Fragment {
 
     public void FillDongNuoc(String MaDN) {
         try {
+
             for (int i = 0; i < CLocal.jsonArray_DongNuoc.length(); i++) {
                 JSONObject jsonObject = CLocal.jsonArray_DongNuoc.getJSONObject(i);
                 if (jsonObject.getString("MaDN").equals(MaDN) == true) {
@@ -144,11 +131,53 @@ public class FragmentDongNuoc extends Fragment {
                     edtHieu.setText(jsonObject.getString("Hieu"));
                     edtCo.setText(jsonObject.getString("Co"));
                     edtSoThan.setText(jsonObject.getString("SoThan"));
+
                     break;
                 }
             }
         } catch (Exception ex) {
             Toast.makeText(getActivity(), ex.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            switch (strings[0]) {
+                case "Kiểm Tra":
+                    return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
+                case "Đóng Nước":
+
+                    break;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

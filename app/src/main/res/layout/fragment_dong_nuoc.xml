@@ -3,44 +3,40 @@
 <!--<android.support.design.widget.BottomNavigationView--><!--android:id="@+id/bottom_navigation"--><!--android:layout_width="match_parent"--><!--android:layout_height="50dp"--><!--android:layout_marginBottom="8dp"--><!--app:layout_constraintBottom_toBottomOf="parent"--><!--app:menu="@menu/bottom_navigation_main" />-->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment_dong_nuoc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:labelFor="@+id/edtChiSoDN"
-        tools:context=".DongNuoc.FragmentDongNuoc">
+        android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/edtCo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="2"
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
+            app:layout_constraintTop_toTopOf="@+id/edtHieu" />
 
         <EditText
             android:id="@+id/edtSoThan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="6"
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
+            app:layout_constraintTop_toTopOf="@+id/edtHieu" />
 
         <EditText
             android:id="@+id/edtMaDN"
@@ -103,19 +99,18 @@
             android:inputType="date"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView10"
-            app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+            app:layout_constraintTop_toBottomOf="@+id/edtSoThan" />
 
         <EditText
             android:id="@+id/edtChiSoDN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:ems="5"
             android:inputType="number"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+            app:layout_constraintTop_toTopOf="@+id/edtNgayDN" />
 
         <EditText
             android:id="@+id/edtHieu"
@@ -127,7 +122,7 @@
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
+            app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
 
         <TextView
             android:id="@+id/textView8"
@@ -249,7 +244,7 @@
             android:entries="@array/dongnuoc_array"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
-            app:layout_constraintTop_toBottomOf="@+id/edtHieu" />
+            app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
 
         <Spinner
             android:id="@+id/spnChiKhoaGoc"
@@ -275,10 +270,9 @@
             android:id="@+id/imgThumb"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="8dp"
             android:src="@android:drawable/ic_menu_gallery"
             app:layout_constraintStart_toEndOf="@+id/spnChiMatSo"
-            app:layout_constraintTop_toBottomOf="@+id/edtSoThan" />
+            app:layout_constraintTop_toTopOf="@+id/spnChiMatSo" />
 
         <Button
             android:id="@+id/btnDongNuoc"
@@ -325,4 +319,5 @@
             app:layout_constraintTop_toBottomOf="@+id/imgThumb" />
 
     </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.CoordinatorLayout>
 </ScrollView>

@@ -126,11 +126,6 @@ public class FragmentDanhSachDongNuoc extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_dong_nuoc, fragmentDongNuoc);
                 fragmentTransaction.commit();
-//
-//                FragmentManager fragmentManager2 = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
-//                fragmentTransaction2.replace(R.id.fragment_dong_nuoc2, fragmentDongNuoc);
-//                fragmentTransaction2.commit();
 
                 TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
                 tabhost.getTabAt(1).select();
