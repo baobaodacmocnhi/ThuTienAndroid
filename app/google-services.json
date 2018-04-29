@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "416927227192",
+    "firebase_url": "https://thutienandroid-c70cb.firebaseio.com",
+    "project_id": "thutienandroid-c70cb",
+    "storage_bucket": "thutienandroid-c70cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416927227192:android:b3b56ef565377a59",
+        "android_client_info": {
+          "package_name": "vn.com.capnuoctanhoa.thutienandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416927227192-tk6d50inirjkglkvct6oijbbon5dvvka.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.com.capnuoctanhoa.thutienandroid",
+            "certificate_hash": "1a520f767eb0636ff76270b106453c5d2eaa015d"
+          }
+        },
+        {
+          "client_id": "416927227192-37alalos5pq689j2mi0lb95ksacum81m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCmHIo-8jTjzfdbsaD3ktAen5iH0qaAGE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416927227192-37alalos5pq689j2mi0lb95ksacum81m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

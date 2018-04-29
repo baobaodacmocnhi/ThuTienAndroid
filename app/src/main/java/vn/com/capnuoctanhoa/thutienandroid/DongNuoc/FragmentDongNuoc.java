@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +30,7 @@ public class FragmentDongNuoc extends Fragment {
     private View rootView;
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtGhiChu;
+    private EditText edtMaDN, edtDanhBo, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnDongNuoc;
 
@@ -46,13 +44,12 @@ public class FragmentDongNuoc extends Fragment {
         edtDanhBo = (EditText) rootView.findViewById(R.id.edtDanhBo);
         edtHoTen = (EditText) rootView.findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) rootView.findViewById(R.id.edtDiaChi);
-        edtNgayDN = (EditText) rootView.findViewById(R.id.edtNgayDN);
-        edtChiSoDN = (EditText) rootView.findViewById(R.id.edtChiSoDN);
         edtHieu = (EditText) rootView.findViewById(R.id.edtHieu);
         edtCo = (EditText) rootView.findViewById(R.id.edtCo);
         edtSoThan = (EditText) rootView.findViewById(R.id.edtSoThan);
-        edtGhiChu = (EditText) rootView.findViewById(R.id.edtGhiChu);
-
+        edtNgayDN = (EditText) rootView.findViewById(R.id.edtNgayDN);
+        edtChiSoDN = (EditText) rootView.findViewById(R.id.edtChiSoDN);
+        edtLyDo = (EditText) rootView.findViewById(R.id.edtLyDo);
         spnChiMatSo = (Spinner) rootView.findViewById(R.id.spnChiMatSo);
         spnChiKhoaGoc = (Spinner) rootView.findViewById(R.id.spnChiKhoaGoc);
 
@@ -61,9 +58,6 @@ public class FragmentDongNuoc extends Fragment {
 
         btnKiemTra = (Button) rootView.findViewById(R.id.btnKiemTra);
         btnDongNuoc = (Button) rootView.findViewById(R.id.btnDongNuoc);
-
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-        edtNgayDN.setText(currentDate.format(new Date()));
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,12 +125,26 @@ public class FragmentDongNuoc extends Fragment {
                     edtHieu.setText(jsonObject.getString("Hieu"));
                     edtCo.setText(jsonObject.getString("Co"));
                     edtSoThan.setText(jsonObject.getString("SoThan"));
-
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                    edtNgayDN.setText(currentDate.format(new Date()));
+                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN"));
+                    SetSpinnerSelection(spnChiMatSo,jsonObject.getString("ChiMatSo"));
+                    SetSpinnerSelection(spnChiKhoaGoc,jsonObject.getString("ChiKhoaGoc"));
+                    edtLyDo.setText(jsonObject.getString("LyDo"));
                     break;
                 }
             }
         } catch (Exception ex) {
             Toast.makeText(getActivity(), ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void SetSpinnerSelection(Spinner spinner, Object value) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(value)) {
+                spinner.setSelection(i);
+                break;
+            }
         }
     }
 
