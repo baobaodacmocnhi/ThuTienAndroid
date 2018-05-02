@@ -167,7 +167,7 @@ public class FragmentDanhSachHanhThu extends Fragment {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CViewEntity entity = new CViewEntity();
-
+                entity.setSTT(String.valueOf(i+1));
                 entity.setID(jsonObject.getString("SOHOADON"));
                 entity.setName1(jsonObject.getString("DANHBA"));
                 entity.setName2(jsonObject.getString("TONGCONG"));

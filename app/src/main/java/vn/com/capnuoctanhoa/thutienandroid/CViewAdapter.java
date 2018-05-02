@@ -35,6 +35,7 @@ public class CViewAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
+        TextView txtSTT;
         TextView txtID;
         TextView txtName1;
         TextView txtName2;
@@ -48,6 +49,7 @@ public class CViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.custom_row_listview, null);
             holder = new ViewHolder();
+            holder.txtSTT = (TextView) convertView.findViewById(R.id.lvSTT);
             holder.txtID = (TextView) convertView.findViewById(R.id.lvID);
             holder.txtName1 = (TextView) convertView.findViewById(R.id.lvName1);
             holder.txtName2 = (TextView) convertView.findViewById(R.id.lvName2);
@@ -58,6 +60,7 @@ public class CViewAdapter extends BaseAdapter {
         }
 
         CViewEntity map = list.get(position);
+        holder.txtSTT.setText(map.getSTT());
         holder.txtID.setText(map.getID());
         holder.txtName1.setText(map.getName1());
         holder.txtName2.setText(map.getName2());

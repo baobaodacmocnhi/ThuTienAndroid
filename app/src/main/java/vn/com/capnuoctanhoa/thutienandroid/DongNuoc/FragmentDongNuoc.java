@@ -1,24 +1,32 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,7 +38,7 @@ public class FragmentDongNuoc extends Fragment {
     private View rootView;
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
+    private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnDongNuoc;
 
@@ -42,6 +50,7 @@ public class FragmentDongNuoc extends Fragment {
 
         edtMaDN = (EditText) rootView.findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) rootView.findViewById(R.id.edtDanhBo);
+        edtMLT = (EditText) rootView.findViewById(R.id.edtMLT);
         edtHoTen = (EditText) rootView.findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) rootView.findViewById(R.id.edtDiaChi);
         edtHieu = (EditText) rootView.findViewById(R.id.edtHieu);
@@ -67,6 +76,13 @@ public class FragmentDongNuoc extends Fragment {
             }
         });
 
+        imgThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowImgThumb();
+            }
+        });
+
         btnKiemTra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +103,10 @@ public class FragmentDongNuoc extends Fragment {
                 if (CLocal.CheckNetworkAvailable(getContext()) == false) {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
+                }
+                if(edtMaDN.getText().toString().equals("")==false&&edtChiSoDN.getText().toString().equals("")==false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("Đóng Nước");
                 }
             }
         });
@@ -120,6 +140,7 @@ public class FragmentDongNuoc extends Fragment {
                 if (jsonObject.getString("MaDN").equals(MaDN) == true) {
                     edtMaDN.setText(MaDN);
                     edtDanhBo.setText(jsonObject.getString("DanhBo"));
+                    edtMLT.setText(jsonObject.getString("MLT"));
                     edtHoTen.setText(jsonObject.getString("HoTen"));
                     edtDiaChi.setText(jsonObject.getString("DiaChi"));
                     edtHieu.setText(jsonObject.getString("Hieu"));
@@ -127,10 +148,10 @@ public class FragmentDongNuoc extends Fragment {
                     edtSoThan.setText(jsonObject.getString("SoThan"));
                     SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
                     edtNgayDN.setText(currentDate.format(new Date()));
-                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN"));
+                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN").replace("null",""));
                     SetSpinnerSelection(spnChiMatSo,jsonObject.getString("ChiMatSo"));
                     SetSpinnerSelection(spnChiKhoaGoc,jsonObject.getString("ChiKhoaGoc"));
-                    edtLyDo.setText(jsonObject.getString("LyDo"));
+                    edtLyDo.setText(jsonObject.getString("LyDo").replace("null",""));
                     break;
                 }
             }
@@ -146,6 +167,29 @@ public class FragmentDongNuoc extends Fragment {
                 break;
             }
         }
+    }
+
+    public void ShowImgThumb() {
+        Dialog builder = new Dialog(getContext());
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageBitmap(((BitmapDrawable)imgThumb.getDrawable()).getBitmap());
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams( 600,600));
+        builder.show();
+    }
+
+    public byte[] ConvertBitmapToBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
@@ -167,8 +211,16 @@ public class FragmentDongNuoc extends Fragment {
                 case "Kiểm Tra":
                     return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
                 case "Đóng Nước":
-
-                    break;
+                    if(Boolean.parseBoolean(ws.CheckExist_KQDongNuoc(edtMaDN.getText().toString()))==false) {
+                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
+                        String imgString = Base64.encodeToString(ConvertBitmapToBytes(reizeImage), Base64.NO_WRAP);
+//                        imgString = "NULL";
+                        return ws.ThemDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
+                                imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(),edtCo.getText().toString(), edtSoThan.getText().toString(),
+                                spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(),CLocal.sharedPreferencesre.getString("MaNV",""));
+                    }
+                    else
+                        return "ĐÃ NHẬP RỒI";
             }
             return null;
         }

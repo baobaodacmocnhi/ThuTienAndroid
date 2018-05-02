@@ -3,11 +3,20 @@ package vn.com.capnuoctanhoa.thutienandroid;
 import android.graphics.Color;
 
 public class CViewEntity {
+    private String STT;
     private String ID;
     private String Name1;
     private String Name2;
     private String Content;
     private int BackgroundColor=Color.TRANSPARENT;
+
+    public String getSTT() {
+        return STT;
+    }
+
+    public void setSTT(String STT) {
+        this.STT = STT;
+    }
 
     public String getID() {
         return ID;

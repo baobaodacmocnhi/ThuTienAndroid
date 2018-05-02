@@ -166,7 +166,7 @@ public class FragmentDanhSachDongNuoc extends Fragment {
                     for (int i = 0; i < CLocal.jsonArray_DongNuoc.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonArray_DongNuoc.getJSONObject(i);
                         CViewEntity entity = new CViewEntity();
-
+                        entity.setSTT(String.valueOf(i+1));
                         entity.setID(jsonObject.getString("MaDN"));
                         entity.setName1(jsonObject.getString("DiaChi"));
 //                        entity.setName2(jsonObject.getString("TONGCONG"));

@@ -206,4 +206,117 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
+    public String CheckExist_KQDongNuoc(String MaDN) {
+        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_KQDongNuoc";
+        String OPERATION_NAME = "TT_CheckExist_KQDongNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
+    public String ThemDongNuoc(String MaDN, String DanhBo, String MLT, String HoTen, String DiaChi,String HinhDN,String NgayDN, String ChiSoDN,
+                               String Hieu, String Co, String SoThan, String ChiMatSo, String ChiKhoaGoc, String LyDo,String CreateBy) {
+        String SOAP_ACTION = "http://tempuri.org/TT_ThemDongNuoc";
+        String OPERATION_NAME = "TT_ThemDongNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("MLT");
+        pi.setValue(MLT);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("HoTen");
+        pi.setValue(HoTen);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("DiaChi");
+        pi.setValue(DiaChi);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("HinhDN");
+        pi.setValue(HinhDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("NgayDN");
+        pi.setValue(NgayDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("ChiSoDN");
+        pi.setValue(ChiSoDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("Hieu");
+        pi.setValue(Hieu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("Co");
+        pi.setValue(Co);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("SoThan");
+        pi.setValue(SoThan);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("ChiMatSo");
+        pi.setValue(ChiMatSo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("ChiKhoaGoc");
+        pi.setValue(ChiKhoaGoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("LyDo");
+        pi.setValue(LyDo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("CreateBy");
+        pi.setValue(CreateBy);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
 }
