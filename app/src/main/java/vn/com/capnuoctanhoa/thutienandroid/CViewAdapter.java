@@ -39,7 +39,8 @@ public class CViewAdapter extends BaseAdapter {
         TextView txtID;
         TextView txtName1;
         TextView txtName2;
-        TextView txtContent;
+        TextView txtContent1;
+        TextView txtContent2;
     }
 
     @Override
@@ -53,7 +54,8 @@ public class CViewAdapter extends BaseAdapter {
             holder.txtID = (TextView) convertView.findViewById(R.id.lvID);
             holder.txtName1 = (TextView) convertView.findViewById(R.id.lvName1);
             holder.txtName2 = (TextView) convertView.findViewById(R.id.lvName2);
-            holder.txtContent = (TextView) convertView.findViewById(R.id.lvContent);
+            holder.txtContent1 = (TextView) convertView.findViewById(R.id.lvContent1);
+            holder.txtContent2 = (TextView) convertView.findViewById(R.id.lvContent2);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -64,7 +66,8 @@ public class CViewAdapter extends BaseAdapter {
         holder.txtID.setText(map.getID());
         holder.txtName1.setText(map.getName1());
         holder.txtName2.setText(map.getName2());
-        holder.txtContent.setText(map.getContent());
+        holder.txtContent1.setText(map.getContent1());
+        holder.txtContent2.setText(map.getContent2());
 
         convertView.setBackgroundColor(map.getBackgroundColor());
 

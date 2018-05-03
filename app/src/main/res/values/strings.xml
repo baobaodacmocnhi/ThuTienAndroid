@@ -63,5 +63,6 @@
         <item>Đã Thu</item>
         <item>Chuyển Khoản</item>
     </string-array>
+    <string name="title_activity_test">test</string>
 
 </resources>

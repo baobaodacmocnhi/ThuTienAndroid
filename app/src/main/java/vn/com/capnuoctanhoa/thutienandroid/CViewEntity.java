@@ -7,7 +7,9 @@ public class CViewEntity {
     private String ID;
     private String Name1;
     private String Name2;
-    private String Content;
+    private String Content1;
+
+    private String Content2;
     private int BackgroundColor=Color.TRANSPARENT;
 
     public String getSTT() {
@@ -42,12 +44,20 @@ public class CViewEntity {
         Name2 = name2;
     }
 
-    public String getContent() {
-        return Content;
+    public String getContent1() {
+        return Content1;
     }
 
-    public void setContent(String content) {
-        Content = content;
+    public void setContent1(String content1) {
+        Content1 = content1;
+    }
+
+    public String getContent2() {
+        return Content2;
+    }
+
+    public void setContent2(String content2) {
+        Content2 = content2;
     }
 
     public int getBackgroundColor() {

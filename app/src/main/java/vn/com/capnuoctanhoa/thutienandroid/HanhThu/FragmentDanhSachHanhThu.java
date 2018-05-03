@@ -171,7 +171,7 @@ public class FragmentDanhSachHanhThu extends Fragment {
                 entity.setID(jsonObject.getString("SOHOADON"));
                 entity.setName1(jsonObject.getString("DANHBA"));
                 entity.setName2(jsonObject.getString("TONGCONG"));
-                entity.setContent(jsonObject.getString("SO") + " " + jsonObject.getString("DUONG"));
+                entity.setContent1(jsonObject.getString("SO") + " " + jsonObject.getString("DUONG"));
                 if (jsonObject.getString("NGAYGIAITRACH") != null || jsonObject.getString("NGAYGIAITRACH") != "")
                     entity.setBackgroundColor(CLocal.Color_DaThu);
                 list.add(entity);

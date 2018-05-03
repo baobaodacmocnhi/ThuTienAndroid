@@ -40,11 +40,13 @@
         <activity
             android:name=".HanhThu.ActivityHanhThu"
             android:label="@string/title_activity_hanh_thu"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
         <activity
             android:name=".DongNuoc.ActivityDongNuoc"
             android:label="@string/title_activity_dong_nuoc"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
     </application>
 
 </manifest>

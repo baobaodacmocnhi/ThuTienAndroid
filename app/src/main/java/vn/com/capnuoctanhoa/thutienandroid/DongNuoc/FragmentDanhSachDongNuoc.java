@@ -168,9 +168,10 @@ public class FragmentDanhSachDongNuoc extends Fragment {
                         CViewEntity entity = new CViewEntity();
                         entity.setSTT(String.valueOf(i+1));
                         entity.setID(jsonObject.getString("MaDN"));
-                        entity.setName1(jsonObject.getString("DiaChi"));
-//                        entity.setName2(jsonObject.getString("TONGCONG"));
-                        entity.setContent(jsonObject.getString("DanhBo") + " " + jsonObject.getString("HoTen"));
+                        entity.setName1(jsonObject.getString("MLT"));
+                        entity.setName2(jsonObject.getString("DiaChi"));
+                        entity.setContent1(jsonObject.getString("DanhBo"));
+                        entity.setContent2(jsonObject.getString("HoTen"));
 //                        if (jsonObject.getString("NGAYGIAITRACH") != null || jsonObject.getString("NGAYGIAITRACH") != "")
 //                            entity.setBackgroundColor(CLocal.Color_DaThu);
                         list.add(entity);

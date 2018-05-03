@@ -121,6 +121,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 case 1:
                     FragmentDongNuoc tab2 = new FragmentDongNuoc();
                     return tab2;
+                case 2:
+                    FragmentMoNuoc tab3 = new FragmentMoNuoc();
+                    return tab3;
             }
             return null;
         }
@@ -128,7 +131,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -138,6 +141,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     return "Danh Sách";
                 case 1:
                     return "Đóng Nước";
+                case 2:
+                    return "Mở Nước";
             }
             return null;
         }
