@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Thu Tiền</string>
-    <string name="title_activity_hanh_thu">ActivityHanhThu</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_dong_nuoc">ActivityDongNuoc</string>
+    <string name="title_activity_dang_nhap">Đăng Nhập</string>
+    <string name="title_activity_danh_sach_hanh_thu">Danh Sách Hành Thu</string>
+    <string name="title_activity_danh_sach_dong_nuoc">Danh Sách Đóng Nước</string>
+    <string name="title_activity_hanh_thu">Hành Thu</string>
+    <string name="title_activity_dong_nuoc">Đóng Nước</string>
+    <string name="title_activity_mo_nuoc">Mở Nước</string>
 
     <string-array name="nam_array">
         <item>2018</item>
@@ -63,6 +62,5 @@
         <item>Đã Thu</item>
         <item>Chuyển Khoản</item>
     </string-array>
-    <string name="title_activity_test">test</string>
 
 </resources>

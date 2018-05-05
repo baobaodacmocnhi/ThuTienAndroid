@@ -14,7 +14,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 
 public class CFirebaseMessagingService extends FirebaseMessagingService {
     @Override
@@ -22,7 +22,7 @@ public class CFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         //Calling method to generate notification
 
-        Intent intent = new Intent(this, ActivityHanhThu.class);
+        Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
         intent.putExtra("SoHoaDon",remoteMessage.getData().get("SoHoaDon"));
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

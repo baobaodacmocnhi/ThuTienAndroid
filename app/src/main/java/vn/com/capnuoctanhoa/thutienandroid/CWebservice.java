@@ -206,9 +206,9 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
-    public String CheckExist_KQDongNuoc(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_KQDongNuoc";
-        String OPERATION_NAME = "TT_CheckExist_KQDongNuoc";
+    public String CheckExist_DongNuoc(String MaDN) {
+        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_DongNuoc";
+        String OPERATION_NAME = "TT_CheckExist_DongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -319,4 +319,55 @@ public class CWebservice {
         return Excute(request, SOAP_ACTION);
     }
 
+    public String CheckExist_MoNuoc(String MaDN) {
+        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_MoNuoc";
+        String OPERATION_NAME = "TT_CheckExist_MoNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
+
+    public String ThemMoNuoc(String MaDN, String HinhMN,String NgayMN, String ChiSoMN, String CreateBy) {
+        String SOAP_ACTION = "http://tempuri.org/TT_ThemMoNuoc";
+        String OPERATION_NAME = "TT_ThemMoNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("HinhMN");
+        pi.setValue(HinhMN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("NgayMN");
+        pi.setValue(NgayMN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("ChiSoMN");
+        pi.setValue(ChiSoMN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("CreateBy");
+        pi.setValue(CreateBy);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return Excute(request, SOAP_ACTION);
+    }
 }

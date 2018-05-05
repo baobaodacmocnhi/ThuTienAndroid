@@ -18,7 +18,7 @@ public class CLocal {
     public static int Color_ChuaThu = Color.TRANSPARENT;
     public static int Color_DaThu = Color.GREEN;
     public static int Color_ChuyenKhoan = Color.RED;
-    public static JSONArray jsonArray_HanhThu, jsonArray_DongNuoc;
+    public static JSONArray jsonHanhThu, jsonDongNuoc;
 
     public static boolean CheckNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

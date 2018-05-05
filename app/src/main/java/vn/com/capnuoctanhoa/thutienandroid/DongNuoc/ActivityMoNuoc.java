@@ -3,20 +3,17 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,47 +33,47 @@ import vn.com.capnuoctanhoa.thutienandroid.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentMoNuoc.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentMoNuoc#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentMoNuoc extends Fragment {
-    private View rootView;
+public class ActivityMoNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
-    private Button btnKiemTra, btnDongNuoc;
-
+    private Button btnKiemTra, btnMoNuoc;
+    
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_mo_nuoc, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mo_nuoc);
 
-        edtMaDN = (EditText) rootView.findViewById(R.id.edtMaDN);
-        edtDanhBo = (EditText) rootView.findViewById(R.id.edtDanhBo);
-        edtMLT = (EditText) rootView.findViewById(R.id.edtMLT);
-        edtHoTen = (EditText) rootView.findViewById(R.id.edtHoTen);
-        edtDiaChi = (EditText) rootView.findViewById(R.id.edtDiaChi);
-        edtHieu = (EditText) rootView.findViewById(R.id.edtHieu);
-        edtCo = (EditText) rootView.findViewById(R.id.edtCo);
-        edtSoThan = (EditText) rootView.findViewById(R.id.edtSoThan);
-        edtNgayMN = (EditText) rootView.findViewById(R.id.edtNgayMN);
-        edtChiSoMN = (EditText) rootView.findViewById(R.id.edtChiSoMN);
-        edtLyDo = (EditText) rootView.findViewById(R.id.edtLyDo);
-        spnChiMatSo = (Spinner) rootView.findViewById(R.id.spnChiMatSo);
-        spnChiKhoaGoc = (Spinner) rootView.findViewById(R.id.spnChiKhoaGoc);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        imgThumb = (ImageView) rootView.findViewById(R.id.imgThumb);
-        ibtnChupHinh = (ImageButton) rootView.findViewById(R.id.ibtnChupHinh);
+        edtMaDN = (EditText) findViewById(R.id.edtMaDN);
+        edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
+        edtMLT = (EditText) findViewById(R.id.edtMLT);
+        edtHoTen = (EditText) findViewById(R.id.edtHoTen);
+        edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
+        edtHieu = (EditText) findViewById(R.id.edtHieu);
+        edtCo = (EditText) findViewById(R.id.edtCo);
+        edtSoThan = (EditText) findViewById(R.id.edtSoThan);
+        edtNgayMN = (EditText) findViewById(R.id.edtNgayMN);
+        edtChiSoMN = (EditText) findViewById(R.id.edtChiSoMN);
+        edtLyDo = (EditText) findViewById(R.id.edtLyDo);
+        spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
+        spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
 
-        btnKiemTra = (Button) rootView.findViewById(R.id.btnKiemTra);
-        btnDongNuoc = (Button) rootView.findViewById(R.id.btnDongNuoc);
+        imgThumb = (ImageView) findViewById(R.id.imgThumb);
+        ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
+
+        btnKiemTra = (Button) findViewById(R.id.btnKiemTra);
+        btnMoNuoc = (Button) findViewById(R.id.btnMoNuoc);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +93,8 @@ public class FragmentMoNuoc extends Fragment {
         btnKiemTra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(getContext()) == false) {
-                    Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.CheckNetworkAvailable(ActivityMoNuoc.this) == false) {
+                    Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(edtMaDN.getText().toString().equals("")==false) {
@@ -107,30 +104,27 @@ public class FragmentMoNuoc extends Fragment {
             }
         });
 
-        btnDongNuoc.setOnClickListener(new View.OnClickListener() {
+        btnMoNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(getContext()) == false) {
-                    Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.CheckNetworkAvailable(ActivityMoNuoc.this) == false) {
+                    Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(edtMaDN.getText().toString().equals("")==false&&edtChiSoMN.getText().toString().equals("")==false) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute("Đóng Nước");
+                    myAsyncTask.execute("Mở Nước");
                 }
             }
         });
 
         try {
-            Bundle bundle = getArguments();
-            if (bundle != null) {
-                String MaDN = bundle.getString("MaDN");
+            String MaDN= getIntent().getStringExtra("MaDN");
+            if (MaDN.equals("")==false) {
                 FillDongNuoc(MaDN);
             }
         } catch (Exception ex) {
         }
-
-        return rootView;
     }
 
     @Override
@@ -145,8 +139,8 @@ public class FragmentMoNuoc extends Fragment {
     public void FillDongNuoc(String MaDN) {
         try {
 
-            for (int i = 0; i < CLocal.jsonArray_DongNuoc.length(); i++) {
-                JSONObject jsonObject = CLocal.jsonArray_DongNuoc.getJSONObject(i);
+            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                 if (jsonObject.getString("MaDN").equals(MaDN) == true) {
                     edtMaDN.setText(MaDN);
                     edtDanhBo.setText(jsonObject.getString("DanhBo"));
@@ -166,7 +160,7 @@ public class FragmentMoNuoc extends Fragment {
                 }
             }
         } catch (Exception ex) {
-            Toast.makeText(getActivity(), ex.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMoNuoc.this, ex.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -180,7 +174,7 @@ public class FragmentMoNuoc extends Fragment {
     }
 
     public void ShowImgThumb() {
-        Dialog builder = new Dialog(getContext());
+        Dialog builder = new Dialog(ActivityMoNuoc.this);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -190,7 +184,7 @@ public class FragmentMoNuoc extends Fragment {
             }
         });
 
-        ImageView imageView = new ImageView(getContext());
+        ImageView imageView = new ImageView(ActivityMoNuoc.this);
         imageView.setImageBitmap(((BitmapDrawable)imgThumb.getDrawable()).getBitmap());
         builder.addContentView(imageView, new RelativeLayout.LayoutParams( 600,600));
         builder.show();
@@ -209,7 +203,7 @@ public class FragmentMoNuoc extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
+            progressDialog = new ProgressDialog(ActivityMoNuoc.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
             progressDialog.show();
@@ -220,14 +214,12 @@ public class FragmentMoNuoc extends Fragment {
             switch (strings[0]) {
                 case "Kiểm Tra":
                     return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
-                case "Đóng Nước":
-                    if(Boolean.parseBoolean(ws.CheckExist_KQDongNuoc(edtMaDN.getText().toString()))==false) {
+                case "Mở Nước":
+                    if(Boolean.parseBoolean(ws.CheckExist_MoNuoc(edtMaDN.getText().toString()))==false) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         String imgString = Base64.encodeToString(ConvertBitmapToBytes(reizeImage), Base64.NO_WRAP);
 //                        imgString = "NULL";
-                        return ws.ThemDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
-                                imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), edtHieu.getText().toString(),edtCo.getText().toString(), edtSoThan.getText().toString(),
-                                spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(),CLocal.sharedPreferencesre.getString("MaNV",""));
+                        return ws.ThemMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
                     }
                     else
                         return "ĐÃ NHẬP RỒI";
@@ -246,7 +238,7 @@ public class FragmentMoNuoc extends Fragment {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMoNuoc.this, s, Toast.LENGTH_SHORT).show();
         }
 
     }

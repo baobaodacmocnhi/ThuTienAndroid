@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,16 @@ public class ActivityDangNhap extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_nhap);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         txtUser = (TextView) findViewById(R.id.txtUser);
         edtUsername = (EditText) findViewById(R.id.edtUsername);
@@ -63,6 +74,8 @@ public class ActivityDangNhap extends AppCompatActivity {
                 editor.remove("Password");
                 editor.remove("MaNV");
                 editor.remove("HoTen");
+                editor.remove("jsonHanhThu");
+                editor.remove("jsonDongNuoc");
                 editor.putBoolean("Login", false);
                 editor.commit();
                 Reload();

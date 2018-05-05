@@ -3,7 +3,6 @@ package vn.com.capnuoctanhoa.thutienandroid;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -14,16 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.concurrent.ExecutionException;
 
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btnHanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivityHanhThu.class);
+                Intent intent = new Intent(MainActivity.this, ActivityDanhSachHanhThu.class);
                 startActivity(intent);
             }
         });
@@ -58,10 +58,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(MainActivity.this, version, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, ActivityDongNuoc.class);
+                Intent intent = new Intent(MainActivity.this, ActivityDanhSachDongNuoc.class);
                 startActivity(intent);
             }
         });
+
+        try {
+            if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("")==false)
+            {
+                CLocal.jsonHanhThu=new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
+            }
+            if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("")==false)
+            {
+                CLocal.jsonDongNuoc=new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
+            }
+        }catch (Exception ex){}
 
     }
 

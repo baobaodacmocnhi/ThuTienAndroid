@@ -1,42 +1,44 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-import android.widget.TextView;
+import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc extends AppCompatActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+    private ImageButton ibtnChupHinh;
+    private ImageView imgThumb;
+    private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
+    private Spinner spnChiMatSo, spnChiKhoaGoc;
+    private Button btnKiemTra, btnDongNuoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,99 +54,193 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 finish();
             }
         });
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        edtMaDN = (EditText) findViewById(R.id.edtMaDN);
+        edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
+        edtMLT = (EditText) findViewById(R.id.edtMLT);
+        edtHoTen = (EditText) findViewById(R.id.edtHoTen);
+        edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
+        edtHieu = (EditText) findViewById(R.id.edtHieu);
+        edtCo = (EditText) findViewById(R.id.edtCo);
+        edtSoThan = (EditText) findViewById(R.id.edtSoThan);
+        edtNgayDN = (EditText) findViewById(R.id.edtNgayDN);
+        edtChiSoDN = (EditText) findViewById(R.id.edtChiSoDN);
+        edtLyDo = (EditText) findViewById(R.id.edtLyDo);
+        spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
+        spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        imgThumb = (ImageView) findViewById(R.id.imgThumb);
+        ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
+        btnKiemTra = (Button) findViewById(R.id.btnKiemTra);
+        btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
+
+        ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        imgThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowImgThumb();
+            }
+        });
+
+        btnKiemTra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CLocal.CheckNetworkAvailable(ActivityDongNuoc.this) == false) {
+                    Toast.makeText(ActivityDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(edtMaDN.getText().toString().equals("")==false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("Kiểm Tra");
+                }
+            }
+        });
+
+        btnDongNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CLocal.CheckNetworkAvailable(ActivityDongNuoc.this) == false) {
+                    Toast.makeText(ActivityDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(edtMaDN.getText().toString().equals("")==false&&edtChiSoDN.getText().toString().equals("")==false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("Đóng Nước");
+                }
+            }
+        });
+
+        try {
+            String MaDN= getIntent().getStringExtra("MaDN");
+            if (MaDN.equals("")==false) {
+                FillDongNuoc(MaDN);
+            }
+        } catch (Exception ex) {
+        }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imgThumb.setImageBitmap(bitmap);
         }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-      /*  @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_activity_dong_nuoc, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }*/
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public void FillDongNuoc(String MaDN) {
+        try {
+            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                if (jsonObject.getString("MaDN").equals(MaDN) == true) {
+                    edtMaDN.setText(MaDN);
+                    edtDanhBo.setText(jsonObject.getString("DanhBo"));
+                    edtMLT.setText(jsonObject.getString("MLT"));
+                    edtHoTen.setText(jsonObject.getString("HoTen"));
+                    edtDiaChi.setText(jsonObject.getString("DiaChi"));
+                    edtHieu.setText(jsonObject.getString("Hieu"));
+                    edtCo.setText(jsonObject.getString("Co"));
+                    edtSoThan.setText(jsonObject.getString("SoThan"));
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                    edtNgayDN.setText(currentDate.format(new Date()));
+                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN").replace("null",""));
+                    SetSpinnerSelection(spnChiMatSo,jsonObject.getString("ChiMatSo"));
+                    SetSpinnerSelection(spnChiKhoaGoc,jsonObject.getString("ChiKhoaGoc"));
+                    edtLyDo.setText(jsonObject.getString("LyDo").replace("null",""));
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            Toast.makeText(ActivityDongNuoc.this, ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+    private void SetSpinnerSelection(Spinner spinner, Object value) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(value)) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    public void ShowImgThumb() {
+        Dialog builder = new Dialog(ActivityDongNuoc.this);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(ActivityDongNuoc.this);
+        imageView.setImageBitmap(((BitmapDrawable)imgThumb.getDrawable()).getBitmap());
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams( 600,600));
+        builder.show();
+    }
+
+    public byte[] ConvertBitmapToBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDongNuoc.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.show();
         }
 
         @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position) {
-                case 0:
-                    FragmentDanhSachDongNuoc tab1 = new FragmentDanhSachDongNuoc();
-                    return tab1;
-                case 1:
-                    FragmentDongNuoc tab2 = new FragmentDongNuoc();
-                    return tab2;
-                case 2:
-                    FragmentMoNuoc tab3 = new FragmentMoNuoc();
-                    return tab3;
+        protected String doInBackground(String... strings) {
+            switch (strings[0]) {
+                case "Kiểm Tra":
+                    return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
+                case "Đóng Nước":
+                    if(Boolean.parseBoolean(ws.CheckExist_DongNuoc(edtMaDN.getText().toString()))==false) {
+                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
+                        String imgString = Base64.encodeToString(ConvertBitmapToBytes(reizeImage), Base64.NO_WRAP);
+//                        imgString = "NULL";
+                        return ws.ThemDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
+                                imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(),edtCo.getText().toString(), edtSoThan.getText().toString(),
+                                spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(),CLocal.sharedPreferencesre.getString("MaNV",""));
+                    }
+                    else
+                        return "ĐÃ NHẬP RỒI";
             }
             return null;
         }
 
         @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
         }
 
         @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Danh Sách";
-                case 1:
-                    return "Đóng Nước";
-                case 2:
-                    return "Mở Nước";
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
             }
-            return null;
+            Toast.makeText(ActivityDongNuoc.this, s, Toast.LENGTH_SHORT).show();
         }
+
     }
 }
