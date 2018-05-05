@@ -150,6 +150,12 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
 
+//        LoadListView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         LoadListView();
     }
 

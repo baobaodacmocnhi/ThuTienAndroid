@@ -6,9 +6,17 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +34,8 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,6 +49,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnMoNuoc;
+    private String imgPath;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +89,13 @@ public class ActivityMoNuoc extends AppCompatActivity {
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 1);
+                Uri imgUri = CreateImageUri();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(ActivityMoNuoc.this.getPackageManager()) != null) {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    startActivityForResult(intent, 1);
+                }
             }
         });
 
@@ -131,9 +147,84 @@ public class ActivityMoNuoc extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+            bitmap = ImageOreintationValidator(bitmap, imgPath);
             imgThumb.setImageBitmap(bitmap);
         }
+    }
+
+    public Uri CreateImageUri() {
+        try {
+            Uri uri;
+            File photoFile = CreateFile();
+            if (Build.VERSION.SDK_INT < 21) {
+                // Từ android 5.0 trở xuống. khi ta sử dụng FileProvider.getUriForFile() sẽ trả về ngoại lệ FileUriExposedException
+                // Vì vậy mình sử dụng Uri.fromFile đề lấy ra uri cho file ảnh
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                photoFile = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "" + timeStamp + ".jpg");
+                uri = Uri.fromFile(photoFile);
+            } else {
+                // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
+                // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
+                Uri photoURI = FileProvider.getUriForFile(ActivityMoNuoc.this, "thutien_camera_fullsize", photoFile);
+                uri = photoURI;
+            }
+            imgPath = photoFile.getAbsolutePath();
+            return uri;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public File CreateFile() {
+        File filesDir = ActivityMoNuoc.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File file = null;
+        try {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            file = File.createTempFile(timeStamp, ".jpg", filesDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public Bitmap ImageOreintationValidator(Bitmap bitmap, String path) {
+        ExifInterface ei;
+        try {
+            ei = new ExifInterface(path);
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    bitmap = RotateImage(bitmap, 90);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    bitmap = RotateImage(bitmap, 180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    bitmap = RotateImage(bitmap, 270);
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
+    public Bitmap RotateImage(Bitmap source, float angle) {
+
+        Bitmap bitmap = null;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        try {
+            bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                    matrix, true);
+        } catch (OutOfMemoryError err) {
+            err.printStackTrace();
+        }
+        return bitmap;
     }
 
     public void FillDongNuoc(String MaDN) {
@@ -186,7 +277,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
 
         ImageView imageView = new ImageView(ActivityMoNuoc.this);
         imageView.setImageBitmap(((BitmapDrawable)imgThumb.getDrawable()).getBitmap());
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams( 600,600));
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams( 1000,1000));
         builder.show();
     }
 
