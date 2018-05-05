@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class ActivityDangNhap extends AppCompatActivity {
     TextView txtUser;
     EditText edtUsername, edtPassword;
-    Button btnDangNhap, btnDangXuat, btnThoat;
+    Button btnDangNhap, btnDangXuat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class ActivityDangNhap extends AppCompatActivity {
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
         btnDangXuat = (Button) findViewById(R.id.btnDangXuat);
-        btnThoat = (Button) findViewById(R.id.btnThoat);
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,17 +82,13 @@ public class ActivityDangNhap extends AppCompatActivity {
                 myAsyncTask.execute(new String[]{"DangXuat", Username});
             }
         });
+        
+    }
 
-        btnThoat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         Reload();
-
-
     }
 
     public void Reload() {
