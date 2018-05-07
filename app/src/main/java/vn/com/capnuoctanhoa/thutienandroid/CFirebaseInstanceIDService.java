@@ -2,7 +2,6 @@ package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -32,7 +31,7 @@ public class CFirebaseInstanceIDService extends FirebaseInstanceIdService {
         @Override
         protected Void doInBackground(Void... voids) {
             CWebservice ws=new CWebservice();
-            ws.UpdateUID(CLocal.sharedPreferencesre.getString("MaNV",""),CLocal.sharedPreferencesre.getString("UID",""));
+            ws.updateUID(CLocal.sharedPreferencesre.getString("MaNV",""),CLocal.sharedPreferencesre.getString("UID",""));
             return null;
         }
     }

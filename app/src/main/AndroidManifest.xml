@@ -57,7 +57,17 @@
             android:name=".DongNuoc.ActivityDanhSachDongNuoc"
             android:label="@string/title_activity_danh_sach_dong_nuoc"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"
+            android:launchMode="singleTop">
+        <!-- to identify this activity as "searchable" -->
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+       </activity>
         <activity
             android:name=".DongNuoc.ActivityDongNuoc"
             android:label="@string/title_activity_dong_nuoc"

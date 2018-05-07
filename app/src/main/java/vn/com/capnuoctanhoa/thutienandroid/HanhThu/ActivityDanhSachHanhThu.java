@@ -54,7 +54,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.CheckNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
                     Toast.makeText(ActivityDanhSachHanhThu.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -65,7 +65,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     }
 
-    public void LoadListView() {
+    public void loadListView() {
         try {
             if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
                 ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
@@ -103,7 +103,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            publishProgress(ws.GetDSHoaDon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString(), CLocal.sharedPreferencesre.getString("MaNV", "")));
+            publishProgress(ws.getDSHoaDon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString(), CLocal.sharedPreferencesre.getString("MaNV", "")));
             return null;
         }
 
@@ -116,7 +116,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     editor.putString("jsonHanhThu", values[0]);
                     editor.commit();
                     CLocal.jsonHanhThu = new JSONArray(values[0]);
-                    LoadListView();
+                    loadListView();
                 } catch (Exception e) {
                 }
             }

@@ -109,7 +109,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         btnKiemTra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(ActivityMoNuoc.this) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityMoNuoc.this) == false) {
                     Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -123,7 +123,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         btnMoNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(ActivityMoNuoc.this) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityMoNuoc.this) == false) {
                     Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -304,13 +304,13 @@ public class ActivityMoNuoc extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Kiểm Tra":
-                    return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
+                    return ws.checkHoaDon_DongNuoc(edtMaDN.getText().toString());
                 case "Mở Nước":
-                    if(Boolean.parseBoolean(ws.CheckExist_MoNuoc(edtMaDN.getText().toString()))==false) {
+                    if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==false) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         String imgString = Base64.encodeToString(ConvertBitmapToBytes(reizeImage), Base64.NO_WRAP);
 //                        imgString = "NULL";
-                        return ws.ThemMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
+                        return ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
                     }
                     else
                         return "ĐÃ NHẬP RỒI";

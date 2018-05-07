@@ -3,7 +3,6 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,10 +18,10 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.Window;
@@ -38,7 +37,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -92,27 +93,53 @@ public class ActivityDongNuoc extends AppCompatActivity {
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri imgUri = CreateImageUri();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(ActivityDongNuoc.this.getPackageManager()) != null) {
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    startActivityForResult(intent, 1);
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDongNuoc.this);
+                builder.setTitle("Thông Báo");
+                builder.setMessage("Chọn lựa hành động");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Uri imgUri = createImageUri();
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (intent.resolveActivity(ActivityDongNuoc.this.getPackageManager()) != null) {
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            startActivityForResult(intent, 1);
+                        }
+                    }
+                });
+                builder.setNegativeButton("Chọn từ thư viện", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (Build.VERSION.SDK_INT <= 19) {
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            startActivityForResult(intent, 2);
+                        } else if (Build.VERSION.SDK_INT > 19) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 2);
+                        }
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
         imgThumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowImgThumb();
+                showImgThumb();
             }
         });
 
         btnKiemTra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(ActivityDongNuoc.this) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDongNuoc.this) == false) {
                     Toast.makeText(ActivityDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -126,7 +153,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         btnDongNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(ActivityDongNuoc.this) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDongNuoc.this) == false) {
                     Toast.makeText(ActivityDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -140,7 +167,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         try {
             String MaDN = getIntent().getStringExtra("MaDN");
             if (MaDN.equals("") == false) {
-                FillDongNuoc(MaDN);
+                fillDongNuoc(MaDN);
             }
         } catch (Exception ex) {
         }
@@ -151,15 +178,27 @@ public class ActivityDongNuoc extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            bitmap = ImageOreintationValidator(bitmap, imgPath);
+            bitmap = imageOreintationValidator(bitmap, imgPath);
+            imgThumb.setImageBitmap(bitmap);
+        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+//            InputStream imageStream;
+//            imageStream = getContentResolver().openInputStream(imageUri);
+//            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             imgThumb.setImageBitmap(bitmap);
         }
     }
 
-    public Uri CreateImageUri() {
+    public Uri createImageUri() {
         try {
             Uri uri;
-            File photoFile = CreateFile();
+            File photoFile = createFile();
             if (Build.VERSION.SDK_INT < 21) {
                 // Từ android 5.0 trở xuống. khi ta sử dụng FileProvider.getUriForFile() sẽ trả về ngoại lệ FileUriExposedException
                 // Vì vậy mình sử dụng Uri.fromFile đề lấy ra uri cho file ảnh
@@ -180,7 +219,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         }
     }
 
-    public File CreateFile() {
+    public File createFile() {
         File filesDir = ActivityDongNuoc.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = null;
         try {
@@ -192,7 +231,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         return file;
     }
 
-    public Bitmap ImageOreintationValidator(Bitmap bitmap, String path) {
+    public Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
         ExifInterface ei;
         try {
             ei = new ExifInterface(path);
@@ -200,13 +239,13 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     ExifInterface.ORIENTATION_NORMAL);
             switch (orientation) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = RotateImage(bitmap, 90);
+                    bitmap = rotateImage(bitmap, 90);
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = RotateImage(bitmap, 180);
+                    bitmap = rotateImage(bitmap, 180);
                     break;
                 case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = RotateImage(bitmap, 270);
+                    bitmap = rotateImage(bitmap, 270);
                     break;
             }
         } catch (IOException e) {
@@ -216,7 +255,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         return bitmap;
     }
 
-    public Bitmap RotateImage(Bitmap source, float angle) {
+    public Bitmap rotateImage(Bitmap source, float angle) {
 
         Bitmap bitmap = null;
         Matrix matrix = new Matrix();
@@ -230,7 +269,37 @@ public class ActivityDongNuoc extends AppCompatActivity {
         return bitmap;
     }
 
-    public void FillDongNuoc(String MaDN) {
+    public String convertBitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        String str = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
+        return str;
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        String selectedImagePath;
+        //1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            selectedImagePath = cursor.getString(column_index);
+        } else {
+            selectedImagePath = null;
+        }
+
+        if (selectedImagePath == null) {
+            //2:OI FILE Manager --- call method: uri.getPath()
+            selectedImagePath = uri.getPath();
+        }
+        return selectedImagePath;
+    }
+
+    public void fillDongNuoc(String MaDN) {
         try {
             for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                 JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
@@ -246,8 +315,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
                     edtNgayDN.setText(currentDate.format(new Date()));
                     edtChiSoDN.setText(jsonObject.getString("ChiSoDN").replace("null", ""));
-                    SetSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
-                    SetSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
+                    setSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
+                    setSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
                     edtLyDo.setText(jsonObject.getString("LyDo").replace("null", ""));
                     break;
                 }
@@ -257,7 +326,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         }
     }
 
-    private void SetSpinnerSelection(Spinner spinner, Object value) {
+    private void setSpinnerSelection(Spinner spinner, Object value) {
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).equals(value)) {
                 spinner.setSelection(i);
@@ -266,7 +335,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         }
     }
 
-    public void ShowImgThumb() {
+    public void showImgThumb() {
         Dialog builder = new Dialog(ActivityDongNuoc.this);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -281,12 +350,6 @@ public class ActivityDongNuoc extends AppCompatActivity {
         imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
         builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
         builder.show();
-    }
-
-    public byte[] ConvertBitmapToBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        return stream.toByteArray();
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
@@ -306,13 +369,16 @@ public class ActivityDongNuoc extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Kiểm Tra":
-                    return ws.KiemTraHoaDon_DongNuoc(edtMaDN.getText().toString());
+                    if (Boolean.parseBoolean(ws.checkHoaDon_DongNuoc(edtMaDN.getText().toString())) == true)
+                        return "ĐÃ GIẢI TRÁCH";
+                    else
+                        return "CÒN TỒN";
                 case "Đóng Nước":
-                    if (Boolean.parseBoolean(ws.CheckExist_DongNuoc(edtMaDN.getText().toString())) == false) {
+                    if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == false) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        String imgString = Base64.encodeToString(ConvertBitmapToBytes(reizeImage), Base64.NO_WRAP);
-//                        imgString = "NULL";
-                        return ws.ThemDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
+                        String imgString = convertBitmapToString(reizeImage);
+
+                        return ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
                                 imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
                                 spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV", ""));
                     } else
@@ -332,7 +398,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(ActivityDongNuoc.this, s, Toast.LENGTH_SHORT).show();
+            CLocal.showPopupMessage(ActivityDongNuoc.this, s);
+//            Toast.makeText(ActivityDongNuoc.this, s, Toast.LENGTH_SHORT).show();
         }
 
     }

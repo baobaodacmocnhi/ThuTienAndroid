@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Update();
+        updateApp();
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
 
         Button btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void Update()
+    private void updateApp()
     {
-        if (CLocal.CheckNetworkAvailable(getApplicationContext()) == false) {
+        if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
             Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
             return;
         }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Version":
-                    return ws.GetVersion();
+                    return ws.getVersion();
                 case "Download":
                     int count;
                     try {

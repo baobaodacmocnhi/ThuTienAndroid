@@ -2,12 +2,17 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,6 +41,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button btnDownload;
     private ListView lstView;
+    private CViewAdapter cViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +60,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
         edtFromDate = (EditText) findViewById(R.id.edtFromDate);
         edtToDate = (EditText) findViewById(R.id.edtToDate);
-
-//        edtFromDate.setText("23/04/2018");
-//        edtToDate.setText("23/04/2018");
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,12 +109,13 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.CheckNetworkAvailable(ActivityDanhSachDongNuoc.this) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDanhSachDongNuoc.this) == false) {
                     Toast.makeText(ActivityDanhSachDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute();
+                CLocal.hideKeyboard(ActivityDanhSachDongNuoc.this);
             }
         });
 
@@ -122,6 +125,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
                 PopupMenu popup = new PopupMenu(ActivityDanhSachDongNuoc.this, view);
+                popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -145,7 +149,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         return true;
                     }
                 });
-                popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
                 popup.show();
             }
         });
@@ -156,7 +159,32 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        LoadListView();
+        loadListView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                cViewAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cViewAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
@@ -174,7 +202,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            publishProgress(ws.GetDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+            publishProgress(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
             return null;
         }
 
@@ -187,7 +215,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     editor.putString("jsonDongNuoc", values[0]);
                     editor.commit();
                     CLocal.jsonDongNuoc = new JSONArray(values[0]);
-                    LoadListView();
+                    loadListView();
                 } catch (Exception ex) {
 
                 }
@@ -203,7 +231,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         }
     }
 
-    public void LoadListView() {
+    public void loadListView() {
         try {
             if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
                 ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
@@ -220,8 +248,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 //                            entity.setBackgroundColor(CLocal.Color_DaThu);
                     list.add(entity);
                 }
-                CViewAdapter adapter = new CViewAdapter(ActivityDanhSachDongNuoc.this, list);
-                lstView.setAdapter(adapter);
+                cViewAdapter = new CViewAdapter(ActivityDanhSachDongNuoc.this, list);
+                lstView.setAdapter(cViewAdapter);
             }
         } catch (Exception e) {
 
