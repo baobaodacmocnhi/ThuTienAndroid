@@ -15,7 +15,9 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
@@ -24,7 +26,6 @@ import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
-    private Spinner spnNam, spnKy, spnFromDot, spnToDot;
     private Button btnDownload;
     private ListView lstView;
 
@@ -43,11 +44,6 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         });
 
-        spnNam = (Spinner) findViewById(R.id.spnNam);
-        spnKy = (Spinner) findViewById(R.id.spnKy);
-        spnFromDot = (Spinner) findViewById(R.id.spnFromDot);
-        spnToDot = (Spinner) findViewById(R.id.spnToDot);
-
         btnDownload = (Button) findViewById(R.id.btnDownload);
         lstView = (ListView) findViewById(R.id.lstView);
 
@@ -65,6 +61,12 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadListView();
+    }
+
     public void loadListView() {
         try {
             if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
@@ -73,12 +75,16 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
                     CViewEntity entity = new CViewEntity();
                     entity.setSTT(String.valueOf(i + 1));
-                    entity.setID(jsonObject.getString("SOHOADON"));
-                    entity.setName1(jsonObject.getString("DANHBA"));
-                    entity.setName2(jsonObject.getString("TONGCONG"));
-                    entity.setContent1(jsonObject.getString("SO") + " " + jsonObject.getString("DUONG"));
-                    if (jsonObject.getString("NGAYGIAITRACH") != null || jsonObject.getString("NGAYGIAITRACH") != "")
+                    entity.setID(jsonObject.getString("SoHoaDon"));
+                    entity.setName1(jsonObject.getString("DanhBo"));
+                    entity.setName2(jsonObject.getString("TongCong"));
+                    entity.setContent1(jsonObject.getString("HoTen"));
+                    entity.setContent2(jsonObject.getString("DiaChi"));
+                    if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
+                        entity.setBackgroundColor(CLocal.Color_DichVuThu);
+                    else if (jsonObject.getString("NgayGiaiTrach") != null && jsonObject.getString("NgayGiaiTrach") != "null")
                         entity.setBackgroundColor(CLocal.Color_DaThu);
+
                     list.add(entity);
                 }
                 CViewAdapter adapter = new CViewAdapter(ActivityDanhSachHanhThu.this, list);
@@ -103,7 +109,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            publishProgress(ws.getDSHoaDon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString(), CLocal.sharedPreferencesre.getString("MaNV", "")));
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), currentDate.format(new Date())));
             return null;
         }
 

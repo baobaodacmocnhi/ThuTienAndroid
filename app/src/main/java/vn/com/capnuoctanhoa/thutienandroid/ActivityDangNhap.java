@@ -62,18 +62,10 @@ public class ActivityDangNhap extends AppCompatActivity {
                     return;
                 }
                 String Username = CLocal.sharedPreferencesre.getString("Username", "");
-                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                editor.remove("Username");
-                editor.remove("Password");
-                editor.remove("MaNV");
-                editor.remove("HoTen");
-                editor.remove("jsonHanhThu");
-                editor.remove("jsonDongNuoc");
-                editor.putBoolean("Login", false);
-                editor.commit();
-                Reload();
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute(new String[]{"DangXuat", Username});
+
+                Reload();
             }
         });
 
@@ -90,16 +82,20 @@ public class ActivityDangNhap extends AppCompatActivity {
         edtPassword.setText("");
         if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
             txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
+            edtUsername.setVisibility(View.INVISIBLE);
+            edtPassword.setVisibility(View.INVISIBLE);
             btnDangNhap.setVisibility(View.INVISIBLE);
             btnDangXuat.setVisibility(View.VISIBLE);
         } else {
             txtUser.setText("Xin chào");
+            edtUsername.setVisibility(View.VISIBLE);
+            edtPassword.setVisibility(View.VISIBLE);
             btnDangNhap.setVisibility(View.VISIBLE);
             btnDangXuat.setVisibility(View.INVISIBLE);
         }
     }
 
-    public class MyAsyncTask extends AsyncTask<String, String, Void> {
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -113,14 +109,26 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "DangNhap":
-                    publishProgress(ws.dangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", "")));
-                    break;
+                    String str = "";
+                    str = ws.dangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
+                    if (str.isEmpty() == false) {
+                        publishProgress(new String[]{"DangNhap",str});
+                        return "true";
+                    } else {
+                        return "false";
+                    }
                 case "DangXuat":
-                    publishProgress(ws.dangXuat(strings[1]));
-                    break;
+                    String str2 = "";
+                    str2=ws.dangXuat(strings[1]);
+                    if (str2.isEmpty() == false) {
+                        publishProgress(new String[]{"DangXuat",str2});
+                        return "true";
+                    } else {
+                        return "false";
+                    }
             }
 
             return null;
@@ -129,31 +137,51 @@ public class ActivityDangNhap extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            if (values != null && (values[0] != "true" || values[0] != "false")) {
-                try {
-                    JSONArray jsonArray = new JSONArray(values[0]);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("Username", jsonObject.getString("TaiKhoan"));
-                    editor.putString("Password", jsonObject.getString("MatKhau"));
-                    editor.putString("MaNV", jsonObject.getString("MaND"));
-                    editor.putString("HoTen", jsonObject.getString("HoTen"));
-                    editor.putBoolean("Login", true);
-                    editor.commit();
+            if (values != null) {
+                switch (values[0]) {
+                    case "DangNhap":
+                        try {
+                            JSONArray jsonArray = new JSONArray(values[1]);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                            editor.putString("Username", jsonObject.getString("TaiKhoan"));
+                            editor.putString("Password", jsonObject.getString("MatKhau"));
+                            editor.putString("MaNV", jsonObject.getString("MaND"));
+                            editor.putString("HoTen", jsonObject.getString("HoTen"));
+                            editor.putBoolean("Login", true);
+                            editor.commit();
 
-                    Reload();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                            Reload();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "DangXuat":
+                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                        editor.remove("Username");
+                        editor.remove("Password");
+                        editor.remove("MaNV");
+                        editor.remove("HoTen");
+                        editor.remove("jsonHanhThu");
+                        editor.remove("jsonDongNuoc");
+                        editor.putBoolean("Login", false);
+                        editor.commit();
+                        break;
                 }
             }
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+            if (Boolean.parseBoolean(s) == true) {
+                CLocal.showPopupMessage(ActivityDangNhap.this, "THÀNH CÔNG");
+                finish();
+            } else
+                CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI");
         }
     }
 }

@@ -1,10 +1,12 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +19,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +50,7 @@ import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.MarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc extends AppCompatActivity {
@@ -54,6 +60,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnDongNuoc;
     private String imgPath;
+    private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityDongNuoc.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,13 @@ public class ActivityDongNuoc extends AppCompatActivity {
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (marshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        marshMallowPermission.requestPermissionForExternalStorage();
+                    }
+                    if (marshMallowPermission.checkPermissionForExternalStorage() == false)
+                        return;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDongNuoc.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -100,7 +114,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri imgUri = createImageUri();
+                       Uri  imgUri = createImageUri();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (intent.resolveActivity(ActivityDongNuoc.this.getPackageManager()) != null) {
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
@@ -120,6 +134,10 @@ public class ActivityDongNuoc extends AppCompatActivity {
                             startActivityForResult(intent, 2);
                         } else if (Build.VERSION.SDK_INT > 19) {
                         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                            Intent intent = new Intent();
+//                            intent.setType("image/*");
+//                            intent.setAction(Intent.ACTION_GET_CONTENT);
+//                            intent.addCategory(Intent.CATEGORY_OPENABLE);
                             startActivityForResult(intent, 2);
                         }
                     }
@@ -185,12 +203,16 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //            InputStream imageStream;
 //            imageStream = getContentResolver().openInputStream(imageUri);
 //            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+//            Bitmap bitmap = null;
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            String strPath = CLocal.getPathFromUri(this, uri);
+            Bitmap bitmap = BitmapFactory.decodeFile(strPath);
+            bitmap = imageOreintationValidator(bitmap, strPath);
             imgThumb.setImageBitmap(bitmap);
         }
     }
@@ -274,29 +296,6 @@ public class ActivityDongNuoc extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         String str = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
         return str;
-    }
-
-    public String getRealPathFromURI(Uri uri) {
-        if (uri == null) {
-            return null;
-        }
-        String selectedImagePath;
-        //1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            selectedImagePath = cursor.getString(column_index);
-        } else {
-            selectedImagePath = null;
-        }
-
-        if (selectedImagePath == null) {
-            //2:OI FILE Manager --- call method: uri.getPath()
-            selectedImagePath = uri.getPath();
-        }
-        return selectedImagePath;
     }
 
     public void fillDongNuoc(String MaDN) {
@@ -398,8 +397,10 @@ public class ActivityDongNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            CLocal.showPopupMessage(ActivityDongNuoc.this, s);
-//            Toast.makeText(ActivityDongNuoc.this, s, Toast.LENGTH_SHORT).show();
+            if(Boolean.parseBoolean(s)==true)
+            CLocal.showPopupMessage(ActivityDongNuoc.this, "THÀNH CÔNG");
+            else
+                CLocal.showPopupMessage(ActivityDongNuoc.this, "THẤT BẠI");
         }
 
     }
