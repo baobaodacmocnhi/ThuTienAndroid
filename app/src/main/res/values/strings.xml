@@ -57,11 +57,20 @@
         <item>Mục đứt</item>
         <item>Đứt</item>
     </string-array>
-    <string-array name="hanhthu_array">
+    <string-array name="filter_hanhthu_array">
         <item>Tất Cả</item>
         <item>Chưa Thu</item>
         <item>Đã Thu</item>
-        <item>Chuyển Khoản</item>
+        <item>Giải Trách</item>
+        <item>Tạm Thu</item>
     </string-array>
-
+    <string-array name="filter_dongnuoc_array">
+        <item>Tất Cả</item>
+        <item>Chưa ĐN</item>
+        <item>Đã ĐN</item>
+        <item>Chưa MN</item>
+        <item>Đã MN</item>
+        <item>Giải Trách</item>
+        <item>Tạm Thu</item>
+    </string-array>
 </resources>

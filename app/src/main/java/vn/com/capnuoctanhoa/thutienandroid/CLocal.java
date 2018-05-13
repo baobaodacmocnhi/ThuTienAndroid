@@ -16,21 +16,26 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.Locale;
 
 public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String FileName = "my_data";
-    public static Integer[] arrayspnNam = new Integer[]{2018, 2019, 2020};
-    public static Integer[] arrayspnKy = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    public static Integer[] arrayspnDot = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
     public static int Color_ChuaThu = Color.TRANSPARENT;
-    public static int Color_DaThu = Color.GREEN;
-    public static int Color_DichVuThu = Color.YELLOW;
+    public static int Color_DaGiaiTrach = Color.GREEN;
+    public static int Color_TamThu = Color.YELLOW;
     public static JSONArray jsonHanhThu, jsonDongNuoc;
 
     public static boolean checkNetworkAvailable(Context context) {
@@ -42,9 +47,8 @@ public class CLocal {
             return false;
     }
 
-    public static void showPopupMessage(Context context,String message)
-    {
-        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+    public static void showPopupMessage(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);
         builder.setCancelable(false);
@@ -54,7 +58,7 @@ public class CLocal {
                 dialogInterface.dismiss();
             }
         });
-        AlertDialog alertDialog=builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
@@ -67,6 +71,40 @@ public class CLocal {
             view = new View(activity);
         }
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void updateJSON(JSONArray jsonArray, String ID, String Key, String Value) {
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                if (jsonObject.getString("ID").equals(ID)) {
+                    jsonObject.put(Key, Value);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String formatMoney(String price) {
+
+        NumberFormat format =new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
+        format.setCurrency(Currency.getInstance(Locale.US));//Or default locale
+
+        price = (!TextUtils.isEmpty(price)) ? price : "0";
+        price = price.trim();
+        price = format.format(Double.parseDouble(price));
+        price = price.replaceAll(",", "\\.");
+
+        if (price.endsWith(".00")) {
+            int centsIndex = price.lastIndexOf(".00");
+            if (centsIndex != -1) {
+                price = price.substring(0, centsIndex);
+            }
+        }
+        price = String.format("%s đ", price);
+        return price;
     }
 
     public static String getPathFromUri(final Context context, final Uri uri) {
@@ -113,7 +151,7 @@ public class CLocal {
                     }
 
                     final String selection = "_id=?";
-                    final String[] selectionArgs = new String[] {
+                    final String[] selectionArgs = new String[]{
                             split[1]
                     };
 

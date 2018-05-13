@@ -158,14 +158,15 @@ public class ActivityDangNhap extends AppCompatActivity {
                         break;
                     case "DangXuat":
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.remove("Username");
-                        editor.remove("Password");
-                        editor.remove("MaNV");
-                        editor.remove("HoTen");
-                        editor.remove("jsonHanhThu");
-                        editor.remove("jsonDongNuoc");
+                        editor.putString("Username", "");
+                        editor.putString("Password", "");
+                        editor.putString("MaNV", "");
+                        editor.putString("HoTen", "");
+                        editor.putString("jsonHanhThu", "");
+                        editor.putString("jsonDongNuoc", "");
                         editor.putBoolean("Login", false);
                         editor.commit();
+                        CLocal.jsonHanhThu=CLocal.jsonDongNuoc=null;
                         break;
                 }
             }

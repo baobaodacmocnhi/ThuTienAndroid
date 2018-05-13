@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Service;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -6,7 +6,10 @@ import android.os.AsyncTask;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-public class CFirebaseInstanceIDService extends FirebaseInstanceIdService {
+import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
+
+public class ServiceFirebaseInstanceID extends FirebaseInstanceIdService {
     String refreshedToken;
 
     @Override

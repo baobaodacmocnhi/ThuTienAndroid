@@ -24,16 +24,21 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".CFirebaseMessagingService">
+        <service android:name=".Service.ServiceFirebaseMessaging">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".CFirebaseInstanceIDService">
+        <service android:name=".Service.ServiceFirebaseInstanceID">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".Service.ServiceAppKilled"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false"></service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -52,31 +57,46 @@
         <activity
             android:name=".HanhThu.ActivityDanhSachHanhThu"
             android:label="@string/title_activity_danh_sach_hanh_thu"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".DongNuoc.ActivityDanhSachDongNuoc"
-            android:label="@string/title_activity_danh_sach_dong_nuoc"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"
-            android:launchMode="singleTop">
+            android:theme="@style/AppTheme.NoActionBar">
         <!-- to identify this activity as "searchable" -->
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
+
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
+
         <meta-data
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
-       </activity>
+        </activity>
+        <activity
+            android:name=".DongNuoc.ActivityDanhSachDongNuoc"
+            android:label="@string/title_activity_danh_sach_dong_nuoc"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
+
+            <!-- to identify this activity as "searchable" -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name=".DongNuoc.ActivityDongNuoc"
             android:label="@string/title_activity_dong_nuoc"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".DongNuoc.ActivityMoNuoc"
+        <activity
+            android:name=".DongNuoc.ActivityMoNuoc"
             android:label="@string/title_activity_mo_nuoc"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
     </application>

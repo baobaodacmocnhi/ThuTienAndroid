@@ -24,6 +24,7 @@ import java.net.URLConnection;
 
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +64,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         try {
+            Intent intent=new Intent(this, ServiceAppKilled.class);
+            startService(intent);
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("")==false)
             {
                 CLocal.jsonHanhThu=new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
@@ -73,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.jsonDongNuoc=new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
             }
         }catch (Exception ex){}
-
     }
 
     private void updateApp()

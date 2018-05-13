@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,20 +14,32 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
+import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class CFirebaseMessagingService extends FirebaseMessagingService {
+public class ServiceFirebaseMessaging extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         //Calling method to generate notification
+        PendingIntent pendingIntent = null;
+        if(remoteMessage.getData().get("Action").equals("HanhThu")) {
+            CLocal.updateJSON(CLocal.jsonHanhThu,remoteMessage.getData().get("ID"),remoteMessage.getData().get("ActionDetail"),"true");
+            Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
 
-        Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
-        intent.putExtra("SoHoaDon",remoteMessage.getData().get("SoHoaDon"));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+        else
+        if(remoteMessage.getData().get("Action").equals("DongNuoc")) {
+            CLocal.updateJSON(CLocal.jsonDongNuoc,remoteMessage.getData().get("ID"),remoteMessage.getData().get("ActionDetail"),"true");
+            Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -45,8 +57,11 @@ public class CFirebaseMessagingService extends FirebaseMessagingService {
 //        notificationBuilder.setDefaults(-1);
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        boolean isScreenOn = powerManager.isInteractive();
-            if(isScreenOn==false)
+        boolean isScreenOn = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+            isScreenOn = powerManager.isInteractive();
+        }
+        if(isScreenOn==false)
             {
                 PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK |PowerManager.ACQUIRE_CAUSES_WAKEUP |PowerManager.ON_AFTER_RELEASE,"MyLock");
                 wl.acquire();

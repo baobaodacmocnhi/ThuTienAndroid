@@ -36,6 +36,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -56,6 +57,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
+    private TextView txtHoaDon;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnKiemTra, btnDongNuoc;
@@ -77,6 +79,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
             }
         });
 
+        txtHoaDon=(TextView)  findViewById(R.id.txtHoaDon);
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
         edtMLT = (EditText) findViewById(R.id.edtMLT);
@@ -302,7 +305,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         try {
             for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                 JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                if (jsonObject.getString("MaDN").equals(MaDN) == true) {
+                if (jsonObject.getString("ID").equals(MaDN) == true) {
                     edtMaDN.setText(MaDN);
                     edtDanhBo.setText(jsonObject.getString("DanhBo"));
                     edtMLT.setText(jsonObject.getString("MLT"));
@@ -317,6 +320,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     setSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
                     setSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
                     edtLyDo.setText(jsonObject.getString("LyDo").replace("null", ""));
+                    txtHoaDon.setText(jsonObject.getString("HoaDon"));
                     break;
                 }
             }

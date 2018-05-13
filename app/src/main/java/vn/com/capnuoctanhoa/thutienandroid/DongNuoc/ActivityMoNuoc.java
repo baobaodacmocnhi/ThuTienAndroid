@@ -295,7 +295,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
 
             for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                 JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                if (jsonObject.getString("MaDN").equals(MaDN) == true) {
+                if (jsonObject.getString("ID").equals(MaDN) == true) {
                     edtMaDN.setText(MaDN);
                     edtDanhBo.setText(jsonObject.getString("DanhBo"));
                     edtMLT.setText(jsonObject.getString("MLT"));
