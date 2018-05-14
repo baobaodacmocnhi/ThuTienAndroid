@@ -228,6 +228,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             progressDialog = new ProgressDialog(ActivityDanhSachHanhThu.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
         }
 

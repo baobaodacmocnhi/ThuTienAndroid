@@ -365,6 +365,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
             progressDialog = new ProgressDialog(ActivityDongNuoc.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
         }
 
