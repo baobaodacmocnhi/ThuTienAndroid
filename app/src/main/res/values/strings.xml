@@ -59,10 +59,10 @@
     </string-array>
     <string-array name="filter_hanhthu_array">
         <item>Tất Cả</item>
+        <item>Tạm Thu-Thu Hộ</item>
         <item>Chưa Thu</item>
         <item>Đã Thu</item>
         <item>Giải Trách</item>
-        <item>Tạm Thu</item>
     </string-array>
     <string-array name="filter_dongnuoc_array">
         <item>Tất Cả</item>

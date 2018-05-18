@@ -5,12 +5,30 @@ import android.graphics.Color;
 public class CViewEntity {
     private String STT;
     private String ID;
-    private String Name1;
-    private String Name2;
-    private String Content1;
-
-    private String Content2;
+    private String Row1a;
+    private String Row1b;
+    private String Row2a;
+    private String Row2b;
+    private String Row3a;
+    private String Row3b;
+    private Boolean GiaiTrach;
+    private Boolean TamThu;
+    private Boolean ThuHo;
     private int BackgroundColor=Color.TRANSPARENT;
+
+    public CViewEntity() {
+        this.STT = "";
+        this.ID = "";
+        Row1a = "";
+        Row1b = "";
+        Row2a = "";
+        Row2b = "";
+        Row3a = "";
+        Row3b = "";
+        GiaiTrach = false;
+        TamThu = false;
+        ThuHo = false;
+    }
 
     public String getSTT() {
         return STT;
@@ -28,36 +46,76 @@ public class CViewEntity {
         this.ID = ID;
     }
 
-    public String getName1() {
-        return Name1;
+    public String getRow1a() {
+        return Row1a;
     }
 
-    public void setName1(String name1) {
-        Name1 = name1;
+    public void setRow1a(String row1a) {
+        Row1a = row1a;
     }
 
-    public String getName2() {
-        return Name2;
+    public String getRow1b() {
+        return Row1b;
     }
 
-    public void setName2(String name2) {
-        Name2 = name2;
+    public void setRow1b(String row1b) {
+        Row1b = row1b;
     }
 
-    public String getContent1() {
-        return Content1;
+    public String getRow2a() {
+        return Row2a;
     }
 
-    public void setContent1(String content1) {
-        Content1 = content1;
+    public void setRow2a(String row2a) {
+        Row2a = row2a;
     }
 
-    public String getContent2() {
-        return Content2;
+    public String getRow2b() {
+        return Row2b;
     }
 
-    public void setContent2(String content2) {
-        Content2 = content2;
+    public void setRow2b(String row2b) {
+        Row2b = row2b;
+    }
+
+    public String getRow3a() {
+        return Row3a;
+    }
+
+    public void setRow3a(String row3a) {
+        Row3a = row3a;
+    }
+
+    public String getRow3b() {
+        return Row3b;
+    }
+
+    public void setRow3b(String row3b) {
+        Row3b = row3b;
+    }
+
+    public Boolean getGiaiTrach() {
+        return GiaiTrach;
+    }
+
+    public void setGiaiTrach(Boolean giaiTrach) {
+        GiaiTrach = giaiTrach;
+    }
+
+    public Boolean getTamThu() {
+        return TamThu;
+    }
+
+    public void setTamThu(Boolean tamThu) {
+        TamThu = tamThu;
+    }
+
+    public Boolean getThuHo() {
+        return ThuHo;
+    }
+
+    public void setThuHo(Boolean thuHo) {
+        ThuHo = thuHo;
     }
 
     public int getBackgroundColor() {

@@ -34,7 +34,7 @@ public class CLocal {
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String FileName = "my_data";
     public static int Color_ChuaThu = Color.TRANSPARENT;
-    public static int Color_DaGiaiTrach = Color.GREEN;
+    public static int Color_GiaiTrach = Color.GREEN;
     public static int Color_TamThu = Color.YELLOW;
     public static JSONArray jsonHanhThu, jsonDongNuoc;
 

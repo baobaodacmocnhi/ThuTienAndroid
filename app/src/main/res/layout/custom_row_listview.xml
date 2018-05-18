@@ -14,7 +14,8 @@
         android:text="STT"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/lvID"
@@ -24,52 +25,83 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/lvName1"
-        android:layout_width="wrap_content"
+        android:id="@+id/lvRow1a"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Name1"
+        android:text="Row1a"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/lvRow1b"
         app:layout_constraintStart_toEndOf="@+id/lvSTT"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/lvName2"
+        android:id="@+id/lvRow1b"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Name2"
+        android:gravity="end"
+        android:text="Row1b"
         android:textAlignment="textEnd"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lvName1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/lvRow1a"
+        app:layout_constraintTop_toTopOf="@+id/lvRow1a"
+        android:layout_marginRight="8dp" />
 
     <TextView
-        android:id="@+id/lvContent1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Content1"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/lvName1"
-        app:layout_constraintTop_toBottomOf="@+id/lvName2" />
-
-    <TextView
-        android:id="@+id/lvContent2"
+        android:id="@+id/lvRow2a"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Content2"
+        android:text="Row2a"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/lvRow2b"
+        app:layout_constraintStart_toStartOf="@+id/lvRow1a"
+        app:layout_constraintTop_toBottomOf="@+id/lvRow1a" />
+
+    <TextView
+        android:id="@+id/lvRow2b"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Row2b"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
-        app:layout_constraintStart_toEndOf="@+id/lvContent1"
-        app:layout_constraintTop_toBottomOf="@+id/lvName2" />
+        app:layout_constraintStart_toEndOf="@+id/lvRow2a"
+        app:layout_constraintTop_toTopOf="@+id/lvRow2a"
+        android:layout_marginRight="8dp" />
+
+    <TextView
+        android:id="@+id/lvRow3a"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Row3a"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/lvRow3b"
+        app:layout_constraintStart_toStartOf="@+id/lvRow2a"
+        app:layout_constraintTop_toBottomOf="@+id/lvRow2a" />
+
+    <TextView
+        android:id="@+id/lvRow3b"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Row3b"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lvRow3a"
+        app:layout_constraintTop_toTopOf="@+id/lvRow3a" />
 
 </android.support.constraint.ConstraintLayout>

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class CViewAdapter extends BaseAdapter implements Filterable {
     private ArrayList<CViewEntity> mOriginalValues;
     private ArrayList<CViewEntity> mDisplayedValues;
-   private Activity activity;
+    private Activity activity;
 
     public CViewAdapter(Activity activity, ArrayList<CViewEntity> list) {
         super();
@@ -38,12 +38,14 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
     }
 
     private class ViewHolder {
-        TextView txtSTT;
-        TextView txtID;
-        TextView txtName1;
-        TextView txtName2;
-        TextView txtContent1;
-        TextView txtContent2;
+        TextView STT;
+        TextView ID;
+        TextView Row1a;
+        TextView Row1b;
+        TextView Row2a;
+        TextView Row2b;
+        TextView Row3a;
+        TextView Row3b;
     }
 
     @Override
@@ -53,38 +55,44 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.custom_row_listview, null);
             holder = new ViewHolder();
-            holder.txtSTT = (TextView) convertView.findViewById(R.id.lvSTT);
-            holder.txtID = (TextView) convertView.findViewById(R.id.lvID);
-            holder.txtName1 = (TextView) convertView.findViewById(R.id.lvName1);
-            holder.txtName2 = (TextView) convertView.findViewById(R.id.lvName2);
-            holder.txtContent1 = (TextView) convertView.findViewById(R.id.lvContent1);
-            holder.txtContent2 = (TextView) convertView.findViewById(R.id.lvContent2);
+            holder.STT = (TextView) convertView.findViewById(R.id.lvSTT);
+            holder.ID = (TextView) convertView.findViewById(R.id.lvID);
+            holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);
+            holder.Row1b = (TextView) convertView.findViewById(R.id.lvRow1b);
+            holder.Row2a = (TextView) convertView.findViewById(R.id.lvRow2a);
+            holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
+            holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
+            holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         CViewEntity map = mDisplayedValues.get(position);
-        holder.txtSTT.setText(map.getSTT());
-        holder.txtID.setText(map.getID());
-        holder.txtName1.setText(map.getName1());
-        holder.txtName2.setText(map.getName2());
-        holder.txtContent1.setText(map.getContent1());
-        holder.txtContent2.setText(map.getContent2());
+        holder.STT.setText(map.getSTT());
+        holder.ID.setText(map.getID());
+        holder.Row1a.setText(map.getRow1a());
+        holder.Row1b.setText(map.getRow1b());
+        holder.Row2a.setText(map.getRow2a());
+        holder.Row2b.setText(map.getRow2b());
+        holder.Row3a.setText(map.getRow3a());
+        holder.Row3b.setText(map.getRow3b());
 
-        convertView.setBackgroundColor(map.getBackgroundColor());
+        if (map.getGiaiTrach() == true)
+            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+        else if (map.getTamThu() == true || map.getThuHo() == true)
+            convertView.setBackgroundColor(CLocal.Color_TamThu);
 
         return convertView;
     }
 
     @Override
-    public Filter getFilter()
-    {
+    public Filter getFilter() {
         Filter filter = new Filter() {
 
             @SuppressWarnings("unchecked")
             @Override
-            protected void publishResults(CharSequence constraint,FilterResults results) {
+            protected void publishResults(CharSequence constraint, FilterResults results) {
 
                 mDisplayedValues = (ArrayList<CViewEntity>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
@@ -114,17 +122,25 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
                     constraint = constraint.toString().toLowerCase();
                     for (int i = 0; i < mOriginalValues.size(); i++) {
 //                        String data = mOriginalValues.get(i).getName1();
-                        if ( mOriginalValues.get(i).getName1().toLowerCase().startsWith(constraint.toString())
-                                ||mOriginalValues.get(i).getName2().toLowerCase().startsWith(constraint.toString())
-                                ||mOriginalValues.get(i).getContent1().toLowerCase().startsWith(constraint.toString())
-                                ||mOriginalValues.get(i).getContent2().toLowerCase().startsWith(constraint.toString())) {
-                            CViewEntity entity=new CViewEntity();
+                        if (mOriginalValues.get(i).getRow1a().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow1b().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow2a().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow2b().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow3a().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())) {
+                            CViewEntity entity = new CViewEntity();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());
-                            entity.setName1(mOriginalValues.get(i).getName1());
-                            entity.setName2(mOriginalValues.get(i).getName2());
-                            entity.setContent1(mOriginalValues.get(i).getContent1());
-                            entity.setContent2(mOriginalValues.get(i).getContent2());
+                            entity.setRow1a(mOriginalValues.get(i).getRow1a());
+                            entity.setRow1b(mOriginalValues.get(i).getRow1b());
+                            entity.setRow2a(mOriginalValues.get(i).getRow2a());
+                            entity.setRow2b(mOriginalValues.get(i).getRow2b());
+                            entity.setRow3a(mOriginalValues.get(i).getRow3a());
+                            entity.setRow3b(mOriginalValues.get(i).getRow3b());
+                            entity.setGiaiTrach(mOriginalValues.get(i).getGiaiTrach());
+                            entity.setTamThu(mOriginalValues.get(i).getTamThu());
+                            entity.setThuHo(mOriginalValues.get(i).getThuHo());
+
                             FilteredArrList.add(entity);
                         }
                     }

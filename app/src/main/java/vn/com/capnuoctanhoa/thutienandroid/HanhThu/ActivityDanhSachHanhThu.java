@@ -36,6 +36,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Spinner spnFilter;
     private ListView lstView;
     private CViewAdapter cViewAdapter;
+private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     public void loadListView() {
         try {
             lstView.setAdapter(null);
-            ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
+            list = new ArrayList<CViewEntity>();
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
                 case "Đã Thu":
@@ -123,21 +124,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == false) {
-                                CViewEntity entity = new CViewEntity();
-                                entity.setSTT(String.valueOf(++stt));
-                                entity.setID(jsonObject.getString("ID"));
-                                String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-                                entity.setName1(strDanhBo);
-                                entity.setName2(CLocal.formatMoney(jsonObject.getString("TongCong")));
-                                entity.setContent1(jsonObject.getString("HoTen"));
-                                entity.setContent2(jsonObject.getString("DiaChi"));
-                                if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_DaGiaiTrach);
-                                else if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_TamThu);
-
-                                list.add(entity);
+                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == false) {
+                                addEntity(jsonObject);
                             }
                         }
                     }
@@ -147,45 +135,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true) {
-                                CViewEntity entity = new CViewEntity();
-                                entity.setSTT(String.valueOf(++stt));
-                                entity.setID(jsonObject.getString("ID"));
-                                String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-                                entity.setName1(strDanhBo);
-                                entity.setName2(CLocal.formatMoney(jsonObject.getString("TongCong")));
-                                entity.setContent1(jsonObject.getString("HoTen"));
-                                entity.setContent2(jsonObject.getString("DiaChi"));
-                                if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_DaGiaiTrach);
-                                else if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_TamThu);
-
-                                list.add(entity);
+                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
+                                addEntity(jsonObject);
                             }
                         }
                     }
                     break;
-                case "Tạm Thu":
+                case "Tạm Thu-Thu Hộ":
                     if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
-                                CViewEntity entity = new CViewEntity();
-                                entity.setSTT(String.valueOf(++stt));
-                                entity.setID(jsonObject.getString("ID"));
-                                String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-                                entity.setName1(strDanhBo);
-                                entity.setName2(CLocal.formatMoney(jsonObject.getString("TongCong")));
-                                entity.setContent1(jsonObject.getString("HoTen"));
-                                entity.setContent2(jsonObject.getString("DiaChi"));
-                                if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_DaGiaiTrach);
-                                else if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                                    entity.setBackgroundColor(CLocal.Color_TamThu);
-
-                                list.add(entity);
+                            if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
+                                addEntity(jsonObject);
                             }
                         }
                     }
@@ -194,20 +156,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
                         for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            CViewEntity entity = new CViewEntity();
-                            entity.setSTT(String.valueOf(i + 1));
-                            entity.setID(jsonObject.getString("ID"));
-                            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-                            entity.setName1(strDanhBo);
-                            entity.setName2(CLocal.formatMoney(jsonObject.getString("TongCong")));
-                            entity.setContent1(jsonObject.getString("HoTen"));
-                            entity.setContent2(jsonObject.getString("DiaChi"));
-                            if (Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true)
-                                entity.setBackgroundColor(CLocal.Color_DaGiaiTrach);
-                            else if (Boolean.parseBoolean(jsonObject.getString("DichVuThu")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                                entity.setBackgroundColor(CLocal.Color_TamThu);
-
-                            list.add(entity);
+                            addEntity(jsonObject);
                         }
                     }
                     break;
@@ -216,6 +165,29 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             lstView.setAdapter(cViewAdapter);
         } catch (Exception e) {
         }
+    }
+
+    public void addEntity(JSONObject jsonObject)
+    {
+        try
+        {
+        CViewEntity entity = new CViewEntity();
+        entity.setSTT(String.valueOf(list.size() + 1));
+        entity.setID(jsonObject.getString("ID"));
+        entity.setRow1a(jsonObject.getString("DiaChi"));
+        entity.setRow1b(jsonObject.getString("Ky")+": "+CLocal.formatMoney(jsonObject.getString("TongCong")));
+        String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
+        entity.setRow2a(strMLT);
+        String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
+        entity.setRow2b(strDanhBo);
+        entity.setRow3a(jsonObject.getString("HoTen"));
+        entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
+        entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
+        entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+
+        list.add(entity);
+    } catch (Exception e) {
+    }
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
