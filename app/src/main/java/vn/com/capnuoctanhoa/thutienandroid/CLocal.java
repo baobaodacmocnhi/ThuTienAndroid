@@ -36,7 +36,7 @@ public class CLocal {
     public static int Color_ChuaThu = Color.TRANSPARENT;
     public static int Color_GiaiTrach = Color.GREEN;
     public static int Color_TamThu = Color.YELLOW;
-    public static JSONArray jsonHanhThu, jsonDongNuoc;
+    public static JSONArray jsonHanhThu, jsonDongNuoc,jsonMessage;
 
     public static boolean checkNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -87,7 +87,7 @@ public class CLocal {
         }
     }
 
-    public static String formatMoney(String price) {
+    public static String formatMoney(String price,String symbol) {
 
         NumberFormat format =new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
         format.setCurrency(Currency.getInstance(Locale.US));//Or default locale
@@ -103,7 +103,7 @@ public class CLocal {
                 price = price.substring(0, centsIndex);
             }
         }
-        price = String.format("%s đ", price);
+        price = String.format("%s "+symbol, price);
         return price;
     }
 

@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
             {
                 CLocal.jsonDongNuoc=new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
             }
+            if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("")==false)
+            {
+                CLocal.jsonMessage=new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
+            }
         }catch (Exception ex){}
     }
 
@@ -91,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
             return;
         }
-        String versionServer = "";
+
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         try {
-            versionServer = (String) myAsyncTask.execute(new String[]{"Version"}).get();
+            String versionServer=(String)myAsyncTask.execute("Version").get();
             PackageInfo packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String versionDevice = packageInfo.versionName;
             if (versionDevice.equals(versionServer) == false) {
@@ -184,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
         }
     }
 }

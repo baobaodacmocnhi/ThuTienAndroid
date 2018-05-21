@@ -1,8 +1,10 @@
 package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +15,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,11 +36,13 @@ import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
-    private Button btnDownload;
-    private Spinner spnFilter;
+    private Button btnDownload, btnShowMess;
+    private Spinner spnFilter, spnFromDot, spnToDot;
     private ListView lstView;
+    private TextView txtTongHD, txtTongCong;
     private CViewAdapter cViewAdapter;
-private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
+    private ArrayList<CViewEntity> list;
+    private long TongHD, TongCong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +60,13 @@ private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
         });
 
         btnDownload = (Button) findViewById(R.id.btnDownload);
+        btnShowMess = (Button) findViewById(R.id.btnShowMess);
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
+        spnFromDot = (Spinner) findViewById(R.id.spnFromDot);
+        spnToDot = (Spinner) findViewById(R.id.spnToDot);
         lstView = (ListView) findViewById(R.id.lstView);
+        txtTongHD = (TextView) findViewById(R.id.txtTongHD);
+        txtTongCong = (TextView) findViewById(R.id.txtTongCong);
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +77,55 @@ private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute();
+            }
+        });
+
+        btnShowMess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+                builderSingle.setIcon(R.mipmap.ic_launcher);
+                builderSingle.setTitle("Tin nhắn đã nhận");
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu.this, android.R.layout.select_dialog_singlechoice);
+                arrayAdapter.add("ab");
+//                try {
+//                    if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
+//                        int stt = 0;
+//                        for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
+////                            arrayAdapter.add(jsonObject.getString("NgayNhan")+" - "+jsonObject.getString("Title")+" - "+jsonObject.getString("Content"));
+//                            String str=jsonObject.getString("NgayNhan");
+//                            arrayAdapter.add(str);
+//                        }
+//                    }
+//                } catch (Exception ex) {
+//                }
+
+                builderSingle.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+//                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String strName = arrayAdapter.getItem(which);
+//                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+//                        builderInner.setMessage(strName);
+//                        builderInner.setTitle("Your Selected Item is");
+//                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog,int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                        builderInner.show();
+//                    }
+//                });
+                builderSingle.show();
             }
         });
 
@@ -117,6 +177,7 @@ private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
         try {
             lstView.setAdapter(null);
             list = new ArrayList<CViewEntity>();
+            TongHD = TongCong = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
                 case "Đã Thu":
@@ -163,31 +224,38 @@ private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
             }
             cViewAdapter = new CViewAdapter(ActivityDanhSachHanhThu.this, list);
             lstView.setAdapter(cViewAdapter);
+            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         } catch (Exception e) {
         }
     }
 
-    public void addEntity(JSONObject jsonObject)
-    {
-        try
-        {
-        CViewEntity entity = new CViewEntity();
-        entity.setSTT(String.valueOf(list.size() + 1));
-        entity.setID(jsonObject.getString("ID"));
-        entity.setRow1a(jsonObject.getString("DiaChi"));
-        entity.setRow1b(jsonObject.getString("Ky")+": "+CLocal.formatMoney(jsonObject.getString("TongCong")));
-        String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
-        entity.setRow2a(strMLT);
-        String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-        entity.setRow2b(strDanhBo);
-        entity.setRow3a(jsonObject.getString("HoTen"));
-        entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
-        entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
-        entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+    public void addEntity(JSONObject jsonObject) {
+        try {
+            CViewEntity entity = new CViewEntity();
+            entity.setSTT(String.valueOf(list.size() + 1));
+            entity.setID(jsonObject.getString("ID"));
+            entity.setRow1a(jsonObject.getString("DiaChi"));
+            entity.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+            String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
+            entity.setRow2a(strMLT);
+            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
+            entity.setRow2b(strDanhBo);
+            entity.setRow3a(jsonObject.getString("HoTen"));
+            if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
+                entity.setRow3b("Tạm Thu");
+            else if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true)
+                entity.setRow3b("Thu Hộ");
+            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
+            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
+            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
 
-        list.add(entity);
-    } catch (Exception e) {
-    }
+            TongHD++;
+            TongCong += Long.parseLong(jsonObject.getString("TongCong"));
+
+            list.add(entity);
+        } catch (Exception e) {
+        }
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
@@ -206,8 +274,9 @@ private  ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
 
         @Override
         protected Void doInBackground(Void... voids) {
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), currentDate.format(new Date())));
+//            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+//            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), currentDate.format(new Date())));
+            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
             return null;
         }
 

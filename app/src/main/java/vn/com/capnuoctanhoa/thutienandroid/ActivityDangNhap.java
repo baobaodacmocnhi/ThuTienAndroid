@@ -115,7 +115,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 case "DangNhap":
                     String str = "";
                     str = ws.dangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (str.isEmpty() == false) {
+                    if (str.isEmpty() == false&&str.equals("[]")==false) {
                         publishProgress(new String[]{"DangNhap",str});
                         return "true";
                     } else {
@@ -165,6 +165,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("HoTen", "");
                         editor.putString("jsonHanhThu", "");
                         editor.putString("jsonDongNuoc", "");
+                        editor.putString("jsonMessage", "");
                         editor.putBoolean("Login", false);
                         editor.commit();
                         CLocal.jsonHanhThu=CLocal.jsonDongNuoc=null;

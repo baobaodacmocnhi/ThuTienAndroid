@@ -19,7 +19,7 @@ public class ServiceAppKilled extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
@@ -29,6 +29,7 @@ public class ServiceAppKilled extends Service {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
             editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+            editor.putString("jsonMessage", CLocal.jsonMessage.toString());
             editor.commit();
         }catch (Exception ex){}
         this.stopSelf();
