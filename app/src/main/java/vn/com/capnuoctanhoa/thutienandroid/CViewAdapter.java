@@ -82,6 +82,8 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
             convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
         else if (map.getTamThu() == true || map.getThuHo() == true)
             convertView.setBackgroundColor(CLocal.Color_TamThu);
+        else
+            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
 
         return convertView;
     }

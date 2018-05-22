@@ -98,8 +98,6 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                         for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
                             arrayAdapter.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
-//                            String str=jsonObject.getString("NgayNhan");
-//                            arrayAdapter.add(str);
                         }
                     }
                 } catch (Exception ex) {
