@@ -14,12 +14,13 @@ public class ServiceAppKilled extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+//        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -27,11 +28,16 @@ public class ServiceAppKilled extends Service {
         super.onTaskRemoved(rootIntent);
         try {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+            if(CLocal.jsonHanhThu!=null)
             editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
+            if(CLocal.jsonDongNuoc!=null)
             editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+            if(CLocal.jsonMessage!=null)
             editor.putString("jsonMessage", CLocal.jsonMessage.toString());
             editor.commit();
-        }catch (Exception ex){}
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         this.stopSelf();
     }
 }

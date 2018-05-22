@@ -1,13 +1,10 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -19,9 +16,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,9 +37,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -373,8 +365,11 @@ public class ActivityDongNuoc extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Kiểm Tra":
-                    if (Boolean.parseBoolean(ws.checkHoaDon_DongNuoc(edtMaDN.getText().toString())) == true)
+                    if (Boolean.parseBoolean(ws.checkHoaDon_DongNuoc_GiaiTrach(edtMaDN.getText().toString())) == true)
                         return "ĐÃ GIẢI TRÁCH";
+                    else
+                    if (Boolean.parseBoolean(ws.checkHoaDon_DongNuoc_TamThu(edtMaDN.getText().toString())) == true)
+                        return "ĐÃ TẠM THU";
                     else
                         return "CÒN TỒN";
                 case "Đóng Nước":

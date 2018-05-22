@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             String versionServer=(String)myAsyncTask.execute("Version").get();
             PackageInfo packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String versionDevice = packageInfo.versionName;
-            if (versionDevice.equals(versionServer) == false) {
+            if (versionServer.equals("False")==false&&versionDevice.equals(versionServer) == false) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(this);
                 builder.setTitle("Cập nhật");
                 builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");

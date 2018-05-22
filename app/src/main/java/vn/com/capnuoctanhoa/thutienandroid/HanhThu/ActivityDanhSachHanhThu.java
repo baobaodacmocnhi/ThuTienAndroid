@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -86,45 +87,63 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
                 builderSingle.setIcon(R.mipmap.ic_launcher);
                 builderSingle.setTitle("Tin nhắn đã nhận");
+                builderSingle.setCancelable(false);
 
-                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu.this, android.R.layout.select_dialog_singlechoice);
-                arrayAdapter.add("ab");
-//                try {
-//                    if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
-//                        int stt = 0;
-//                        for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
-//                            JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
-////                            arrayAdapter.add(jsonObject.getString("NgayNhan")+" - "+jsonObject.getString("Title")+" - "+jsonObject.getString("Content"));
+                ListView lstMessage = new ListView(ActivityDanhSachHanhThu.this);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu.this, android.R.layout.select_dialog_singlechoice);
+
+                try {
+                    if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
+                        int stt = 0;
+                        for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
+                            arrayAdapter.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
 //                            String str=jsonObject.getString("NgayNhan");
 //                            arrayAdapter.add(str);
-//                        }
-//                    }
-//                } catch (Exception ex) {
-//                }
+                        }
+                    }
+                } catch (Exception ex) {
+                }
 
-                builderSingle.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                lstMessage.setAdapter(arrayAdapter);
+                builderSingle.setView(lstMessage);
+
+                builderSingle.setNegativeButton(
+                        "Xóa Tất Cả",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                CLocal.jsonMessage = new JSONArray();
+                            }
+                        });
+
+                builderSingle.setPositiveButton(
+                        "Thoát",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                //hàm này khi click row sẽ bị ẩn
+                /*builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                        String strName = arrayAdapter.getItem(which);
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+                        builderInner.setMessage(strName);
+                        builderInner.setTitle("Your Selected Item is");
+                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
                     }
-                });
+                });*/
 
-//                builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        String strName = arrayAdapter.getItem(which);
-//                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
-//                        builderInner.setMessage(strName);
-//                        builderInner.setTitle("Your Selected Item is");
-//                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog,int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                        builderInner.show();
-//                    }
-//                });
+                final Dialog dialog = builderSingle.create();
                 builderSingle.show();
             }
         });

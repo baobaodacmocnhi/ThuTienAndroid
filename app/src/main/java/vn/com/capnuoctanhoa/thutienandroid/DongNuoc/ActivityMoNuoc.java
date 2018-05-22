@@ -362,7 +362,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Kiểm Tra":
-                    return ws.checkHoaDon_DongNuoc(edtMaDN.getText().toString());
+                    return ws.checkHoaDon_DongNuoc_GiaiTrach(edtMaDN.getText().toString());
                 case "Mở Nước":
                     if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==false) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);

@@ -75,22 +75,33 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(remoteMessage.getData().get("title"))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("body")))
                     .setContentText(remoteMessage.getData().get("body"))
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
                     .setContentIntent(pendingIntent);
+
+//            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+//            bigTextStyle.bigText(remoteMessage.getData().get("body"));
+//            notificationBuilder.setStyle(bigTextStyle);
+
         } else {
             notificationBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(remoteMessage.getData().get("title"))
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("body")))
                     .setContentText(remoteMessage.getData().get("body"))
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
                     .setContentIntent(pendingIntent);
+
+//            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
+//            bigTextStyle.bigText(remoteMessage.getData().get("body"));
+//            notificationBuilder.setStyle(bigTextStyle);
         }
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
