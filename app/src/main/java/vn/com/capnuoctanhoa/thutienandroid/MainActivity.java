@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("")==false)
             {
                 CLocal.jsonDongNuoc=new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
+                CLocal.jsonDongNuocChild=new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuocChild", ""));
             }
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("")==false)
             {

@@ -16,10 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,10 +31,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
+import vn.com.capnuoctanhoa.thutienandroid.CViewAdapterGroup;
 import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
+import vn.com.capnuoctanhoa.thutienandroid.CViewEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -42,9 +46,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button btnDownload;
     private Spinner spnFilter;
-    private ListView lstView;
-    private CViewAdapter cViewAdapter;
-private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
+    private ExpandableListView lstView;
+    private CViewAdapterGroup cViewAdapterGroup;
+    private ArrayList<CViewEntity> listParent;
+    private ArrayList<CViewEntityChild> listChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
-        lstView = (ListView) findViewById(R.id.lstView);
+        lstView = (ExpandableListView) findViewById(R.id.lstView);
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,9 +141,9 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
             }
         });
 
-        lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 PopupMenu popup = new PopupMenu(ActivityDanhSachDongNuoc.this, view);
                 popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -165,6 +170,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                     }
                 });
                 popup.show();
+                return true;
             }
         });
     }
@@ -193,7 +199,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                cViewAdapter.getFilter().filter(newText);
+                cViewAdapterGroup.getFilter().filter(newText);
                 return false;
             }
         });
@@ -202,8 +208,8 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
 
     public void loadListView() {
         try {
-            lstView.setAdapter(null);
-            list = new ArrayList<CViewEntity>();
+            lstView.setAdapter((BaseExpandableListAdapter) null);
+            listParent = new ArrayList<CViewEntity>();
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa ĐN":
                     if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
@@ -211,7 +217,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == false) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -222,7 +228,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -233,7 +239,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -244,7 +250,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == true) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -255,7 +261,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -266,7 +272,7 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                             if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
-                                addEntity(jsonObject);
+                                addEntityParent(jsonObject);
                             }
                         }
                     }
@@ -275,24 +281,22 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
                     if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            addEntity(jsonObject);
+                            addEntityParent(jsonObject);
                         }
                     }
                     break;
             }
-            cViewAdapter = new CViewAdapter(ActivityDanhSachDongNuoc.this, list);
-            lstView.setAdapter(cViewAdapter);
+            cViewAdapterGroup = new CViewAdapterGroup(ActivityDanhSachDongNuoc.this, listParent);
+            lstView.setAdapter(cViewAdapterGroup);
         } catch (Exception e) {
 
         }
     }
 
-    public void addEntity(JSONObject jsonObject)
-    {
-        try
-        {
+    public void addEntityParent(JSONObject jsonObject) {
+        try {
             CViewEntity entity = new CViewEntity();
-            entity.setSTT(String.valueOf(list.size() + 1));
+            entity.setSTT(String.valueOf(listParent.size() + 1));
             entity.setID(jsonObject.getString("ID"));
             entity.setRow1a(jsonObject.getString("DiaChi"));
             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
@@ -304,7 +308,35 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
 
-            list.add(entity);
+            ///////////////////////////
+            listChild = new ArrayList<CViewEntityChild>();
+            if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
+                for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                    JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(i);
+                    if (jsonObjectChild.getString("ID").equals(entity.getID())==true) {
+                        addEntityChild(jsonObjectChild);
+                    }
+                }
+
+//                listChildHashMap.put(listParent.get(listParent.size()-1),listChild);
+
+            entity.setListChild(listChild);
+            listParent.add(entity);
+        } catch (Exception e) {
+        }
+    }
+
+    public void addEntityChild(JSONObject jsonObject) {
+        try {
+            CViewEntityChild entity = new CViewEntityChild();
+            entity.setID(jsonObject.getString("MaHD"));
+            entity.setRow1a(jsonObject.getString("Ky"));
+            entity.setRow1b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
+            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
+            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+
+            listChild.add(entity);
         } catch (Exception e) {
         }
     }
@@ -325,7 +357,14 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
 
         @Override
         protected Void doInBackground(Void... voids) {
-            publishProgress(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+            try {
+                CLocal.jsonDongNuoc=new JSONArray(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                CLocal.jsonDongNuocChild=new JSONArray(ws.getDSCTDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                publishProgress("true");
+            } catch (Exception ex) {
+                publishProgress("false");
+            }
+
             return null;
         }
 
@@ -334,11 +373,21 @@ private ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("jsonDongNuoc", values[0]);
-                    editor.commit();
-                    CLocal.jsonDongNuoc = new JSONArray(values[0]);
-                    loadListView();
+                    if(Boolean.parseBoolean(values[0])==true) {
+                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                        editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+                        editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+                        editor.commit();
+//                    CLocal.jsonDongNuoc = new JSONArray(array[0]);
+//                    CLocal.jsonDongNuocChild = new JSONArray(array[1]);
+                        loadListView();
+                    }
+                    else {
+                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                        editor.putString("jsonDongNuoc", "");
+                        editor.putString("jsonDongNuocChild", "");
+                        editor.commit();
+                    }
                 } catch (Exception ex) {
 
                 }

@@ -174,8 +174,34 @@ public class CWebservice {
     }
 
     public String getDSDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc";
-        String OPERATION_NAME = "TT_GetDSDongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc1";
+        String OPERATION_NAME = "TT_GetDSDongNuoc1";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaNV_DongNuoc");
+        pi.setValue(MaNV_DongNuoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("FromNgayGiao");
+        pi.setValue(FromNgayGiao);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("ToNgayGiao");
+        pi.setValue(ToNgayGiao);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDSCTDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSCTDongNuoc";
+        String OPERATION_NAME = "TT_GetDSCTDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();

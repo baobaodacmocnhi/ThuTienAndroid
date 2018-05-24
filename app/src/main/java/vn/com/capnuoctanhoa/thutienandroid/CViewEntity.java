@@ -1,6 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
-import android.graphics.Color;
+import java.util.ArrayList;
 
 public class CViewEntity {
     private String STT;
@@ -14,7 +14,7 @@ public class CViewEntity {
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
-    private int BackgroundColor=Color.TRANSPARENT;
+    private ArrayList<CViewEntityChild> listChild ;
 
     public CViewEntity() {
         this.STT = "";
@@ -28,6 +28,7 @@ public class CViewEntity {
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
+        listChild = new ArrayList<CViewEntityChild>();
     }
 
     public String getSTT() {
@@ -118,11 +119,11 @@ public class CViewEntity {
         ThuHo = thuHo;
     }
 
-    public int getBackgroundColor() {
-        return BackgroundColor;
+    public ArrayList<CViewEntityChild> getListChild() {
+        return listChild;
     }
 
-    public void setBackgroundColor(int backgroundColor) {
-        BackgroundColor = backgroundColor;
+    public void setListChild(ArrayList<CViewEntityChild> listChild) {
+        this.listChild = listChild;
     }
 }

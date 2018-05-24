@@ -36,7 +36,7 @@ public class CLocal {
     public static int Color_ChuaThu = Color.TRANSPARENT;
     public static int Color_GiaiTrach = Color.GREEN;
     public static int Color_TamThu = Color.YELLOW;
-    public static JSONArray jsonHanhThu, jsonDongNuoc,jsonMessage;
+    public static JSONArray jsonHanhThu, jsonDongNuoc,jsonDongNuocChild,jsonMessage;
 
     public static boolean checkNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -176,8 +176,7 @@ public class CLocal {
         return null;
     }
 
-    public static String getDataColumn(Context context, Uri uri, String selection,
-                                       String[] selectionArgs) {
+    public static String getDataColumn(Context context, Uri uri, String selection,String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";

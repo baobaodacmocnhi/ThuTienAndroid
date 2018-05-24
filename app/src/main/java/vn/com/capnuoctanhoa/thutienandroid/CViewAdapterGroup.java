@@ -4,37 +4,58 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CViewAdapter extends BaseAdapter implements Filterable {
+public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filterable {
     private Activity activity;
     private ArrayList<CViewEntity> mOriginalValues;
     private ArrayList<CViewEntity> mDisplayedValues;
 
-    public CViewAdapter(Activity activity, ArrayList<CViewEntity> mDisplayedValues) {
-        super();
+    public CViewAdapterGroup(Activity activity, ArrayList<CViewEntity> mDisplayedValues) {
         this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
     }
 
     @Override
-    public int getCount() {
-        return mDisplayedValues.size();
+    public int getGroupCount() {
+        return this.mDisplayedValues.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return mDisplayedValues.get(position);
+    public int getChildrenCount(int groupPosition) {
+        ArrayList<CViewEntityChild> lstChild=this.mDisplayedValues.get(groupPosition).getListChild();
+        return  lstChild.size();
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
+    public Object getGroup(int groupPosition) {
+        return this.mDisplayedValues.get(groupPosition);
+    }
+
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        ArrayList<CViewEntityChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
+        return lstChild.get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
     }
 
     private class ViewHolder {
@@ -49,7 +70,7 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         ViewHolder holder;
         LayoutInflater inflater = activity.getLayoutInflater();
         if (convertView == null) {
@@ -68,7 +89,7 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        CViewEntity map = mDisplayedValues.get(position);
+        CViewEntity map = (CViewEntity) getGroup(groupPosition);
         holder.STT.setText(map.getSTT());
         holder.ID.setText(map.getID());
         holder.Row1a.setText(map.getRow1a());
@@ -77,6 +98,61 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         holder.Row2b.setText(map.getRow2b());
         holder.Row3a.setText(map.getRow3a());
         holder.Row3b.setText(map.getRow3b());
+
+        ///tính giải tránh ngược từ child -> parent
+        Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
+        numRowChild = getChildrenCount(groupPosition);
+        for (int i = 0; i < numRowChild; i++) {
+            CViewEntityChild entityChild = (CViewEntityChild) getChild(groupPosition, i);
+            if (entityChild.getGiaiTrach() == true)
+                numGiaiTrach++;
+            else if (entityChild.getTamThu() == true)
+                numTamThu++;
+            else if (entityChild.getThuHo() == true)
+                numThuHo++;
+        }
+        if (numGiaiTrach == numRowChild)
+            map.setGiaiTrach(true);
+        else if (numTamThu == numRowChild)
+            map.setTamThu(true);
+        else if (numThuHo == numRowChild)
+            map.setThuHo(true);
+
+        if (map.getGiaiTrach() == true)
+            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+        else if (map.getTamThu() == true || map.getThuHo() == true)
+            convertView.setBackgroundColor(CLocal.Color_TamThu);
+        else
+            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+
+        return convertView;
+    }
+
+    private class ViewHolderChild {
+        TextView ID;
+        TextView Row1a;
+        TextView Row1b;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        ViewHolderChild holder;
+        LayoutInflater inflater = activity.getLayoutInflater();
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.custom_row_listview_child, null);
+            holder = new ViewHolderChild();
+            holder.ID = (TextView) convertView.findViewById(R.id.lvID);
+            holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);
+            holder.Row1b = (TextView) convertView.findViewById(R.id.lvRow1b);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolderChild) convertView.getTag();
+        }
+
+        CViewEntityChild map = (CViewEntityChild) getChild(groupPosition, childPosition);
+        holder.ID.setText(map.getID());
+        holder.Row1a.setText(map.getRow1a());
+        holder.Row1b.setText(map.getRow1b());
 
         if (map.getGiaiTrach() == true)
             convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
@@ -89,15 +165,19 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
 
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-
-                mDisplayedValues = (ArrayList<CViewEntity>) results.values; // has the filtered values
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                    mDisplayedValues = (ArrayList<CViewEntity>) results.values; // has the filtered values
+                    notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
             @Override
@@ -149,7 +229,7 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
                 }
-                return results;
+                    return results;
             }
         };
         return filter;

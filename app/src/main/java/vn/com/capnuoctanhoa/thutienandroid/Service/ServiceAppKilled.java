@@ -30,8 +30,10 @@ public class ServiceAppKilled extends Service {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             if(CLocal.jsonHanhThu!=null)
             editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
-            if(CLocal.jsonDongNuoc!=null)
-            editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+            if(CLocal.jsonDongNuoc!=null) {
+                editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+                editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+            }
             if(CLocal.jsonMessage!=null)
             editor.putString("jsonMessage", CLocal.jsonMessage.toString());
             editor.commit();
