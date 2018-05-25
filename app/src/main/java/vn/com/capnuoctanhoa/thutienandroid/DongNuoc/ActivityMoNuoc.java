@@ -50,7 +50,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
-    private Button btnKiemTra, btnMoNuoc;
+    private Button  btnMoNuoc;
     private String imgPath;
     private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityMoNuoc.this);
 
@@ -86,7 +86,6 @@ public class ActivityMoNuoc extends AppCompatActivity {
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
-        btnKiemTra = (Button) findViewById(R.id.btnKiemTra);
         btnMoNuoc = (Button) findViewById(R.id.btnMoNuoc);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
@@ -126,10 +125,6 @@ public class ActivityMoNuoc extends AppCompatActivity {
                             startActivityForResult(intent, 2);
                         } else if (Build.VERSION.SDK_INT > 19) {
                         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                            Intent intent = new Intent();
-//                            intent.setType("image/*");
-//                            intent.setAction(Intent.ACTION_GET_CONTENT);
-//                            intent.addCategory(Intent.CATEGORY_OPENABLE);
                             startActivityForResult(intent, 2);
                         }
                     }
@@ -146,20 +141,6 @@ public class ActivityMoNuoc extends AppCompatActivity {
             }
         });
 
-        btnKiemTra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityMoNuoc.this) == false) {
-                    Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(edtMaDN.getText().toString().equals("")==false) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute("Kiểm Tra");
-                }
-            }
-        });
-
         btnMoNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +150,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                 }
                 if(edtMaDN.getText().toString().equals("")==false&&edtChiSoMN.getText().toString().equals("")==false) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute("Mở Nước");
+                    myAsyncTask.execute("MoNuoc");
                 }
             }
         });
@@ -188,31 +169,29 @@ public class ActivityMoNuoc extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            bitmap = imageOreintationValidator(bitmap, imgPath);
+            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
             imgThumb.setImageBitmap(bitmap);
         }else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
-//            InputStream imageStream;
-//            imageStream = getContentResolver().openInputStream(imageUri);
-//            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-//            Bitmap bitmap = null;
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             String strPath = CLocal.getPathFromUri(this, uri);
             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
-            bitmap = imageOreintationValidator(bitmap, strPath);
+            bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
             imgThumb.setImageBitmap(bitmap);
         }
     }
 
-    public Uri createImageUri() {
+    private Uri createImageUri() {
         try {
+            File filesDir = ActivityMoNuoc.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File photoFile = null;
+            try {
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                photoFile = File.createTempFile(timeStamp, ".jpg", filesDir);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Uri uri;
-            File photoFile = createFile();
+
             if (Build.VERSION.SDK_INT < 21) {
                 // Từ android 5.0 trở xuống. khi ta sử dụng FileProvider.getUriForFile() sẽ trả về ngoại lệ FileUriExposedException
                 // Vì vậy mình sử dụng Uri.fromFile đề lấy ra uri cho file ảnh
@@ -233,64 +212,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         }
     }
 
-    public File createFile() {
-        File filesDir = ActivityMoNuoc.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File file = null;
-        try {
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            file = File.createTempFile(timeStamp, ".jpg", filesDir);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file;
-    }
-
-    public Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
-        ExifInterface ei;
-        try {
-            ei = new ExifInterface(path);
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = rotateImage(bitmap, 90);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = rotateImage(bitmap, 180);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = rotateImage(bitmap, 270);
-                    break;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
-    }
-
-    public Bitmap rotateImage(Bitmap source, float angle) {
-
-        Bitmap bitmap = null;
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        try {
-            bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                    matrix, true);
-        } catch (OutOfMemoryError err) {
-            err.printStackTrace();
-        }
-        return bitmap;
-    }
-
-    public String convertBitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        String str = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
-        return str;
-    }
-
-    public void fillDongNuoc(String MaDN) {
+    private void fillDongNuoc(String MaDN) {
         try {
 
             for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
@@ -361,17 +283,20 @@ public class ActivityMoNuoc extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
-                case "Kiểm Tra":
-                    return ws.checkHoaDon_DongNuoc_GiaiTrach(edtMaDN.getText().toString());
-                case "Mở Nước":
-                    if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==false) {
-                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        String imgString = convertBitmapToString(reizeImage);
-
-                        return ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
-                    }
-                    else
+                case "MoNuoc":
+                    if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == false)
+                        return "CHƯA NHẬP ĐÓNG NƯỚC";
+                    if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==true)
                         return "ĐÃ NHẬP RỒI";
+
+                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
+                        String imgString = CLocal.convertBitmapToString(reizeImage);
+
+                        String result= ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
+                        if(Boolean.parseBoolean(result)==true)
+                            return "THÀNH CÔNG";
+                        else
+                            return "THẤT BẠI";
             }
             return null;
         }
@@ -387,10 +312,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if(Boolean.parseBoolean(s)==true)
-                CLocal.showPopupMessage(ActivityMoNuoc.this, "THÀNH CÔNG");
-            else
-                CLocal.showPopupMessage(ActivityMoNuoc.this, "THẤT BẠI");
+                CLocal.showPopupMessage(ActivityMoNuoc.this, s);
         }
 
     }

@@ -150,20 +150,28 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         int id = menuItem.getItemId();
+                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
+                        Intent intent;
                         switch (id) {
                             case R.id.popup_action_DongNuoc:
-                                TextView MaDN = (TextView) view.findViewById(R.id.lvID);
-
-                                Intent intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc.class);
+                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc.class);
+                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                startActivity(intent);
+                                break;
+                            case R.id.popup_action_DongNuoc2:
+                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc2.class);
                                 intent.putExtra("MaDN", MaDN.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.popup_action_MoNuoc:
-                                TextView MaDN2 = (TextView) view.findViewById(R.id.lvID);
-
-                                Intent intent2 = new Intent(ActivityDanhSachDongNuoc.this, ActivityMoNuoc.class);
-                                intent2.putExtra("MaDN", MaDN2.getText().toString());
-                                startActivity(intent2);
+                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityMoNuoc.class);
+                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                startActivity(intent);
+                                break;
+                            case R.id.popup_action_DongTien:
+                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongTien.class);
+                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                startActivity(intent);
                                 break;
                         }
                         return true;
@@ -309,17 +317,36 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
 
             ///////////////////////////
+
             listChild = new ArrayList<CViewEntityChild>();
+
             if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
-                for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
                     JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(i);
-                    if (jsonObjectChild.getString("ID").equals(entity.getID())==true) {
+                    Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
+                    if (jsonObjectChild.getString("ID").equals(entity.getID()) == true) {
                         addEntityChild(jsonObjectChild);
+                        ///cập nhật parent
+                        numRowChild++;
+                        if (Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")) == true)
+                            numGiaiTrach++;
+                        else if (Boolean.parseBoolean(jsonObjectChild.getString("TamThu")) == true)
+                            numTamThu++;
+                        else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true)
+                            numThuHo++;
+
+                        if (numGiaiTrach == numRowChild) {
+                            entity.setRow3b("Giải Trách");
+                            entity.setGiaiTrach(true);
+                        } else if (numTamThu == numRowChild) {
+                            entity.setRow3b("Tạm Thu");
+                            entity.setTamThu(true);
+                        } else if (numThuHo == numRowChild) {
+                            entity.setRow3b("Thu Hộ");
+                            entity.setThuHo(true);
+                        }
                     }
                 }
-
-//                listChildHashMap.put(listParent.get(listParent.size()-1),listChild);
-
             entity.setListChild(listChild);
             listParent.add(entity);
         } catch (Exception e) {
@@ -358,8 +385,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                CLocal.jsonDongNuoc=new JSONArray(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
-                CLocal.jsonDongNuocChild=new JSONArray(ws.getDSCTDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 publishProgress("true");
             } catch (Exception ex) {
                 publishProgress("false");
@@ -373,7 +400,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    if(Boolean.parseBoolean(values[0])==true) {
+                    if (Boolean.parseBoolean(values[0]) == true) {
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                         editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
                         editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
@@ -381,8 +408,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 //                    CLocal.jsonDongNuoc = new JSONArray(array[0]);
 //                    CLocal.jsonDongNuocChild = new JSONArray(array[1]);
                         loadListView();
-                    }
-                    else {
+                    } else {
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");

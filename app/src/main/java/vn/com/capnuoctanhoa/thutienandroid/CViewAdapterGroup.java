@@ -28,8 +28,8 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        ArrayList<CViewEntityChild> lstChild=this.mDisplayedValues.get(groupPosition).getListChild();
-        return  lstChild.size();
+        ArrayList<CViewEntityChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
+        return lstChild.size();
     }
 
     @Override
@@ -99,25 +99,6 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
         holder.Row3a.setText(map.getRow3a());
         holder.Row3b.setText(map.getRow3b());
 
-        ///tính giải tránh ngược từ child -> parent
-        Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
-        numRowChild = getChildrenCount(groupPosition);
-        for (int i = 0; i < numRowChild; i++) {
-            CViewEntityChild entityChild = (CViewEntityChild) getChild(groupPosition, i);
-            if (entityChild.getGiaiTrach() == true)
-                numGiaiTrach++;
-            else if (entityChild.getTamThu() == true)
-                numTamThu++;
-            else if (entityChild.getThuHo() == true)
-                numThuHo++;
-        }
-        if (numGiaiTrach == numRowChild)
-            map.setGiaiTrach(true);
-        else if (numTamThu == numRowChild)
-            map.setTamThu(true);
-        else if (numThuHo == numRowChild)
-            map.setThuHo(true);
-
         if (map.getGiaiTrach() == true)
             convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
         else if (map.getTamThu() == true || map.getThuHo() == true)
@@ -176,8 +157,8 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                    mDisplayedValues = (ArrayList<CViewEntity>) results.values; // has the filtered values
-                    notifyDataSetChanged();  // notifies the data with new filtered values
+                mDisplayedValues = (ArrayList<CViewEntity>) results.values; // has the filtered values
+                notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
             @Override
@@ -229,7 +210,7 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
                 }
-                    return results;
+                return results;
             }
         };
         return filter;

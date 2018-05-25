@@ -4,8 +4,10 @@
     <string name="title_activity_danh_sach_hanh_thu">Danh Sách Hành Thu</string>
     <string name="title_activity_danh_sach_dong_nuoc">Danh Sách Đóng Nước</string>
     <string name="title_activity_hanh_thu">Hành Thu</string>
-    <string name="title_activity_dong_nuoc">Đóng Nước</string>
+    <string name="title_activity_dong_nuoc">Đóng Nước Lần 1</string>
+    <string name="title_activity_dong_nuoc2">Đóng Nước Lần 2</string>
     <string name="title_activity_mo_nuoc">Mở Nước</string>
+    <string name="title_activity_dong_tien">Đóng Tiền</string>
     <string name="search_hint">Tìm Kiếm</string>
 
     <string-array name="nam_array">

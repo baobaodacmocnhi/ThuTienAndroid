@@ -259,7 +259,9 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
             entity.setRow2b(strDanhBo);
             entity.setRow3a(jsonObject.getString("HoTen"));
-            if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
+            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true)
+                entity.setRow3b("Giải Trách");
+            else if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
                 entity.setRow3b("Tạm Thu");
             else if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true)
                 entity.setRow3b("Thu Hộ");

@@ -30,7 +30,7 @@ public class MarshMallowPermission {
     }
 
     public boolean checkPermissionForCamera() {
-        int result = ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
+        int result = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA);
         if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {
@@ -40,7 +40,7 @@ public class MarshMallowPermission {
 
     public boolean checkLocationPermission() {
 
-        int result = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        int result = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
         if (result == PackageManager.PERMISSION_GRANTED) {
             return true;
         } else {

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.PowerManager;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import vn.com.capnuoctanhoa.thutienandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
@@ -32,6 +34,27 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         //Calling method to generate notification
         PendingIntent pendingIntent = null;
+
+        if (remoteMessage.getData().get("Action").equals("DangXuat"))
+        {
+            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+            editor.putString("Username", "");
+            editor.putString("Password", "");
+            editor.putString("MaNV", "");
+            editor.putString("HoTen", "");
+            editor.putString("jsonHanhThu", "");
+            editor.putString("jsonDongNuoc", "");
+            editor.putString("jsonDongNuocChild", "");
+            editor.putString("jsonMessage", "");
+            editor.putBoolean("Login", false);
+            editor.commit();
+            CLocal.jsonHanhThu=CLocal.jsonDongNuoc=CLocal.jsonDongNuocChild=CLocal.jsonMessage=null;
+
+            Intent intent = new Intent(this, ActivityDangNhap.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+        else
         if (remoteMessage.getData().get("Action").equals("HanhThu")) {
             CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
             try {
@@ -45,14 +68,14 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 CLocal.jsonMessage.put(jsonObject);
             } catch (Exception ex) {
             }
-            Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
 
+            Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongNuoc")) {
             CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
-            Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
 
+            Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         }
@@ -82,11 +105,6 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
                     .setContentIntent(pendingIntent);
-
-//            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-//            bigTextStyle.bigText(remoteMessage.getData().get("body"));
-//            notificationBuilder.setStyle(bigTextStyle);
-
         } else {
             notificationBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.mipmap.ic_launcher)
@@ -98,10 +116,6 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
                     .setContentIntent(pendingIntent);
-
-//            NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-//            bigTextStyle.bigText(remoteMessage.getData().get("body"));
-//            notificationBuilder.setStyle(bigTextStyle);
         }
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);

@@ -3,9 +3,17 @@
     <item
         android:id="@+id/popup_action_DongNuoc"
         android:enabled="true"
-        android:title="Đóng Nước" />
+        android:title="Đóng Nước Lần 1" />
+    <item
+        android:id="@+id/popup_action_DongNuoc2"
+        android:enabled="true"
+        android:title="Đóng Nước Lần 2" />
     <item
         android:id="@+id/popup_action_MoNuoc"
         android:enabled="true"
         android:title="Mở Nước" />
+    <item
+        android:id="@+id/popup_action_DongTien"
+        android:enabled="true"
+        android:title="Đóng Tiền" />
 </menu>

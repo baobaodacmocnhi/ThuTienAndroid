@@ -174,8 +174,8 @@ public class CWebservice {
     }
 
     public String getDSDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc1";
-        String OPERATION_NAME = "TT_GetDSDongNuoc1";
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc";
+        String OPERATION_NAME = "TT_GetDSDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -225,37 +225,23 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String checkHoaDon_DongNuoc_TamThu(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckHoaDon_DongNuoc_TamThu";
-        String OPERATION_NAME = "TT_CheckHoaDon_DongNuoc_TamThu";
-        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-
-        PropertyInfo pi = new PropertyInfo();
-        pi.setName("MaDN");
-        pi.setValue(MaDN);
-        pi.setType(String.class);
-        request.addProperty(pi);
-
-        return excute(request, SOAP_ACTION);
-    }
-
-    public String checkHoaDon_DongNuoc_GiaiTrach(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckHoaDon_DongNuoc_GiaiTrach";
-        String OPERATION_NAME = "TT_CheckHoaDon_DongNuoc_GiaiTrach";
-        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-
-        PropertyInfo pi = new PropertyInfo();
-        pi.setName("MaDN");
-        pi.setValue(MaDN);
-        pi.setType(String.class);
-        request.addProperty(pi);
-
-        return excute(request, SOAP_ACTION);
-    }
-
     public String checkExist_DongNuoc(String MaDN) {
         String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_DongNuoc";
         String OPERATION_NAME = "TT_CheckExist_DongNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String checkExist_DongNuoc2(String MaDN) {
+        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_DongNuoc2";
+        String OPERATION_NAME = "TT_CheckExist_DongNuoc2";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -354,6 +340,44 @@ public class CWebservice {
         pi=new PropertyInfo();
         pi.setName("LyDo");
         pi.setValue(LyDo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("CreateBy");
+        pi.setValue(CreateBy);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String themDongNuoc2(String MaDN, String HinhDN, String NgayDN, String ChiSoDN, String CreateBy) {
+        String SOAP_ACTION = "http://tempuri.org/TT_ThemDongNuoc2";
+        String OPERATION_NAME = "TT_ThemDongNuoc2";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaDN");
+        pi.setValue(MaDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("HinhDN");
+        pi.setValue(HinhDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("NgayDN");
+        pi.setValue(NgayDN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("ChiSoDN");
+        pi.setValue(ChiSoDN);
         pi.setType(String.class);
         request.addProperty(pi);
 
