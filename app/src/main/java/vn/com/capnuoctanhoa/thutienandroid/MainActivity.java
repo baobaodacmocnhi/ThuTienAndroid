@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        updateApp();
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
 
         Button btnDangNhap = (Button) findViewById(R.id.btnDangNhap);
@@ -87,22 +86,22 @@ public class MainActivity extends AppCompatActivity {
             {
                 CLocal.jsonMessage=new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
             }
+            if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
+                return;
+            }
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute("Version");
         }catch (Exception ex){}
     }
 
-    private void updateApp()
+    private void updateApp(String versionServer)
     {
-        if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
-            Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
         try {
-            String versionServer=(String)myAsyncTask.execute("Version").get();
+//            String versionServer=(String)myAsyncTask.execute("Version").get();
             PackageInfo packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String versionDevice = packageInfo.versionName;
-            if (versionServer.equals("False")==false&&versionDevice.equals(versionServer) == false) {
+            if (versionServer.equals("")==false&&versionServer.equals("False")==false&&versionDevice.equals(versionServer) == false) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(this);
                 builder.setTitle("Cập nhật");
                 builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");
@@ -132,10 +131,15 @@ public class MainActivity extends AppCompatActivity {
         CWebservice ws = new CWebservice();
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Version":
-                    return ws.getVersion();
+                    return  ws.getVersion();
                 case "Download":
                     int count;
                     try {
@@ -183,13 +187,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+           updateApp(s);
         }
     }
 }

@@ -336,12 +336,15 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             numThuHo++;
 
                         if (numGiaiTrach == numRowChild) {
+                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"GiaiTrach","true");
                             entity.setRow3b("Giải Trách");
                             entity.setGiaiTrach(true);
                         } else if (numTamThu == numRowChild) {
+                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"TamThu","true");
                             entity.setRow3b("Tạm Thu");
                             entity.setTamThu(true);
                         } else if (numThuHo == numRowChild) {
+                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"ThuHo","true");
                             entity.setRow3b("Thu Hộ");
                             entity.setThuHo(true);
                         }
