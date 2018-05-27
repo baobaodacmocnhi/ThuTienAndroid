@@ -6,28 +6,135 @@
     android:layout_height="match_parent"
     tools:context="vn.com.capnuoctanhoa.thutienandroid.MainActivity">
 
+    <ImageButton
+        android:id="@+id/imgbtnDangNhap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUser"
+        app:srcCompat="@drawable/ic_logout" />
+
+    <ImageButton
+        android:id="@+id/imgbtnHanhThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtnDongNuoc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnDangNhap"
+        app:srcCompat="@drawable/ic_hanh_thu" />
+
+    <ImageButton
+        android:id="@+id/imgbtnDongNuoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgbtnHanhThu"
+        app:layout_constraintTop_toTopOf="@+id/imgbtnHanhThu"
+        app:srcCompat="@drawable/ic_dong_nuoc" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Đăng Nhập"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnDangNhap"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnDangNhap"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnDangNhap" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Hành Thu"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnHanhThu"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Đóng Nước"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnDongNuoc"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnDongNuoc"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnDongNuoc" />
+
+    <TextView
+        android:id="@+id/txtUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Xin chào"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btnDangNhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng Nhập" />
+            android:text="Đăng Nhập"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnHanhThu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hành Thu" />
+            android:text="Hành Thu"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnDongNuoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đóng Nước" />
+            android:text="Đóng Nước"
+            android:visibility="gone" />
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
