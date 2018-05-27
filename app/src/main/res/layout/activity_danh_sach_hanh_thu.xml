@@ -45,7 +45,7 @@
     <Spinner
         android:id="@+id/spnFilter"
         android:layout_width="0dp"
-        android:layout_height="30sp"
+        android:layout_height="30dp"
         android:entries="@array/filter_hanhthu_array"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/txtTongCong"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowMess" />
+        app:layout_constraintTop_toBottomOf="@+id/spnToDot" />
 
     <TextView
         android:id="@+id/txtTongCong"
@@ -85,22 +85,25 @@
 
     <Spinner
         android:id="@+id/spnFromDot"
-        android:layout_width="0dp"
-        android:layout_height="30sp"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/dot_array"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
 
     <Spinner
         android:id="@+id/spnToDot"
-        android:layout_width="0dp"
-        android:layout_height="30sp"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:entries="@array/dot_array"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
+        app:layout_constraintTop_toBottomOf="@+id/spnFromDot" />
 
     <TextView
         android:id="@+id/textView3"

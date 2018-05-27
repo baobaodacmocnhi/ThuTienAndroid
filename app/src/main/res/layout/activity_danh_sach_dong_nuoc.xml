@@ -61,17 +61,15 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:text="Lọc"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/spnFilter"
         app:layout_constraintTop_toTopOf="@+id/spnFilter" />
 
     <Spinner
         android:id="@+id/spnFilter"
         android:layout_width="0dp"
-        android:layout_height="50sp"
+        android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
