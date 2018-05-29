@@ -1,12 +1,14 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.app.Activity;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         TextView Row2b;
         TextView Row3a;
         TextView Row3b;
+        ConstraintLayout layoutChild;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
             holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
             holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
+            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -79,11 +83,14 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         holder.Row3b.setText(map.getRow3b());
 
         if (map.getGiaiTrach() == true)
-            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+            holder.layoutChild.setBackgroundColor(CLocal.Color_GiaiTrach);
+//            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
         else if (map.getTamThu() == true || map.getThuHo() == true)
-            convertView.setBackgroundColor(CLocal.Color_TamThu);
+            holder.layoutChild.setBackgroundColor(CLocal.Color_TamThu);
+//            convertView.setBackgroundColor(CLocal.Color_TamThu);
         else
-            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+        holder.layoutChild.setBackgroundColor(CLocal.Color_ChuaThu);
+//            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
 
         return convertView;
     }

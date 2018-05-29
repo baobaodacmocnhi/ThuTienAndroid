@@ -61,9 +61,8 @@ public class ActivityDangNhap extends AppCompatActivity {
                     Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-                String Username = CLocal.sharedPreferencesre.getString("Username", "");
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute(new String[]{"DangXuat", Username});
+                myAsyncTask.execute(new String[]{"DangXuat"});
 
                 Reload();
             }
@@ -114,7 +113,7 @@ public class ActivityDangNhap extends AppCompatActivity {
             switch (strings[0]) {
                 case "DangNhap":
                     String str = "";
-                    str = ws.dangNhap(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
+                    str = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
                     if (str.isEmpty() == false&&str.equals("[]")==false) {
                         publishProgress(new String[]{"DangNhap",str});
                         return "true";
@@ -123,7 +122,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     }
                 case "DangXuat":
                     String str2 = "";
-                    str2=ws.dangXuat(strings[1]);
+                    str2=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
                     if (str2.isEmpty() == false) {
                         publishProgress(new String[]{"DangXuat",str2});
                         return "true";
@@ -186,7 +185,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (Boolean.parseBoolean(s) == true) {
-                CLocal.showPopupMessage(ActivityDangNhap.this, "THÀNH CÔNG");
+//                CLocal.showPopupMessage(ActivityDangNhap.this, "THÀNH CÔNG");
                 finish();
             } else
                 CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI");
