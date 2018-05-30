@@ -3,6 +3,7 @@ package vn.com.capnuoctanhoa.thutienandroid;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -99,9 +100,11 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
 
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
+                txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
             } else {
-                txtUser.setText("");
+                txtUser.setText("Xin hãy đăng nhập");
+                txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_logout);
             }
         } catch (Exception ex) {

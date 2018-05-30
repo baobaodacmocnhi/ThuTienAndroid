@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -83,14 +82,17 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         holder.Row3b.setText(map.getRow3b());
 
         if (map.getGiaiTrach() == true)
-            holder.layoutChild.setBackgroundColor(CLocal.Color_GiaiTrach);
 //            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
         else if (map.getTamThu() == true || map.getThuHo() == true)
-            holder.layoutChild.setBackgroundColor(CLocal.Color_TamThu);
 //            convertView.setBackgroundColor(CLocal.Color_TamThu);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
         else
-        holder.layoutChild.setBackgroundColor(CLocal.Color_ChuaThu);
 //            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+
+//        if (map.getLenhHuy() == true)
+//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 
         return convertView;
     }

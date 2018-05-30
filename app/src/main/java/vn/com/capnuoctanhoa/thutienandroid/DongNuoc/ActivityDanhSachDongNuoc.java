@@ -154,22 +154,22 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         Intent intent;
                         switch (id) {
                             case R.id.popup_action_DongNuoc:
-                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc.class);
+                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc.class);
                                 intent.putExtra("MaDN", MaDN.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.popup_action_DongNuoc2:
-                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc2.class);
+                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc2.class);
                                 intent.putExtra("MaDN", MaDN.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.popup_action_MoNuoc:
-                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityMoNuoc.class);
+                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityMoNuoc.class);
                                 intent.putExtra("MaDN", MaDN.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.popup_action_DongTien:
-                                 intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongTien.class);
+                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongTien.class);
                                 intent.putExtra("MaDN", MaDN.getText().toString());
                                 startActivity(intent);
                                 break;
@@ -246,7 +246,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == true) {
+                            if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == true) {
                                 addEntityParent(jsonObject);
                             }
                         }
@@ -268,7 +268,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
+                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true&&jsonObject.getString("DongPhi") != "null" && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == false) {
                                 addEntityParent(jsonObject);
                             }
                         }
@@ -315,6 +315,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+            entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
 
             ///////////////////////////
 
@@ -323,7 +324,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
                 for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
                     JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(i);
-                    Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
+                    Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0, numLenhHuy = 0;
                     if (jsonObjectChild.getString("ID").equals(entity.getID()) == true) {
                         addEntityChild(jsonObjectChild);
                         ///cập nhật parent
@@ -334,19 +335,27 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             numTamThu++;
                         else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true)
                             numThuHo++;
+                        ///xét lệnh hủy riêng
+                        if (Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")) == true)
+                            numLenhHuy++;
 
                         if (numGiaiTrach == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"GiaiTrach","true");
+                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "GiaiTrach", "true");
                             entity.setRow3b("Giải Trách");
                             entity.setGiaiTrach(true);
                         } else if (numTamThu == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"TamThu","true");
+                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "TamThu", "true");
                             entity.setRow3b("Tạm Thu");
                             entity.setTamThu(true);
                         } else if (numThuHo == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc,entity.getID(),"ThuHo","true");
+                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "ThuHo", "true");
                             entity.setRow3b("Thu Hộ");
                             entity.setThuHo(true);
+                        }
+                        ///xét lệnh hủy riêng
+                        if (numLenhHuy == numRowChild) {
+                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "LenhHuy", "true");
+                            entity.setLenhHuy(true);
                         }
                     }
                 }
@@ -365,6 +374,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+            entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
 
             listChild.add(entity);
         } catch (Exception e) {

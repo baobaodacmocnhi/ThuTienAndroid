@@ -35,8 +35,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         //Calling method to generate notification
         PendingIntent pendingIntent = null;
 
-        if (remoteMessage.getData().get("Action").equals("DangXuat"))
-        {
+        if (remoteMessage.getData().get("Action").equals("DangXuat")) {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             editor.putString("Username", "");
             editor.putString("Password", "");
@@ -48,36 +47,41 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             editor.putString("jsonMessage", "");
             editor.putBoolean("Login", false);
             editor.commit();
-            CLocal.jsonHanhThu=CLocal.jsonDongNuoc=CLocal.jsonDongNuocChild=CLocal.jsonMessage=null;
+            CLocal.jsonHanhThu = CLocal.jsonDongNuoc = CLocal.jsonDongNuocChild = CLocal.jsonMessage = null;
 
             Intent intent = new Intent(this, ActivityDangNhap.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        }
-        else
-        if (remoteMessage.getData().get("Action").equals("HanhThu")) {
+        } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
             CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
-            try {
-                if( CLocal.jsonMessage==null)
-                CLocal.jsonMessage=new JSONArray();
-                JSONObject jsonObject = new JSONObject();
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                jsonObject.put("NgayNhan", currentDate.format(new Date()));
-                jsonObject.put("Title", remoteMessage.getData().get("title"));
-                jsonObject.put("Content", remoteMessage.getData().get("body"));
-                CLocal.jsonMessage.put(jsonObject);
-            } catch (Exception ex) {
-            }
 
             Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        } else if (remoteMessage.getData().get("Action").equals("DongNuoc")) {
-            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+        } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
 
             Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
+                CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+
+            Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+
+        try {
+            if (CLocal.jsonMessage == null)
+                CLocal.jsonMessage = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            jsonObject.put("NgayNhan", currentDate.format(new Date()));
+            jsonObject.put("Title", remoteMessage.getData().get("title"));
+            jsonObject.put("Content", remoteMessage.getData().get("body"));
+            CLocal.jsonMessage.put(jsonObject);
+        } catch (Exception ex) {
         }
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

@@ -23,6 +23,7 @@
 
     <Button
         android:id="@+id/btnDownload"
+        style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -44,18 +45,21 @@
 
     <Spinner
         android:id="@+id/spnFilter"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:entries="@array/filter_hanhthu_array"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/spnToDot" />
 
     <ListView
         android:id="@+id/lstView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/txtTongCong"
-        app:layout_constraintTop_toBottomOf="@+id/spnToDot" />
+        app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
 
     <TextView
         android:id="@+id/txtTongCong"
@@ -92,7 +96,7 @@
         android:layout_marginTop="8dp"
         android:entries="@array/dot_array"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <Spinner
         android:id="@+id/spnToDot"
@@ -129,6 +133,7 @@
 
     <Button
         android:id="@+id/btnShowMess"
+        style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"

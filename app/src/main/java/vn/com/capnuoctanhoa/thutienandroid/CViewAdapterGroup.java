@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.app.Activity;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
         TextView Row2b;
         TextView Row3a;
         TextView Row3b;
+        ConstraintLayout layoutChild;
     }
 
     @Override
@@ -84,6 +86,7 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
             holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
             holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
+            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -100,11 +103,17 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
         holder.Row3b.setText(map.getRow3b());
 
         if (map.getGiaiTrach() == true)
-            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+//            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
         else if (map.getTamThu() == true || map.getThuHo() == true)
-            convertView.setBackgroundColor(CLocal.Color_TamThu);
+//            convertView.setBackgroundColor(CLocal.Color_TamThu);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
         else
-            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+//            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+
+        if (map.getLenhHuy() == true)
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 
         return convertView;
     }
@@ -136,11 +145,14 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
         holder.Row1b.setText(map.getRow1b());
 
         if (map.getGiaiTrach() == true)
-            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
         else if (map.getTamThu() == true || map.getThuHo() == true)
-            convertView.setBackgroundColor(CLocal.Color_TamThu);
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
         else
-            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+
+        if (map.getLenhHuy() == true)
+            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 
         return convertView;
     }
@@ -202,6 +214,7 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
                             entity.setGiaiTrach(mOriginalValues.get(i).getGiaiTrach());
                             entity.setTamThu(mOriginalValues.get(i).getTamThu());
                             entity.setThuHo(mOriginalValues.get(i).getThuHo());
+                            entity.setLenhHuy(mOriginalValues.get(i).getLenhHuy());
 
                             FilteredArrList.add(entity);
                         }

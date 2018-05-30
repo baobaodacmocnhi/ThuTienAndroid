@@ -9,6 +9,7 @@ public class CViewEntityChild {
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
+    private Boolean LenhHuy;
 
     public CViewEntityChild() {
         this.ID = "";
@@ -65,5 +66,13 @@ public class CViewEntityChild {
 
     public void setThuHo(Boolean thuHo) {
         ThuHo = thuHo;
+    }
+
+    public Boolean getLenhHuy() {
+        return LenhHuy;
+    }
+
+    public void setLenhHuy(Boolean lenhHuy) {
+        LenhHuy = lenhHuy;
     }
 }

@@ -14,6 +14,7 @@ public class CViewEntity {
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
+    private Boolean LenhHuy;
     private ArrayList<CViewEntityChild> listChild ;
 
     public CViewEntity() {
@@ -117,6 +118,14 @@ public class CViewEntity {
 
     public void setThuHo(Boolean thuHo) {
         ThuHo = thuHo;
+    }
+
+    public Boolean getLenhHuy() {
+        return LenhHuy;
+    }
+
+    public void setLenhHuy(Boolean lenhHuy) {
+        LenhHuy = lenhHuy;
     }
 
     public ArrayList<CViewEntityChild> getListChild() {

@@ -81,12 +81,14 @@ public class ActivityDangNhap extends AppCompatActivity {
         edtPassword.setText("");
         if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
             txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
+            txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
             edtUsername.setVisibility(View.INVISIBLE);
             edtPassword.setVisibility(View.INVISIBLE);
             btnDangNhap.setVisibility(View.INVISIBLE);
             btnDangXuat.setVisibility(View.VISIBLE);
         } else {
-            txtUser.setText("Xin chào");
+            txtUser.setText("Xin hãy đăng nhập");
+            txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
             edtUsername.setVisibility(View.VISIBLE);
             edtPassword.setVisibility(View.VISIBLE);
             btnDangNhap.setVisibility(View.VISIBLE);
