@@ -28,9 +28,11 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
 import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
@@ -38,7 +40,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
-    private Spinner spnFilter, spnFromDot, spnToDot;
+    private Spinner spnFilter, spnSort,spnFromDot, spnToDot;
     private ListView lstView;
     private TextView txtTongHD, txtTongCong;
     private CViewAdapter cViewAdapter;
@@ -157,6 +159,29 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
             }
         });
+
+        spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (spnSort.getSelectedItem().toString()) {
+                    case "Thời Gian Tăng":
+                        Collections.sort(list, new CSort("ModifyDate", -1));
+                        break;
+                    case "Thời Gian Giảm":
+                        Collections.sort(list, new CSort("ModifyDate", 1));
+                        break;
+                    default:
+                        Collections.sort(list, new CSort("", -1));
+                        break;
+                }
+                cViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -249,6 +274,9 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     public void addEntity(JSONObject jsonObject) {
         try {
+            ///thiết lập khởi tạo 1 lần đầu để sort
+            if(jsonObject.has("ModifyDate")==false)
+                jsonObject.put("ModifyDate",CLocal.DateFormat.format(new Date()));
             CViewEntity entity = new CViewEntity();
             entity.setSTT(String.valueOf(list.size() + 1));
             entity.setID(jsonObject.getString("ID"));

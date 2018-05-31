@@ -59,13 +59,14 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
 
             Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        }else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
-                CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+        } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
+            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
 
             Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -76,7 +77,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             if (CLocal.jsonMessage == null)
                 CLocal.jsonMessage = new JSONArray();
             JSONObject jsonObject = new JSONObject();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             jsonObject.put("NgayNhan", currentDate.format(new Date()));
             jsonObject.put("Title", remoteMessage.getData().get("title"));
             jsonObject.put("Content", remoteMessage.getData().get("body"));

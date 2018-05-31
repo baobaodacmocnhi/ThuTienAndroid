@@ -44,9 +44,7 @@ public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String FileName = "my_data";
-//    public static int Color_ChuaThu = Color.TRANSPARENT;
-//    public static int Color_GiaiTrach = Color.GREEN;
-//    public static int Color_TamThu = Color.YELLOW;
+    public static  SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc,jsonDongNuocChild,jsonMessage;
 
     public static boolean checkNetworkAvailable(Context context) {
@@ -90,6 +88,8 @@ public class CLocal {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 if (jsonObject.getString("ID").equals(ID)) {
                     jsonObject.put(Key, Value);
+                    //thiết lập ModifyDate để sort
+                    jsonObject.put("ModifyDate",new Date().toString());
                     break;
                 }
             }

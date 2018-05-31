@@ -1,9 +1,12 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,11 +19,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,23 +34,29 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.CViewAdapterGroup;
 import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.CViewEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
-    private Button btnDownload;
-    private Spinner spnFilter;
+    private Button btnDownload, btnShowMess;
+    private Spinner spnFilter, spnSort;
     private ExpandableListView lstView;
     private CViewAdapterGroup cViewAdapterGroup;
     private ArrayList<CViewEntity> listParent;
@@ -69,7 +80,9 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         edtFromDate = (EditText) findViewById(R.id.edtFromDate);
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnDownload = (Button) findViewById(R.id.btnDownload);
+        btnShowMess = (Button) findViewById(R.id.btnShowMess);
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
+        spnSort = (Spinner) findViewById(R.id.spnSort);
         lstView = (ExpandableListView) findViewById(R.id.lstView);
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
@@ -129,10 +142,98 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
 
+        btnShowMess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDanhSachDongNuoc.this);
+                builderSingle.setIcon(R.mipmap.ic_launcher);
+                builderSingle.setTitle("Tin nhắn đã nhận");
+                builderSingle.setCancelable(false);
+
+                ListView lstMessage = new ListView(ActivityDanhSachDongNuoc.this);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachDongNuoc.this, android.R.layout.select_dialog_singlechoice);
+
+                try {
+                    if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
+                        int stt = 0;
+                        for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
+                            arrayAdapter.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
+                        }
+                    }
+                } catch (Exception ex) {
+                }
+
+                lstMessage.setAdapter(arrayAdapter);
+                builderSingle.setView(lstMessage);
+
+                builderSingle.setNegativeButton(
+                        "Xóa Tất Cả",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                CLocal.jsonMessage = new JSONArray();
+                            }
+                        });
+
+                builderSingle.setPositiveButton(
+                        "Thoát",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                //hàm này khi click row sẽ bị ẩn
+                /*builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = arrayAdapter.getItem(which);
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+                        builderInner.setMessage(strName);
+                        builderInner.setTitle("Your Selected Item is");
+                        builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                    }
+                });*/
+
+                final Dialog dialog = builderSingle.create();
+                builderSingle.show();
+            }
+        });
+
         spnFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 loadListView();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (spnSort.getSelectedItem().toString()) {
+                    case "Thời Gian Tăng":
+                        Collections.sort(listParent, new CSort("ModifyDate", -1));
+                        break;
+                    case "Thời Gian Giảm":
+                        Collections.sort(listParent, new CSort("ModifyDate", 1));
+                        break;
+                    default:
+                        Collections.sort(listParent, new CSort("", -1));
+                        break;
+                }
+                cViewAdapterGroup.notifyDataSetChanged();
             }
 
             @Override
@@ -268,7 +369,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         int stt = 0;
                         for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true&&jsonObject.getString("DongPhi") != "null" && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == false) {
+                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true && jsonObject.getString("DongPhi") != "null" && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == false) {
                                 addEntityParent(jsonObject);
                             }
                         }
@@ -303,6 +404,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
     public void addEntityParent(JSONObject jsonObject) {
         try {
+            ///thiết lập khởi tạo 1 lần đầu để sort
+            if (jsonObject.has("ModifyDate") == false)
+                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
+
             CViewEntity entity = new CViewEntity();
             entity.setSTT(String.valueOf(listParent.size() + 1));
             entity.setID(jsonObject.getString("ID"));
@@ -316,7 +421,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
             entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
-
+            entity.setModifyDate(jsonObject.getString("ModifyDate"));
             ///////////////////////////
 
             listChild = new ArrayList<CViewEntityChild>();
@@ -367,6 +472,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
     public void addEntityChild(JSONObject jsonObject) {
         try {
+            ///thiết lập khởi tạo 1 lần đầu để sort
+            if (jsonObject.has("ModifyDate") == false)
+                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
+
             CViewEntityChild entity = new CViewEntityChild();
             entity.setID(jsonObject.getString("MaHD"));
             entity.setRow1a(jsonObject.getString("Ky"));

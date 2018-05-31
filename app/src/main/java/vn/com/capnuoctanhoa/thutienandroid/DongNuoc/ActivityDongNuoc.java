@@ -51,11 +51,11 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-//    private TextView txtHoaDon;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
-    private Button  btnDongNuoc;
+    private Button btnDongNuoc;
     private String imgPath;
+    private Bitmap imgCapture;
     private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityDongNuoc.this);
 
     @Override
@@ -103,6 +103,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     if (marshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
+                imgCapture=null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDongNuoc.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -110,7 +111,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                       Uri  imgUri = createImageUri();
+                        Uri imgUri = createImageUri();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (intent.resolveActivity(ActivityDongNuoc.this.getPackageManager()) != null) {
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
@@ -129,7 +130,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                             intent.addCategory(Intent.CATEGORY_OPENABLE);
                             startActivityForResult(intent, 2);
                         } else if (Build.VERSION.SDK_INT > 19) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                            Intent intent = new Intent();
 //                            intent.setType("image/*");
 //                            intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -193,6 +194,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+            imgCapture = bitmap;
             imgThumb.setImageBitmap(bitmap);
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
@@ -209,6 +211,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
             String strPath = CLocal.getPathFromUri(this, uri);
             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+            imgCapture = bitmap;
             imgThumb.setImageBitmap(bitmap);
         }
     }
@@ -264,7 +267,6 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     setSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
                     setSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
                     edtLyDo.setText(jsonObject.getString("LyDo").replace("null", ""));
-//                    txtHoaDon.setText(jsonObject.getString("HoaDon"));
                     break;
                 }
             }
@@ -320,16 +322,18 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == true)
                         return "ĐÃ NHẬP RỒI";
 
+                    String imgString = "NULL";
+                    if (imgCapture != null) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        String imgString = CLocal.convertBitmapToString(reizeImage);
-
-                        String result= ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
-                                imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
-                                spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV", ""));
-                        if(Boolean.parseBoolean(result)==true)
-                            return "THÀNH CÔNG";
-                        else
-                            return "THẤT BẠI";
+                        imgString = CLocal.convertBitmapToString(reizeImage);
+                    }
+                    String result = ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
+                            imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
+                            spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV", ""));
+                    if (Boolean.parseBoolean(result) == true)
+                        return "THÀNH CÔNG";
+                    else
+                        return "THẤT BẠI";
             }
             return null;
         }

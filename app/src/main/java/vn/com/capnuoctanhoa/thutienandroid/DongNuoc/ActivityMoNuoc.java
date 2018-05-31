@@ -52,6 +52,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button  btnMoNuoc;
     private String imgPath;
+    private Bitmap imgCapture;
     private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityMoNuoc.this);
 
     @Override
@@ -98,6 +99,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     if (marshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
+                imgCapture=null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMoNuoc.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -170,12 +172,14 @@ public class ActivityMoNuoc extends AppCompatActivity {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+            imgCapture = bitmap;
             imgThumb.setImageBitmap(bitmap);
         }else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
             String strPath = CLocal.getPathFromUri(this, uri);
             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+            imgCapture = bitmap;
             imgThumb.setImageBitmap(bitmap);
         }
     }
@@ -289,9 +293,11 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==true)
                         return "ĐÃ NHẬP RỒI";
 
+                    String imgString = "NULL";
+                    if (imgCapture != null) {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        String imgString = CLocal.convertBitmapToString(reizeImage);
-
+                        imgString = CLocal.convertBitmapToString(reizeImage);
+                    }
                         String result= ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
                         if(Boolean.parseBoolean(result)==true)
                             return "THÀNH CÔNG";

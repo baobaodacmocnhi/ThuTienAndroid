@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CViewEntity {
     private String STT;
@@ -15,6 +16,7 @@ public class CViewEntity {
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
+    private String ModifyDate;
     private ArrayList<CViewEntityChild> listChild ;
 
     public CViewEntity() {
@@ -126,6 +128,14 @@ public class CViewEntity {
 
     public void setLenhHuy(Boolean lenhHuy) {
         LenhHuy = lenhHuy;
+    }
+
+    public String getModifyDate() {
+        return ModifyDate;
+    }
+
+    public void setModifyDate(String modifyDate) {
+        ModifyDate = modifyDate;
     }
 
     public ArrayList<CViewEntityChild> getListChild() {
