@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
 import android.support.constraint.ConstraintLayout;
@@ -11,6 +11,8 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filterable {
     private Activity activity;

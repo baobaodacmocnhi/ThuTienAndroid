@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,22 +33,17 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.CViewAdapterGroup;
-import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
-import vn.com.capnuoctanhoa.thutienandroid.CViewEntityChild;
-import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapterGroup;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntityChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachDongNuoc extends AppCompatActivity {
@@ -67,15 +61,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_dong_nuoc);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         edtFromDate = (EditText) findViewById(R.id.edtFromDate);
         edtToDate = (EditText) findViewById(R.id.edtToDate);
@@ -294,7 +280,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_search, menu);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -313,6 +299,21 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_search_khach_hang:
+
+                return true;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void loadListView() {

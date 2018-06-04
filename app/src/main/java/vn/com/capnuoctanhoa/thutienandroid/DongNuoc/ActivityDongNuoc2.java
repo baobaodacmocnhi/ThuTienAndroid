@@ -18,7 +18,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -36,9 +36,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.MarshMallowPermission;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc2 extends AppCompatActivity {
@@ -49,22 +49,14 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
     private Button btnDongNuoc;
     private String imgPath;
     private Bitmap imgCapture;
-    private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityDongNuoc2.this);
+    private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc2.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dong_nuoc2);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
@@ -89,10 +81,10 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (marshMallowPermission.checkPermissionForExternalStorage() == false) {
-                        marshMallowPermission.requestPermissionForExternalStorage();
+                    if (CMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        CMarshMallowPermission.requestPermissionForExternalStorage();
                     }
-                    if (marshMallowPermission.checkPermissionForExternalStorage() == false)
+                    if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
                 imgCapture=null;
@@ -160,6 +152,19 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

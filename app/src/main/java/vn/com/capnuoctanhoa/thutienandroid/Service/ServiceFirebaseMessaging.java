@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Random;
 
 import vn.com.capnuoctanhoa.thutienandroid.ActivityDangNhap;
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.R;

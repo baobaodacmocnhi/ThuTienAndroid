@@ -8,6 +8,7 @@
     <string name="title_activity_dong_nuoc2">Đóng Nước Lần 2</string>
     <string name="title_activity_mo_nuoc">Mở Nước</string>
     <string name="title_activity_dong_tien">Đóng Tiền</string>
+    <string name="title_activity_search_khach_hang">Tìm Kiếm Khách Hàng</string>
     <string name="search_hint">Tìm Kiếm</string>
 
     <string-array name="nam_array">

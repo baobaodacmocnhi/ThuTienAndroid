@@ -1,7 +1,6 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class CViewEntity {
     private String STT;

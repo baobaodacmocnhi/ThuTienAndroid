@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,8 +18,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -34,15 +31,14 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.MarshMallowPermission;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityMoNuoc extends AppCompatActivity {
@@ -53,22 +49,14 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private Button  btnMoNuoc;
     private String imgPath;
     private Bitmap imgCapture;
-    private MarshMallowPermission marshMallowPermission = new MarshMallowPermission(ActivityMoNuoc.this);
+    private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityMoNuoc.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mo_nuoc);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
@@ -93,10 +81,10 @@ public class ActivityMoNuoc extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (marshMallowPermission.checkPermissionForExternalStorage() == false) {
-                        marshMallowPermission.requestPermissionForExternalStorage();
+                    if (CMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        CMarshMallowPermission.requestPermissionForExternalStorage();
                     }
-                    if (marshMallowPermission.checkPermissionForExternalStorage() == false)
+                    if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
                 imgCapture=null;
@@ -164,6 +152,19 @@ public class ActivityMoNuoc extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

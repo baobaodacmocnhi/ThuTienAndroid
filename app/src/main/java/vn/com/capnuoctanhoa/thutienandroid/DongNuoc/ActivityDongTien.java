@@ -4,8 +4,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,10 +19,9 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongTien extends AppCompatActivity {
@@ -39,15 +38,7 @@ public class ActivityDongTien extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dong_tien);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         TongCong = 0;
         MaHDs = "";
@@ -111,6 +102,19 @@ public class ActivityDongTien extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class CHoaDon {

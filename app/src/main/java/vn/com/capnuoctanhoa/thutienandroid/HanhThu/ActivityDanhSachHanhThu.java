@@ -11,9 +11,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,16 +26,15 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.CViewAdapter;
-import vn.com.capnuoctanhoa.thutienandroid.CViewEntity;
-import vn.com.capnuoctanhoa.thutienandroid.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
@@ -52,19 +51,12 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_hanh_thu);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btnDownload = (Button) findViewById(R.id.btnDownload);
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
+        spnSort = (Spinner) findViewById(R.id.spnSort);
         spnFromDot = (Spinner) findViewById(R.id.spnFromDot);
         spnToDot = (Spinner) findViewById(R.id.spnToDot);
         lstView = (ListView) findViewById(R.id.lstView);
@@ -194,7 +186,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_search, menu);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -213,6 +205,21 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_search_khach_hang:
+
+                return true;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void loadListView() {

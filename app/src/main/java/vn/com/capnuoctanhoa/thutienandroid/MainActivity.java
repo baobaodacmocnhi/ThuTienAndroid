@@ -3,16 +3,16 @@ package vn.com.capnuoctanhoa.thutienandroid;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,22 +20,21 @@ import android.widget.Toast;
 import org.json.JSONArray;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
-private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
-    private   TextView txtUser;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc;
+    private TextView txtUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,9 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
 
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
 
-         imgbtnDangNhap=(ImageButton) findViewById(R.id.imgbtnDangNhap);
+        ActionBar actionBar = getSupportActionBar();
+
+        imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
         imgbtnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +54,7 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
             }
         });
 
-         imgbtnHanhThu=(ImageButton) findViewById(R.id.imgbtnHanhThu);
+        imgbtnHanhThu = (ImageButton) findViewById(R.id.imgbtnHanhThu);
         imgbtnHanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,7 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
             }
         });
 
-         imgbtnDongNuoc=(ImageButton) findViewById(R.id.imgbtnDongNuoc);
+        imgbtnDongNuoc = (ImageButton) findViewById(R.id.imgbtnDongNuoc);
         imgbtnDongNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,7 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
             }
         });
 
-        txtUser=(TextView) findViewById(R.id.txtUser);
+        txtUser = (TextView) findViewById(R.id.txtUser);
 
     }
 
@@ -109,6 +110,29 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
             }
         } catch (Exception ex) {
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu, this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search_khach_hang:
+                Intent intent= new Intent(MainActivity.this, ActivitySearchKhachHang.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_settings:
+
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateApp(String versionServer) {
@@ -160,7 +184,7 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
                 case "Download":
                     int count;
                     try {
-                        String pathSave = Environment.getExternalStorageDirectory().toString()+"/DownLoad/" ;
+                        String pathSave = Environment.getExternalStorageDirectory().toString() + "/DownLoad/";
 
                         URL url = new URL(strings[1]);
 
@@ -177,7 +201,7 @@ private ImageButton imgbtnDangNhap,imgbtnHanhThu,imgbtnDongNuoc;
 
                         // Output stream to write file
 
-                        OutputStream output = new FileOutputStream(pathSave+"/"+fileName);
+                        OutputStream output = new FileOutputStream(pathSave + "/" + fileName);
                         byte data[] = new byte[1024];
 
                         long total = 0;

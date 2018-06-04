@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.support.annotation.Nullable;
 
@@ -508,4 +508,47 @@ public class CWebservice {
 
         return excute(request, SOAP_ACTION);
     }
+
+    public String getDSHoaDon(String DanhBo)
+    {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon_DanhBo";
+        String OPERATION_NAME = "TT_GetDSHoaDon_DanhBo";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDSHoaDon(String HoTen,String SoNha,String TenDuong)
+    {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon_TTKH";
+        String OPERATION_NAME = "TT_GetDSHoaDon_TTKH";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("HoTen");
+        pi.setValue(HoTen);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("SoNha");
+        pi.setValue(SoNha);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("TenDuong");
+        pi.setValue(TenDuong);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
 }

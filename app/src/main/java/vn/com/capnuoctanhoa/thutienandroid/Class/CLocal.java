@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
 import android.content.ContentUris;

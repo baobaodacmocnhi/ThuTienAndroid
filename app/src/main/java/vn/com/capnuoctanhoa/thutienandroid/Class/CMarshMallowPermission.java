@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid;
+package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
-public class MarshMallowPermission {
+public class CMarshMallowPermission {
     public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 2;
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
@@ -16,7 +16,7 @@ public class MarshMallowPermission {
     Activity activity;
     Context mContext;
 
-    public MarshMallowPermission(Activity activity) {
+    public CMarshMallowPermission(Activity activity) {
         this.activity = activity;
         this.mContext = activity;
     }
