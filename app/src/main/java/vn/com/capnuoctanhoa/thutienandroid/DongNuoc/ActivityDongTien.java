@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class ActivityDongTien extends AppCompatActivity {
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong;
     private String MaHDs;
-
+    private JSONArray jsonArrayHoaDonTon=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +104,8 @@ public class ActivityDongTien extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute("GetHoaDonTon");
     }
 
     @Override
@@ -195,6 +199,20 @@ public class ActivityDongTien extends AppCompatActivity {
                     break;
                 }
             }
+            if(jsonArrayHoaDonTon!=null)
+            {
+                for (int k = 0; k < jsonArrayHoaDonTon.length(); k++)
+                {
+                    JSONObject jsonObjectHoaDonTon = jsonArrayHoaDonTon.getJSONObject(k);
+                    CHoaDon entity = new CHoaDon();
+                    entity.setMaHD(jsonObjectHoaDonTon.getString("MaHD"));
+                    entity.setKy(jsonObjectHoaDonTon.getString("Ky"));
+                    entity.setTongCong(jsonObjectHoaDonTon.getString("TongCong"));
+                    lstHoaDon.add(entity);
+
+                    arrayList.add(jsonObjectHoaDonTon.getString("Ky") + " : " + CLocal.formatMoney(jsonObjectHoaDonTon.getString("TongCong"), "đ"));
+                }
+            }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
             lstView.setAdapter(arrayAdapter);
             txtTongCong.setText(CLocal.formatMoney("0", "đ"));
@@ -220,15 +238,19 @@ public class ActivityDongTien extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            String result="";
             switch (strings[0]) {
                 case "DongTien":
                     if(MaHDs.equals("")==true)
                         return "CHƯA CHỌN HÓA ĐƠN";
-                    String result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), MaHDs);
+                     result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), MaHDs);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";
                     else
                         return "THẤT BẠI";
+                case "GetHoaDonTon":
+                     result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), MaHDs);
+                    publishProgress(new String[]{"GetHoaDonTon",result});
             }
             return null;
         }
@@ -236,6 +258,17 @@ public class ActivityDongTien extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "GetHoaDonTon":
+                        try {
+                            jsonArrayHoaDonTon=new JSONArray(values[1]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
         }
 
         @Override

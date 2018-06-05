@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHang;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapterGroup;
@@ -309,7 +310,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-
+                Intent intent= new Intent(ActivityDanhSachDongNuoc.this, ActivitySearchKhachHang.class);
+                startActivity(intent);
                 return true;
             default:break;
         }

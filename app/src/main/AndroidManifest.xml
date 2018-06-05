@@ -105,7 +105,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".ActivitySearchKhachHang"
             android:label="@string/title_activity_search_khach_hang"
-
+android:theme="@style/AppTheme.PopupTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" ></activity>
     </application>
 

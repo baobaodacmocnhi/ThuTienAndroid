@@ -77,7 +77,7 @@
         <item>Tạm Thu-Thu Hộ</item>
     </string-array>
     <string-array name="sort_array">
-        <item></item>
+        <item>MLT</item>
         <item>Thời Gian Tăng</item>
         <item>Thời Gian Giảm</item>
     </string-array>

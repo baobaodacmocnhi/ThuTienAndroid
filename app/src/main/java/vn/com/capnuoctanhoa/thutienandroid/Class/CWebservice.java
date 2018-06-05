@@ -509,6 +509,27 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String getDSHoaDonTon_DongNuoc(String DanhBo, String MaHDs)
+    {
+        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDonTon_DongNuoc";
+        String OPERATION_NAME = "TT_GetDSHoaDonTon_DongNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi=new PropertyInfo();
+        pi.setName("MaHDs");
+        pi.setValue(MaHDs);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     public String getDSHoaDon(String DanhBo)
     {
         String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon_DanhBo";

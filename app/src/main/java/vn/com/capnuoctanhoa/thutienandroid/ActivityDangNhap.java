@@ -120,21 +120,20 @@ public class ActivityDangNhap extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            String result = "";
             switch (strings[0]) {
                 case "DangNhap":
-                    String str = "";
-                    str = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (str.isEmpty() == false&&str.equals("[]")==false) {
-                        publishProgress(new String[]{"DangNhap",str});
+                    result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
+                    if (result.isEmpty() == false&&result.equals("[]")==false) {
+                        publishProgress(new String[]{"DangNhap",result});
                         return "true";
                     } else {
                         return "false";
                     }
                 case "DangXuat":
-                    String str2 = "";
-                    str2=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (str2.isEmpty() == false) {
-                        publishProgress(new String[]{"DangXuat",str2});
+                    result=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
+                    if (result.isEmpty() == false) {
+                        publishProgress(new String[]{"DangXuat",result});
                         return "true";
                     } else {
                         return "false";

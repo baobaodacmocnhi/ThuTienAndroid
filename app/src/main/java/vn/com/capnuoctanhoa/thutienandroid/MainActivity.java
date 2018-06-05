@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.FileName, MODE_PRIVATE);
 
-        ActionBar actionBar = getSupportActionBar();
-
         imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
         imgbtnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
         txtUser = (TextView) findViewById(R.id.txtUser);
 
+        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute("Version");
+        }
+
     }
 
     @Override
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
+
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
                 CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
             }
@@ -96,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
                 return;
             }
-            MyAsyncTask myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute("Version");
 
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));

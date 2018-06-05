@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHang;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
@@ -215,7 +217,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-
+                Intent intent= new Intent(ActivityDanhSachHanhThu.this, ActivitySearchKhachHang.class);
+                startActivity(intent);
                 return true;
             default:break;
         }
@@ -303,7 +306,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
-
+            entity.setModifyDate(jsonObject.getString("ModifyDate"));
             TongHD++;
             TongCong += Long.parseLong(jsonObject.getString("TongCong"));
 
