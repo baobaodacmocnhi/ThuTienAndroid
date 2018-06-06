@@ -32,11 +32,11 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DisplayMetrics displayMetrics=new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width=displayMetrics.widthPixels;
-        int height=displayMetrics.heightPixels;
-        getWindow().setLayout((int)(width*.9),(int)(height*.8));
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
+        getWindow().setLayout((int) (width * .9), (int) (height * .8));
 
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
@@ -62,13 +62,13 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -82,11 +82,13 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String str = "Danh Bộ: " + new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString() + " Khách Hàng: " + jsonObject.getString("HoTen");
-                        str += " Địa Chỉ: " + jsonObject.getString("DiaChi");
-                        str += " GB: " + jsonObject.getString("GiaBieu") + " ĐM: " + jsonObject.getString("DinhMuc");
-                        str += " Kỳ: " + jsonObject.getString("Ky") + " Tiêu Thụ: " + jsonObject.getString("TieuThu");
-                        str += " Tổng Cộng: " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ") + " Ngày Giải Trách: " + jsonObject.getString("NgayGiaiTrach");
+                        String str = "Danh Bộ: " + new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString()
+                                + "\nKhách Hàng: " + jsonObject.getString("HoTen")
+                                + "\nĐịa Chỉ: " + jsonObject.getString("DiaChi")
+                                + "\nGB: " + jsonObject.getString("GiaBieu") + " ĐM: " + jsonObject.getString("DinhMuc")
+                                + "\nKỳ: " + jsonObject.getString("Ky") + " Tiêu Thụ: " + jsonObject.getString("TieuThu")
+                                + "\nTổng Cộng: " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ")
+                                + "\nNgày Giải Trách: " + jsonObject.getString("NgayGiaiTrach");
                         arrayList.add(str);
                     }
                     break;
@@ -94,8 +96,9 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String str = "Danh Bộ: " + new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString() + " Khách Hàng: " + jsonObject.getString("HoTen");
-                        str += " Địa Chỉ: " + jsonObject.getString("DiaChi");
+                        String str = "Danh Bộ: " + new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString()
+                                + "\nKhách Hàng: " + jsonObject.getString("HoTen")
+                                + "\nĐịa Chỉ: " + jsonObject.getString("DiaChi");
                         arrayList.add(str);
                     }
                     break;

@@ -11,8 +11,6 @@
         style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:text="Tải Về"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +20,6 @@
         style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
         android:text="Tin Nhắn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDownload" />
@@ -35,7 +31,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Lọc"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spnFilter"
         app:layout_constraintTop_toTopOf="@+id/spnFilter" />
 
@@ -43,8 +39,6 @@
         android:id="@+id/spnFilter"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/filter_hanhthu_array"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +51,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Sắp Xếp"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spnSort"
         app:layout_constraintTop_toTopOf="@+id/spnSort" />
 
@@ -65,8 +59,6 @@
         android:id="@+id/spnSort"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/sort_array"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +78,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Từ Đợt"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spnFromDot"
         app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
 
@@ -94,8 +86,6 @@
         android:id="@+id/spnFromDot"
         android:layout_width="150dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:entries="@array/dot_array"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -107,7 +97,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Đến Đợt"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spnToDot"
         app:layout_constraintTop_toTopOf="@+id/spnToDot" />
 
@@ -115,8 +105,6 @@
         android:id="@+id/spnToDot"
         android:layout_width="150dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:entries="@array/dot_array"
         app:layout_constraintEnd_toEndOf="parent"
