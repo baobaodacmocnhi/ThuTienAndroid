@@ -11,6 +11,8 @@ public class CViewEntity {
     private String Row2b;
     private String Row3a;
     private String Row3b;
+    private String Row4a;
+    private String Row4b;
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
@@ -27,6 +29,8 @@ public class CViewEntity {
         Row2b = "";
         Row3a = "";
         Row3b = "";
+        Row4a = "";
+        Row4b = "";
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
@@ -95,6 +99,22 @@ public class CViewEntity {
 
     public void setRow3b(String row3b) {
         Row3b = row3b;
+    }
+
+    public String getRow4a() {
+        return Row4a;
+    }
+
+    public void setRow4a(String row4a) {
+        Row4a = row4a;
+    }
+
+    public String getRow4b() {
+        return Row4b;
+    }
+
+    public void setRow4b(String row4b) {
+        Row4b = row4b;
     }
 
     public Boolean getGiaiTrach() {

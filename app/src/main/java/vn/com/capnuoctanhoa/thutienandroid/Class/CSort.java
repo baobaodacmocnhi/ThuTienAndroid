@@ -22,9 +22,9 @@ public class CSort implements Comparator<CViewEntity> {
                 else
                     return (-1 * order);
                 default://do Row2a hanhthu & dongnuoc cùng lưu MLT
-                    if (o1.getRow2a().toString().compareTo(o2.getRow2a().toString()) == 0)
+                    if (o1.getRow1a().toString().compareTo(o2.getRow1a().toString()) == 0)
                         return 0;
-                    else if (o1.getRow2a().toString().compareTo(o2.getRow2a().toString()) < 0)
+                    else if (o1.getRow1a().toString().compareTo(o2.getRow1a().toString()) < 0)
                         return order;
                     else
                         return (-1 * order);

@@ -103,10 +103,11 @@
             android:name=".DongNuoc.ActivityDongTien"
             android:label="@string/title_activity_dong_tien"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".ActivitySearchKhachHang"
+        <activity
+            android:name=".ActivitySearchKhachHang"
             android:label="@string/title_activity_search_khach_hang"
-android:theme="@style/AppTheme.PopupTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize" ></activity>
+            android:theme="@style/AppTheme.PopupTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
     </application>
 
 </manifest>

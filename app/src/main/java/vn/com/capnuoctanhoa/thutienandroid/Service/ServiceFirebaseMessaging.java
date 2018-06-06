@@ -53,20 +53,20 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
-            CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+            CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             Intent intent = new Intent(this, ActivityDanhSachHanhThu.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
-            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
-            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("ActionDetail"), "true");
+            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             Intent intent = new Intent(this, ActivityDanhSachDongNuoc.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

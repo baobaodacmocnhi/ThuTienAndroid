@@ -10,9 +10,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.AttributeSet;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -282,6 +286,9 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+
+
+
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -414,12 +421,17 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             CViewEntity entity = new CViewEntity();
             entity.setSTT(String.valueOf(listParent.size() + 1));
             entity.setID(jsonObject.getString("ID"));
-            entity.setRow1a(jsonObject.getString("DiaChi"));
+
             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
-            entity.setRow2a(strMLT);
+            entity.setRow1a(strMLT);
+
             String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-            entity.setRow2b(strDanhBo);
+            entity.setRow2a(strDanhBo);
+
             entity.setRow3a(jsonObject.getString("HoTen"));
+
+            entity.setRow4a(jsonObject.getString("DiaChi"));
+
             entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
@@ -449,15 +461,15 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
                         if (numGiaiTrach == numRowChild) {
                             CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "GiaiTrach", "true");
-                            entity.setRow3b("Giải Trách");
+                            entity.setRow2b("Giải Trách");
                             entity.setGiaiTrach(true);
                         } else if (numTamThu == numRowChild) {
                             CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "TamThu", "true");
-                            entity.setRow3b("Tạm Thu");
+                            entity.setRow2b("Tạm Thu");
                             entity.setTamThu(true);
                         } else if (numThuHo == numRowChild) {
                             CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "ThuHo", "true");
-                            entity.setRow3b("Thu Hộ");
+                            entity.setRow2b("Thu Hộ");
                             entity.setThuHo(true);
                         }
                         ///xét lệnh hủy riêng

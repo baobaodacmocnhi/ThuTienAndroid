@@ -32,18 +32,20 @@ public class ActivityDongTien extends AppCompatActivity {
     private Button btnDongTien;
     private ListView lstView;
     private ArrayList<CHoaDon> lstHoaDon;
-    private long TongCong;
-    private String MaHDs;
-    private JSONArray jsonArrayHoaDonTon=null;
+    private ArrayList<String> arrayList;
+    private ArrayAdapter<String> arrayAdapter;
+    private long TongCong = 0;
+    private String selectedMaHDs = "";
+    private String lstMaHD = "";
+    private String danhBo = "";
+    private JSONArray jsonArrayHoaDonTon = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dong_tien);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        TongCong = 0;
-        MaHDs = "";
 
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
 
@@ -80,16 +82,16 @@ public class ActivityDongTien extends AppCompatActivity {
             public void onClick(View v) {
                 SparseBooleanArray sp = lstView.getCheckedItemPositions();
                 StringBuilder sb = new StringBuilder();
-                MaHDs = "";
+                selectedMaHDs = "";
                 for (int i = 0; i < sp.size(); i++) {
 //                    int key = sp.keyAt(i);
 //                    boolean value = sp.get(key);
                     if (sp.valueAt(i) == true) {
                         CHoaDon hoadon = lstHoaDon.get(sp.keyAt(i));
-                        if (MaHDs.equals("") == true)
-                            MaHDs = hoadon.MaHD;
+                        if (selectedMaHDs.equals("") == true)
+                            selectedMaHDs = hoadon.MaHD;
                         else
-                            MaHDs += "," + hoadon.MaHD;
+                            selectedMaHDs += "," + hoadon.MaHD;
                     }
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -104,19 +106,21 @@ public class ActivityDongTien extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("GetHoaDonTon");
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,13 +179,13 @@ public class ActivityDongTien extends AppCompatActivity {
     private void fillDongNuoc(String MaDN) {
         try {
             lstHoaDon = new ArrayList<CHoaDon>();
-            ArrayList<String> arrayList = new ArrayList<String>();
+            arrayList = new ArrayList<String>();
 
             for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
                 JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
                 if (jsonObject.getString("ID").equals(MaDN) == true) {
                     edtMaDN.setText(MaDN);
-
+                    danhBo = jsonObject.getString("DanhBo");
                     if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
                         for (int j = 0; j < CLocal.jsonDongNuocChild.length(); j++) {
                             JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(j);
@@ -193,16 +197,31 @@ public class ActivityDongTien extends AppCompatActivity {
                                 entity.setTongCong(jsonObjectChild.getString("TongCong"));
                                 lstHoaDon.add(entity);
 
+                                if (lstMaHD.isEmpty() == true)
+                                    lstMaHD = entity.getMaHD();
+                                else
+                                    lstMaHD += "," + entity.getMaHD();
+
                                 arrayList.add(jsonObjectChild.getString("Ky") + " : " + CLocal.formatMoney(jsonObjectChild.getString("TongCong"), "đ"));
                             }
                         }
                     break;
                 }
             }
-            if(jsonArrayHoaDonTon!=null)
-            {
-                for (int k = 0; k < jsonArrayHoaDonTon.length(); k++)
-                {
+
+            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+            lstView.setAdapter(arrayAdapter);
+            txtTongCong.setText(CLocal.formatMoney("0", "đ"));
+
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void fillHoaDonTon() {
+        if (jsonArrayHoaDonTon != null)
+            try {
+                for (int k = 0; k < jsonArrayHoaDonTon.length(); k++) {
                     JSONObject jsonObjectHoaDonTon = jsonArrayHoaDonTon.getJSONObject(k);
                     CHoaDon entity = new CHoaDon();
                     entity.setMaHD(jsonObjectHoaDonTon.getString("MaHD"));
@@ -212,14 +231,10 @@ public class ActivityDongTien extends AppCompatActivity {
 
                     arrayList.add(jsonObjectHoaDonTon.getString("Ky") + " : " + CLocal.formatMoney(jsonObjectHoaDonTon.getString("TongCong"), "đ"));
                 }
+                arrayAdapter.notifyDataSetChanged();
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
             }
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
-            lstView.setAdapter(arrayAdapter);
-            txtTongCong.setText(CLocal.formatMoney("0", "đ"));
-
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
@@ -238,19 +253,20 @@ public class ActivityDongTien extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            String result="";
+            String result = "";
             switch (strings[0]) {
                 case "DongTien":
-                    if(MaHDs.equals("")==true)
+                    if (selectedMaHDs.equals("") == true)
                         return "CHƯA CHỌN HÓA ĐƠN";
-                     result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), MaHDs);
+                    result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), selectedMaHDs);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";
                     else
                         return "THẤT BẠI";
                 case "GetHoaDonTon":
-                     result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), MaHDs);
-                    publishProgress(new String[]{"GetHoaDonTon",result});
+                    result = ws.getDSHoaDonTon_DongNuoc(danhBo, lstMaHD);
+                    publishProgress(new String[]{"GetHoaDonTon", result});
+                    return "false";
             }
             return null;
         }
@@ -262,7 +278,8 @@ public class ActivityDongTien extends AppCompatActivity {
                 switch (values[0]) {
                     case "GetHoaDonTon":
                         try {
-                            jsonArrayHoaDonTon=new JSONArray(values[1]);
+                            jsonArrayHoaDonTon = new JSONArray(values[1]);
+                            fillHoaDonTon();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -277,6 +294,7 @@ public class ActivityDongTien extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+            if(s.equals("false")==false)
             CLocal.showPopupMessage(ActivityDongTien.this, s);
         }
 

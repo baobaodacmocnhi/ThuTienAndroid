@@ -189,6 +189,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
+
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -290,19 +291,24 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             CViewEntity entity = new CViewEntity();
             entity.setSTT(String.valueOf(list.size() + 1));
             entity.setID(jsonObject.getString("ID"));
-            entity.setRow1a(jsonObject.getString("DiaChi"));
-            entity.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+
             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
-            entity.setRow2a(strMLT);
+            entity.setRow1a(strMLT);
+            entity.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+
             String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-            entity.setRow2b(strDanhBo);
-            entity.setRow3a(jsonObject.getString("HoTen"));
+            entity.setRow2a(strDanhBo);
             if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true)
-                entity.setRow3b("Giải Trách");
+                entity.setRow2b("Giải Trách");
             else if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                entity.setRow3b("Tạm Thu");
+                entity.setRow2b("Tạm Thu");
             else if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true)
-                entity.setRow3b("Thu Hộ");
+                entity.setRow2b("Thu Hộ");
+
+            entity.setRow3a(jsonObject.getString("HoTen"));
+
+            entity.setRow4a(jsonObject.getString("DiaChi"));
+
             entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));

@@ -22,11 +22,13 @@
         android:layout_marginStart="8dp"
         android:text="Row1a"
         android:textAlignment="textEnd"
+        android:textColor="@color/colorText"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/lvRow1b"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="end" />
 
     <TextView
         android:id="@+id/lvRow1b"
@@ -39,6 +41,7 @@
         android:gravity="end"
         android:text="Row1b"
         android:textAlignment="textStart"
+        android:textColor="@color/colorText"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

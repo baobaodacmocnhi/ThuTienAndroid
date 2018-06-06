@@ -3,7 +3,7 @@
     <item
         android:id="@+id/popup_action_DongNuoc"
         android:enabled="true"
-        android:title="Đóng Nước Lần 1" />
+        android:title="Đóng Nước Lần 1"/>
     <item
         android:id="@+id/popup_action_DongNuoc2"
         android:enabled="true"

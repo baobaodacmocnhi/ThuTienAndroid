@@ -25,7 +25,6 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
     Button btnTimKiem;
     ListView lstView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -49,6 +49,8 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         TextView Row2b;
         TextView Row3a;
         TextView Row3b;
+        TextView Row4a;
+        TextView Row4b;
         ConstraintLayout layoutChild;
     }
 
@@ -67,6 +69,8 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
             holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
             holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
+            holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
+            holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
             holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
@@ -82,16 +86,15 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
         holder.Row2b.setText(map.getRow2b());
         holder.Row3a.setText(map.getRow3a());
         holder.Row3b.setText(map.getRow3b());
+        holder.Row4a.setText(map.getRow4a());
+        holder.Row4b.setText(map.getRow4b());
 
-        if (map.getGiaiTrach() == true)
-//            convertView.setBackgroundColor(CLocal.Color_GiaiTrach);
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
-        else if (map.getTamThu() == true || map.getThuHo() == true)
-//            convertView.setBackgroundColor(CLocal.Color_TamThu);
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
-        else
-//            convertView.setBackgroundColor(CLocal.Color_ChuaThu);
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+//        if (map.getGiaiTrach() == true)
+//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
+//        else if (map.getTamThu() == true || map.getThuHo() == true)
+//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
+//        else
+//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
 //        if (map.getLenhHuy() == true)
 //            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
@@ -139,7 +142,9 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
                                 || mOriginalValues.get(i).getRow2a().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow2b().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow3a().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())) {
+                                || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow4a().toLowerCase().startsWith(constraint.toString())
+                                || mOriginalValues.get(i).getRow4b().toLowerCase().startsWith(constraint.toString())) {
                             CViewEntity entity = new CViewEntity();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());
@@ -149,6 +154,8 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
                             entity.setRow2b(mOriginalValues.get(i).getRow2b());
                             entity.setRow3a(mOriginalValues.get(i).getRow3a());
                             entity.setRow3b(mOriginalValues.get(i).getRow3b());
+                            entity.setRow4a(mOriginalValues.get(i).getRow4a());
+                            entity.setRow4b(mOriginalValues.get(i).getRow4b());
                             entity.setGiaiTrach(mOriginalValues.get(i).getGiaiTrach());
                             entity.setTamThu(mOriginalValues.get(i).getTamThu());
                             entity.setThuHo(mOriginalValues.get(i).getThuHo());
