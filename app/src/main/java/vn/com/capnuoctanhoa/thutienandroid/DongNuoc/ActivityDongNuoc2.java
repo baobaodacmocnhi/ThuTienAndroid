@@ -297,7 +297,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
-                        String result= ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
+                        String result= ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), CLocal.MaNV);
                         if(Boolean.parseBoolean(result)==true)
                             return "THÀNH CÔNG";
                         else

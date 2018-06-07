@@ -8,15 +8,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.AttributeSet;
-import android.view.InflateException;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +23,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -55,11 +51,15 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
     private Button btnDownload, btnShowMess;
-    private Spinner spnFilter, spnSort;
+    private Spinner spnFilter, spnSort,spnNhanVien;
     private ExpandableListView lstView;
     private CViewAdapterGroup cViewAdapterGroup;
     private ArrayList<CViewEntity> listParent;
     private ArrayList<CViewEntityChild> listChild;
+    private LinearLayout layout_NhanVien;
+    private ArrayList<String> spnID_NhanVien;
+    private   ArrayList<String> spnName_NhanVien;
+    private String selectedMaNV ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,35 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
+        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ExpandableListView) findViewById(R.id.lstView);
+        layout_NhanVien = (LinearLayout) findViewById(R.id.layout_NhanVien);
+
+        if (CLocal.ToTruong == true) {
+            layout_NhanVien.setVisibility(View.VISIBLE);
+            try {
+                if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                    spnID_NhanVien=new ArrayList<>();
+                    spnName_NhanVien=new ArrayList<>();
+                    for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                        if(Boolean.parseBoolean(jsonObject.getString("DongNuoc"))==true) {
+                            spnID_NhanVien.add(jsonObject.getString("MaND"));
+                            spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                        }
+                    }
+                }
+                ArrayAdapter<String> adapter =new ArrayAdapter<String>(ActivityDanhSachDongNuoc.this,android.R.layout.simple_spinner_item, spnName_NhanVien);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnNhanVien.setAdapter(adapter);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+            layout_NhanVien.setVisibility(View.GONE);
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +261,18 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
 
+        spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedMaNV =spnID_NhanVien.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -288,7 +328,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         inflater.inflate(R.menu.menu_search, menu);
 
 
-
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -311,16 +350,16 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-                Intent intent= new Intent(ActivityDanhSachDongNuoc.this, ActivitySearchKhachHang.class);
+                Intent intent = new Intent(ActivityDanhSachDongNuoc.this, ActivitySearchKhachHang.class);
                 startActivity(intent);
                 return true;
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -522,13 +561,14 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
-                CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                if (CLocal.ToTruong == false)
+                    selectedMaNV =CLocal.MaNV;
+                CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 publishProgress("true");
             } catch (Exception ex) {
                 publishProgress("false");
             }
-
             return null;
         }
 
@@ -538,18 +578,9 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (values != null) {
                 try {
                     if (Boolean.parseBoolean(values[0]) == true) {
-                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
-                        editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
-                        editor.commit();
-//                    CLocal.jsonDongNuoc = new JSONArray(array[0]);
-//                    CLocal.jsonDongNuocChild = new JSONArray(array[1]);
                         loadListView();
                     } else {
-                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.putString("jsonDongNuoc", "");
-                        editor.putString("jsonDongNuocChild", "");
-                        editor.commit();
+                        CLocal.jsonDongNuoc = CLocal.jsonDongNuocChild = null;
                     }
                 } catch (Exception ex) {
 

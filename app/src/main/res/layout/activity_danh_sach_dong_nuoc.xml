@@ -7,6 +7,46 @@
     tools:context=".DongNuoc.ActivityDanhSachDongNuoc"
     android:theme="@style/AppTheme">
 
+    <LinearLayout
+        android:id="@+id/layout_NhanVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nhân Viên:"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <Spinner
+            android:id="@+id/spnNhanVien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="8dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtFromDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="6"
+        android:hint="Chọn Ngày"
+        android:inputType="date"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/layout_NhanVien" />
+
     <EditText
         android:id="@+id/edtToDate"
         android:layout_width="wrap_content"
@@ -19,19 +59,6 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="@+id/edtFromDate" />
-
-    <EditText
-        android:id="@+id/edtFromDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="6"
-        android:hint="Chọn Ngày"
-        android:inputType="date"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnDownload"

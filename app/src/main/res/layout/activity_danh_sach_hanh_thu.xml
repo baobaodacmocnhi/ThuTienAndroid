@@ -6,14 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".HanhThu.ActivityDanhSachHanhThu">
 
+    <LinearLayout
+        android:id="@+id/layout_NhanVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nhân Viên:"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <Spinner
+            android:id="@+id/spnNhanVien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="8dp" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnDownload"
         style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Tải Về"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_NhanVien" />
 
     <Button
         android:id="@+id/btnShowMess"
@@ -72,6 +99,45 @@
         app:layout_constraintTop_toBottomOf="@+id/spnSort" />
 
     <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Năm"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/spnNam"
+        app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+    <Spinner
+        android:id="@+id/spnNam"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:entries="@array/nam_array"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_NhanVien" />
+
+    <Spinner
+        android:id="@+id/spnKy"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/ky_array"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnNam" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Kỳ"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/spnKy"
+        app:layout_constraintTop_toTopOf="@+id/spnKy" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,9 +152,10 @@
         android:id="@+id/spnFromDot"
         android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_marginTop="8dp"
         android:entries="@array/dot_array"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spnKy" />
 
     <TextView
         android:id="@+id/textView4"

@@ -258,7 +258,7 @@ public class ActivityDongTien extends AppCompatActivity {
                 case "DongTien":
                     if (selectedMaHDs.equals("") == true)
                         return "CHƯA CHỌN HÓA ĐƠN";
-                    result = ws.dangNganDongNuoc(CLocal.sharedPreferencesre.getString("MaNV", ""), selectedMaHDs);
+                    result = ws.dangNganDongNuoc(CLocal.MaNV, selectedMaHDs);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";
                     else

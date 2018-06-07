@@ -95,15 +95,21 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
             }
-            if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
-                Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
-                return;
-            }
-
+//            if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+//                Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
+//                return;
+//            }
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
-                txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
+                CLocal.MaNV=CLocal.sharedPreferencesre.getString("MaNV", "");
+                CLocal.HoTen=CLocal.sharedPreferencesre.getString("HoTen", "");
+                txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
+                if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true&&CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
+                {
+                    CLocal.ToTruong=CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
+                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogout));

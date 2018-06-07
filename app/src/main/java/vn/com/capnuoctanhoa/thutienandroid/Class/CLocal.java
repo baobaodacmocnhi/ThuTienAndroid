@@ -44,8 +44,17 @@ public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String FileName = "my_data";
-    public static  SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    public static JSONArray jsonHanhThu, jsonDongNuoc,jsonDongNuocChild,jsonMessage;
+    public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage,jsonNhanVien;
+    public static String MaNV="",HoTen="";
+    public static  boolean ToTruong=false;
+
+    public  void CLocal()
+    {
+        MaNV=HoTen="";
+        ToTruong=false;
+        jsonHanhThu=jsonDongNuoc=jsonDongNuocChild=jsonMessage=jsonNhanVien=null;
+    }
 
     public static boolean checkNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -89,7 +98,7 @@ public class CLocal {
                 if (jsonObject.getString("ID").equals(ID)) {
                     jsonObject.put(Key, Value);
                     //thiết lập ModifyDate để sort
-                    jsonObject.put("ModifyDate",new Date().toString());
+                    jsonObject.put("ModifyDate", new Date().toString());
                     break;
                 }
             }
@@ -98,9 +107,9 @@ public class CLocal {
         }
     }
 
-    public static String formatMoney(String price,String symbol) {
+    public static String formatMoney(String price, String symbol) {
 
-        NumberFormat format =new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
+        NumberFormat format = new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
         format.setCurrency(Currency.getInstance(Locale.US));//Or default locale
 
         price = (!TextUtils.isEmpty(price)) ? price : "0";
@@ -114,12 +123,12 @@ public class CLocal {
                 price = price.substring(0, centsIndex);
             }
         }
-        price = String.format("%s "+symbol, price);
+        price = String.format("%s " + symbol, price);
         return price;
     }
 
     public File createFile(Activity activity) {
-        File filesDir =activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File filesDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = null;
         try {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -244,7 +253,7 @@ public class CLocal {
         return null;
     }
 
-    public static String getDataColumn(Context context, Uri uri, String selection,String[] selectionArgs) {
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";

@@ -123,53 +123,40 @@ public class ActivityDangNhap extends AppCompatActivity {
             String result = "";
             switch (strings[0]) {
                 case "DangNhap":
+                    try {
                     result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
                     if (result.isEmpty() == false&&result.equals("[]")==false) {
-                        publishProgress(new String[]{"DangNhap",result});
+                        JSONArray jsonArray = new JSONArray(result);
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                        editor.putString("Username", jsonObject.getString("TaiKhoan"));
+                        editor.putString("Password", jsonObject.getString("MatKhau"));
+                        editor.putString("MaNV", jsonObject.getString("MaND"));
+                        editor.putString("HoTen", jsonObject.getString("HoTen"));
+                        editor.putString("jsonHanhThu", "");
+                        editor.putString("jsonDongNuoc", "");
+                        editor.putString("jsonDongNuocChild", "");
+                        editor.putString("jsonMessage", "");
+                        if(Boolean.parseBoolean(jsonObject.getString("ToTruong"))==true)
+                        {
+                            editor.putString("jsonNhanVien", ws.getDSNhanVien(jsonObject.getString("MaTo")));
+                            editor.putBoolean("ToTruong",Boolean.parseBoolean(jsonObject.getString("ToTruong")));
+                        }
+                        editor.putBoolean("Login", true);
+                        editor.commit();
+
+                        publishProgress("DangNhap");
                         return "true";
                     } else {
                         return "false";
+                    }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 case "DangXuat":
+                    try {
                     result=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
                     if (result.isEmpty() == false) {
-                        publishProgress(new String[]{"DangXuat",result});
-                        return "true";
-                    } else {
-                        return "false";
-                    }
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            if (values != null) {
-                switch (values[0]) {
-                    case "DangNhap":
-                        try {
-                            JSONArray jsonArray = new JSONArray(values[1]);
-                            JSONObject jsonObject = jsonArray.getJSONObject(0);
-                            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                            editor.putString("Username", jsonObject.getString("TaiKhoan"));
-                            editor.putString("Password", jsonObject.getString("MatKhau"));
-                            editor.putString("MaNV", jsonObject.getString("MaND"));
-                            editor.putString("HoTen", jsonObject.getString("HoTen"));
-                            editor.putString("jsonHanhThu", "");
-                            editor.putString("jsonDongNuoc", "");
-                            editor.putString("jsonDongNuocChild", "");
-                            editor.putString("jsonMessage", "");
-                            editor.putBoolean("Login", true);
-                            editor.commit();
-
-                            Reload();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "DangXuat":
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                         editor.putString("Username", "");
                         editor.putString("Password", "");
@@ -179,9 +166,33 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");
                         editor.putString("jsonMessage", "");
+                        editor.putString("jsonNhanVien", "");
+                        editor.putBoolean("ToTruong", false);
                         editor.putBoolean("Login", false);
                         editor.commit();
-                        CLocal.jsonHanhThu=CLocal.jsonDongNuoc=CLocal.jsonDongNuocChild=CLocal.jsonMessage=null;
+
+                        publishProgress("DangXuat");
+                        return "true";
+                    } else {
+                        return "false";
+                    }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "DangNhap":
+                            Reload();
+                        break;
+                    case "DangXuat":
+                        new CLocal();
                         break;
                 }
             }

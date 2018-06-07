@@ -7,7 +7,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,12 +41,16 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
-    private Spinner spnFilter, spnSort,spnFromDot, spnToDot;
+    private Spinner spnFilter, spnSort,spnFromDot, spnToDot,spnNhanVien,spnNam,spnKy;
     private ListView lstView;
     private TextView txtTongHD, txtTongCong;
     private CViewAdapter cViewAdapter;
     private ArrayList<CViewEntity> list;
     private long TongHD, TongCong;
+    private LinearLayout layout_NhanVien;
+    ArrayList<String> spnID_NhanVien;
+    ArrayList<String> spnName_NhanVien;
+    private String selectedMaNV ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +65,39 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnSort = (Spinner) findViewById(R.id.spnSort);
         spnFromDot = (Spinner) findViewById(R.id.spnFromDot);
         spnToDot = (Spinner) findViewById(R.id.spnToDot);
+        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+        spnNam = (Spinner) findViewById(R.id.spnNam);
+        spnKy = (Spinner) findViewById(R.id.spnKy);
         lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
+        layout_NhanVien = (LinearLayout) findViewById(R.id.layout_NhanVien);
+
+        if (CLocal.ToTruong == true) {
+            layout_NhanVien.setVisibility(View.VISIBLE);
+            try {
+                if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                    spnID_NhanVien=new ArrayList<>();
+                    spnName_NhanVien=new ArrayList<>();
+                    for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                        if(Boolean.parseBoolean(jsonObject.getString("HanhThu"))==true) {
+                            spnID_NhanVien.add(jsonObject.getString("MaND"));
+                            spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                        }
+                    }
+                }
+                ArrayAdapter<String> adapter =new ArrayAdapter<String>(ActivityDanhSachHanhThu.this,android.R.layout.simple_spinner_item, spnName_NhanVien);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnNhanVien.setAdapter(adapter);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+            layout_NhanVien.setVisibility(View.GONE);
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +207,18 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedMaNV =spnID_NhanVien.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -338,8 +384,15 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 //            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-//            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), currentDate.format(new Date())));
-            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("MaNV", ""), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+//            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("selectedMaNV", ""), currentDate.format(new Date())));
+            try {
+                if (CLocal.ToTruong == false)
+                    selectedMaNV =CLocal.MaNV;
+                CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV,spnNam.getSelectedItem().toString(),spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                publishProgress("true");
+            } catch (Exception ex) {
+                publishProgress("false");
+            }
             return null;
         }
 
@@ -348,12 +401,11 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("jsonHanhThu", values[0]);
-                    editor.commit();
-                    CLocal.jsonHanhThu = new JSONArray(values[0]);
-                    loadListView();
+                    if (Boolean.parseBoolean(values[0]) == true){
+                        loadListView();
+                    }
                 } catch (Exception e) {
+                    CLocal.jsonHanhThu=null;
                 }
             }
         }

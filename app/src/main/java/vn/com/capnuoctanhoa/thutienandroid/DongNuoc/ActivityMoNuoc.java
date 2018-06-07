@@ -299,7 +299,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
-                        String result= ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV",""));
+                        String result= ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.MaNV);
                         if(Boolean.parseBoolean(result)==true)
                             return "THÀNH CÔNG";
                         else

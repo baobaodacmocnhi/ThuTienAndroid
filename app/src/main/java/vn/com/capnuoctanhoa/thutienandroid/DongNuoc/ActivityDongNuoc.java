@@ -326,7 +326,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     }
                     String result = ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
                             imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
-                            spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.sharedPreferencesre.getString("MaNV", ""));
+                            spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";
                     else
