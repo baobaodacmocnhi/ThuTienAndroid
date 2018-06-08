@@ -7,147 +7,154 @@
     tools:context=".DongNuoc.ActivityDanhSachDongNuoc"
     android:theme="@style/AppTheme">
 
-    <LinearLayout
-        android:id="@+id/layout_NhanVien"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layoutAutoHide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layoutNhanVien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nhân Viên:"
+                android:textSize="14sp"
+                tools:layout_editor_absoluteX="145dp"
+                tools:layout_editor_absoluteY="48dp" />
+
+            <Spinner
+                android:id="@+id/spnNhanVien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="8dp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView24"
+            android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nhân Viên:"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Sắp Xếp"
             android:textSize="14sp"
-            tools:layout_editor_absoluteX="145dp"
-            tools:layout_editor_absoluteY="48dp" />
+            app:layout_constraintEnd_toStartOf="@+id/spnSort"
+            app:layout_constraintTop_toTopOf="@+id/spnSort" />
 
         <Spinner
-            android:id="@+id/spnNhanVien"
+            android:id="@+id/spnSort"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:entries="@array/sort_array"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
+
+        <Spinner
+            android:id="@+id/spnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:entries="@array/filter_dongnuoc_array"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtToDate" />
+
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="8dp" />
-    </LinearLayout>
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Từ Ngày"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtFromDate" />
 
-    <EditText
-        android:id="@+id/edtFromDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="6"
-        android:hint="Chọn Ngày"
-        android:inputType="date"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/layout_NhanVien" />
+        <Button
+            android:id="@+id/btnShowMess"
+            style="@style/ButtonThuTien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tin Nhắn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnDownload" />
 
-    <EditText
-        android:id="@+id/edtToDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="6"
-        android:hint="Chọn Ngày"
-        android:inputType="date"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="@+id/edtFromDate" />
+        <Button
+            android:id="@+id/btnDownload"
+            style="@style/ButtonThuTien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tải"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtFromDate" />
 
-    <Button
-        android:id="@+id/btnDownload"
-        style="@style/ButtonThuTien"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tải"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtFromDate" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Lọc"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/spnFilter"
+            app:layout_constraintTop_toTopOf="@+id/spnFilter" />
 
-    <Button
-        android:id="@+id/btnShowMess"
-        style="@style/ButtonThuTien"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tin Nhắn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDownload" />
+        <EditText
+            android:id="@+id/edtFromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="6"
+            android:hint="Chọn Ngày"
+            android:inputType="date"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/layoutNhanVien" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Từ Ngày"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edtFromDate" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Đến Ngày"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/edtFromDate"
+            app:layout_constraintTop_toTopOf="@+id/edtToDate" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Đến Ngày"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/edtFromDate"
-        app:layout_constraintTop_toTopOf="@+id/edtToDate" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Lọc"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/spnFilter"
-        app:layout_constraintTop_toTopOf="@+id/spnFilter" />
-
-    <Spinner
-        android:id="@+id/spnFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:entries="@array/filter_dongnuoc_array"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtToDate" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Sắp Xếp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/spnSort"
-        app:layout_constraintTop_toTopOf="@+id/spnSort" />
-
-    <Spinner
-        android:id="@+id/spnSort"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginTop="8dp"
-        android:entries="@array/sort_array"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
+        <EditText
+            android:id="@+id/edtToDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="6"
+            android:hint="Chọn Ngày"
+            android:inputType="date"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/edtFromDate" />
+    </android.support.constraint.ConstraintLayout>
 
     <ExpandableListView
         android:id="@+id/lstView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShowMess"
+        app:layout_constraintTop_toBottomOf="@+id/layoutAutoHide"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 

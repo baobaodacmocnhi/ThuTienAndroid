@@ -66,7 +66,6 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-
             default:
                 break;
         }

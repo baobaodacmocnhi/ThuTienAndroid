@@ -3,12 +3,15 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -16,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
@@ -38,7 +42,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHang;
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapterGroup;
@@ -51,20 +55,25 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
     private Button btnDownload, btnShowMess;
-    private Spinner spnFilter, spnSort,spnNhanVien;
+    private Spinner spnFilter, spnSort, spnNhanVien;
     private ExpandableListView lstView;
     private CViewAdapterGroup cViewAdapterGroup;
     private ArrayList<CViewEntity> listParent;
     private ArrayList<CViewEntityChild> listChild;
-    private LinearLayout layout_NhanVien;
+    private LinearLayout layoutNhanVien;
+    private ConstraintLayout layoutAutoHide;
     private ArrayList<String> spnID_NhanVien;
-    private   ArrayList<String> spnName_NhanVien;
-    private String selectedMaNV ="";
+    private ArrayList<String> spnName_NhanVien;
+    private String selectedMaNV = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_dong_nuoc);
+
+        ///clear notifications
+        NotificationManager notificationManager = (NotificationManager) ActivityDanhSachDongNuoc.this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -76,33 +85,31 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         spnSort = (Spinner) findViewById(R.id.spnSort);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ExpandableListView) findViewById(R.id.lstView);
-        layout_NhanVien = (LinearLayout) findViewById(R.id.layout_NhanVien);
+        layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
+        layoutAutoHide=(ConstraintLayout) findViewById(R.id.layoutAutoHide);
 
         if (CLocal.ToTruong == true) {
-            layout_NhanVien.setVisibility(View.VISIBLE);
+            layoutNhanVien.setVisibility(View.VISIBLE);
             try {
                 if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
-                    spnID_NhanVien=new ArrayList<>();
-                    spnName_NhanVien=new ArrayList<>();
+                    spnID_NhanVien = new ArrayList<>();
+                    spnName_NhanVien = new ArrayList<>();
                     for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
-                        if(Boolean.parseBoolean(jsonObject.getString("DongNuoc"))==true) {
+                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
                             spnID_NhanVien.add(jsonObject.getString("MaND"));
                             spnName_NhanVien.add(jsonObject.getString("HoTen"));
                         }
                     }
                 }
-                ArrayAdapter<String> adapter =new ArrayAdapter<String>(ActivityDanhSachDongNuoc.this,android.R.layout.simple_spinner_item, spnName_NhanVien);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityDanhSachDongNuoc.this, android.R.layout.simple_spinner_item, spnName_NhanVien);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnNhanVien.setAdapter(adapter);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else
-            layout_NhanVien.setVisibility(View.GONE);
+        } else
+            layoutNhanVien.setVisibility(View.GONE);
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,7 +271,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedMaNV =spnID_NhanVien.get(position);
+                selectedMaNV = spnID_NhanVien.get(position);
             }
 
             @Override
@@ -313,6 +320,27 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 return true;
             }
         });
+
+        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    layoutAutoHide.setVisibility(View.GONE);
+                }
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    layoutAutoHide.setVisibility(View.VISIBLE);
+                }
+                mLastFirstVisibleItem=firstVisibleItem;
+            }
+        });
     }
 
     @Override
@@ -355,7 +383,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-                Intent intent = new Intent(ActivityDanhSachDongNuoc.this, ActivitySearchKhachHang.class);
+                Intent intent = new Intent(ActivityDanhSachDongNuoc.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             default:
@@ -562,9 +590,17 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 if (CLocal.ToTruong == false)
-                    selectedMaNV =CLocal.MaNV;
+                    selectedMaNV = CLocal.MaNV;
                 CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                if (CLocal.jsonDongNuoc != null) {
+                    editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+                    editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+                }
+                if (CLocal.jsonMessage != null)
+                    editor.putString("jsonMessage", CLocal.jsonMessage.toString());
+                editor.commit();
                 publishProgress("true");
             } catch (Exception ex) {
                 publishProgress("false");

@@ -35,6 +35,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         //Calling method to generate notification
         PendingIntent pendingIntent = null;
         Intent intent;
+//        Random random = new Random();
+//        int UNIQUE_INT_VALUE_FOR_EVERY_CALL=random.nextInt(9999 - 1000) + 1000;;
+        int UNIQUE_INT_VALUE_FOR_EVERY_CALL = 0;
         if (remoteMessage.getData().get("Action").equals("DangXuat")) {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             editor.putString("Username", "");
@@ -50,27 +53,27 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             CLocal.jsonHanhThu = CLocal.jsonDongNuoc = CLocal.jsonDongNuocChild = CLocal.jsonMessage = null;
 
             intent = new Intent(this, ActivityDangNhap.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
             CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
-             intent = new Intent(this, ActivityDanhSachHanhThu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            intent = new Intent(this, ActivityDanhSachHanhThu.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
             CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
-             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            intent = new Intent(this, ActivityDanhSachDongNuoc.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
             CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 //            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
-             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            intent = new Intent(this, ActivityDanhSachDongNuoc.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
         try {
@@ -137,8 +140,8 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         }
 
         Random random = new Random();
-//        int id = random.nextInt(9999 - 1000) + 1000;
-        int id = 1000;
+        int id = random.nextInt(9999 - 1000) + 1000;
+//        int id = 1000;
         notificationManager.notify(id, notificationBuilder.build());
     }
 

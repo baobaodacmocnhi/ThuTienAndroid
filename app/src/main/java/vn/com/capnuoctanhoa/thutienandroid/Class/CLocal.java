@@ -49,7 +49,7 @@ public class CLocal {
     public static String MaNV="",HoTen="";
     public static  boolean ToTruong=false;
 
-    public  void CLocal()
+    public static void initialCLocal()
     {
         MaNV=HoTen="";
         ToTruong=false;

@@ -192,7 +192,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                             Reload();
                         break;
                     case "DangXuat":
-                        new CLocal();
+                        CLocal.initialCLocal();
                         break;
                 }
             }

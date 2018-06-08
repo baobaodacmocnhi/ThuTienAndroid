@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search_khach_hang:
-                Intent intent= new Intent(MainActivity.this, ActivitySearchKhachHang.class);
+                Intent intent= new Intent(MainActivity.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             case R.id.action_settings:

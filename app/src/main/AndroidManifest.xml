@@ -107,7 +107,9 @@
             android:name=".ActivitySearchKhachHang"
             android:label="@string/title_activity_search_khach_hang"
             android:theme="@style/AppTheme.PopupTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".ActivitySearchKhachHangWeb"
+            android:label="@string/title_activity_search_khach_hang"></activity>
     </application>
 
 </manifest>

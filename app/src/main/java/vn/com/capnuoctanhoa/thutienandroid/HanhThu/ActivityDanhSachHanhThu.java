@@ -2,12 +2,15 @@ package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHang;
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
@@ -47,15 +51,20 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private CViewAdapter cViewAdapter;
     private ArrayList<CViewEntity> list;
     private long TongHD, TongCong;
-    private LinearLayout layout_NhanVien;
-    ArrayList<String> spnID_NhanVien;
-    ArrayList<String> spnName_NhanVien;
+    private LinearLayout layoutNhanVien;
+    private ConstraintLayout layoutAutoHide;
+    private ArrayList<String> spnID_NhanVien;
+    private ArrayList<String> spnName_NhanVien;
     private String selectedMaNV ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_sach_hanh_thu);
+
+        ///clear notifications
+        NotificationManager notificationManager= (NotificationManager) ActivityDanhSachHanhThu.this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -71,10 +80,11 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
-        layout_NhanVien = (LinearLayout) findViewById(R.id.layout_NhanVien);
+        layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
+        layoutAutoHide=(ConstraintLayout) findViewById(R.id.layoutAutoHide);
 
         if (CLocal.ToTruong == true) {
-            layout_NhanVien.setVisibility(View.VISIBLE);
+            layoutNhanVien.setVisibility(View.VISIBLE);
             try {
                 if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                     spnID_NhanVien=new ArrayList<>();
@@ -97,7 +107,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         }
         else
-            layout_NhanVien.setVisibility(View.GONE);
+            layoutNhanVien.setVisibility(View.GONE);
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +232,27 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
             }
         });
+
+        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    layoutAutoHide.setVisibility(View.GONE);
+                }
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    layoutAutoHide.setVisibility(View.VISIBLE);
+                }
+                mLastFirstVisibleItem=firstVisibleItem;
+            }
+        });
     }
 
     @Override
@@ -264,7 +295,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-                Intent intent= new Intent(ActivityDanhSachHanhThu.this, ActivitySearchKhachHang.class);
+                Intent intent= new Intent(ActivityDanhSachHanhThu.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             default:break;
@@ -389,6 +420,10 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 if (CLocal.ToTruong == false)
                     selectedMaNV =CLocal.MaNV;
                 CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV,spnNam.getSelectedItem().toString(),spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                if (CLocal.jsonHanhThu != null)
+                    editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
+                editor.commit();
                 publishProgress("true");
             } catch (Exception ex) {
                 publishProgress("false");
