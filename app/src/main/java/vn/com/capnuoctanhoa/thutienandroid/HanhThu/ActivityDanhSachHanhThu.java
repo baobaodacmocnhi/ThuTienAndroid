@@ -234,7 +234,6 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         });
 
         lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int mLastFirstVisibleItem;
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -242,15 +241,24 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(mLastFirstVisibleItem<firstVisibleItem)
-                {
+                if (firstVisibleItem == 0) {
+                    // check if we reached the top or bottom of the list
+                    View v = lstView.getChildAt(0);
+                    int offset = (v == null) ? 0 : v.getTop();
+                    if (offset == 0) {
+                        layoutAutoHide.setVisibility(View.VISIBLE);
+                    }
+                } else if (totalItemCount - visibleItemCount == firstVisibleItem) {
+                    View v = lstView.getChildAt(totalItemCount - 1);
+                    int offset = (v == null) ? 0 : v.getTop();
+                    if (offset == 0) {
+                        // reached the bottom: visible header and footer
+//                        layoutAutoHide.setVisibility(View.VISIBLE);
+                    }
+                } else if (totalItemCount - visibleItemCount > firstVisibleItem){
+                    // on scrolling
                     layoutAutoHide.setVisibility(View.GONE);
                 }
-                if(mLastFirstVisibleItem>firstVisibleItem)
-                {
-                    layoutAutoHide.setVisibility(View.VISIBLE);
-                }
-                mLastFirstVisibleItem=firstVisibleItem;
             }
         });
     }

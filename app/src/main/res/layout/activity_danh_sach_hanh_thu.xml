@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/textView24"
@@ -34,6 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="8dp" />
         </LinearLayout>
@@ -44,6 +46,8 @@
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:entries="@array/sort_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnFilter" />
 
@@ -53,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Lọc"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnFilter"
@@ -64,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Sắp Xếp"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnSort"
@@ -75,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Đến Đợt"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnToDot"
@@ -82,10 +89,12 @@
 
         <Spinner
             android:id="@+id/spnKy"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:entries="@array/ky_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnNam" />
 
@@ -95,6 +104,8 @@
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:entries="@array/filter_hanhthu_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnToDot" />
 
@@ -104,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Năm"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnNam"
@@ -111,18 +123,22 @@
 
         <Spinner
             android:id="@+id/spnNam"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:entries="@array/nam_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutNhanVien" />
 
         <Spinner
             android:id="@+id/spnFromDot"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:entries="@array/dot_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnKy" />
 
@@ -132,6 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Kỳ"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnKy"
@@ -139,10 +156,12 @@
 
         <Spinner
             android:id="@+id/spnToDot"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
             android:entries="@array/dot_array"
+            android:gravity="center"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnFromDot" />
 
@@ -161,6 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:text="Từ Đợt"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/spnFromDot"

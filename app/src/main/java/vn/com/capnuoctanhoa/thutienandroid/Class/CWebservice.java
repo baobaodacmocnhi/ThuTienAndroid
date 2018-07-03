@@ -14,7 +14,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 public class CWebservice {
     private final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
-    private final String SOAP_ADDRESS = "http://113.161.88.180:1989/service.asmx";
+    private final String SOAP_ADDRESS = "http://113.161.88.180:1989/wsThuTien.asmx";
 
     @Nullable
     private String excute(SoapObject request, String SOAP_ACTION) {
@@ -60,8 +60,8 @@ public class CWebservice {
     }
 
     public String dangNhap(String Username, String Password, String UID) {
-        String SOAP_ACTION = "http://tempuri.org/TT_DangNhap";
-        String OPERATION_NAME = "TT_DangNhap";
+        String SOAP_ACTION = "http://tempuri.org/DangNhap";
+        String OPERATION_NAME = "DangNhap";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -86,8 +86,8 @@ public class CWebservice {
     }
 
     public String dangNhaps(String Username, String Password, String UID) {
-        String SOAP_ACTION = "http://tempuri.org/TT_DangNhaps";
-        String OPERATION_NAME = "TT_DangNhaps";
+        String SOAP_ACTION = "http://tempuri.org/DangNhaps";
+        String OPERATION_NAME = "DangNhaps";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -112,8 +112,8 @@ public class CWebservice {
     }
 
     public String dangXuat(String Username) {
-        String SOAP_ACTION = "http://tempuri.org/TT_DangXuat";
-        String OPERATION_NAME = "TT_DangXuat";
+        String SOAP_ACTION = "http://tempuri.org/DangXuat";
+        String OPERATION_NAME = "DangXuat";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -126,8 +126,8 @@ public class CWebservice {
     }
 
     public String dangXuats(String Username, String UID) {
-        String SOAP_ACTION = "http://tempuri.org/TT_DangXuats";
-        String OPERATION_NAME = "TT_DangXuats";
+        String SOAP_ACTION = "http://tempuri.org/DangXuats";
+        String OPERATION_NAME = "DangXuats";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -146,8 +146,8 @@ public class CWebservice {
     }
 
     public String updateUID(String MaNV, String UID) {
-        String SOAP_ACTION = "http://tempuri.org/TT_UpdateUID";
-        String OPERATION_NAME = "TT_UpdateUID";
+        String SOAP_ACTION = "http://tempuri.org/UpdateUID";
+        String OPERATION_NAME = "UpdateUID";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -166,16 +166,16 @@ public class CWebservice {
     }
 
     public String getVersion() {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetVersion";
-        String OPERATION_NAME = "TT_GetVersion";
+        String SOAP_ACTION = "http://tempuri.org/GetVersion";
+        String OPERATION_NAME = "GetVersion";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         return excute(request, SOAP_ACTION);
     }
 
     public String getDSNhanVien(String MaTo) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSNhanVien";
-        String OPERATION_NAME = "TT_GetDSNhanVien";
+        String SOAP_ACTION = "http://tempuri.org/GetDSNhanVien";
+        String OPERATION_NAME = "GetDSNhanVien";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -188,8 +188,8 @@ public class CWebservice {
     }
 
     public String getDSHoaDonTon(String MaNV, String NgayDi) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDonTon";
-        String OPERATION_NAME = "TT_GetDSHoaDonTon";
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDonTon";
+        String OPERATION_NAME = "GetDSHoaDonTon";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -208,8 +208,8 @@ public class CWebservice {
     }
 
     public String getDSHoaDonTon(String MaNV, String Nam,String Ky,String FromDot,String ToDot) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDonTon_Dot";
-        String OPERATION_NAME = "TT_GetDSHoaDonTon_Dot";
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDonTon_Dot";
+        String OPERATION_NAME = "GetDSHoaDonTon_Dot";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -246,8 +246,8 @@ public class CWebservice {
     }
 
     public String getDSDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSDongNuoc";
-        String OPERATION_NAME = "TT_GetDSDongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/GetDSDongNuoc";
+        String OPERATION_NAME = "GetDSDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -272,8 +272,8 @@ public class CWebservice {
     }
 
     public String getDSCTDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSCTDongNuoc";
-        String OPERATION_NAME = "TT_GetDSCTDongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/GetDSCTDongNuoc";
+        String OPERATION_NAME = "GetDSCTDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -298,8 +298,8 @@ public class CWebservice {
     }
 
     public String checkExist_DongNuoc(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_DongNuoc";
-        String OPERATION_NAME = "TT_CheckExist_DongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/CheckExist_DongNuoc";
+        String OPERATION_NAME = "CheckExist_DongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -312,8 +312,8 @@ public class CWebservice {
     }
 
     public String checkExist_DongNuoc2(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_DongNuoc2";
-        String OPERATION_NAME = "TT_CheckExist_DongNuoc2";
+        String SOAP_ACTION = "http://tempuri.org/CheckExist_DongNuoc2";
+        String OPERATION_NAME = "CheckExist_DongNuoc2";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -327,8 +327,8 @@ public class CWebservice {
 
     public String themDongNuoc(String MaDN, String DanhBo, String MLT, String HoTen, String DiaChi, String HinhDN, String NgayDN, String ChiSoDN,
                                String Hieu, String Co, String SoThan, String ChiMatSo, String ChiKhoaGoc, String LyDo, String CreateBy) {
-        String SOAP_ACTION = "http://tempuri.org/TT_ThemDongNuoc";
-        String OPERATION_NAME = "TT_ThemDongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/ThemDongNuoc";
+        String OPERATION_NAME = "ThemDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -425,8 +425,8 @@ public class CWebservice {
     }
 
     public String themDongNuoc2(String MaDN, String HinhDN, String NgayDN, String ChiSoDN, String CreateBy) {
-        String SOAP_ACTION = "http://tempuri.org/TT_ThemDongNuoc2";
-        String OPERATION_NAME = "TT_ThemDongNuoc2";
+        String SOAP_ACTION = "http://tempuri.org/ThemDongNuoc2";
+        String OPERATION_NAME = "ThemDongNuoc2";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -463,8 +463,8 @@ public class CWebservice {
     }
 
     public String checkExist_MoNuoc(String MaDN) {
-        String SOAP_ACTION = "http://tempuri.org/TT_CheckExist_MoNuoc";
-        String OPERATION_NAME = "TT_CheckExist_MoNuoc";
+        String SOAP_ACTION = "http://tempuri.org/CheckExist_MoNuoc";
+        String OPERATION_NAME = "CheckExist_MoNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -477,8 +477,8 @@ public class CWebservice {
     }
 
     public String themMoNuoc(String MaDN, String HinhMN, String NgayMN, String ChiSoMN, String CreateBy) {
-        String SOAP_ACTION = "http://tempuri.org/TT_ThemMoNuoc";
-        String OPERATION_NAME = "TT_ThemMoNuoc";
+        String SOAP_ACTION = "http://tempuri.org/ThemMoNuoc";
+        String OPERATION_NAME = "ThemMoNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -516,8 +516,8 @@ public class CWebservice {
 
     public String dangNganDongNuoc(String MaNV, String MaHDs)
     {
-        String SOAP_ACTION = "http://tempuri.org/TT_DangNganDongNuoc";
-        String OPERATION_NAME = "TT_DangNganDongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/DangNganDongNuoc";
+        String OPERATION_NAME = "DangNganDongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -537,8 +537,8 @@ public class CWebservice {
 
     public String getDSHoaDonTon_DongNuoc(String DanhBo, String MaHDs)
     {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDonTon_DongNuoc";
-        String OPERATION_NAME = "TT_GetDSHoaDonTon_DongNuoc";
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDonTon_DongNuoc";
+        String OPERATION_NAME = "GetDSHoaDonTon_DongNuoc";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -558,8 +558,8 @@ public class CWebservice {
 
     public String getDSHoaDon(String DanhBo)
     {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon_DanhBo";
-        String OPERATION_NAME = "TT_GetDSHoaDon_DanhBo";
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_DanhBo";
+        String OPERATION_NAME = "GetDSHoaDon_DanhBo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -573,8 +573,8 @@ public class CWebservice {
 
     public String getDSHoaDon(String HoTen,String SoNha,String TenDuong)
     {
-        String SOAP_ACTION = "http://tempuri.org/TT_GetDSHoaDon_TTKH";
-        String OPERATION_NAME = "TT_GetDSHoaDon_TTKH";
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_TTKH";
+        String OPERATION_NAME = "GetDSHoaDon_TTKH";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
