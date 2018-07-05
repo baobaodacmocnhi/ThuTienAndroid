@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -27,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toStartOf="@+id/imgbtnDongNuoc"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +50,16 @@
         app:layout_constraintStart_toEndOf="@+id/imgbtnHanhThu"
         app:layout_constraintTop_toTopOf="@+id/imgbtnHanhThu"
         app:srcCompat="@drawable/ic_dong_nuoc" />
+
+    <ImageButton
+        android:id="@+id/imgbtnQuanLy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
+        app:layout_constraintTop_toTopOf="@+id/textView20"
+        app:srcCompat="@drawable/ic_checklistx256" />
 
     <TextView
         android:id="@+id/textView19"
@@ -92,6 +107,21 @@
         app:layout_constraintTop_toBottomOf="@+id/imgbtnDongNuoc" />
 
     <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Quản Lý"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnQuanLy"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnQuanLy"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnQuanLy" />
+
+    <TextView
         android:id="@+id/txtUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,6 +136,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -138,3 +173,4 @@
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

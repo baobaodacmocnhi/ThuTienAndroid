@@ -137,9 +137,15 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");
                         editor.putString("jsonMessage", "");
+                        if(Boolean.parseBoolean(jsonObject.getString("Doi"))==true)
+                        {
+                            editor.putString("jsonTo", ws.getDSTo());
+                            editor.putString("jsonNhanVien", ws.getDSNhanVienDoi());
+                            editor.putBoolean("Doi",Boolean.parseBoolean(jsonObject.getString("Doi")));
+                        }
                         if(Boolean.parseBoolean(jsonObject.getString("ToTruong"))==true)
                         {
-                            editor.putString("jsonNhanVien", ws.getDSNhanVien(jsonObject.getString("MaTo")));
+                            editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
                             editor.putBoolean("ToTruong",Boolean.parseBoolean(jsonObject.getString("ToTruong")));
                         }
                         editor.putBoolean("Login", true);
@@ -166,7 +172,9 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");
                         editor.putString("jsonMessage", "");
+                        editor.putString("jsonTo", "");
                         editor.putString("jsonNhanVien", "");
+                        editor.putBoolean("Doi", false);
                         editor.putBoolean("ToTruong", false);
                         editor.putBoolean("Login", false);
                         editor.commit();

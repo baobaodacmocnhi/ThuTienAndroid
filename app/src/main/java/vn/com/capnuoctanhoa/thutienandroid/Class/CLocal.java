@@ -45,15 +45,14 @@ public class CLocal {
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String FileName = "my_data";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage,jsonNhanVien;
-    public static String MaNV="",HoTen="";
-    public static  boolean ToTruong=false;
+    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage,jsonTo, jsonNhanVien;
+    public static String MaNV = "", HoTen = "";
+    public static boolean  Doi = false,ToTruong = false;
 
-    public static void initialCLocal()
-    {
-        MaNV=HoTen="";
-        ToTruong=false;
-        jsonHanhThu=jsonDongNuoc=jsonDongNuocChild=jsonMessage=jsonNhanVien=null;
+    public static void initialCLocal() {
+        MaNV = HoTen = "";
+        Doi=ToTruong = false;
+        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo=jsonNhanVien = null;
     }
 
     public static boolean checkNetworkAvailable(Context context) {

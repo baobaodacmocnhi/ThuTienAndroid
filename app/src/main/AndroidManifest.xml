@@ -108,8 +108,13 @@
             android:label="@string/title_activity_search_khach_hang"
             android:theme="@style/AppTheme.PopupTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".ActivitySearchKhachHangWeb"
-            android:label="@string/title_activity_search_khach_hang"></activity>
+        <activity
+            android:name=".ActivitySearchKhachHangWeb"
+            android:label="@string/title_activity_search_khach_hang" />
+        <activity
+            android:name=".QuanLy.ActivityQuanLy"
+            android:label="@string/title_activity_quan_ly"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

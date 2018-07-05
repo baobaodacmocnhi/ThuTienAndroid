@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 
@@ -29,10 +28,11 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy;
     private TextView txtUser;
 
     @Override
@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDanhSachDongNuoc.class);
+                startActivity(intent);
+            }
+        });
+
+        imgbtnQuanLy = (ImageButton) findViewById(R.id.imgbtnQuanLy);
+        imgbtnQuanLy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityQuanLy.class);
                 startActivity(intent);
             }
         });
@@ -105,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
+                if (CLocal.sharedPreferencesre.getBoolean("Doi", false) == true&&CLocal.sharedPreferencesre.getString("jsonTo", "").equals("") == false)
+                {
+                    CLocal.Doi=CLocal.sharedPreferencesre.getBoolean("Doi", false);
+                    CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
+                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                }
                 if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true&&CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                 {
                     CLocal.ToTruong=CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
@@ -147,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 //            String versionServer=(String)myAsyncTask.execute("Version").get();
             PackageInfo packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String versionDevice = packageInfo.versionName;
-            if (versionServer.equals("") == false && versionServer.equals("False") == false && versionDevice.equals(versionServer) == false) {
+            if (versionServer.equals("") == false && versionServer.equals("False") == false && versionServer.equals("java.net.ConnectException: Connection refused") == false&& versionDevice.equals(versionServer) == false) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Cập nhật");
                 builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");
