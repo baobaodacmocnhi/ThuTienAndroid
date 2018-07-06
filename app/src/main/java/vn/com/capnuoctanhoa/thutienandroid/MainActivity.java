@@ -33,7 +33,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy;
-    private TextView txtUser;
+    private TextView txtUser,txtQuanLy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         txtUser = (TextView) findViewById(R.id.txtUser);
+        txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
 
         if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -108,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
 //                return;
 //            }
+            imgbtnQuanLy.setVisibility(View.GONE);
+            txtQuanLy.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 CLocal.MaNV=CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen=CLocal.sharedPreferencesre.getString("HoTen", "");
@@ -118,12 +121,16 @@ public class MainActivity extends AppCompatActivity {
                 {
                     CLocal.Doi=CLocal.sharedPreferencesre.getBoolean("Doi", false);
                     CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
-                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                    imgbtnQuanLy.setVisibility(View.VISIBLE);
+                    txtQuanLy.setVisibility(View.VISIBLE);
                 }
                 if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true&&CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                 {
                     CLocal.ToTruong=CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                    CLocal.MaTo=CLocal.sharedPreferencesre.getString("MaTo", "");
+                    imgbtnQuanLy.setVisibility(View.VISIBLE);
+                    txtQuanLy.setVisibility(View.VISIBLE);
                 }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");

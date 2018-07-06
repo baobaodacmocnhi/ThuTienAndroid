@@ -46,11 +46,11 @@ public class CLocal {
     public static String FileName = "my_data";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage,jsonTo, jsonNhanVien;
-    public static String MaNV = "", HoTen = "";
+    public static String MaNV = "", HoTen = "",MaTo="";
     public static boolean  Doi = false,ToTruong = false;
 
     public static void initialCLocal() {
-        MaNV = HoTen = "";
+        MaNV = HoTen =MaTo= "";
         Doi=ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo=jsonNhanVien = null;
     }

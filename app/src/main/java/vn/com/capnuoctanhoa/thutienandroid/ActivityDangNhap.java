@@ -140,7 +140,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         if(Boolean.parseBoolean(jsonObject.getString("Doi"))==true)
                         {
                             editor.putString("jsonTo", ws.getDSTo());
-                            editor.putString("jsonNhanVien", ws.getDSNhanVienDoi());
+//                            editor.putString("jsonNhanVien", ws.getDSNhanVienDoi());
                             editor.putBoolean("Doi",Boolean.parseBoolean(jsonObject.getString("Doi")));
                         }
                         if(Boolean.parseBoolean(jsonObject.getString("ToTruong"))==true)

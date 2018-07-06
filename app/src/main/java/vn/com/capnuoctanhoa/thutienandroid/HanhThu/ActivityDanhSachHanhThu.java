@@ -53,8 +53,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private long TongHD, TongCong;
     private LinearLayout layoutNhanVien;
     private ConstraintLayout layoutAutoHide;
-    private ArrayList<String> spnID_NhanVien;
-    private ArrayList<String> spnName_NhanVien;
+    private ArrayList<String> spnID_NhanVien,spnName_NhanVien;
     private String selectedMaNV ="";
 
     @Override
