@@ -41,6 +41,7 @@ public class FragmentGiao extends Fragment {
     private String selectedTo = "";
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
+    private ArrayList<CViewEntity> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +66,8 @@ public class FragmentGiao extends Fragment {
                 if (CLocal.jsonTo != null && CLocal.jsonTo.length() > 0) {
                     spnID_To = new ArrayList<>();
                     spnName_To = new ArrayList<>();
+                    spnID_To.add("0");
+                    spnName_To.add("Tất Cả");
                     for (int i = 0; i < CLocal.jsonTo.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
                         if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
@@ -126,9 +129,20 @@ public class FragmentGiao extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (CLocal.Doi == false)
-                selectedTo = CLocal.MaTo;
-            publishProgress(ws.getTongGiaoHoaDon(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+//            lstView.setAdapter(null);
+            list = new ArrayList<CViewEntity>();
+            TongHD = TongCong = 0;
+            if (CLocal.Doi == true) {
+                if(Integer.parseInt(selectedTo)==0) {
+                    for (int i = 0; i < spnID_To.size(); i++) {
+                        publishProgress(ws.getTongGiaoHoaDon(spnID_To.get(i), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                    }
+                }
+                else
+                publishProgress(ws.getTongGiaoHoaDon(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+            }
+            else
+            publishProgress(ws.getTongGiaoHoaDon(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
 
             return null;
         }
@@ -138,9 +152,6 @@ public class FragmentGiao extends Fragment {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    lstView.setAdapter(null);
-                    ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
-                    TongHD = TongCong = 0;
                     JSONArray jsonArray=new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
