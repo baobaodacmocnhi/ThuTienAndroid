@@ -48,9 +48,9 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Spinner spnFilter, spnSort,spnFromDot, spnToDot,spnNhanVien,spnNam,spnKy;
     private ListView lstView;
     private TextView txtTongHD, txtTongCong;
+    private long TongHD, TongCong;
     private CViewAdapter cViewAdapter;
     private ArrayList<CViewEntity> list;
-    private long TongHD, TongCong;
     private LinearLayout layoutNhanVien;
     private ConstraintLayout layoutAutoHide;
     private ArrayList<String> spnID_NhanVien,spnName_NhanVien;

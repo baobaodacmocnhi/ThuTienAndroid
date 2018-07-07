@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,27 +33,31 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class FragmentGiao extends Fragment {
     private View rootView;
-    private Spinner spnNam, spnKy, spnFromDot, spnToDot, spnTo, spnNhanVien;
+    private Spinner spnNam, spnKy, spnFromDot, spnToDot, spnTo;
     private Button btnXem;
     private ListView lstView;
     private LinearLayout layoutTo;
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
+    private TextView txtTongHD, txtTongCong;
+    private long TongHD, TongCong;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_giao, container, false);
+
+        layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         spnNam = (Spinner) rootView.findViewById(R.id.spnNam);
         spnKy = (Spinner) rootView.findViewById(R.id.spnKy);
         spnFromDot = (Spinner) rootView.findViewById(R.id.spnFromDot);
         spnToDot = (Spinner) rootView.findViewById(R.id.spnToDot);
         spnTo = (Spinner) rootView.findViewById(R.id.spnTo);
-        spnNhanVien = (Spinner) rootView.findViewById(R.id.spnNhanVien);
         btnXem = (Button) rootView.findViewById(R.id.btnXem);
         lstView = (ListView) rootView.findViewById(R.id.lstView);
-        layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
+        txtTongHD = (TextView) rootView.findViewById(R.id.txtTongHD);
+        txtTongCong = (TextView) rootView.findViewById(R.id.txtTongCong);
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);
@@ -135,6 +140,7 @@ public class FragmentGiao extends Fragment {
                 try {
                     lstView.setAdapter(null);
                     ArrayList<CViewEntity> list = new ArrayList<CViewEntity>();
+                    TongHD = TongCong = 0;
                     JSONArray jsonArray=new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -143,9 +149,13 @@ public class FragmentGiao extends Fragment {
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         list.add(entity);
+                        TongHD += Long.parseLong(jsonObject.getString("TongHD"));
+                        TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
                     CViewAdapter cViewAdapter = new CViewAdapter(getActivity(), list);
                     lstView.setAdapter(cViewAdapter);
+                    txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

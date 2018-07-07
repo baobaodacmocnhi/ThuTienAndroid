@@ -25,6 +25,16 @@ android {
     }
     productFlavors {
     }
+//    sourceSets {
+//        main {
+//            res.srcDirs =
+//                    [
+//                            'src/main/res/layout/quanly',
+//                            'src/main/res/layout',
+//                            'src/main/res'
+//                    ]
+//        }
+//    }
 }
 
 dependencies {
