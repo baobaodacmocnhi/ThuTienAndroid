@@ -25,7 +25,6 @@ import java.util.Random;
 import vn.com.capnuoctanhoa.thutienandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ServiceFirebaseMessaging extends FirebaseMessagingService {
@@ -58,7 +57,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
             CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
-            intent = new Intent(this, ActivityDanhSachHanhThu.class);
+            intent = new Intent(this, ActivityDanhSachHanhThu3.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, PendingIntent.FLAG_ONE_SHOT);
         } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {

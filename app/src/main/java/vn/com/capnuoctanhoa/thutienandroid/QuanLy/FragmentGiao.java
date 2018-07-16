@@ -1,8 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid.QuanLy;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,13 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class FragmentGiao extends Fragment {
@@ -133,16 +129,14 @@ public class FragmentGiao extends Fragment {
             list = new ArrayList<CViewEntity>();
             TongHD = TongCong = 0;
             if (CLocal.Doi == true) {
-                if(Integer.parseInt(selectedTo)==0) {
+                if (Integer.parseInt(selectedTo) == 0) {
                     for (int i = 0; i < spnID_To.size(); i++) {
                         publishProgress(ws.getTongGiaoHoaDon(spnID_To.get(i), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                     }
-                }
-                else
-                publishProgress(ws.getTongGiaoHoaDon(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-            }
-            else
-            publishProgress(ws.getTongGiaoHoaDon(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                } else
+                    publishProgress(ws.getTongGiaoHoaDon(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+            } else
+                publishProgress(ws.getTongGiaoHoaDon(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
 
             return null;
         }
@@ -152,7 +146,7 @@ public class FragmentGiao extends Fragment {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    JSONArray jsonArray=new JSONArray(values[0]);
+                    JSONArray jsonArray = new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CViewEntity entity = new CViewEntity();

@@ -101,14 +101,38 @@ public class CViewAdapterGroup extends BaseExpandableListAdapter implements Filt
         CViewEntity map = (CViewEntity) getGroup(groupPosition);
         holder.STT.setText(map.getSTT());
         holder.ID.setText(map.getID());
-        holder.Row1a.setText(map.getRow1a());
-        holder.Row1b.setText(map.getRow1b());
-        holder.Row2a.setText(map.getRow2a());
-        holder.Row2b.setText(map.getRow2b());
-        holder.Row3a.setText(map.getRow3a());
-        holder.Row3b.setText(map.getRow3b());
-        holder.Row4a.setText(map.getRow4a());
-        holder.Row4b.setText(map.getRow4b());
+        if(map.getRow1a().isEmpty()==true&&map.getRow1b().isEmpty()==true){
+            holder.Row1a.setVisibility(View.GONE);
+            holder.Row1b.setVisibility(View.GONE);
+        }
+        else{
+            holder.Row1a.setText(map.getRow1a());
+            holder.Row1b.setText(map.getRow1b());
+        }
+        if(map.getRow2a().isEmpty()==true&&map.getRow2b().isEmpty()==true){
+            holder.Row2a.setVisibility(View.GONE);
+            holder.Row2b.setVisibility(View.GONE);
+        }
+        else{
+            holder.Row2a.setText(map.getRow2a());
+            holder.Row2b.setText(map.getRow2b());
+        }
+        if(map.getRow3a().isEmpty()==true&&map.getRow3b().isEmpty()==true){
+            holder.Row3a.setVisibility(View.GONE);
+            holder.Row3b.setVisibility(View.GONE);
+        }
+        else{
+            holder.Row3a.setText(map.getRow3a());
+            holder.Row3b.setText(map.getRow3b());
+        }
+        if(map.getRow4a().isEmpty()==true&&map.getRow4b().isEmpty()==true){
+            holder.Row4a.setVisibility(View.GONE);
+            holder.Row4b.setVisibility(View.GONE);
+        }
+        else{
+            holder.Row4a.setText(map.getRow4a());
+            holder.Row4b.setText(map.getRow4b());
+        }
 
 //        if (map.getGiaiTrach() == true)
 //            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));

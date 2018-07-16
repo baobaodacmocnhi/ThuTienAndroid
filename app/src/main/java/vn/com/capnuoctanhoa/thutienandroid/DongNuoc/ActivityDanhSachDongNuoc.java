@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -19,6 +20,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,6 +71,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private ArrayList<String> spnID_NhanVien;
     private ArrayList<String> spnName_NhanVien;
     private String selectedMaNV = "";
+    private Boolean flagSearch = false;
+    private FloatingActionButton fbtnScrollUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +95,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         lstView = (ExpandableListView) findViewById(R.id.lstView);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
         layoutAutoHide=(ConstraintLayout) findViewById(R.id.layoutAutoHide);
+        fbtnScrollUp = (FloatingActionButton) findViewById(R.id.fbtnScrollUp);
 
         if (CLocal.ToTruong == true) {
             layoutNhanVien.setVisibility(View.VISIBLE);
@@ -215,7 +224,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = arrayAdapter.getItem(which);
-                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu3.this);
                         builderInner.setMessage(strName);
                         builderInner.setTitle("Your Selected Item is");
                         builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -334,7 +343,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     View v = lstView.getChildAt(0);
                     int offset = (v == null) ? 0 : v.getTop();
                     if (offset == 0) {
-                        layoutAutoHide.setVisibility(View.VISIBLE);
+                        showLayoutAutoHide();
+                        hidefbtnScrollUp();
                     }
                 } else if (totalItemCount - visibleItemCount == firstVisibleItem) {
                     View v = lstView.getChildAt(totalItemCount - 1);
@@ -345,8 +355,16 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                 } else if (totalItemCount - visibleItemCount > firstVisibleItem){
                     // on scrolling
-                    layoutAutoHide.setVisibility(View.GONE);
+                    hideLayoutAutoHide();
+                    showfbtnScrollUp();
                 }
+            }
+        });
+
+        fbtnScrollUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lstView.smoothScrollToPosition(0);
             }
         });
     }
@@ -363,11 +381,25 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
-
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flagSearch = true;
+                layoutAutoHide.setVisibility(View.GONE);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                flagSearch = false;
+                layoutAutoHide.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -555,6 +587,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                 }
             entity.setListChild(listChild);
+            entity.setRow1b(String.valueOf(listChild.size())+" HĐ");
             listParent.add(entity);
         } catch (Exception e) {
         }
@@ -578,6 +611,48 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             listChild.add(entity);
         } catch (Exception e) {
         }
+    }
+
+    private void showLayoutAutoHide() {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
+        final int topMarginStart = params.topMargin; // your start value
+        final int topMarginEnd = 0; // where to animate to
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
+                // interpolate the proper value
+                params.topMargin = topMarginStart + (int) ((topMarginEnd - topMarginStart) * interpolatedTime);
+                layoutAutoHide.setLayoutParams(params);
+            }
+        };
+        a.setDuration(50);
+        layoutAutoHide.startAnimation(a);
+    }
+
+    private void hideLayoutAutoHide() {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
+        final int topMarginStart = params.topMargin; // your start value
+        final int topMarginEnd = (-1) * layoutAutoHide.getHeight(); // where to animate to
+        Animation a = new Animation() {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
+                // interpolate the proper value
+                params.topMargin = topMarginStart + (int) ((topMarginEnd - topMarginStart) * interpolatedTime);
+                layoutAutoHide.setLayoutParams(params);
+            }
+        };
+        a.setDuration(50);
+        layoutAutoHide.startAnimation(a);
+    }
+
+    private void hidefbtnScrollUp() {
+        fbtnScrollUp.animate().setDuration(100).translationY(fbtnScrollUp.getHeight() + 300).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    private void showfbtnScrollUp() {
+        fbtnScrollUp.animate().setDuration(100).translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {

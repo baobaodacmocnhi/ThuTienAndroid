@@ -21,7 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags=""
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
         </android.support.v7.widget.Toolbar>
@@ -32,22 +32,22 @@
             android:layout_height="wrap_content">
 
             <!--<android.support.design.widget.TabItem-->
-                <!--android:id="@+id/tabItem"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/tab_text_1" />-->
+            <!--android:id="@+id/tabItem"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/tab_text_1" />-->
 
             <!--<android.support.design.widget.TabItem-->
-                <!--android:id="@+id/tabItem2"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/tab_text_2" />-->
+            <!--android:id="@+id/tabItem2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/tab_text_2" />-->
 
             <!--<android.support.design.widget.TabItem-->
-                <!--android:id="@+id/tabItem3"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@string/tab_text_3" />-->
+            <!--android:id="@+id/tabItem3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/tab_text_3" />-->
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

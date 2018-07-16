@@ -15,6 +15,7 @@ import org.ksoap2.transport.HttpTransportSE;
 public class CWebservice {
     private final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
     private final String SOAP_ADDRESS = "http://113.161.88.180:1989/wsThuTien.asmx";
+//private final String SOAP_ADDRESS = "http://192.168.90.11:81/wsThuTien.asmx";
 
     @Nullable
     private String excute(SoapObject request, String SOAP_ACTION) {
@@ -673,6 +674,45 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("ToNgayGiaiTrach");
         pi.setValue(ToNgayGiaiTrach);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getTongTon(String MaTo, String Nam,String Ky,String FromDot,String ToDot)
+    {
+        String SOAP_ACTION = "http://tempuri.org/GetTongTon";
+        String OPERATION_NAME = "GetTongTon";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaTo");
+        pi.setValue(MaTo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Nam");
+        pi.setValue(Nam);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Ky");
+        pi.setValue(Ky);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("FromDot");
+        pi.setValue(FromDot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("ToDot");
+        pi.setValue(ToDot);
         pi.setType(String.class);
         request.addProperty(pi);
 

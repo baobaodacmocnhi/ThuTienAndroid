@@ -133,6 +133,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("Password", jsonObject.getString("MatKhau"));
                         editor.putString("MaNV", jsonObject.getString("MaND"));
                         editor.putString("HoTen", jsonObject.getString("HoTen"));
+                        editor.putString("MaTo", jsonObject.getString("MaTo"));
                         editor.putString("jsonHanhThu", "");
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");
@@ -168,6 +169,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("Password", "");
                         editor.putString("MaNV", "");
                         editor.putString("HoTen", "");
+                        editor.putString("MaTo", "");
                         editor.putString("jsonHanhThu", "");
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonDongNuocChild", "");

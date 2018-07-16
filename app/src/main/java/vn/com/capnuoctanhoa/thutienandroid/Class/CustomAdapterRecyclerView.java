@@ -1,11 +1,10 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
-import android.app.Activity;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -14,116 +13,39 @@ import java.util.ArrayList;
 
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class CViewAdapter extends BaseAdapter implements Filterable {
-    private Activity activity;
+public class CustomAdapterRecyclerView extends RecyclerView.Adapter<CustomAdapterRecyclerView.RecyclerViewHolder>  implements Filterable {
     private ArrayList<CViewEntity> mOriginalValues;
     private ArrayList<CViewEntity> mDisplayedValues;
 
-    public CViewAdapter(Activity activity, ArrayList<CViewEntity> mDisplayedValues) {
+    public CustomAdapterRecyclerView(ArrayList<CViewEntity> mDisplayedValues) {
         super();
-        this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
     }
 
     @Override
-    public int getCount() {
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.custom_row_listview, parent, false);
+        return new RecyclerViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+        holder.STT.setText(mDisplayedValues.get(position).getSTT());
+        holder.ID.setText(mDisplayedValues.get(position).getID());
+        holder.Row1a.setText(mDisplayedValues.get(position).getRow1a());
+        holder.Row1b.setText(mDisplayedValues.get(position).getRow1b());
+        holder.Row2a.setText(mDisplayedValues.get(position).getRow2a());
+        holder.Row2b.setText(mDisplayedValues.get(position).getRow2b());
+        holder.Row3a.setText(mDisplayedValues.get(position).getRow3a());
+        holder.Row3b.setText(mDisplayedValues.get(position).getRow3b());
+        holder.Row4a.setText(mDisplayedValues.get(position).getRow4a());
+        holder.Row4b.setText(mDisplayedValues.get(position).getRow4b());
+    }
+
+    @Override
+    public int getItemCount() {
         return mDisplayedValues.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mDisplayedValues.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    private class ViewHolder {
-        TextView STT;
-        TextView ID;
-        TextView Row1a;
-        TextView Row1b;
-        TextView Row2a;
-        TextView Row2b;
-        TextView Row3a;
-        TextView Row3b;
-        TextView Row4a;
-        TextView Row4b;
-        ConstraintLayout layoutChild;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        LayoutInflater inflater = activity.getLayoutInflater();
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.custom_row_listview, null);
-            holder = new ViewHolder();
-            holder.STT = (TextView) convertView.findViewById(R.id.lvSTT);
-            holder.ID = (TextView) convertView.findViewById(R.id.lvID);
-            holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);
-            holder.Row1b = (TextView) convertView.findViewById(R.id.lvRow1b);
-            holder.Row2a = (TextView) convertView.findViewById(R.id.lvRow2a);
-            holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
-            holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
-            holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
-            holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
-            holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
-            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        CViewEntity map = mDisplayedValues.get(position);
-        holder.STT.setText(map.getSTT());
-        holder.ID.setText(map.getID());
-        if(map.getRow1a().isEmpty()==true&&map.getRow1b().isEmpty()==true){
-            holder.Row1a.setVisibility(View.GONE);
-            holder.Row1b.setVisibility(View.GONE);
-        }
-        else{
-            holder.Row1a.setText(map.getRow1a());
-            holder.Row1b.setText(map.getRow1b());
-        }
-        if(map.getRow2a().isEmpty()==true&&map.getRow2b().isEmpty()==true){
-            holder.Row2a.setVisibility(View.GONE);
-            holder.Row2b.setVisibility(View.GONE);
-        }
-        else{
-            holder.Row2a.setText(map.getRow2a());
-            holder.Row2b.setText(map.getRow2b());
-        }
-        if(map.getRow3a().isEmpty()==true&&map.getRow3b().isEmpty()==true){
-            holder.Row3a.setVisibility(View.GONE);
-            holder.Row3b.setVisibility(View.GONE);
-        }
-        else{
-            holder.Row3a.setText(map.getRow3a());
-            holder.Row3b.setText(map.getRow3b());
-        }
-        if(map.getRow4a().isEmpty()==true&&map.getRow4b().isEmpty()==true){
-            holder.Row4a.setVisibility(View.GONE);
-            holder.Row4b.setVisibility(View.GONE);
-        }
-        else{
-            holder.Row4a.setText(map.getRow4a());
-            holder.Row4b.setText(map.getRow4b());
-        }
-
-//        if (map.getGiaiTrach() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
-//        else if (map.getTamThu() == true || map.getThuHo() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
-//        else
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-
-//        if (map.getLenhHuy() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
-
-        return convertView;
     }
 
     @Override
@@ -195,5 +117,34 @@ public class CViewAdapter extends BaseAdapter implements Filterable {
             }
         };
         return filter;
+    }
+
+    public class RecyclerViewHolder  extends RecyclerView.ViewHolder{
+        TextView STT;
+        TextView ID;
+        TextView Row1a;
+        TextView Row1b;
+        TextView Row2a;
+        TextView Row2b;
+        TextView Row3a;
+        TextView Row3b;
+        TextView Row4a;
+        TextView Row4b;
+        ConstraintLayout layoutChild;
+
+        public RecyclerViewHolder(View itemView) {
+            super(itemView);
+            STT = (TextView) itemView.findViewById(R.id.lvSTT);
+            ID = (TextView) itemView.findViewById(R.id.lvID);
+            Row1a = (TextView) itemView.findViewById(R.id.lvRow1a);
+            Row1b = (TextView) itemView.findViewById(R.id.lvRow1b);
+            Row2a = (TextView) itemView.findViewById(R.id.lvRow2a);
+            Row2b = (TextView) itemView.findViewById(R.id.lvRow2b);
+            Row3a = (TextView) itemView.findViewById(R.id.lvRow3a);
+            Row3b = (TextView) itemView.findViewById(R.id.lvRow3b);
+            Row4a = (TextView) itemView.findViewById(R.id.lvRow4a);
+            Row4b = (TextView) itemView.findViewById(R.id.lvRow4b);
+            layoutChild = (ConstraintLayout) itemView.findViewById(R.id.layoutChild);
+        }
     }
 }

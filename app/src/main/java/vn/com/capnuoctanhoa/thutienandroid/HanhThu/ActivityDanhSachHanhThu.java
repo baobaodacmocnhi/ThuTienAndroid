@@ -10,18 +10,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -36,25 +42,28 @@ import java.util.Collections;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
-    private Spinner spnFilter, spnSort,spnFromDot, spnToDot,spnNhanVien,spnNam,spnKy;
-    private ListView lstView;
+    private Spinner spnFilter, spnSort, spnFromDot, spnToDot, spnNhanVien, spnNam, spnKy;
+    private RecyclerView recycler;
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
-    private CViewAdapter cViewAdapter;
+    private CustomAdapterRecyclerView customAdapterRecyclerView;
     private ArrayList<CViewEntity> list;
     private LinearLayout layoutNhanVien;
-    private ConstraintLayout layoutAutoHide;
-    private ArrayList<String> spnID_NhanVien,spnName_NhanVien;
-    private String selectedMaNV ="";
+    private CardView layoutAutoHide;
+    private NestedScrollView nestedScrollView;
+    private ArrayList<String> spnID_NhanVien, spnName_NhanVien;
+    private String selectedMaNV = "";
+    private FloatingActionButton floatingActionButton;
+    private int layoutAutoHide_Height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +71,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         setContentView(R.layout.activity_danh_sach_hanh_thu);
 
         ///clear notifications
-        NotificationManager notificationManager= (NotificationManager) ActivityDanhSachHanhThu.this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) ActivityDanhSachHanhThu.this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,36 +85,35 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         spnNam = (Spinner) findViewById(R.id.spnNam);
         spnKy = (Spinner) findViewById(R.id.spnKy);
-        lstView = (ListView) findViewById(R.id.lstView);
+        recycler = (RecyclerView) findViewById(R.id.recycler);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
-        layoutAutoHide=(ConstraintLayout) findViewById(R.id.layoutAutoHide);
+        nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
+        layoutAutoHide = (CardView) findViewById(R.id.layoutAutoHide);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         if (CLocal.ToTruong == true) {
             layoutNhanVien.setVisibility(View.VISIBLE);
             try {
                 if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
-                    spnID_NhanVien=new ArrayList<>();
-                    spnName_NhanVien=new ArrayList<>();
+                    spnID_NhanVien = new ArrayList<>();
+                    spnName_NhanVien = new ArrayList<>();
                     for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
-                        if(Boolean.parseBoolean(jsonObject.getString("HanhThu"))==true) {
+                        if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
                             spnID_NhanVien.add(jsonObject.getString("MaND"));
                             spnName_NhanVien.add(jsonObject.getString("HoTen"));
                         }
                     }
                 }
-                ArrayAdapter<String> adapter =new ArrayAdapter<String>(ActivityDanhSachHanhThu.this,android.R.layout.simple_spinner_item, spnName_NhanVien);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu.this, android.R.layout.simple_spinner_item, spnName_NhanVien);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnNhanVien.setAdapter(adapter);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else
+        } else
             layoutNhanVien.setVisibility(View.GONE);
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
@@ -146,14 +154,6 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 builderSingle.setView(lstMessage);
 
                 builderSingle.setNegativeButton(
-                        "Xóa Tất Cả",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                CLocal.jsonMessage = new JSONArray();
-                            }
-                        });
-
-                builderSingle.setPositiveButton(
                         "Thoát",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -161,13 +161,20 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                             }
                         });
 
+                builderSingle.setPositiveButton(
+                        "Xóa Tất Cả",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                CLocal.jsonMessage = new JSONArray();
+                            }
+                        });
 
                 //hàm này khi click row sẽ bị ẩn
                 /*builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = arrayAdapter.getItem(which);
-                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu.this);
+                        AlertDialog.Builder builderInner = new AlertDialog.Builder(ActivityDanhSachHanhThu3.this);
                         builderInner.setMessage(strName);
                         builderInner.setTitle("Your Selected Item is");
                         builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -211,7 +218,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                         Collections.sort(list, new CSort("", -1));
                         break;
                 }
-                cViewAdapter.notifyDataSetChanged();
+                customAdapterRecyclerView.notifyDataSetChanged();
             }
 
             @Override
@@ -223,7 +230,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedMaNV =spnID_NhanVien.get(position);
+                selectedMaNV = spnID_NhanVien.get(position);
             }
 
             @Override
@@ -232,32 +239,74 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         });
 
-        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        layoutAutoHide_Height=layoutAutoHide.getHeight();
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+            public void onScrollChanged() {
+                int scrollY = nestedScrollView.getScrollY();
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) layoutAutoHide.getLayoutParams();
+                int height = Math.max(0,layoutAutoHide_Height-scrollY);
+                lp.height = height;
+                layoutAutoHide.setLayoutParams(lp);
             }
+        });
 
+        //if you remove this part, the card would be shown in its minimum state at start
+        recycler.post(new Runnable() {
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0) {
-                    // check if we reached the top or bottom of the list
-                    View v = lstView.getChildAt(0);
-                    int offset = (v == null) ? 0 : v.getTop();
-                    if (offset == 0) {
-                        layoutAutoHide.setVisibility(View.VISIBLE);
+            public void run() {
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
+
+        // The calculation for heights of views should be done after the view created
+        final View rootView = findViewById(R.id.layoutRoot);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    public void onGlobalLayout() {
+                        //Remove the listener before proceeding
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        } else {
+                            rootView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        }
+                        // measure your views here
+                        layoutAutoHide_Height = layoutAutoHide.getHeight();
+                        nestedScrollView.scrollTo(0,0);
                     }
-                } else if (totalItemCount - visibleItemCount == firstVisibleItem) {
-                    View v = lstView.getChildAt(totalItemCount - 1);
-                    int offset = (v == null) ? 0 : v.getTop();
-                    if (offset == 0) {
-                        // reached the bottom: visible header and footer
-//                        layoutAutoHide.setVisibility(View.VISIBLE);
+                });
+
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if(nestedScrollView.getScrollY()==0||nestedScrollView.getScrollY()<layoutAutoHide_Height) {
+                        floatingActionButton.hide();
                     }
-                } else if (totalItemCount - visibleItemCount > firstVisibleItem){
-                    // on scrolling
-                    layoutAutoHide.setVisibility(View.GONE);
-                }
+                    else {
+                        floatingActionButton.show();
+                    }
+            }
+        });
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                    if(scrollY==0||scrollY<layoutAutoHide_Height) {
+//                        floatingActionButton.hide();
+//                    }
+//                    else {
+//                        floatingActionButton.show();
+//                    }
+//                }
+//            });
+//        }
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        nestedScrollView.fling(0);
+                        nestedScrollView.smoothScrollTo(0, 0);
             }
         });
     }
@@ -266,11 +315,11 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadListView();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
 
@@ -278,16 +327,29 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                cViewAdapter.getFilter().filter(query);
+                customAdapterRecyclerView.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                cViewAdapter.getFilter().filter(newText);
+                customAdapterRecyclerView.getFilter().filter(newText);
                 return false;
             }
         });
@@ -296,23 +358,23 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-                Intent intent= new Intent(ActivityDanhSachHanhThu.this, ActivitySearchKhachHangWeb.class);
+                Intent intent = new Intent(ActivityDanhSachHanhThu.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void loadListView() {
         try {
-            lstView.setAdapter(null);
+            recycler.setAdapter(null);
             list = new ArrayList<CViewEntity>();
             TongHD = TongCong = 0;
             switch (spnFilter.getSelectedItem().toString()) {
@@ -359,8 +421,12 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     }
                     break;
             }
-            cViewAdapter = new CViewAdapter(ActivityDanhSachHanhThu.this, list);
-            lstView.setAdapter(cViewAdapter);
+            customAdapterRecyclerView = new CustomAdapterRecyclerView(list);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+            recycler.setLayoutManager(layoutManager);
+            recycler.setAdapter(customAdapterRecyclerView);
             txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         } catch (Exception e) {
@@ -370,8 +436,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     public void addEntity(JSONObject jsonObject) {
         try {
             ///thiết lập khởi tạo 1 lần đầu để sort
-            if(jsonObject.has("ModifyDate")==false)
-                jsonObject.put("ModifyDate",CLocal.DateFormat.format(new Date()));
+            if (jsonObject.has("ModifyDate") == false)
+                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
             CViewEntity entity = new CViewEntity();
             entity.setSTT(String.valueOf(list.size() + 1));
             entity.setID(jsonObject.getString("ID"));
@@ -425,8 +491,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 //            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("selectedMaNV", ""), currentDate.format(new Date())));
             try {
                 if (CLocal.ToTruong == false)
-                    selectedMaNV =CLocal.MaNV;
-                CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV,spnNam.getSelectedItem().toString(),spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                    selectedMaNV = CLocal.MaNV;
+                CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 if (CLocal.jsonHanhThu != null)
                     editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
@@ -443,11 +509,11 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    if (Boolean.parseBoolean(values[0]) == true){
+                    if (Boolean.parseBoolean(values[0]) == true) {
                         loadListView();
                     }
                 } catch (Exception e) {
-                    CLocal.jsonHanhThu=null;
+                    CLocal.jsonHanhThu = null;
                 }
             }
         }
