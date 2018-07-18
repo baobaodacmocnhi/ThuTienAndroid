@@ -97,10 +97,14 @@ public class MainActivity extends AppCompatActivity {
 
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
                 CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
+//                if(CLocal.jsonHanhThu.length()>1000)
+//                    CLocal.jsonHanhThu=null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
                 CLocal.jsonDongNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
                 CLocal.jsonDongNuocChild = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuocChild", ""));
+//                if(CLocal.jsonDongNuoc.length()>1000)
+//                    CLocal.jsonDongNuoc=null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));

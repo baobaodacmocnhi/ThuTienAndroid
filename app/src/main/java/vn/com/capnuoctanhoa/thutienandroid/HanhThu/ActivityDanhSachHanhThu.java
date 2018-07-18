@@ -42,21 +42,21 @@ import java.util.Collections;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerView;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
     private Spinner spnFilter, spnSort, spnFromDot, spnToDot, spnNhanVien, spnNam, spnKy;
-    private RecyclerView recycler;
+    private RecyclerView recyclerView;
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
-    private CustomAdapterRecyclerView customAdapterRecyclerView;
-    private ArrayList<CViewEntity> list;
+    private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
+    private ArrayList<CEntityParent> list;
     private LinearLayout layoutNhanVien;
     private CardView layoutAutoHide;
     private NestedScrollView nestedScrollView;
@@ -64,6 +64,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private String selectedMaNV = "";
     private FloatingActionButton floatingActionButton;
     private int layoutAutoHide_Height;
+    private loadRecyclerViewAysncTask loadRecyclerViewAysncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +86,11 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         spnNam = (Spinner) findViewById(R.id.spnNam);
         spnKy = (Spinner) findViewById(R.id.spnKy);
-        recycler = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
-        nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
+        nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
         layoutAutoHide = (CardView) findViewById(R.id.layoutAutoHide);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
@@ -195,7 +196,10 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadListView();
+                if (loadRecyclerViewAysncTask != null && loadRecyclerViewAysncTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    // My AsyncTask is currently doing work in doInBackground()
+                    loadRecyclerView();
+                }
             }
 
             @Override
@@ -207,18 +211,20 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (spnSort.getSelectedItem().toString()) {
-                    case "Thời Gian Tăng":
-                        Collections.sort(list, new CSort("ModifyDate", -1));
-                        break;
-                    case "Thời Gian Giảm":
-                        Collections.sort(list, new CSort("ModifyDate", 1));
-                        break;
-                    default:
-                        Collections.sort(list, new CSort("", -1));
-                        break;
-                }
-                customAdapterRecyclerView.notifyDataSetChanged();
+                if (list != null && list.size() > 0)
+                    switch (spnSort.getSelectedItem().toString()) {
+                        case "Thời Gian Tăng":
+                            Collections.sort(list, new CSort("ModifyDate", -1));
+                            break;
+                        case "Thời Gian Giảm":
+                            Collections.sort(list, new CSort("ModifyDate", 1));
+                            break;
+                        default:
+                            Collections.sort(list, new CSort("", -1));
+                            break;
+                    }
+                if (customAdapterRecyclerViewParent != null)
+                    customAdapterRecyclerViewParent.notifyDataSetChanged();
             }
 
             @Override
@@ -239,23 +245,23 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         });
 
-        layoutAutoHide_Height=layoutAutoHide.getHeight();
+        layoutAutoHide_Height = layoutAutoHide.getHeight();
         nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
                 int scrollY = nestedScrollView.getScrollY();
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) layoutAutoHide.getLayoutParams();
-                int height = Math.max(0,layoutAutoHide_Height-scrollY);
+                int height = Math.max(0, layoutAutoHide_Height - scrollY);
                 lp.height = height;
                 layoutAutoHide.setLayoutParams(lp);
             }
         });
 
         //if you remove this part, the card would be shown in its minimum state at start
-        recycler.post(new Runnable() {
+        recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                nestedScrollView.scrollTo(0,0);
+                nestedScrollView.scrollTo(0, 0);
             }
         });
 
@@ -272,19 +278,18 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                         }
                         // measure your views here
                         layoutAutoHide_Height = layoutAutoHide.getHeight();
-                        nestedScrollView.scrollTo(0,0);
+                        nestedScrollView.scrollTo(0, 0);
                     }
                 });
 
         nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if(nestedScrollView.getScrollY()==0||nestedScrollView.getScrollY()<layoutAutoHide_Height) {
-                        floatingActionButton.hide();
-                    }
-                    else {
-                        floatingActionButton.show();
-                    }
+                if (nestedScrollView.getScrollY() == 0 || nestedScrollView.getScrollY() < layoutAutoHide_Height) {
+                    floatingActionButton.hide();
+                } else {
+                    floatingActionButton.show();
+                }
             }
         });
 
@@ -305,17 +310,18 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        nestedScrollView.fling(0);
-                        nestedScrollView.smoothScrollTo(0, 0);
+                nestedScrollView.fling(0);
+                nestedScrollView.smoothScrollTo(0, 0);
             }
         });
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loadListView();
-
+        loadRecyclerView();
     }
 
     @Override
@@ -343,13 +349,13 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                customAdapterRecyclerView.getFilter().filter(query);
+//                customAdapterRecyclerViewParent.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                customAdapterRecyclerView.getFilter().filter(newText);
+                customAdapterRecyclerViewParent.getFilter().filter(newText);
                 return false;
             }
         });
@@ -374,8 +380,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     public void loadListView() {
         try {
-            recycler.setAdapter(null);
-            list = new ArrayList<CViewEntity>();
+//            recyclerView.setAdapter(null);
+            list = new ArrayList<CEntityParent>();
             TongHD = TongCong = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
@@ -421,16 +427,20 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterRecyclerView = new CustomAdapterRecyclerView(list);
+            customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(this, list);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-            recycler.setLayoutManager(layoutManager);
-            recycler.setAdapter(customAdapterRecyclerView);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(customAdapterRecyclerViewParent);
             txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         } catch (Exception e) {
         }
+    }
+
+    public void loadRecyclerView() {
+        loadRecyclerViewAysncTask = new loadRecyclerViewAysncTask();
+        loadRecyclerViewAysncTask.execute();
     }
 
     public void addEntity(JSONObject jsonObject) {
@@ -438,7 +448,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             ///thiết lập khởi tạo 1 lần đầu để sort
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
-            CViewEntity entity = new CViewEntity();
+            CEntityParent entity = new CEntityParent();
             entity.setSTT(String.valueOf(list.size() + 1));
             entity.setID(jsonObject.getString("ID"));
 
@@ -524,6 +534,76 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+        }
+    }
+
+    public class loadRecyclerViewAysncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+//            recyclerView.setAdapter(null);
+                list = new ArrayList<CEntityParent>();
+                TongHD = TongCong = 0;
+                switch (spnFilter.getSelectedItem().toString()) {
+                    case "Chưa Thu":
+                    case "Đã Thu":
+                        if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+                                if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == false) {
+                                    addEntity(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Giải Trách":
+                        if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+                                if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
+                                    addEntity(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Tạm Thu-Thu Hộ":
+                        if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+                                if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
+                                    addEntity(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+                            for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+                                addEntity(jsonObject);
+                            }
+                        }
+                        break;
+                }
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(ActivityDanhSachHanhThu.this, list);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(customAdapterRecyclerViewParent);
+            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         }
     }
 }

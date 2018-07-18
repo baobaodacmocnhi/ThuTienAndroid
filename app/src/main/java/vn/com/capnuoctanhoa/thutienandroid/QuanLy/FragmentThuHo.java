@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid.QuanLy;
 
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -22,7 +23,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,14 +33,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class FragmentDangNgan extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentThuHo extends Fragment {
     private View rootView;
     private DatePickerDialog datePickerDialog;
     private EditText edtFromDate, edtToDate;
@@ -60,11 +63,16 @@ public class FragmentDangNgan extends Fragment {
     private ArrayList<CEntityParent> list;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
+    public FragmentThuHo() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_dang_ngan, container, false);
+        rootView= inflater.inflate(R.layout.fragment_thu_ho, container, false);
 
         layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         edtFromDate = (EditText) rootView.findViewById(R.id.edtFromDate);
@@ -267,12 +275,12 @@ public class FragmentDangNgan extends Fragment {
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
                     for (int i = 0; i < spnID_To.size(); i++) {
-                        publishProgress(ws.getTongDangNgan(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        publishProgress(ws.getTongThuHo(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString()));
                     }
                 } else
-                    publishProgress(ws.getTongDangNgan(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                    publishProgress(ws.getTongThuHo(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
             } else
-                publishProgress(ws.getTongDangNgan(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                publishProgress(ws.getTongThuHo(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
             return null;
         }
 

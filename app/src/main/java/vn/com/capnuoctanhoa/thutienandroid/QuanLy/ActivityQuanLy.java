@@ -83,14 +83,20 @@ public class ActivityQuanLy extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    FragmentGiao tab1 = new FragmentGiao();
-                    return tab1;
+                    FragmentGiao tab0 = new FragmentGiao();
+                    return tab0;
                 case 1:
-                    FragmentDangNgan tab2 = new FragmentDangNgan();
-                    return tab2;
+                    FragmentDangNgan tab1 = new FragmentDangNgan();
+                    return tab1;
                 case 2:
-                    FragmentTon tab3 = new FragmentTon();
+                    FragmentTon tab2 = new FragmentTon();
+                    return tab2;
+                case 3:
+                    FragmentDongMoNuoc tab3 = new FragmentDongMoNuoc();
                     return tab3;
+                case 4:
+                    FragmentThuHo tab4 = new FragmentThuHo();
+                    return tab4;
                 default:
                     return null;
             }
@@ -99,7 +105,7 @@ public class ActivityQuanLy extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 5;
         }
 
         @Override
@@ -111,6 +117,10 @@ public class ActivityQuanLy extends AppCompatActivity {
                     return "Đăng Ngân";
                 case 2:
                     return "Tồn";
+                case 3:
+                    return "Đóng Nước";
+                case 4:
+                    return "Thu Hộ";
                 default:
                     return null;
             }

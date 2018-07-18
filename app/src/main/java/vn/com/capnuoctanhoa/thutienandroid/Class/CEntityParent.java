@@ -2,7 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import java.util.ArrayList;
 
-public class CViewEntity {
+public class CEntityParent {
     private String STT;
     private String ID;
     private String Row1a;
@@ -18,9 +18,9 @@ public class CViewEntity {
     private Boolean ThuHo;
     private Boolean LenhHuy;
     private String ModifyDate;
-    private ArrayList<CViewEntityChild> listChild ;
+    private ArrayList<CEntityChild> listChild ;
 
-    public CViewEntity() {
+    public CEntityParent() {
         this.STT = "";
         this.ID = "";
         Row1a = "";
@@ -34,7 +34,7 @@ public class CViewEntity {
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
-        listChild = new ArrayList<CViewEntityChild>();
+        listChild = new ArrayList<CEntityChild>();
     }
 
     public String getSTT() {
@@ -157,11 +157,12 @@ public class CViewEntity {
         ModifyDate = modifyDate;
     }
 
-    public ArrayList<CViewEntityChild> getListChild() {
+    public ArrayList<CEntityChild> getListChild() {
         return listChild;
     }
 
-    public void setListChild(ArrayList<CViewEntityChild> listChild) {
+    public void setListChild(ArrayList<CEntityChild> listChild) {
         this.listChild = listChild;
     }
+
 }

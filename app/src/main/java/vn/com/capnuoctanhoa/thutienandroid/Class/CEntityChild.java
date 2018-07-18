@@ -2,7 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.graphics.Color;
 
-public class CViewEntityChild {
+public class CEntityChild {
     private String ID;
     private String Row1a;
     private String Row1b;
@@ -11,7 +11,7 @@ public class CViewEntityChild {
     private Boolean ThuHo;
     private Boolean LenhHuy;
 
-    public CViewEntityChild() {
+    public CEntityChild() {
         this.ID = "";
         Row1a = "";
         Row1b = "";
@@ -75,4 +75,6 @@ public class CViewEntityChild {
     public void setLenhHuy(Boolean lenhHuy) {
         LenhHuy = lenhHuy;
     }
+
+
 }

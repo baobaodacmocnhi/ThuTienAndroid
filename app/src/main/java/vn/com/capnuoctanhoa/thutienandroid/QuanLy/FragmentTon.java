@@ -1,17 +1,23 @@
 package vn.com.capnuoctanhoa.thutienandroid.QuanLy;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -24,22 +30,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapter;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class FragmentTon extends Fragment {
     private View rootView;
     private Spinner spnNam, spnKy, spnFromDot, spnToDot, spnTo;
     private Button btnXem;
-    private ListView lstView;
+    private RecyclerView recyclerView;
     private LinearLayout layoutTo;
+    private CardView layoutAutoHide;
+    private NestedScrollView nestedScrollView;
+    private FloatingActionButton floatingActionButton;
+    private TextView txtTongHD, txtTongCong;
+
+    private int layoutAutoHide_Height;
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
-    private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
-    private ArrayList<CViewEntity> list;
+    private ArrayList<CEntityParent> list;
+    private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,9 +67,12 @@ public class FragmentTon extends Fragment {
         spnToDot = (Spinner) rootView.findViewById(R.id.spnToDot);
         spnTo = (Spinner) rootView.findViewById(R.id.spnTo);
         btnXem = (Button) rootView.findViewById(R.id.btnXem);
-        lstView = (ListView) rootView.findViewById(R.id.lstView);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         txtTongHD = (TextView) rootView.findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) rootView.findViewById(R.id.txtTongCong);
+        nestedScrollView=(NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
+        layoutAutoHide = (CardView) rootView.findViewById(R.id.layoutAutoHide);
+        floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);
@@ -108,6 +124,77 @@ public class FragmentTon extends Fragment {
             }
         });
 
+        layoutAutoHide_Height=layoutAutoHide.getHeight();
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                int scrollY = nestedScrollView.getScrollY();
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) layoutAutoHide.getLayoutParams();
+                int height = Math.max(0,layoutAutoHide_Height-scrollY);
+                lp.height = height;
+                layoutAutoHide.setLayoutParams(lp);
+            }
+        });
+
+        //if you remove this part, the card would be shown in its minimum state at start
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                nestedScrollView.scrollTo(0,0);
+            }
+        });
+
+        // The calculation for heights of views should be done after the view created
+        final View view = rootView.findViewById(R.id.layoutRoot);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    public void onGlobalLayout() {
+                        //Remove the listener before proceeding
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        } else {
+                            view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        }
+                        // measure your views here
+                        layoutAutoHide_Height = layoutAutoHide.getHeight();
+                        nestedScrollView.scrollTo(0,0);
+                    }
+                });
+
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if(nestedScrollView.getScrollY()==0||nestedScrollView.getScrollY()<layoutAutoHide_Height) {
+                    floatingActionButton.hide();
+                }
+                else {
+                    floatingActionButton.show();
+                }
+            }
+        });
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                    if(scrollY==0||scrollY<layoutAutoHide_Height) {
+//                        floatingActionButton.hide();
+//                    }
+//                    else {
+//                        floatingActionButton.show();
+//                    }
+//                }
+//            });
+//        }
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nestedScrollView.fling(0);
+                nestedScrollView.smoothScrollTo(0, 0);
+            }
+        });
+
         return rootView;
     }
 
@@ -127,8 +214,8 @@ public class FragmentTon extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-//            lstView.setAdapter(null);
-            list = new ArrayList<CViewEntity>();
+//            recyclerView.setAdapter(null);
+            list = new ArrayList<CEntityParent>();
             TongHD = TongCong = 0;
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
@@ -151,7 +238,7 @@ public class FragmentTon extends Fragment {
                     JSONArray jsonArray = new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        CViewEntity entity = new CViewEntity();
+                        CEntityParent entity = new CEntityParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
@@ -159,8 +246,12 @@ public class FragmentTon extends Fragment {
                         TongHD += Long.parseLong(jsonObject.getString("TongHD"));
                         TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
-                    CViewAdapter cViewAdapter = new CViewAdapter(getActivity(), list);
-                    lstView.setAdapter(cViewAdapter);
+                    CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
+                    customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(),list);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(customAdapterRecyclerViewParent);
                     txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
                     txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
                 } catch (Exception e) {

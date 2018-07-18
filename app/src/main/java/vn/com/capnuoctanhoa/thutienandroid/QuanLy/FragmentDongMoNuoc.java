@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid.QuanLy;
 
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -22,7 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,19 +34,23 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class FragmentDangNgan extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FragmentDongMoNuoc extends Fragment {
     private View rootView;
     private DatePickerDialog datePickerDialog;
     private EditText edtFromDate, edtToDate;
     private Spinner spnTo;
     private Button btnXem;
+    private RadioButton radDongNuoc;
     private RecyclerView recyclerView;
     private LinearLayout layoutTo;
     private CardView layoutAutoHide;
@@ -60,17 +65,23 @@ public class FragmentDangNgan extends Fragment {
     private ArrayList<CEntityParent> list;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
+    public FragmentDongMoNuoc() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_dang_ngan, container, false);
+        rootView= inflater.inflate(R.layout.fragment_dong_mo_nuoc, container, false);
 
         layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         edtFromDate = (EditText) rootView.findViewById(R.id.edtFromDate);
         edtToDate = (EditText) rootView.findViewById(R.id.edtToDate);
         spnTo = (Spinner) rootView.findViewById(R.id.spnTo);
         btnXem = (Button) rootView.findViewById(R.id.btnXem);
+        radDongNuoc=(RadioButton) rootView.findViewById(R.id.radDongNuoc);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         txtTongHD = (TextView) rootView.findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) rootView.findViewById(R.id.txtTongCong);
@@ -264,15 +275,18 @@ public class FragmentDangNgan extends Fragment {
 //            recyclerView.setAdapter(null);
             list = new ArrayList<CEntityParent>();
             TongHD = TongCong = 0;
+            Boolean DongNuoc=false;
+            if(radDongNuoc.isChecked()==true)
+                DongNuoc=true;
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
                     for (int i = 0; i < spnID_To.size(); i++) {
-                        publishProgress(ws.getTongDangNgan(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        publishProgress(ws.getTongDongMoNuoc(String.valueOf(DongNuoc),spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString()));
                     }
                 } else
-                    publishProgress(ws.getTongDangNgan(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                    publishProgress(ws.getTongDongMoNuoc(String.valueOf(DongNuoc),selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
             } else
-                publishProgress(ws.getTongDangNgan(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                publishProgress(ws.getTongDongMoNuoc(String.valueOf(DongNuoc),CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString()));
             return null;
         }
 
@@ -287,10 +301,10 @@ public class FragmentDangNgan extends Fragment {
                         CEntityParent entity = new CEntityParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
                         entity.setRow2a(jsonObject.getString("TongHD"));
-                        entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+//                        entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         list.add(entity);
                         TongHD += Long.parseLong(jsonObject.getString("TongHD"));
-                        TongCong += Long.parseLong(jsonObject.getString("TongCong"));
+//                        TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
                     CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
                     customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(), list);
@@ -299,7 +313,7 @@ public class FragmentDangNgan extends Fragment {
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(customAdapterRecyclerViewParent);
                     txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
-                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+//                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

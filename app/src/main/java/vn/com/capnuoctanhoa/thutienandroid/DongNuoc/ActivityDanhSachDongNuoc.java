@@ -11,31 +11,28 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.constraint.ConstraintLayout;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Transformation;
-import android.widget.AbsListView;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,10 +48,11 @@ import java.util.Date;
 import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewAdapterGroup;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntity;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CViewEntityChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachDongNuoc extends AppCompatActivity {
@@ -62,17 +60,21 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button btnDownload, btnShowMess;
     private Spinner spnFilter, spnSort, spnNhanVien;
-    private ExpandableListView lstView;
-    private CViewAdapterGroup cViewAdapterGroup;
-    private ArrayList<CViewEntity> listParent;
-    private ArrayList<CViewEntityChild> listChild;
+    private RecyclerView recyclerView;
+    private TextView txtTongHD, txtTongCong;
+    private long TongDC, TongCong,TongHD;
+    private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
+    private ArrayList<CEntityParent> listParent;
+    private ArrayList<CEntityChild> listChild;
     private LinearLayout layoutNhanVien;
-    private ConstraintLayout layoutAutoHide;
+    private CardView layoutAutoHide;
+    private NestedScrollView nestedScrollView;
     private ArrayList<String> spnID_NhanVien;
     private ArrayList<String> spnName_NhanVien;
     private String selectedMaNV = "";
-    private Boolean flagSearch = false;
-    private FloatingActionButton fbtnScrollUp;
+    private FloatingActionButton floatingActionButton;
+    private int layoutAutoHide_Height;
+    private loadRecyclerViewAysncTask loadRecyclerViewAysncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +94,13 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
-        lstView = (ExpandableListView) findViewById(R.id.lstView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        txtTongHD = (TextView) findViewById(R.id.txtTongHD);
+        txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
-        layoutAutoHide=(ConstraintLayout) findViewById(R.id.layoutAutoHide);
-        fbtnScrollUp = (FloatingActionButton) findViewById(R.id.fbtnScrollUp);
+        nestedScrollView=(NestedScrollView) findViewById(R.id.nestedScrollView);
+        layoutAutoHide=(CardView) findViewById(R.id.layoutAutoHide);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         if (CLocal.ToTruong == true) {
             layoutNhanVien.setVisibility(View.VISIBLE);
@@ -203,14 +208,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 builderSingle.setView(lstMessage);
 
                 builderSingle.setNegativeButton(
-                        "Xóa Tất Cả",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                CLocal.jsonMessage = new JSONArray();
-                            }
-                        });
-
-                builderSingle.setPositiveButton(
                         "Thoát",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -218,6 +215,13 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             }
                         });
 
+                builderSingle.setPositiveButton(
+                        "Xóa Tất Cả",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                CLocal.jsonMessage = new JSONArray();
+                            }
+                        });
 
                 //hàm này khi click row sẽ bị ẩn
                 /*builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
@@ -245,7 +249,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         spnFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadListView();
+                if (loadRecyclerViewAysncTask != null && loadRecyclerViewAysncTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    // My AsyncTask is currently doing work in doInBackground()
+                    loadRecyclerView();
+                }
             }
 
             @Override
@@ -257,6 +264,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (listParent != null && listParent.size() > 0)
                 switch (spnSort.getSelectedItem().toString()) {
                     case "Thời Gian Tăng":
                         Collections.sort(listParent, new CSort("ModifyDate", -1));
@@ -268,7 +276,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         Collections.sort(listParent, new CSort("", -1));
                         break;
                 }
-                cViewAdapterGroup.notifyDataSetChanged();
+                if (customAdapterRecyclerViewParent != null)
+                customAdapterRecyclerViewParent.notifyDataSetChanged();
             }
 
             @Override
@@ -289,84 +298,77 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
 
-        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        layoutAutoHide_Height=layoutAutoHide.getHeight();
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                PopupMenu popup = new PopupMenu(ActivityDanhSachDongNuoc.this, view);
-                popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
-                        Intent intent;
-                        switch (id) {
-                            case R.id.popup_action_DongNuoc:
-                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.popup_action_DongNuoc2:
-                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongNuoc2.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.popup_action_MoNuoc:
-                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityMoNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.popup_action_DongTien:
-                                intent = new Intent(ActivityDanhSachDongNuoc.this, ActivityDongTien.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
-                return true;
+            public void onScrollChanged() {
+                int scrollY = nestedScrollView.getScrollY();
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) layoutAutoHide.getLayoutParams();
+                int height = Math.max(0,layoutAutoHide_Height-scrollY);
+                lp.height = height;
+                layoutAutoHide.setLayoutParams(lp);
             }
         });
 
-        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        //if you remove this part, the card would be shown in its minimum state at start
+        recyclerView.post(new Runnable() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+            public void run() {
+                nestedScrollView.scrollTo(0,0);
             }
+        });
 
+        // The calculation for heights of views should be done after the view created
+        final View rootView = findViewById(R.id.layoutRoot);
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    public void onGlobalLayout() {
+                        //Remove the listener before proceeding
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        } else {
+                            rootView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        }
+                        // measure your views here
+                        layoutAutoHide_Height = layoutAutoHide.getHeight();
+                        nestedScrollView.scrollTo(0,0);
+                    }
+                });
+
+        nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0) {
-                    // check if we reached the top or bottom of the list
-                    View v = lstView.getChildAt(0);
-                    int offset = (v == null) ? 0 : v.getTop();
-                    if (offset == 0) {
-                        showLayoutAutoHide();
-                        hidefbtnScrollUp();
-                    }
-                } else if (totalItemCount - visibleItemCount == firstVisibleItem) {
-                    View v = lstView.getChildAt(totalItemCount - 1);
-                    int offset = (v == null) ? 0 : v.getTop();
-                    if (offset == 0) {
-                        // reached the bottom: visible header and footer
-//                        layoutAutoHide.setVisibility(View.VISIBLE);
-                    }
-                } else if (totalItemCount - visibleItemCount > firstVisibleItem){
-                    // on scrolling
-                    hideLayoutAutoHide();
-                    showfbtnScrollUp();
+            public void onScrollChanged() {
+                if(nestedScrollView.getScrollY()==0||nestedScrollView.getScrollY()<layoutAutoHide_Height) {
+                    floatingActionButton.hide();
+                }
+                else {
+                    floatingActionButton.show();
                 }
             }
         });
 
-        fbtnScrollUp.setOnClickListener(new View.OnClickListener() {
+        //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                @Override
+//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                    if(scrollY==0||scrollY<layoutAutoHide_Height) {
+//                        floatingActionButton.hide();
+//                    }
+//                    else {
+//                        floatingActionButton.show();
+//                    }
+//                }
+//            });
+//        }
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lstView.smoothScrollToPosition(0);
+                nestedScrollView.fling(0);
+                nestedScrollView.smoothScrollTo(0, 0);
             }
         });
+
     }
 
     @Override
@@ -388,15 +390,13 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flagSearch = true;
-                layoutAutoHide.setVisibility(View.GONE);
+
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                flagSearch = false;
-                layoutAutoHide.setVisibility(View.VISIBLE);
+
                 return false;
             }
         });
@@ -409,7 +409,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                cViewAdapterGroup.getFilter().filter(newText);
+                customAdapterRecyclerViewParent.getFilter().filter(newText);
                 return false;
             }
         });
@@ -434,8 +434,9 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
     public void loadListView() {
         try {
-            lstView.setAdapter((BaseExpandableListAdapter) null);
-            listParent = new ArrayList<CViewEntity>();
+//            recyclerView.setAdapter(null);
+            listParent = new ArrayList<CEntityParent>();
+            TongDC = TongCong = TongHD=0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa ĐN":
                     if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
@@ -512,11 +513,21 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                     break;
             }
-            cViewAdapterGroup = new CViewAdapterGroup(ActivityDanhSachDongNuoc.this, listParent);
-            lstView.setAdapter(cViewAdapterGroup);
+            customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(this,listParent);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(customAdapterRecyclerViewParent);
+            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongDC), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongHD), "")+"HĐ: "+CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         } catch (Exception e) {
 
         }
+    }
+
+    public void loadRecyclerView() {
+        loadRecyclerViewAysncTask = new loadRecyclerViewAysncTask();
+        loadRecyclerViewAysncTask.execute();
     }
 
     public void addEntityParent(JSONObject jsonObject) {
@@ -525,7 +536,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
 
-            CViewEntity entity = new CViewEntity();
+            CEntityParent entity = new CEntityParent();
             entity.setSTT(String.valueOf(listParent.size() + 1));
             entity.setID(jsonObject.getString("ID"));
 
@@ -546,7 +557,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setModifyDate(jsonObject.getString("ModifyDate"));
             ///////////////////////////
 
-            listChild = new ArrayList<CViewEntityChild>();
+            listChild = new ArrayList<CEntityChild>();
 
             if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
                 for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
@@ -588,6 +599,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 }
             entity.setListChild(listChild);
             entity.setRow1b(String.valueOf(listChild.size())+" HĐ");
+            TongDC++;
+
             listParent.add(entity);
         } catch (Exception e) {
         }
@@ -599,7 +612,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
 
-            CViewEntityChild entity = new CViewEntityChild();
+            CEntityChild entity = new CEntityChild();
             entity.setID(jsonObject.getString("MaHD"));
             entity.setRow1a(jsonObject.getString("Ky"));
             entity.setRow1b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
@@ -607,52 +620,12 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
             entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
             entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
+            TongCong += Long.parseLong(jsonObject.getString("TongCong"));
+            TongHD++;
 
             listChild.add(entity);
         } catch (Exception e) {
         }
-    }
-
-    private void showLayoutAutoHide() {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
-        final int topMarginStart = params.topMargin; // your start value
-        final int topMarginEnd = 0; // where to animate to
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
-                // interpolate the proper value
-                params.topMargin = topMarginStart + (int) ((topMarginEnd - topMarginStart) * interpolatedTime);
-                layoutAutoHide.setLayoutParams(params);
-            }
-        };
-        a.setDuration(50);
-        layoutAutoHide.startAnimation(a);
-    }
-
-    private void hideLayoutAutoHide() {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
-        final int topMarginStart = params.topMargin; // your start value
-        final int topMarginEnd = (-1) * layoutAutoHide.getHeight(); // where to animate to
-        Animation a = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) layoutAutoHide.getLayoutParams();
-                // interpolate the proper value
-                params.topMargin = topMarginStart + (int) ((topMarginEnd - topMarginStart) * interpolatedTime);
-                layoutAutoHide.setLayoutParams(params);
-            }
-        };
-        a.setDuration(50);
-        layoutAutoHide.startAnimation(a);
-    }
-
-    private void hidefbtnScrollUp() {
-        fbtnScrollUp.animate().setDuration(100).translationY(fbtnScrollUp.getHeight() + 300).setInterpolator(new AccelerateInterpolator(2));
-    }
-
-    private void showfbtnScrollUp() {
-        fbtnScrollUp.animate().setDuration(100).translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
@@ -716,5 +689,105 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         }
     }
 
+    public class loadRecyclerViewAysncTask extends AsyncTask<Void, Void, Void> {
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+//            recyclerView.setAdapter(null);
+                listParent = new ArrayList<CEntityParent>();
+                TongDC = TongCong = TongHD=0;
+                switch (spnFilter.getSelectedItem().toString()) {
+                    case "Chưa ĐN":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == false) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Đã ĐN":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Chưa MN":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == true) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Đã MN":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == true) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Giải Trách":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true && jsonObject.getString("DongPhi") != "null" && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == false) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    case "Tạm Thu-Thu Hộ":
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            int stt = 0;
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
+                                    addEntityParent(jsonObject);
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+                            for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                                JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                                addEntityParent(jsonObject);
+                            }
+                        }
+                        break;
+                }
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(ActivityDanhSachDongNuoc.this,listParent);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(customAdapterRecyclerViewParent);
+            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongDC), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongHD), "")+"HĐ: "+CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+        }
+    }
 }

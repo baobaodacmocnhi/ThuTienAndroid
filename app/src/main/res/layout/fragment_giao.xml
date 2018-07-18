@@ -2,163 +2,200 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".QuanLy.FragmentGiao">
 
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/layoutAutoHide"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" >
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layoutTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tổ:"
+                    android:textSize="14sp"
+                    tools:layout_editor_absoluteX="145dp"
+                    tools:layout_editor_absoluteY="48dp" />
+
+                <Spinner
+                    android:id="@+id/spnTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteY="8dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Năm"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+            <Spinner
+                android:id="@+id/spnNam"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/nam_array"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toBottomOf="@+id/layoutTo" />
+
+            <Spinner
+                android:id="@+id/spnKy"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:entries="@array/ky_array"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView29"
+                app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Kỳ"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/spnNam"
+                app:layout_constraintTop_toTopOf="@+id/spnKy" />
+
+            <Spinner
+                android:id="@+id/spnFromDot"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/dot_array"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView30"
+                app:layout_constraintTop_toBottomOf="@+id/spnKy" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Từ Đợt"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
+
+            <Spinner
+                android:id="@+id/spnToDot"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:entries="@array/dot_array"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Đến Đợt"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/spnFromDot"
+                app:layout_constraintTop_toTopOf="@+id/spnToDot" />
+
+            <Button
+                android:id="@+id/btnXem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spnFromDot" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/layoutTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/cardview_shadow_start_color"
+            app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tổ:"
-                android:textSize="14sp"
-                tools:layout_editor_absoluteX="145dp"
-                tools:layout_editor_absoluteY="48dp" />
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spnTo"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="8dp" />
-        </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp" />
 
-        <TextView
-            android:id="@+id/textView28"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Năm"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/spnNam" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false" />
 
-        <Spinner
-            android:id="@+id/spnNam"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:entries="@array/nam_array"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTo" />
-
-        <Spinner
-            android:id="@+id/spnKy"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:entries="@array/ky_array"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/spnNam" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Kỳ"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/spnNam"
-            app:layout_constraintTop_toTopOf="@+id/spnKy" />
-
-        <Spinner
-            android:id="@+id/spnFromDot"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:entries="@array/dot_array"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView30"
-            app:layout_constraintTop_toBottomOf="@+id/spnKy" />
-
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Từ Đợt"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
-
-        <Spinner
-            android:id="@+id/spnToDot"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:entries="@array/dot_array"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView31"
-            app:layout_constraintTop_toTopOf="@+id/spnFromDot" />
-
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Đến Đợt"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/spnFromDot"
-            app:layout_constraintTop_toTopOf="@+id/spnToDot" />
-
-        <Button
-            android:id="@+id/btnXem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Xem"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spnFromDot" />
-
-        <ListView
-            android:id="@+id/lstView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
-            app:layout_constraintTop_toBottomOf="@+id/btnXem"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <TextView
             android:id="@+id/txtTongHD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_weight="1"
             android:text="TextView"
             android:textColor="@color/colorSoTien"
             android:textSize="20sp"
@@ -170,14 +207,31 @@
             android:id="@+id/txtTongCong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:layout_weight="1"
             android:text="TextView"
             android:textColor="@color/colorSoTien"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:clickable="true"
+            app:backgroundTint="@android:color/holo_green_light"
+            app:layout_constraintBottom_toTopOf="@+id/txtTongCong"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtTongHD" />
+            app:srcCompat="@android:drawable/stat_sys_upload" />
 
     </android.support.constraint.ConstraintLayout>
+
 </FrameLayout>
