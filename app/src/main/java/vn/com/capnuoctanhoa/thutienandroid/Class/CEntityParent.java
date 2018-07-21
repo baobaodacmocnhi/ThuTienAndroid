@@ -165,4 +165,8 @@ public class CEntityParent {
         this.listChild = listChild;
     }
 
+    public int getItemChildCount()
+    {
+        return listChild.size();
+    }
 }

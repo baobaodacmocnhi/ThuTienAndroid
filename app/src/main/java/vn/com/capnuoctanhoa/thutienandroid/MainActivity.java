@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
                 CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
-//                if(CLocal.jsonHanhThu.length()>1000)
-//                    CLocal.jsonHanhThu=null;
+                if(CLocal.jsonHanhThu.length()>1000)
+                    CLocal.jsonHanhThu=null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
                 CLocal.jsonDongNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));

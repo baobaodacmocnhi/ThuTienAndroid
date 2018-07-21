@@ -51,7 +51,6 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
         TextView Row3b;
         TextView Row4a;
         TextView Row4b;
-        ConstraintLayout layoutChild;
     }
 
     @Override
@@ -71,7 +70,6 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
             holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
             holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
-            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

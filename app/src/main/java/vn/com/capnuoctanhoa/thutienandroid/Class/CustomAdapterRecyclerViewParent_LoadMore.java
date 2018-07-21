@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
@@ -25,12 +24,17 @@ import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongTien;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityMoNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<CustomAdapterRecyclerViewParent.RecyclerViewHolder>  implements Filterable {
+public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements Filterable {
+
     private Activity activity;
     private ArrayList<CEntityParent> mOriginalValues;
     private ArrayList<CEntityParent> mDisplayedValues;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+    private OnLoadMoreListener onLoadMoreListener;
+    private boolean isLoading=false,isMoreDataAvailable = true;
 
-    public CustomAdapterRecyclerViewParent(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
+    public CustomAdapterRecyclerViewParent_LoadMore(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
         super();
         this.activity=activity;
         this.mDisplayedValues = mDisplayedValues;
@@ -42,41 +46,58 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
     }
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_parent, parent, false);
-        return new RecyclerViewHolder(view);
-
+    public int getItemViewType(int position) {
+        return mDisplayedValues.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
-        if(getItemCount()>0) {
-            CEntityParent entity = mDisplayedValues.get(position);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType==VIEW_TYPE_ITEM){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_parent, parent, false);
+            return new RecyclerViewHolder(view);
+        }
+        else if (viewType==VIEW_TYPE_LOADING){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_loading, parent, false);
+            return new RecyclerViewHolderLoading(view);
+        }
+        return null;
+    }
 
-            holder.STT.setText(entity.getSTT());
-            holder.ID.setText(entity.getID());
-            holder.Row1a.setText(entity.getRow1a());
-            holder.Row1b.setText(entity.getRow1b());
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if(position>=getItemCount()-1 && isMoreDataAvailable && !isLoading && onLoadMoreListener!=null){
+            isLoading = true;
+            onLoadMoreListener.onLoadMore();
+        }
+
+        if(getItemViewType(position)==VIEW_TYPE_ITEM){
+            CEntityParent entity = mDisplayedValues.get(position);
+            final RecyclerViewHolder recyclerViewHolder=(RecyclerViewHolder)holder;
+
+            recyclerViewHolder.STT.setText(entity.getSTT());
+            recyclerViewHolder.ID.setText(entity.getID());
+            recyclerViewHolder.Row1a.setText(entity.getRow1a());
+            recyclerViewHolder.Row1b.setText(entity.getRow1b());
             if (entity.getRow2a().isEmpty() == true && entity.getRow2b().isEmpty() == true) {
-                holder.Row2a.setVisibility(View.GONE);
-                holder.Row2b.setVisibility(View.GONE);
+                recyclerViewHolder.Row2a.setVisibility(View.GONE);
+                recyclerViewHolder.Row2b.setVisibility(View.GONE);
             } else {
-                holder.Row2a.setText(entity.getRow2a());
-                holder.Row2b.setText(entity.getRow2b());
+                recyclerViewHolder.Row2a.setText(entity.getRow2a());
+                recyclerViewHolder.Row2b.setText(entity.getRow2b());
             }
             if (entity.getRow3a().isEmpty() == true && entity.getRow3b().isEmpty() == true) {
-                holder.Row3a.setVisibility(View.GONE);
-                holder.Row3b.setVisibility(View.GONE);
+                recyclerViewHolder.Row3a.setVisibility(View.GONE);
+                recyclerViewHolder.Row3b.setVisibility(View.GONE);
             } else {
-                holder.Row3a.setText(entity.getRow3a());
-                holder.Row3b.setText(entity.getRow3b());
+                recyclerViewHolder.Row3a.setText(entity.getRow3a());
+                recyclerViewHolder.Row3b.setText(entity.getRow3b());
             }
             if (entity.getRow4a().isEmpty() == true && entity.getRow4b().isEmpty() == true) {
-                holder.Row4a.setVisibility(View.GONE);
-                holder.Row4b.setVisibility(View.GONE);
+                recyclerViewHolder.Row4a.setVisibility(View.GONE);
+                recyclerViewHolder.Row4b.setVisibility(View.GONE);
             } else {
-                holder.Row4a.setText(entity.getRow4a());
-                holder.Row4b.setText(entity.getRow4b());
+                recyclerViewHolder.Row4a.setText(entity.getRow4a());
+                recyclerViewHolder.Row4b.setText(entity.getRow4b());
             }
             ///
             ///thêm ItemChild
@@ -84,25 +105,25 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
                 CustomAdapterRecyclerViewChild customAdapterRecyclerViewChild = new CustomAdapterRecyclerViewChild(entity.getListChild());
                 LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                holder.recyclerView.setLayoutManager(layoutManager);
-                holder.recyclerView.setAdapter(customAdapterRecyclerViewChild);
+                recyclerViewHolder.recyclerView.setLayoutManager(layoutManager);
+                recyclerViewHolder.recyclerView.setAdapter(customAdapterRecyclerViewChild);
 
-                holder.layoutChild.setVisibility(View.GONE);
+                recyclerViewHolder.layoutChild.setVisibility(View.GONE);
 
-                holder.layoutParent.setOnClickListener(new View.OnClickListener() {
+                recyclerViewHolder.layoutParent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (v.getId() == R.id.layoutParent) {
-                            if ( holder.layoutChild.getVisibility() == View.VISIBLE) {
-                                holder.layoutChild.setVisibility(View.GONE);
+                            if ( recyclerViewHolder.layoutChild.getVisibility() == View.VISIBLE) {
+                                recyclerViewHolder.layoutChild.setVisibility(View.GONE);
                             } else {
-                                holder.layoutChild.setVisibility(View.VISIBLE);
+                                recyclerViewHolder.layoutChild.setVisibility(View.VISIBLE);
                             }
                         }
                     }
                 });
 
-                holder.layoutParent.setOnLongClickListener(new View.OnLongClickListener() {
+                recyclerViewHolder.layoutParent.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         PopupMenu popup = new PopupMenu(activity, v);
@@ -111,7 +132,7 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {
                                 int id = menuItem.getItemId();
-                                TextView MaDN =  holder.ID;
+                                TextView MaDN =  recyclerViewHolder.ID;
                                 Intent intent;
                                 switch (id) {
                                     case R.id.popup_action_DongNuoc:
@@ -144,6 +165,8 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
                 });
             }
         }
+        //No else part needed as load holder doesn't bind any data
+
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -177,7 +200,36 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
             layoutChild = (LinearLayout) itemView.findViewById(R.id.layoutChild);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerView);
 
-            }
+        }
+    }
+
+    private class RecyclerViewHolderLoading extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public RecyclerViewHolderLoading(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        }
+    }
+
+    public void setMoreDataAvailable(boolean moreDataAvailable) {
+        isMoreDataAvailable = moreDataAvailable;
+    }
+
+    /* notifyDataSetChanged is final method so we can't override it
+         call adapter.notifyDataChanged(); after update the list
+         */
+    public void notifyDataChanged(){
+        notifyDataSetChanged();
+        isLoading = false;
+    }
+
+    public interface OnLoadMoreListener{
+        void onLoadMore();
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
     }
 
     @Override

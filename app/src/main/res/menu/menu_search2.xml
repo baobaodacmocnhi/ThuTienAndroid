@@ -9,9 +9,9 @@
         appcompat:showAsAction="always" />
 
     <item
-        android:id="@+id/action_down_data"
-        android:icon="@android:drawable/stat_sys_download"
-        android:title="Tải Dữ Liệu"
+        android:id="@+id/action_search_khach_hang"
+        android:icon="@drawable/ic_user_searchx512"
+        android:title="Tìm Kiếm Khách Hàng"
         app:showAsAction="always" />
 
 </menu>

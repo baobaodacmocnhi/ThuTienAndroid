@@ -114,7 +114,15 @@
         <activity
             android:name=".QuanLy.ActivityQuanLy"
             android:label="@string/title_activity_quan_ly"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HanhThu.ActivityDownDataHanhThu"
+            android:label="@string/title_activity_down_data_hanh_thu"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".DongNuoc.ActivityDownDataDongNuoc"
+            android:label="@string/title_activity_down_data_dong_nuoc"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
     </application>
 
 </manifest>

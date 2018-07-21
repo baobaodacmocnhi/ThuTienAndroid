@@ -72,7 +72,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         TextView Row3b;
         TextView Row4a;
         TextView Row4b;
-        ConstraintLayout layoutChild;
+        ConstraintLayout layoutParent;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
             holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
             holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
-            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
+            holder.layoutParent = (ConstraintLayout) convertView.findViewById(R.id.layoutParent);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -142,9 +142,9 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
 //            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
         if (map.getLenhHuy() == true)
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
         else
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
         return convertView;
     }
@@ -153,6 +153,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         TextView ID;
         TextView Row1a;
         TextView Row1b;
+        ConstraintLayout layoutChild;
     }
 
     @Override
@@ -165,6 +166,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.ID = (TextView) convertView.findViewById(R.id.lvID);
             holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);
             holder.Row1b = (TextView) convertView.findViewById(R.id.lvRow1b);
+            holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolderChild) convertView.getTag();
@@ -176,14 +178,14 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         holder.Row1b.setText(map.getRow1b());
 
         if (map.getGiaiTrach() == true)
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
         else if (map.getTamThu() == true || map.getThuHo() == true)
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
         else
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
         if (map.getLenhHuy() == true)
-            convertView.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 
         return convertView;
     }
