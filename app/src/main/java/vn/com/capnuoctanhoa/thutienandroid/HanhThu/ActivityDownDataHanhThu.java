@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDownDataDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDownDataHanhThu extends AppCompatActivity {
@@ -89,13 +90,13 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         btnShowMess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDownDataHanhThu.this);
                 builderSingle.setIcon(R.mipmap.ic_launcher);
                 builderSingle.setTitle("Tin nhắn đã nhận");
                 builderSingle.setCancelable(false);
 
                 ListView lstMessage = new ListView(getApplicationContext());
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.select_dialog_singlechoice);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_singlechoice);
 
                 try {
                     if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
@@ -123,7 +124,21 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                         "Xóa Tất Cả",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                CLocal.jsonMessage = new JSONArray();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDownDataHanhThu.this);
+                                builder.setMessage("Bạn có chắc chắn xóa?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                CLocal.jsonMessage = new JSONArray();
+                                            }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
                             }
                         });
 

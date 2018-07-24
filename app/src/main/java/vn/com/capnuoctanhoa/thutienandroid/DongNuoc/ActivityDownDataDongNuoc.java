@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,7 +53,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
-        spnNhanVien=(Spinner) findViewById(R.id.spnNhanVien);
+        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
 
         if (CLocal.ToTruong == true) {
@@ -85,6 +87,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                 int mYear = c.get(Calendar.YEAR); // current year
                 int mMonth = c.get(Calendar.MONTH); // current month
                 int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                //hide soft keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 // date picker dialog
                 datePickerDialog = new DatePickerDialog(ActivityDownDataDongNuoc.this,
                         new DatePickerDialog.OnDateSetListener() {
@@ -107,6 +112,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                 int mYear = c.get(Calendar.YEAR); // current year
                 int mMonth = c.get(Calendar.MONTH); // current month
                 int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                //hide soft keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 // date picker dialog
                 datePickerDialog = new DatePickerDialog(ActivityDownDataDongNuoc.this,
                         new DatePickerDialog.OnDateSetListener() {
@@ -137,13 +145,13 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         btnShowMess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDownDataDongNuoc.this);
                 builderSingle.setIcon(R.mipmap.ic_launcher);
                 builderSingle.setTitle("Tin nhắn đã nhận");
                 builderSingle.setCancelable(false);
 
                 ListView lstMessage = new ListView(getApplicationContext());
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.select_dialog_singlechoice);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataDongNuoc.this, android.R.layout.select_dialog_singlechoice);
 
                 try {
                     if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
@@ -171,7 +179,21 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         "Xóa Tất Cả",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                CLocal.jsonMessage = new JSONArray();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDownDataDongNuoc.this);
+                                builder.setMessage("Bạn có chắc chắn xóa?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                CLocal.jsonMessage = new JSONArray();
+                                            }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = builder.create();
+                                alert.show();
                             }
                         });
 
@@ -241,9 +263,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                 if (CLocal.jsonMessage != null)
                     editor.putString("jsonMessage", CLocal.jsonMessage.toString());
                 editor.commit();
-                return  true;
+                return true;
             } catch (Exception ex) {
-               return false;
+                return false;
             }
         }
 
@@ -253,14 +275,11 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if(aBoolean==true)
-            {
+            if (aBoolean == true) {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
-            }
-            else
-            {
+            } else {
 
             }
         }
