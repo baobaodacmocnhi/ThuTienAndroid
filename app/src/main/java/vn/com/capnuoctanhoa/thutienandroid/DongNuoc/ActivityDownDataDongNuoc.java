@@ -38,10 +38,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
     private Button btnDownload, btnShowMess;
-    private Spinner spnNhanVien;
-    private LinearLayout layoutNhanVien;
-    private ArrayList<String> spnID_NhanVien;
-    private ArrayList<String> spnName_NhanVien;
+    private Spinner spnTo, spnNhanVien;
+    private LinearLayout layoutTo, layoutNhanVien;
+    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien;
     private String selectedMaNV = "";
 
     @Override
@@ -53,31 +52,56 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnDownload = (Button) findViewById(R.id.btnDownload);
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
+        spnTo = (Spinner) findViewById(R.id.spnTo);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+        layoutTo = (LinearLayout) findViewById(R.id.layoutTo);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
 
-        if (CLocal.ToTruong == true) {
-            layoutNhanVien.setVisibility(View.VISIBLE);
+        if (CLocal.Doi == true) {
+            layoutTo.setVisibility(View.VISIBLE);
             try {
-                if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
-                    spnID_NhanVien = new ArrayList<>();
-                    spnName_NhanVien = new ArrayList<>();
-                    for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
-                        JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
-                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                            spnID_NhanVien.add(jsonObject.getString("MaND"));
-                            spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                if (CLocal.jsonTo != null && CLocal.jsonTo.length() > 0) {
+                    spnID_To = new ArrayList<>();
+                    spnName_To = new ArrayList<>();
+                    for (int i = 0; i < CLocal.jsonTo.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
+                        if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
+                            spnID_To.add(jsonObject.getString("MaTo"));
+                            spnName_To.add(jsonObject.getString("TenTo"));
                         }
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_To);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnNhanVien.setAdapter(adapter);
+                spnTo.setAdapter(adapter);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else
-            layoutNhanVien.setVisibility(View.GONE);
+        } else {
+            layoutTo.setVisibility(View.GONE);
+            if (CLocal.ToTruong == true) {
+                layoutNhanVien.setVisibility(View.VISIBLE);
+                try {
+                    if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                        spnID_NhanVien = new ArrayList<>();
+                        spnName_NhanVien = new ArrayList<>();
+                        for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                            if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+                                spnID_NhanVien.add(jsonObject.getString("MaND"));
+                                spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                            }
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnNhanVien.setAdapter(adapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else
+                layoutNhanVien.setVisibility(View.GONE);
+        }
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,6 +244,35 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
             }
         });
 
+        spnTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                        spnID_NhanVien = new ArrayList<>();
+                        spnName_NhanVien = new ArrayList<>();
+                        for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                            if (jsonObject.getString("MaTo") == spnID_To.get(position) && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+                                spnID_NhanVien.add(jsonObject.getString("MaND"));
+                                spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                            }
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnNhanVien.setAdapter(adapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -251,7 +304,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                if (CLocal.ToTruong == false)
+                if (CLocal.Doi == false &&CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
                 CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));

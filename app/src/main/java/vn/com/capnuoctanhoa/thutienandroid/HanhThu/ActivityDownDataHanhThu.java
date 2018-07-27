@@ -32,10 +32,10 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDownDataHanhThu extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
-    private Spinner  spnFromDot, spnToDot, spnNhanVien, spnNam, spnKy;
+    private Spinner spnFromDot, spnToDot, spnTo, spnNhanVien, spnNam, spnKy;
     private ArrayList<CEntityParent> lstOriginal, lstDisplayed;
-    private LinearLayout layoutNhanVien;
-    private ArrayList<String> spnID_NhanVien, spnName_NhanVien;
+    private LinearLayout layoutTo, layoutNhanVien;
+    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien;
     private String selectedMaNV = "";
 
     @Override
@@ -47,33 +47,58 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
         spnFromDot = (Spinner) findViewById(R.id.spnFromDot);
         spnToDot = (Spinner) findViewById(R.id.spnToDot);
+        spnTo = (Spinner) findViewById(R.id.spnTo);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         spnNam = (Spinner) findViewById(R.id.spnNam);
         spnKy = (Spinner) findViewById(R.id.spnKy);
+        layoutTo = (LinearLayout) findViewById(R.id.layoutTo);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
 
-        if (CLocal.ToTruong == true) {
-            layoutNhanVien.setVisibility(View.VISIBLE);
+        if (CLocal.Doi == true) {
+            layoutTo.setVisibility(View.VISIBLE);
             try {
-                if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
-                    spnID_NhanVien = new ArrayList<>();
-                    spnName_NhanVien = new ArrayList<>();
-                    for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
-                        JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                if (CLocal.jsonTo != null && CLocal.jsonTo.length() > 0) {
+                    spnID_To = new ArrayList<>();
+                    spnName_To = new ArrayList<>();
+                    for (int i = 0; i < CLocal.jsonTo.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
                         if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
-                            spnID_NhanVien.add(jsonObject.getString("MaND"));
-                            spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                            spnID_To.add(jsonObject.getString("MaTo"));
+                            spnName_To.add(jsonObject.getString("TenTo"));
                         }
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_To);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnNhanVien.setAdapter(adapter);
+                spnTo.setAdapter(adapter);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else
-            layoutNhanVien.setVisibility(View.GONE);
+        } else {
+            layoutTo.setVisibility(View.GONE);
+            if (CLocal.ToTruong == true) {
+                layoutNhanVien.setVisibility(View.VISIBLE);
+                try {
+                    if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                        spnID_NhanVien = new ArrayList<>();
+                        spnName_NhanVien = new ArrayList<>();
+                        for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                            if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
+                                spnID_NhanVien.add(jsonObject.getString("MaND"));
+                                spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                            }
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnNhanVien.setAdapter(adapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else
+                layoutNhanVien.setVisibility(View.GONE);
+        }
 
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +190,35 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
             }
         });
 
+        spnTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
+                        spnID_NhanVien = new ArrayList<>();
+                        spnName_NhanVien = new ArrayList<>();
+                        for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
+                            JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
+                            if (jsonObject.getString("MaTo") == spnID_To.get(position) && Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
+                                spnID_NhanVien.add(jsonObject.getString("MaND"));
+                                spnName_NhanVien.add(jsonObject.getString("HoTen"));
+                            }
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_NhanVien);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnNhanVien.setAdapter(adapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -198,16 +252,16 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 //            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
 //            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("selectedMaNV", ""), currentDate.format(new Date())));
             try {
-                if (CLocal.ToTruong == false)
+                if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
                 CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 if (CLocal.jsonHanhThu != null)
                     editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
                 editor.commit();
-                return  true;
+                return true;
             } catch (Exception ex) {
-                return  false;
+                return false;
             }
         }
 
@@ -217,14 +271,11 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if(aBoolean==true)
-            {
+            if (aBoolean == true) {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
-            }
-            else
-            {
+            } else {
 
             }
         }

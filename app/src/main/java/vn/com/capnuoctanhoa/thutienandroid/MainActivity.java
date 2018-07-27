@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     CLocal.Doi=CLocal.sharedPreferencesre.getBoolean("Doi", false);
                     CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
+                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
                 }
