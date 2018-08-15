@@ -83,7 +83,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
