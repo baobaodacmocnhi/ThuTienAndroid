@@ -32,6 +32,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <CheckBox
+                android:id="@+id/chkKhoaTu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Khóa Từ"
+                app:layout_constraintStart_toStartOf="@+id/edtNgayDN"
+                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+
+            <EditText
+                android:id="@+id/edtNiemChi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="5"
+                android:inputType="number"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Niêm Chì"
+                app:layout_constraintEnd_toStartOf="@+id/edtNiemChi"
+                app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
+
             <Spinner
                 android:id="@+id/spnChiKhoaGoc"
                 android:layout_width="0dp"
@@ -349,7 +382,7 @@
                 android:entries="@array/dongnuoc_array"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
-                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+                app:layout_constraintTop_toBottomOf="@+id/edtNiemChi" />
 
             <EditText
                 android:id="@+id/edtSoThan"
