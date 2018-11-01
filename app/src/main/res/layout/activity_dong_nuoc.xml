@@ -33,13 +33,25 @@
             android:layout_height="match_parent">
 
             <CheckBox
+                android:id="@+id/chkButChi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Bứt Chì"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+
+            <CheckBox
                 android:id="@+id/chkKhoaTu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Khóa Từ"
-                app:layout_constraintStart_toStartOf="@+id/edtNgayDN"
-                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+                app:layout_constraintStart_toEndOf="@+id/chkButChi"
+                app:layout_constraintTop_toTopOf="@+id/chkButChi" />
 
             <EditText
                 android:id="@+id/edtNiemChi"
@@ -51,18 +63,18 @@
                 android:ems="5"
                 android:inputType="number"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintStart_toEndOf="@+id/textView37"
                 app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
 
             <TextView
                 android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Niêm Chì"
-                app:layout_constraintEnd_toStartOf="@+id/edtNiemChi"
+                app:layout_constraintStart_toEndOf="@+id/chkKhoaTu"
                 app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
 
             <Spinner

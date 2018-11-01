@@ -48,7 +48,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN,edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnDongNuoc;
-    private CheckBox chkKhoaTu;
+    private CheckBox chkButChi,chkKhoaTu;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
@@ -79,6 +79,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
+        chkButChi=(CheckBox)  findViewById(R.id.chkButChi);
         chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
@@ -329,7 +330,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
                     String result = ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(),
-                            imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), String.valueOf(chkKhoaTu.isChecked()),edtNiemChi.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
+                            imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), String.valueOf(chkButChi.isChecked()),String.valueOf(chkKhoaTu.isChecked()),edtNiemChi.getText().toString(), edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(),
                             spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";

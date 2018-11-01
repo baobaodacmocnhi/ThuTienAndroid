@@ -61,6 +61,16 @@
         app:layout_constraintTop_toTopOf="@+id/textView20"
         app:srcCompat="@drawable/ic_checklistx256" />
 
+    <ImageButton
+        android:id="@+id/imgbtnTimKiem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnDongNuoc"
+        app:layout_constraintTop_toTopOf="@+id/textView21"
+        app:srcCompat="@drawable/ic_user_searchx256" />
+
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
@@ -120,6 +130,21 @@
         app:layout_constraintEnd_toEndOf="@+id/imgbtnQuanLy"
         app:layout_constraintStart_toStartOf="@+id/imgbtnQuanLy"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnQuanLy" />
+
+    <TextView
+        android:id="@+id/textView39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Tìm Kiếm"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnTimKiem"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnTimKiem"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnTimKiem" />
 
     <TextView
         android:id="@+id/txtUser"

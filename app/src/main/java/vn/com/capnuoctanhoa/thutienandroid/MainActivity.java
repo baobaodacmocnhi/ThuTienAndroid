@@ -32,7 +32,7 @@ import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy,imgbtnTimKiem;
     private TextView txtUser,txtQuanLy;
 
     @Override
@@ -74,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityQuanLy.class);
+                startActivity(intent);
+            }
+        });
+
+        imgbtnTimKiem = (ImageButton) findViewById(R.id.imgbtnTimKiem);
+        imgbtnTimKiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHang.class);
                 startActivity(intent);
             }
         });
