@@ -455,8 +455,6 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
 
             customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent_LoadMore(this, lstDisplayed);
 
-
-
             //set load more listener for the RecyclerView adapter
             customAdapterRecyclerViewParent.setOnLoadMoreListener(new CustomAdapterRecyclerViewParent_LoadMore.OnLoadMoreListener() {
                 @Override

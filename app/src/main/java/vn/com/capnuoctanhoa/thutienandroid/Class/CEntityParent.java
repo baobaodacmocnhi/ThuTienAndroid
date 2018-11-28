@@ -17,6 +17,10 @@ public class CEntityParent {
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
+    private Boolean DongNuoc;
+    private Boolean DongNuoc2;
+    private Boolean ToTrinh;
+    private Boolean DCHD;
     private String ModifyDate;
     private ArrayList<CEntityChild> listChild ;
 
@@ -34,6 +38,11 @@ public class CEntityParent {
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
+         LenhHuy= false;
+         DongNuoc= false;
+        DongNuoc2= false;
+         ToTrinh= false;
+        DCHD= false;
         listChild = new ArrayList<CEntityChild>();
     }
 
@@ -147,6 +156,38 @@ public class CEntityParent {
 
     public void setLenhHuy(Boolean lenhHuy) {
         LenhHuy = lenhHuy;
+    }
+
+    public Boolean getDongNuoc() {
+        return DongNuoc;
+    }
+
+    public void setDongNuoc(Boolean dongNuoc) {
+        DongNuoc = dongNuoc;
+    }
+
+    public Boolean getDongNuoc2() {
+        return DongNuoc2;
+    }
+
+    public void setDongNuoc2(Boolean dongNuoc2) {
+        DongNuoc2 = dongNuoc2;
+    }
+
+    public Boolean getToTrinh() {
+        return ToTrinh;
+    }
+
+    public void setToTrinh(Boolean toTrinh) {
+        ToTrinh = toTrinh;
+    }
+
+    public Boolean getDCHD() {
+        return DCHD;
+    }
+
+    public void setDCHD(Boolean DCHD) {
+        this.DCHD = DCHD;
     }
 
     public String getModifyDate() {

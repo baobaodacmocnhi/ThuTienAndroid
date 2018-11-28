@@ -13,5 +13,8 @@
     <color name="colorMLT">#1e26e1</color>
     <color name="colorSoTien">#ff0000</color>
     <color name="colorText">#020202</color>
-
+    <color name="colorDongNuoc">#FFFFFF00</color>
+    <color name="colorDongNuoc2">#FFFFA500</color>
+    <color name="colorToTrinh">#FF008800</color>
+    <color name="colorDCHD">#FFFF00FF</color>
 </resources>

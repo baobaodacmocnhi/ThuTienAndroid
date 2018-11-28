@@ -601,9 +601,9 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSHoaDon(String DanhBo) {
-        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_DanhBo";
-        String OPERATION_NAME = "GetDSHoaDon_DanhBo";
+    public String getDSTimKiem(String DanhBo) {
+        String SOAP_ACTION = "http://tempuri.org/GetDSTimKiem";
+        String OPERATION_NAME = "GetDSTimKiem";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -615,9 +615,9 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSHoaDon(String HoTen, String SoNha, String TenDuong) {
-        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_TTKH";
-        String OPERATION_NAME = "GetDSHoaDon_TTKH";
+    public String getDSTimKiemTTKH(String HoTen, String SoNha, String TenDuong) {
+        String SOAP_ACTION = "http://tempuri.org/GetDSTimKiemTTKH";
+        String OPERATION_NAME = "GetDSTimKiemTTKH";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();

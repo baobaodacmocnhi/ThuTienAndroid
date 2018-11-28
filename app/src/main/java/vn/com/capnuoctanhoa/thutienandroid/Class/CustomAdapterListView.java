@@ -51,6 +51,7 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
         TextView Row3b;
         TextView Row4a;
         TextView Row4b;
+        ConstraintLayout layoutParent;
     }
 
     @Override
@@ -70,6 +71,7 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
             holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
             holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
             holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
+            holder.layoutParent=(ConstraintLayout) convertView.findViewById(R.id.layoutParent);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -111,15 +113,16 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
             holder.Row4b.setText(map.getRow4b());
         }
 
-//        if (map.getGiaiTrach() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
-//        else if (map.getTamThu() == true || map.getThuHo() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
-//        else
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-
-//        if (map.getLenhHuy() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+        if (map.getDongNuoc() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
+        if (map.getDongNuoc2() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc2));
+        if (map.getLenhHuy() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+        if (map.getToTrinh() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorToTrinh));
+        if (map.getDCHD() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDCHD));
 
         return convertView;
     }
