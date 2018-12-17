@@ -33,13 +33,25 @@
             android:layout_height="match_parent">
 
             <CheckBox
+                android:id="@+id/chkButChi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Bứt Chì"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+
+            <CheckBox
                 android:id="@+id/chkKhoaTu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:text="Khóa Từ"
-                app:layout_constraintStart_toStartOf="@+id/edtNgayDN"
-                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+                app:layout_constraintStart_toEndOf="@+id/chkButChi"
+                app:layout_constraintTop_toTopOf="@+id/chkButChi" />
 
             <EditText
                 android:id="@+id/edtNiemChi"

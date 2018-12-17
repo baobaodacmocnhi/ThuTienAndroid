@@ -45,10 +45,10 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc2 extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN,edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnDongNuoc;
-    private CheckBox chkKhoaTu;
+    private CheckBox chkButChi, chkKhoaTu;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc2.this);
@@ -79,7 +79,8 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
-chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
+        chkButChi = (CheckBox) findViewById(R.id.chkButChi);
+        chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
                     if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
-                imgCapture=null;
+                imgCapture = null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDongNuoc2.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -160,13 +161,13 @@ chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -301,11 +302,11 @@ chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
-                        String result= ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), CLocal.MaNV);
-                        if(Boolean.parseBoolean(result)==true)
-                            return "THÀNH CÔNG";
-                        else
-                            return "THẤT BẠI";
+                    String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), CLocal.MaNV);
+                    if (Boolean.parseBoolean(result) == true)
+                        return "THÀNH CÔNG";
+                    else
+                        return "THẤT BẠI";
             }
             return null;
         }
@@ -321,7 +322,7 @@ chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-                CLocal.showPopupMessage(ActivityDongNuoc2.this, s);
+            CLocal.showPopupMessage(ActivityDongNuoc2.this, s);
         }
 
     }
