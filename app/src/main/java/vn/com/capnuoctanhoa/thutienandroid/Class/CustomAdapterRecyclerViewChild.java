@@ -19,6 +19,11 @@ public class CustomAdapterRecyclerViewChild extends RecyclerView.Adapter<CustomA
     }
 
     @Override
+    public int getItemCount() {
+        return mDisplayedValues == null ? 0 : mDisplayedValues.size();
+    }
+
+    @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_child, parent, false);
         return new RecyclerViewHolder(itemView);
@@ -26,14 +31,11 @@ public class CustomAdapterRecyclerViewChild extends RecyclerView.Adapter<CustomA
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.ID.setText(mDisplayedValues.get(position).getID());
-        holder.Row1a.setText(mDisplayedValues.get(position).getRow1a());
-        holder.Row1b.setText(mDisplayedValues.get(position).getRow1b());
-    }
-
-    @Override
-    public int getItemCount() {
-        return mDisplayedValues.size();
+        if(getItemCount()>0) {
+            holder.ID.setText(mDisplayedValues.get(position).getID());
+            holder.Row1a.setText(mDisplayedValues.get(position).getRow1a());
+            holder.Row1b.setText(mDisplayedValues.get(position).getRow1b());
+        }
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {

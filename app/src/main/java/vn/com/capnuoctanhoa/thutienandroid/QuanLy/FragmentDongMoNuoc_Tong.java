@@ -46,7 +46,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentDongMoNuoc extends Fragment {
+public class FragmentDongMoNuoc_Tong extends Fragment {
     private View rootView;
     private DatePickerDialog datePickerDialog;
     private EditText edtFromDate, edtToDate;
@@ -67,7 +67,7 @@ public class FragmentDongMoNuoc extends Fragment {
     private ArrayList<CEntityParent> list;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
-    public FragmentDongMoNuoc() {
+    public FragmentDongMoNuoc_Tong() {
         // Required empty public constructor
     }
 
@@ -76,7 +76,7 @@ public class FragmentDongMoNuoc extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView= inflater.inflate(R.layout.fragment_dong_mo_nuoc, container, false);
+        rootView= inflater.inflate(R.layout.fragment_dong_mo_nuoc_tong, container, false);
 
         layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         edtFromDate = (EditText) rootView.findViewById(R.id.edtFromDate);

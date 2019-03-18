@@ -79,6 +79,11 @@
         <item>Giải Trách</item>
         <item>Tạm Thu-Thu Hộ</item>
     </string-array>
+    <string-array name="filter_thuho_array">
+        <item>Tất Cả</item>
+        <item>Chưa Giải Trách</item>
+        <item>Giải Trách</item>
+    </string-array>
     <string-array name="sort_array">
         <item>MLT</item>
         <item>Thời Gian Tăng</item>

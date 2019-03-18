@@ -23,34 +23,42 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent_LoadMore;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentThuHo extends Fragment {
+public class FragmentDongMoNuoc_Chitiet extends Fragment {
     private View rootView;
     private DatePickerDialog datePickerDialog;
     private EditText edtFromDate, edtToDate;
-    private Spinner spnTo,spnFilter;
+    private Spinner spnTo;
     private Button btnXem;
+    private RadioButton radDongNuoc;
     private RecyclerView recyclerView;
     private LinearLayout layoutTo;
     private CardView layoutAutoHide;
@@ -62,26 +70,27 @@ public class FragmentThuHo extends Fragment {
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent> list;
+    private ArrayList<CEntityParent> listParent;
+    private ArrayList<CEntityChild> listChild;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
+    private JSONArray jsonTong, jsonChiTiet;
 
-    public FragmentThuHo() {
+    public FragmentDongMoNuoc_Chitiet() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView= inflater.inflate(R.layout.fragment_thu_ho, container, false);
+        rootView = inflater.inflate(R.layout.fragment_dong_mo_nuoc_chitiet, container, false);
 
         layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         edtFromDate = (EditText) rootView.findViewById(R.id.edtFromDate);
         edtToDate = (EditText) rootView.findViewById(R.id.edtToDate);
         spnTo = (Spinner) rootView.findViewById(R.id.spnTo);
-        spnFilter = (Spinner) rootView.findViewById(R.id.spnFilter);
         btnXem = (Button) rootView.findViewById(R.id.btnXem);
+        radDongNuoc = (RadioButton) rootView.findViewById(R.id.radDongNuoc);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         txtTongHD = (TextView) rootView.findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) rootView.findViewById(R.id.txtTongCong);
@@ -262,6 +271,63 @@ public class FragmentThuHo extends Fragment {
         return rootView;
     }
 
+    public void loadListView() {
+        try {
+
+            if (jsonTong != null && jsonTong.length() > 0 && jsonChiTiet != null && jsonChiTiet.length() > 0) {
+                for (int i = 0; i < jsonTong.length(); i++) {
+                    JSONObject jsonObject = jsonTong.getJSONObject(i);
+                    addEntityParent(jsonObject);
+                }
+            }
+            customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(this.getActivity(), listParent);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+            recyclerView.setAdapter(customAdapterRecyclerViewParent);
+
+            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void addEntityParent(JSONObject jsonObject) {
+        try {
+            CEntityParent entity = new CEntityParent();
+            entity.setID(jsonObject.getString("MaNV_DongNuoc"));
+            entity.setRow1a(jsonObject.getString("HoTen"));
+            entity.setRow2a(jsonObject.getString("TongHD"));
+            /////////////////////////
+            listChild = new ArrayList<CEntityChild>();
+            if (jsonChiTiet != null && jsonChiTiet.length() > 0)
+                for (int i = 0; i < jsonChiTiet.length(); i++) {
+                    JSONObject jsonObjectChild = jsonChiTiet.getJSONObject(i);
+                    if (jsonObjectChild.getString("MaNV_DongNuoc").equals(entity.getID()) == true) {
+                        addEntityChild(jsonObjectChild);
+                    }
+                }
+            entity.setListChild(listChild);
+//            entity.setRow1b(String.valueOf(listChild.size()) + " HĐ");
+            listParent.add(entity);
+
+            TongHD += Long.parseLong(jsonObject.getString("TongHD"));
+        } catch (Exception e) {
+        }
+    }
+
+    public void addEntityChild(JSONObject jsonObject) {
+        try {
+            CEntityChild entity = new CEntityChild();
+            entity.setID(jsonObject.getString("MaNV_DongNuoc"));
+            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
+            entity.setRow1a(strDanhBo);
+            entity.setRow1b(jsonObject.getString("DiaChi"));
+            listChild.add(entity);
+        } catch (Exception e) {
+        }
+    }
+
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
@@ -278,18 +344,26 @@ public class FragmentThuHo extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-//            recyclerView.setAdapter(null);
-            list = new ArrayList<CEntityParent>();
-            TongHD = TongCong = 0;
+            listParent = new ArrayList<CEntityParent>();
+            TongCong = TongHD = 0;
+            Boolean DongNuoc = false;
+            if (radDongNuoc.isChecked() == true)
+                DongNuoc = true;
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
                     for (int i = 0; i < spnID_To.size(); i++) {
-                        publishProgress(ws.getTongThuHo(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
+                        String[] result = new String[]{ws.getTongDongMoNuoc_Tong(String.valueOf(DongNuoc), spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString()), ws.getTongDongMoNuoc_ChiTiet(String.valueOf(DongNuoc), spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString())};
+                        publishProgress(result);
                     }
-                } else
-                    publishProgress(ws.getTongThuHo(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
-            } else
-                publishProgress(ws.getTongThuHo(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
+                } else {
+                    String[] result = new String[]{ws.getTongDongMoNuoc_Tong(String.valueOf(DongNuoc), selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString()), ws.getTongDongMoNuoc_ChiTiet(String.valueOf(DongNuoc), selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString())};
+                    publishProgress(result);
+                }
+            } else {
+                String[] result = new String[]{ws.getTongDongMoNuoc_Tong(String.valueOf(DongNuoc), CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString()), ws.getTongDongMoNuoc_ChiTiet(String.valueOf(DongNuoc), CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString())};
+                publishProgress(result);
+            }
+            publishProgress("true");
             return null;
         }
 
@@ -298,25 +372,9 @@ public class FragmentThuHo extends Fragment {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    JSONArray jsonArray = new JSONArray(values[0]);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        CEntityParent entity = new CEntityParent();
-                        entity.setRow1a(jsonObject.getString("HoTen"));
-                        entity.setRow2a(jsonObject.getString("TongHD"));
-                        entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
-                        list.add(entity);
-                        TongHD += Long.parseLong(jsonObject.getString("TongHD"));
-                        TongCong += Long.parseLong(jsonObject.getString("TongCong"));
-                    }
-                    CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
-                    customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(), list);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(customAdapterRecyclerViewParent);
-                    txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
-                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+                    jsonTong = new JSONArray(values[0]);
+                    jsonChiTiet = new JSONArray(values[1]);
+                    loadListView();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

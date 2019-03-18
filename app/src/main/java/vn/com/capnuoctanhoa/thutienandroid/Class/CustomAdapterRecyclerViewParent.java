@@ -102,46 +102,46 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
                     }
                 });
 
-                holder.layoutParent.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        PopupMenu popup = new PopupMenu(activity, v);
-                        popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem menuItem) {
-                                int id = menuItem.getItemId();
-                                TextView MaDN =  holder.ID;
-                                Intent intent;
-                                switch (id) {
-                                    case R.id.popup_action_DongNuoc:
-                                        intent = new Intent(activity, ActivityDongNuoc.class);
-                                        intent.putExtra("MaDN", MaDN.getText().toString());
-                                        activity.startActivity(intent);
-                                        break;
-                                    case R.id.popup_action_DongNuoc2:
-                                        intent = new Intent(activity, ActivityDongNuoc2.class);
-                                        intent.putExtra("MaDN", MaDN.getText().toString());
-                                        activity.startActivity(intent);
-                                        break;
-                                    case R.id.popup_action_MoNuoc:
-                                        intent = new Intent(activity, ActivityMoNuoc.class);
-                                        intent.putExtra("MaDN", MaDN.getText().toString());
-                                        activity.startActivity(intent);
-                                        break;
-                                    case R.id.popup_action_DongTien:
-                                        intent = new Intent(activity, ActivityDongTien.class);
-                                        intent.putExtra("MaDN", MaDN.getText().toString());
-                                        activity.startActivity(intent);
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                        popup.show();
-                        return false;
-                    }
-                });
+//                holder.layoutParent.setOnLongClickListener(new View.OnLongClickListener() {
+//                    @Override
+//                    public boolean onLongClick(View v) {
+//                        PopupMenu popup = new PopupMenu(activity, v);
+//                        popup.getMenuInflater().inflate(R.menu.popup_dong_nuoc, popup.getMenu());
+//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                            @Override
+//                            public boolean onMenuItemClick(MenuItem menuItem) {
+//                                int id = menuItem.getItemId();
+//                                TextView MaDN =  holder.ID;
+//                                Intent intent;
+//                                switch (id) {
+//                                    case R.id.popup_action_DongNuoc:
+//                                        intent = new Intent(activity, ActivityDongNuoc.class);
+//                                        intent.putExtra("MaDN", MaDN.getText().toString());
+//                                        activity.startActivity(intent);
+//                                        break;
+//                                    case R.id.popup_action_DongNuoc2:
+//                                        intent = new Intent(activity, ActivityDongNuoc2.class);
+//                                        intent.putExtra("MaDN", MaDN.getText().toString());
+//                                        activity.startActivity(intent);
+//                                        break;
+//                                    case R.id.popup_action_MoNuoc:
+//                                        intent = new Intent(activity, ActivityMoNuoc.class);
+//                                        intent.putExtra("MaDN", MaDN.getText().toString());
+//                                        activity.startActivity(intent);
+//                                        break;
+//                                    case R.id.popup_action_DongTien:
+//                                        intent = new Intent(activity, ActivityDongTien.class);
+//                                        intent.putExtra("MaDN", MaDN.getText().toString());
+//                                        activity.startActivity(intent);
+//                                        break;
+//                                }
+//                                return true;
+//                            }
+//                        });
+//                        popup.show();
+//                        return false;
+//                    }
+//                });
             }
         }
     }
