@@ -6,6 +6,12 @@ public class CEntityChild {
     private String ID;
     private String Row1a;
     private String Row1b;
+    private String Row2a;
+    private String Row2b;
+    private String Row3a;
+    private String Row3b;
+    private String Row4a;
+    private String Row4b;
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
@@ -15,6 +21,12 @@ public class CEntityChild {
         this.ID = "";
         Row1a = "";
         Row1b = "";
+        Row2a = "";
+        Row2b = "";
+        Row3a = "";
+        Row3b = "";
+        Row4a = "";
+        Row4b = "";
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
@@ -42,6 +54,54 @@ public class CEntityChild {
 
     public void setRow1b(String row1b) {
         Row1b = row1b;
+    }
+
+    public String getRow2a() {
+        return Row2a;
+    }
+
+    public void setRow2a(String row2a) {
+        Row2a = row2a;
+    }
+
+    public String getRow2b() {
+        return Row2b;
+    }
+
+    public void setRow2b(String row2b) {
+        Row2b = row2b;
+    }
+
+    public String getRow3a() {
+        return Row3a;
+    }
+
+    public void setRow3a(String row3a) {
+        Row3a = row3a;
+    }
+
+    public String getRow3b() {
+        return Row3b;
+    }
+
+    public void setRow3b(String row3b) {
+        Row3b = row3b;
+    }
+
+    public String getRow4a() {
+        return Row4a;
+    }
+
+    public void setRow4a(String row4a) {
+        Row4a = row4a;
+    }
+
+    public String getRow4b() {
+        return Row4b;
+    }
+
+    public void setRow4b(String row4b) {
+        Row4b = row4b;
     }
 
     public Boolean getGiaiTrach() {

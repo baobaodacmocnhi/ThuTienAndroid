@@ -8,8 +8,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:background="@android:color/background_light"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/layoutChild"
@@ -27,14 +29,11 @@
                 android:id="@+id/lvRow1a"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:gravity="end"
+                android:layout_marginTop="8dp"
                 android:text="Row1a"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorMLT"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/lvRow1b"
@@ -49,16 +48,114 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:gravity="end"
+                android:gravity="right"
                 android:text="Row1b"
-                android:textAlignment="textStart"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorSoTien"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/lvRow1a"
-                app:layout_constraintTop_toTopOf="@+id/lvRow1a"
-                tools:ignore="RtlCompat" />
+                app:layout_constraintTop_toTopOf="@+id/lvRow1a" />
+
+            <TextView
+                android:id="@+id/lvRow2a"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Row2a"
+                android:textColor="@color/colorDanhBo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/lvRow2b"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lvRow1a" />
+
+            <TextView
+                android:id="@+id/lvRow2b"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="right"
+                android:text="Row2b"
+                android:textAllCaps="false"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lvRow2a"
+                app:layout_constraintTop_toTopOf="@+id/lvRow2a" />
+
+            <TextView
+                android:id="@+id/lvRow3a"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Row3a"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/lvRow3b"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lvRow2a" />
+
+            <TextView
+                android:id="@+id/lvRow3b"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="right"
+                android:text="Row3b"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lvRow3a"
+                app:layout_constraintTop_toTopOf="@+id/lvRow3a" />
+
+            <TextView
+                android:id="@+id/lvRow4a"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Row4a"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/lvRow4b"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lvRow3a" />
+
+            <TextView
+                android:id="@+id/lvRow4b"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:gravity="right"
+                android:text="Row4b"
+                android:textColor="@color/colorText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/lvRow4a"
+                app:layout_constraintTop_toTopOf="@+id/lvRow4a" />
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

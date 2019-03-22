@@ -45,7 +45,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentThuHo extends Fragment {
+public class FragmentThuHo_Tong extends Fragment {
     private View rootView;
     private DatePickerDialog datePickerDialog;
     private EditText edtFromDate, edtToDate;
@@ -65,7 +65,7 @@ public class FragmentThuHo extends Fragment {
     private ArrayList<CEntityParent> list;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
-    public FragmentThuHo() {
+    public FragmentThuHo_Tong() {
         // Required empty public constructor
     }
 
@@ -284,12 +284,12 @@ public class FragmentThuHo extends Fragment {
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
                     for (int i = 0; i < spnID_To.size(); i++) {
-                        publishProgress(ws.getTongThuHo(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
+                        publishProgress(ws.getTongThuHo_Tong(spnID_To.get(i), edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
                     }
                 } else
-                    publishProgress(ws.getTongThuHo(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
+                    publishProgress(ws.getTongThuHo_Tong(selectedTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
             } else
-                publishProgress(ws.getTongThuHo(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
+                publishProgress(ws.getTongThuHo_Tong(CLocal.MaTo, edtFromDate.getText().toString(), edtToDate.getText().toString(),spnFilter.getSelectedItem().toString()));
             return null;
         }
 

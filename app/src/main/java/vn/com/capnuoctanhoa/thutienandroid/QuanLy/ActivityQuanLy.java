@@ -84,10 +84,10 @@ public class ActivityQuanLy extends AppCompatActivity {
                     FragmentTon tab2 = new FragmentTon();
                     return tab2;
                 case 3:
-                    FragmentDongMoNuoc_Chitiet tab3 = new FragmentDongMoNuoc_Chitiet();
+                    FragmentDongMoNuoc_ChiTiet tab3 = new FragmentDongMoNuoc_ChiTiet();
                     return tab3;
                 case 4:
-                    FragmentThuHo tab4 = new FragmentThuHo();
+                    FragmentThuHo_ChiTiet tab4 = new FragmentThuHo_ChiTiet();
                     return tab4;
                 default:
                     return null;
