@@ -45,10 +45,10 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc2 extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
     private Button btnDongNuoc;
-    private CheckBox chkButChi, chkKhoaTu;
+    private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc2.this);
@@ -72,6 +72,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         edtChiSoDN = (EditText) findViewById(R.id.edtChiSoDN);
         edtNiemChi = (EditText) findViewById(R.id.edtNiemChi);
         edtLyDo = (EditText) findViewById(R.id.edtLyDo);
+        edtKhoaKhac_GhiChu = (EditText) findViewById(R.id.edtKhoaKhac_GhiChu);
         spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
         spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
 
@@ -81,6 +82,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
         chkButChi = (CheckBox) findViewById(R.id.chkButChi);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
+        chkKhoaKhac=(CheckBox)  findViewById(R.id.chkKhoaKhac);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,7 +304,8 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
-                    String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(), String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), CLocal.MaNV);
+                    String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
+                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(),String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true)
                         return "THÀNH CÔNG";
                     else

@@ -101,35 +101,31 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         CEntityParent map = (CEntityParent) getGroup(groupPosition);
         holder.STT.setText(map.getSTT());
         holder.ID.setText(map.getID());
-        if(map.getRow1a().isEmpty()==true&&map.getRow1b().isEmpty()==true){
+        if (map.getRow1a().isEmpty() == true && map.getRow1b().isEmpty() == true) {
             holder.Row1a.setVisibility(View.GONE);
             holder.Row1b.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.Row1a.setText(map.getRow1a());
             holder.Row1b.setText(map.getRow1b());
         }
-        if(map.getRow2a().isEmpty()==true&&map.getRow2b().isEmpty()==true){
+        if (map.getRow2a().isEmpty() == true && map.getRow2b().isEmpty() == true) {
             holder.Row2a.setVisibility(View.GONE);
             holder.Row2b.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.Row2a.setText(map.getRow2a());
             holder.Row2b.setText(map.getRow2b());
         }
-        if(map.getRow3a().isEmpty()==true&&map.getRow3b().isEmpty()==true){
+        if (map.getRow3a().isEmpty() == true && map.getRow3b().isEmpty() == true) {
             holder.Row3a.setVisibility(View.GONE);
             holder.Row3b.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.Row3a.setText(map.getRow3a());
             holder.Row3b.setText(map.getRow3b());
         }
-        if(map.getRow4a().isEmpty()==true&&map.getRow4b().isEmpty()==true){
+        if (map.getRow4a().isEmpty() == true && map.getRow4b().isEmpty() == true) {
             holder.Row4a.setVisibility(View.GONE);
             holder.Row4b.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.Row4a.setText(map.getRow4a());
             holder.Row4b.setText(map.getRow4b());
         }
@@ -153,6 +149,12 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         TextView ID;
         TextView Row1a;
         TextView Row1b;
+        TextView Row2a;
+        TextView Row2b;
+        TextView Row3a;
+        TextView Row3b;
+        TextView Row4a;
+        TextView Row4b;
         ConstraintLayout layoutChild;
     }
 
@@ -166,6 +168,12 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.ID = (TextView) convertView.findViewById(R.id.lvID);
             holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);
             holder.Row1b = (TextView) convertView.findViewById(R.id.lvRow1b);
+            holder.Row2a = (TextView) convertView.findViewById(R.id.lvRow2a);
+            holder.Row2b = (TextView) convertView.findViewById(R.id.lvRow2b);
+            holder.Row3a = (TextView) convertView.findViewById(R.id.lvRow3a);
+            holder.Row3b = (TextView) convertView.findViewById(R.id.lvRow3b);
+            holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
+            holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
             holder.layoutChild = (ConstraintLayout) convertView.findViewById(R.id.layoutChild);
             convertView.setTag(holder);
         } else {
@@ -176,7 +184,34 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         holder.ID.setText(map.getID());
         holder.Row1a.setText(map.getRow1a());
         holder.Row1b.setText(map.getRow1b());
-
+        if (map.getRow1a().isEmpty() == true && map.getRow1b().isEmpty() == true) {
+            holder.Row1a.setVisibility(View.GONE);
+            holder.Row1b.setVisibility(View.GONE);
+        } else {
+            holder.Row1a.setText(map.getRow1a());
+            holder.Row1b.setText(map.getRow1b());
+        }
+        if (map.getRow2a().isEmpty() == true && map.getRow2b().isEmpty() == true) {
+            holder.Row2a.setVisibility(View.GONE);
+            holder.Row2b.setVisibility(View.GONE);
+        } else {
+            holder.Row2a.setText(map.getRow2a());
+            holder.Row2b.setText(map.getRow2b());
+        }
+        if (map.getRow3a().isEmpty() == true && map.getRow3b().isEmpty() == true) {
+            holder.Row3a.setVisibility(View.GONE);
+            holder.Row3b.setVisibility(View.GONE);
+        } else {
+            holder.Row3a.setText(map.getRow3a());
+            holder.Row3b.setText(map.getRow3b());
+        }
+        if (map.getRow4a().isEmpty() == true && map.getRow4b().isEmpty() == true) {
+            holder.Row4a.setVisibility(View.GONE);
+            holder.Row4b.setVisibility(View.GONE);
+        } else {
+            holder.Row4a.setText(map.getRow4a());
+            holder.Row4b.setText(map.getRow4b());
+        }
         if (map.getGiaiTrach() == true)
             holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
         else if (map.getTamThu() == true || map.getThuHo() == true)

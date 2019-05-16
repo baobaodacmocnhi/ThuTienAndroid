@@ -342,7 +342,8 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String themDongNuoc(String MaDN, String DanhBo, String MLT, String HoTen, String DiaChi, String HinhDN, String NgayDN, String ChiSoDN,String ButChi,String KhoaTu,String NiemChi,
+    public String themDongNuoc(String MaDN, String DanhBo, String MLT, String HoTen, String DiaChi, String HinhDN, String NgayDN, String ChiSoDN,
+                               String ButChi,String KhoaTu,String NiemChi,String KhoaKhac,String KhoaKhac_GhiChu,
                                String Hieu, String Co, String SoThan, String ChiMatSo, String ChiKhoaGoc, String LyDo, String CreateBy) {
         String SOAP_ACTION = "http://tempuri.org/ThemDongNuoc";
         String OPERATION_NAME = "ThemDongNuoc";
@@ -409,6 +410,18 @@ public class CWebservice {
         request.addProperty(pi);
 
         pi = new PropertyInfo();
+        pi.setName("KhoaKhac");
+        pi.setValue(KhoaKhac);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("KhoaKhac_GhiChu");
+        pi.setValue(KhoaKhac_GhiChu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
         pi.setName("NiemChi");
         pi.setValue(NiemChi);
         pi.setType(String.class);
@@ -459,7 +472,8 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String themDongNuoc2(String MaDN, String HinhDN, String NgayDN, String ChiSoDN,String ButChi,String KhoaTu,String NiemChi, String CreateBy) {
+    public String themDongNuoc2(String MaDN, String HinhDN, String NgayDN, String ChiSoDN,
+                                String ButChi,String KhoaTu,String NiemChi,String KhoaKhac,String KhoaKhac_GhiChu, String CreateBy) {
         String SOAP_ACTION = "http://tempuri.org/ThemDongNuoc2";
         String OPERATION_NAME = "ThemDongNuoc2";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -503,6 +517,18 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("NiemChi");
         pi.setValue(NiemChi);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("KhoaKhac");
+        pi.setValue(KhoaKhac);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("KhoaKhac_GhiChu");
+        pi.setValue(KhoaKhac_GhiChu);
         pi.setType(String.class);
         request.addProperty(pi);
 
