@@ -82,6 +82,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                         spnID_NhanVien = new ArrayList<>();
                         spnName_NhanVien = new ArrayList<>();
+                        spnID_NhanVien.add("0");
+                        spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
                             if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
@@ -197,6 +199,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                         spnID_NhanVien = new ArrayList<>();
                         spnName_NhanVien = new ArrayList<>();
+                        spnID_NhanVien.add("0");
+                        spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
                             if (jsonObject.getString("MaTo") == spnID_To.get(position) && Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
@@ -254,7 +258,22 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
             try {
                 if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
-                CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                if(selectedMaNV.equals("0"))
+                {
+                    CLocal.jsonHanhThu=new JSONArray();
+                    for (int i = 1; i < spnID_NhanVien.size(); i++)
+                    {
+                        JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                        for (int j = 0; j < jsonResult.length(); j++)
+                        {
+                            JSONObject jsonObject = jsonResult.getJSONObject(j);
+                            CLocal.jsonHanhThu.put(jsonObject);
+                        }
+                    }
+                }
+                else {
+                    CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                }
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 if (CLocal.jsonHanhThu != null)
                     editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
