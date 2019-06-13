@@ -65,7 +65,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private ExpandableListView listView;
     private CustomAdapterExpandableListView customAdapterExpandableListView;
     private TextView txtTongHD, txtTongCong;
-    private long TongDC, TongCong,TongHD;
+    private long TongDC, TongCong, TongHD;
     private ArrayList<CEntityParent> listParent;
     private ArrayList<CEntityChild> listChild;
 
@@ -107,17 +107,17 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (listParent != null && listParent.size() > 0)
-                switch (spnSort.getSelectedItem().toString()) {
-                    case "Thời Gian Tăng":
-                        Collections.sort(listParent, new CSort("ModifyDate", -1));
-                        break;
-                    case "Thời Gian Giảm":
-                        Collections.sort(listParent, new CSort("ModifyDate", 1));
-                        break;
-                    default:
-                        Collections.sort(listParent, new CSort("", -1));
-                        break;
-                }
+                    switch (spnSort.getSelectedItem().toString()) {
+                        case "Thời Gian Tăng":
+                            Collections.sort(listParent, new CSort("ModifyDate", -1));
+                            break;
+                        case "Thời Gian Giảm":
+                            Collections.sort(listParent, new CSort("ModifyDate", 1));
+                            break;
+                        default:
+                            Collections.sort(listParent, new CSort("", -1));
+                            break;
+                    }
                 if (customAdapterExpandableListView != null)
                     customAdapterExpandableListView.notifyDataSetChanged();
             }
@@ -133,10 +133,12 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             private int mLastFirstVisibleItem;
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem>=1)
+                if (firstVisibleItem >= 1)
                     floatingActionButton.show();
                 else
                     floatingActionButton.hide();
@@ -161,7 +163,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         int id = menuItem.getItemId();
-                        TextView MaDN = (TextView) view.findViewById(R.id.lvID); ;
+                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
+                        ;
                         Intent intent;
                         switch (id) {
                             case R.id.popup_action_DongNuoc:
@@ -254,7 +257,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 return true;
             case R.id.action_down_data:
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataDongNuoc.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
                 return true;
             default:
                 break;
@@ -266,7 +269,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         try {
 //            recyclerView.setAdapter(null);
             listParent = new ArrayList<CEntityParent>();
-            TongDC = TongCong = TongHD=0;
+            TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa ĐN":
                     if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
@@ -343,10 +346,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterExpandableListView = new CustomAdapterExpandableListView(this,listParent);
+            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent);
             listView.setAdapter(customAdapterExpandableListView);
             txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongDC), ""));
-            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongHD), "")+"HĐ: "+CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongHD), "") + "HĐ: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"));
         } catch (Exception e) {
 
         }
@@ -385,6 +388,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
                     JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(i);
                     Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0, numLenhHuy = 0;
+                    Boolean flagPhiMoNuoc = false;
                     if (jsonObjectChild.getString("ID").equals(entity.getID()) == true) {
                         addEntityChild(jsonObjectChild);
                         ///cập nhật parent
@@ -393,8 +397,12 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             numGiaiTrach++;
                         else if (Boolean.parseBoolean(jsonObjectChild.getString("TamThu")) == true)
                             numTamThu++;
-                        else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true)
+                        else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true) {
                             numThuHo++;
+                            if (jsonObjectChild.getString("PhiMoNuoc") != "null" &&jsonObjectChild.getString("PhiMoNuoc").equals("168000") == true) {
+                                flagPhiMoNuoc = true;
+                            }
+                        }
                         ///xét lệnh hủy riêng
                         if (Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")) == true)
                             numLenhHuy++;
@@ -409,7 +417,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             entity.setTamThu(true);
                         } else if (numThuHo == numRowChild) {
                             CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "ThuHo", "true");
-                            entity.setRow2b("Thu Hộ");
+                            String str = "Thu Hộ";
+                            if (flagPhiMoNuoc == true)
+                                str += " (168k)";
+                            entity.setRow2b(str);
                             entity.setThuHo(true);
                         }
                         ///xét lệnh hủy riêng
@@ -420,7 +431,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                 }
             entity.setListChild(listChild);
-            entity.setRow1b(String.valueOf(listChild.size())+" HĐ");
+            entity.setRow1b(String.valueOf(listChild.size()) + " HĐ");
             TongDC++;
 
             listParent.add(entity);
@@ -453,8 +464,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-            if(resultCode== Activity.RESULT_OK)
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK)
                 loadListView();
         }
     }

@@ -15,7 +15,7 @@ import org.ksoap2.transport.HttpTransportSE;
 public class CWebservice {
     private final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
     private final String SOAP_ADDRESS = "http://113.161.88.180:1989/wsThuTien.asmx";
-//  private final String SOAP_ADDRESS = "http://192.168.90.11:81/wsThuTien.asmx";
+//  private final String SOAP_ADDRESS = "http://192.168.90.11:81/wsThuTien_test.asmx";
 
     @Nullable
     private String excute(SoapObject request, String SOAP_ACTION) {

@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -53,6 +55,18 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         spnKy = (Spinner) findViewById(R.id.spnKy);
         layoutTo = (LinearLayout) findViewById(R.id.layoutTo);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
+
+        //cast to an ArrayAdapter
+        ArrayAdapter spnNamAdapter = (ArrayAdapter) spnNam.getAdapter();
+        int spnNamPosition = spnNamAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        //set the default according to value
+        spnNam.setSelection(spnNamPosition);
+
+        //cast to an ArrayAdapter
+        ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
+        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
+        //set the default according to value
+        spnKy.setSelection(spnKyPosition);
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);
@@ -258,20 +272,16 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
             try {
                 if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
-                if(selectedMaNV.equals("0"))
-                {
-                    CLocal.jsonHanhThu=new JSONArray();
-                    for (int i = 1; i < spnID_NhanVien.size(); i++)
-                    {
+                if (selectedMaNV.equals("0")) {
+                    CLocal.jsonHanhThu = new JSONArray();
+                    for (int i = 1; i < spnID_NhanVien.size(); i++) {
                         JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-                        for (int j = 0; j < jsonResult.length(); j++)
-                        {
+                        for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonHanhThu.put(jsonObject);
                         }
                     }
-                }
-                else {
+                } else {
                     CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                 }
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
