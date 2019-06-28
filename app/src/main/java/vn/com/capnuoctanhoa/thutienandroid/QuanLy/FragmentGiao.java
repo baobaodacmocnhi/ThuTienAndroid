@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
@@ -73,6 +74,18 @@ public class FragmentGiao extends Fragment {
         nestedScrollView=(NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
         layoutAutoHide = (CardView) rootView.findViewById(R.id.layoutAutoHide);
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
+
+        //cast to an ArrayAdapter
+        ArrayAdapter spnNamAdapter = (ArrayAdapter) spnNam.getAdapter();
+        int spnNamPosition = spnNamAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        //set the default according to value
+        spnNam.setSelection(spnNamPosition);
+
+        //cast to an ArrayAdapter
+        ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
+        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
+        //set the default according to value
+        spnKy.setSelection(spnKyPosition);
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);

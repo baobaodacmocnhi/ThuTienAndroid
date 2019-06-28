@@ -123,6 +123,7 @@
             android:name=".DongNuoc.ActivityDownDataDongNuoc"
             android:label="@string/title_activity_down_data_dong_nuoc"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity android:name=".LenhHuy.ActivityLenhHuy"></activity>
     </application>
 
 </manifest>

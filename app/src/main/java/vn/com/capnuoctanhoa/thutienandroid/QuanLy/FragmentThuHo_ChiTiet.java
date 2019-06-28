@@ -324,6 +324,10 @@ public class FragmentThuHo_ChiTiet extends Fragment {
             entity.setRow2a(strDanhBo);
 
             entity.setRow3a(jsonObject.getString("HoTen"));
+            if (jsonObject.getString("PhiMoNuoc") != "null"&&jsonObject.getString("PhiMoNuoc").equals("0")==false) {
+                entity.setRow3b("("+jsonObject.getString("PhiMoNuoc").substring(0,jsonObject.getString("PhiMoNuoc").length()-3)+"k)");
+            }
+
             entity.setRow4a(jsonObject.getString("DiaChi"));
 
             listChild.add(entity);

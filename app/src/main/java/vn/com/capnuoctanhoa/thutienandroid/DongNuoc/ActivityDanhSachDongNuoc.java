@@ -399,7 +399,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             numTamThu++;
                         else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true) {
                             numThuHo++;
-                            if (jsonObjectChild.getString("PhiMoNuoc") != "null" &&jsonObjectChild.getString("PhiMoNuoc").equals("168000") == true) {
+                            if (jsonObjectChild.getString("PhiMoNuoc") != "null"&&jsonObjectChild.getString("PhiMoNuoc").equals("0")==false) {
                                 flagPhiMoNuoc = true;
                             }
                         }
@@ -419,7 +419,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "ThuHo", "true");
                             String str = "Thu Hộ";
                             if (flagPhiMoNuoc == true)
-                                str += " (168k)";
+                                str += " ("+jsonObjectChild.getString("PhiMoNuoc").substring(0,jsonObjectChild.getString("PhiMoNuoc").length()-3)+"k)";
                             entity.setRow2b(str);
                             entity.setThuHo(true);
                         }

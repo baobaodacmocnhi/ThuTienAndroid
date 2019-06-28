@@ -28,12 +28,13 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy,imgbtnTimKiem;
-    private TextView txtUser,txtQuanLy;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy,imgbtnTimKiem,imgbtnLenhHuy;
+    private TextView txtUser,txtQuanLy,txtLenhHuy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +88,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imgbtnLenhHuy = (ImageButton) findViewById(R.id.imgbtnLenhHuy);
+        imgbtnLenhHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityLenhHuy.class);
+                startActivity(intent);
+            }
+        });
+
         txtUser = (TextView) findViewById(R.id.txtUser);
         txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
+        txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
 
         if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -124,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);
+            imgbtnLenhHuy.setVisibility(View.GONE);
+            txtLenhHuy.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 CLocal.MaNV=CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen=CLocal.sharedPreferencesre.getString("HoTen", "");
@@ -137,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
+                    imgbtnLenhHuy.setVisibility(View.VISIBLE);
+                    txtLenhHuy.setVisibility(View.VISIBLE);
                 }
                 if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true&&CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                 {
