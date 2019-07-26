@@ -253,6 +253,7 @@ public class FragmentGiao extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CEntityParent entity = new CEntityParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
+                        entity.setRow1b(jsonObject.getString("TyLeThuDuoc"));
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         list.add(entity);
