@@ -941,9 +941,9 @@ public class CWebservice {
     }
 
     //lệnh hủy
-    public String getDSHoaDon_LenhHuy(String LoaiCat, String ID) {
-        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_LenhHuy";
-        String OPERATION_NAME = "GetDSHoaDon_LenhHuy";
+    public String GetDSHoaDon_LenhHuy(String LoaiCat, String ID) {
+        String SOAP_ACTION = "http://tempuri.org/GetDSHoaDon_LenhHuy_MaLenh";
+        String OPERATION_NAME = "GetDSHoaDon_LenhHuy_MaLenh";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();

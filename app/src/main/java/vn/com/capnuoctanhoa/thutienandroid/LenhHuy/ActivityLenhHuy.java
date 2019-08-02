@@ -19,6 +19,7 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,7 +34,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityLenhHuy extends AppCompatActivity {
     private Button btnTimKiem, btnCapNhat, btnShowMess;
-    private RadioButton radCatTam, radCatHuy;
+    private Spinner spnLoai;
     private CheckBox chkCat;
     private EditText edtMa, edtTinhTrang;
     private ListView lstView;
@@ -47,8 +48,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lenh_huy);
 
-        radCatTam = (RadioButton) findViewById(R.id.radCatTam);
-        radCatHuy = (RadioButton) findViewById(R.id.radCatHuy);
+        spnLoai = (Spinner) findViewById(R.id.spnLoai);
         chkCat = (CheckBox) findViewById(R.id.chkCat);
         edtMa = (EditText) findViewById(R.id.edtMa);
         edtTinhTrang = (EditText) findViewById(R.id.edtTinhTrang);
@@ -56,6 +56,14 @@ public class ActivityLenhHuy extends AppCompatActivity {
         btnTimKiem = (Button) findViewById(R.id.btnTimKiem);
         btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
+
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Cắt Tạm");
+        arrayList.add("Cắt Hủy");
+        arrayList.add("Danh Bộ");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnLoai.setAdapter(arrayAdapter);
 
         lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -298,12 +306,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
                 String result = "";
                 switch (voids[0]) {
                     case "TimKiem":
-                        String LoaiCat = "";
-                        if (radCatTam.isChecked() == true)
-                            LoaiCat = "CatTam";
-                        else if (radCatHuy.isChecked() == true)
-                            LoaiCat = "CatHuy";
-                        result = ws.getDSHoaDon_LenhHuy(LoaiCat, edtMa.getText().toString().replace("-", ""));
+                        result = ws.GetDSHoaDon_LenhHuy(spnLoai.getSelectedItem().toString(), edtMa.getText().toString().replace("-", "").replace(" ", ""));
                         if (result.equals("[]") == true)
                             return "Không có lệnh hủy";
                         else
