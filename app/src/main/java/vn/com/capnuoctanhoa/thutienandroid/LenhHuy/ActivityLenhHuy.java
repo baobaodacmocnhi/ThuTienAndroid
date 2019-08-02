@@ -61,6 +61,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
         arrayList.add("Cắt Tạm");
         arrayList.add("Cắt Hủy");
         arrayList.add("Danh Bộ");
+        arrayList.add("Tất Cả");
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, arrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnLoai.setAdapter(arrayAdapter);
@@ -274,12 +275,12 @@ public class ActivityLenhHuy extends AppCompatActivity {
                 else
                     lstMaHD += "," + jsonObject.getString("MaHD");
                 if (Boolean.parseBoolean(jsonObject.getString("Cat")) == true)
-                    arrayList.add(jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Đã Cắt");
+                    arrayList.add(jsonObject.getString("DanhBo") + " ; " +jsonObject.getString("DiaChi") + " ; " +jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Đã Cắt");
                 else
-                    arrayList.add(jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Chưa Cắt");
+                    arrayList.add(jsonObject.getString("DanhBo") + " ; " +jsonObject.getString("DiaChi") + " ; " +jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Chưa Cắt");
             }
 
-            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+            arrayAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_checked, arrayList);
             lstView.setAdapter(arrayAdapter);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();

@@ -111,7 +111,7 @@
 
     <Spinner
         android:id="@+id/spnLoai"
-        android:layout_width="96dp"
+        android:layout_width="120dp"
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Loại"
+        android:text="Tìm Theo"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/spnLoai"
         app:layout_constraintStart_toStartOf="@+id/spnLoai"
         app:layout_constraintTop_toTopOf="parent" />
