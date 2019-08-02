@@ -48,11 +48,8 @@ public class ActivityDongTien extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
-
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
-
         btnDongTien = (Button) findViewById(R.id.btnDongTien);
-
         lstView = (ListView) findViewById(R.id.lstView);
 
         // CHOICE_MODE_NONE: Không cho phép lựa chọn (Mặc định).
@@ -81,7 +78,7 @@ public class ActivityDongTien extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SparseBooleanArray sp = lstView.getCheckedItemPositions();
-                StringBuilder sb = new StringBuilder();
+//                StringBuilder sb = new StringBuilder();
                 selectedMaHDs = "";
                 for (int i = 0; i < sp.size(); i++) {
 //                    int key = sp.keyAt(i);

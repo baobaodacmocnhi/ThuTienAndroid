@@ -28,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="Cắt Hủy" />
     </RadioGroup>
 
@@ -40,9 +41,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="Mã"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Mã"
+        android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/btnTimKiem"
         app:layout_constraintStart_toEndOf="@+id/radioGroup"
         app:layout_constraintTop_toTopOf="@+id/radioGroup" />

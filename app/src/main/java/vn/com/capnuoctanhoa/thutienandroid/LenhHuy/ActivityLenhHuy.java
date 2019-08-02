@@ -5,15 +5,17 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -22,16 +24,23 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDownDataHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongTien;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityLenhHuy extends AppCompatActivity {
-    private Button  btnTimKiem,btnCapNhat,btnShowMess;
-    private RadioButton radCatTam,radCatHuy;
+    private Button btnTimKiem, btnCapNhat, btnShowMess;
+    private RadioButton radCatTam, radCatHuy;
     private CheckBox chkCat;
-    private EditText edtMa,edtTinhTrang;
+    private EditText edtMa, edtTinhTrang;
+    private ListView lstView;
+    private ArrayList<String> arrayList;
+    private ArrayList<CLenhHuy> lstLenhHuy;
+    private ArrayAdapter<String> arrayAdapter;
+    private String lstMaHD = "",selectedMaHDs = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +50,27 @@ public class ActivityLenhHuy extends AppCompatActivity {
         radCatTam = (RadioButton) findViewById(R.id.radCatTam);
         radCatHuy = (RadioButton) findViewById(R.id.radCatHuy);
         chkCat = (CheckBox) findViewById(R.id.chkCat);
-        edtMa= (EditText) findViewById(R.id.edtMa);
-        edtTinhTrang= (EditText) findViewById(R.id.edtTinhTrang);
+        edtMa = (EditText) findViewById(R.id.edtMa);
+        edtTinhTrang = (EditText) findViewById(R.id.edtTinhTrang);
+        lstView = (ListView) findViewById(R.id.lstView);
         btnTimKiem = (Button) findViewById(R.id.btnTimKiem);
         btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         btnShowMess = (Button) findViewById(R.id.btnShowMess);
+
+        lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CheckedTextView v = (CheckedTextView) view;
+                boolean currentCheck = v.isChecked();
+                CLenhHuy lenhhuy = lstLenhHuy.get(position);
+                lenhhuy.setSelected(!currentCheck);
+
+                edtTinhTrang.setText(lenhhuy.getTinhTrang());
+                chkCat.setChecked(lenhhuy.isCat());
+            }
+        });
+
 
         btnTimKiem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +81,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
                 }
                 ActivityLenhHuy.MyAsyncTask myAsyncTask = new ActivityLenhHuy.MyAsyncTask();
                 myAsyncTask.execute("TimKiem");
+                CLocal.hideKeyboard(ActivityLenhHuy.this);
             }
         });
 
@@ -66,8 +92,20 @@ public class ActivityLenhHuy extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
+                SparseBooleanArray sp = lstView.getCheckedItemPositions();
+                selectedMaHDs = "";
+                for (int i = 0; i < sp.size(); i++) {
+                    if (sp.valueAt(i) == true) {
+                        CLenhHuy lenhhuy = lstLenhHuy.get(sp.keyAt(i));
+                        if (selectedMaHDs.equals("") == true)
+                            selectedMaHDs = lenhhuy.MaHD;
+                        else
+                            selectedMaHDs += "," + lenhhuy.MaHD;
+                    }
+                }
                 ActivityLenhHuy.MyAsyncTask myAsyncTask = new ActivityLenhHuy.MyAsyncTask();
-                myAsyncTask.execute();
+                myAsyncTask.execute("CapNhat");
+                CLocal.hideKeyboard(ActivityLenhHuy.this);
             }
         });
 
@@ -150,7 +188,97 @@ public class ActivityLenhHuy extends AppCompatActivity {
         });
     }
 
-    public class MyAsyncTask extends AsyncTask<String, String, Boolean> {
+    public class CLenhHuy {
+        private String MaHD;
+        private String Ky;
+        private String TinhTrang;
+        private boolean Cat;
+        private boolean Selected;
+
+        public CLenhHuy() {
+            MaHD = "";
+            Ky = "";
+            TinhTrang = "";
+            Cat = false;
+            Selected = false;
+        }
+
+        public String getMaHD() {
+            return MaHD;
+        }
+
+        public void setMaHD(String maHD) {
+            MaHD = maHD;
+        }
+
+        public String getKy() {
+            return Ky;
+        }
+
+        public void setKy(String ky) {
+            Ky = ky;
+        }
+
+        public String getTinhTrang() {
+            return TinhTrang;
+        }
+
+        public void setTinhTrang(String tinhTrang) {
+            TinhTrang = tinhTrang;
+        }
+
+        public boolean isCat() {
+            return Cat;
+        }
+
+        public void setCat(boolean cat) {
+            Cat = cat;
+        }
+
+        public boolean isSelected() {
+            return Selected;
+        }
+
+        public void setSelected(boolean selected) {
+            Selected = selected;
+        }
+
+    }
+
+    private void fillListView(String value) {
+        try {
+            JSONArray result = new JSONArray(value);
+            lstLenhHuy=new ArrayList<CLenhHuy>();
+            arrayList = new ArrayList<String>();
+
+            for (int i = 0; i < result.length(); i++) {
+                JSONObject jsonObject = result.getJSONObject(i);
+
+                CLenhHuy entity = new CLenhHuy();
+                entity.setMaHD(jsonObject.getString("MaHD"));
+                entity.setKy(jsonObject.getString("Ky"));
+                entity.setTinhTrang(jsonObject.getString("TinhTrang"));
+                entity.setCat(Boolean.parseBoolean(jsonObject.getString("Cat")));
+                lstLenhHuy.add(entity);
+
+                if (lstMaHD.isEmpty() == true)
+                    lstMaHD = jsonObject.getString("MaHD");
+                else
+                    lstMaHD += "," + jsonObject.getString("MaHD");
+                if (Boolean.parseBoolean(jsonObject.getString("Cat")) == true)
+                    arrayList.add(jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Đã Cắt");
+                else
+                    arrayList.add(jsonObject.getString("Ky") + " ; " + jsonObject.getString("TinhTrang") + " ; Chưa Cắt");
+            }
+
+            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+            lstView.setAdapter(arrayAdapter);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -165,28 +293,64 @@ public class ActivityLenhHuy extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(String... voids) {
+        protected String doInBackground(String... voids) {
             try {
-
-                return false;
+                String result = "";
+                switch (voids[0]) {
+                    case "TimKiem":
+                        String LoaiCat = "";
+                        if (radCatTam.isChecked() == true)
+                            LoaiCat = "CatTam";
+                        else if (radCatHuy.isChecked() == true)
+                            LoaiCat = "CatHuy";
+                        result = ws.getDSHoaDon_LenhHuy(LoaiCat, edtMa.getText().toString().replace("-", ""));
+                        if (result.equals("[]") == true)
+                            return "Không có lệnh hủy";
+                        else
+                            publishProgress(new String[]{"TimKiem", result});
+                        break;
+                    case "CapNhat":
+                        if (selectedMaHDs.equals("") == true)
+                            return "CHƯA CHỌN HÓA ĐƠN";
+                        result = ws.sua_LenhHuy(selectedMaHDs,String.valueOf(chkCat.isChecked()),edtTinhTrang.getText().toString(),CLocal.MaNV);
+                        if (Boolean.parseBoolean(result) == true)
+                            return "THÀNH CÔNG";
+                        else
+                            return "THẤT BẠI";
+                }
+                return "false";
             } catch (Exception ex) {
-                return false;
+                return "false";
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "TimKiem":
+                        try {
+                            fillListView(values[1]);
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case "CapNhat":
+
+                        break;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (aBoolean == true) {
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            } else {
-
-            }
+            if (s.equals("false") == false)
+                CLocal.showPopupMessage(ActivityLenhHuy.this, s);
         }
     }
 

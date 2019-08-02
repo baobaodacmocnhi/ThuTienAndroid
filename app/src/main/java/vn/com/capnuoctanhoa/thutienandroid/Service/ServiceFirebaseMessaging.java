@@ -26,6 +26,7 @@ import vn.com.capnuoctanhoa.thutienandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.MainActivity;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -57,33 +58,36 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             //liên kết hàm [spSendNotificationToClient] sqlserver
 
             intent = new Intent(this, ActivityDangNhap.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
             //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
             CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             intent = new Intent(this, ActivityDanhSachHanhThu.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
             //action DongPhi cập nhật PhiMoNuoc cho DongNuoc
 //            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
             CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
             //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
             CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 //            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
 
             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+        } else if (remoteMessage.getData().get("Action").equals("LenhHuy")) {
+            intent = new Intent(this, ActivityLenhHuy.class);
         }
-
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         try {
             if (CLocal.jsonMessage == null)
                 CLocal.jsonMessage = new JSONArray();
