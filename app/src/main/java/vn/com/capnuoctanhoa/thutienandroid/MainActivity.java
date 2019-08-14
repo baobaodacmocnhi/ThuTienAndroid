@@ -33,8 +33,8 @@ import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy,imgbtnTimKiem,imgbtnLenhHuy;
-    private TextView txtUser,txtQuanLy,txtLenhHuy;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc,imgbtnQuanLy,imgbtnTimKiem,imgbtnLenhHuy,imgbtnHoaDonDienTu;
+    private TextView txtUser,txtQuanLy,txtLenhHuy,txtHoaDonDienTu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +97,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imgbtnHoaDonDienTu = (ImageButton) findViewById(R.id.imgbtnHoaDonDienTu);
+        imgbtnHoaDonDienTu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityLenhHuy.class);
+                startActivity(intent);
+            }
+        });
+
         txtUser = (TextView) findViewById(R.id.txtUser);
         txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
         txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
+        txtHoaDonDienTu = (TextView) findViewById(R.id.txtHoaDonDienTu);
 
         if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -137,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             txtQuanLy.setVisibility(View.GONE);
             imgbtnLenhHuy.setVisibility(View.GONE);
             txtLenhHuy.setVisibility(View.GONE);
+            imgbtnHoaDonDienTu.setVisibility(View.GONE);
+            txtHoaDonDienTu.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 CLocal.MaNV=CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen=CLocal.sharedPreferencesre.getString("HoTen", "");
@@ -152,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
                     txtQuanLy.setVisibility(View.VISIBLE);
                     imgbtnLenhHuy.setVisibility(View.VISIBLE);
                     txtLenhHuy.setVisibility(View.VISIBLE);
+                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 }
                 if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true&&CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                 {
@@ -160,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     CLocal.MaTo=CLocal.sharedPreferencesre.getString("MaTo", "");
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
+                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");

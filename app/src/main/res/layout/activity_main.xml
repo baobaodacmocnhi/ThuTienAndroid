@@ -81,6 +81,16 @@
         app:layout_constraintTop_toTopOf="@+id/textView21"
         app:srcCompat="@drawable/ic_user_searchx256" />
 
+    <ImageButton
+        android:id="@+id/imgbtnHoaDonDienTu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnTimKiem"
+        app:layout_constraintTop_toTopOf="@+id/textView39"
+        app:srcCompat="@drawable/ic_hanh_thu" />
+
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
@@ -155,6 +165,21 @@
         app:layout_constraintEnd_toEndOf="@+id/imgbtnLenhHuy"
         app:layout_constraintStart_toStartOf="@+id/imgbtnLenhHuy"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnLenhHuy" />
+
+    <TextView
+        android:id="@+id/txtHoaDonDienTu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Hóa Đơn Điện Tử"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnHoaDonDienTu"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnHoaDonDienTu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnHoaDonDienTu" />
 
     <TextView
         android:id="@+id/textView39"

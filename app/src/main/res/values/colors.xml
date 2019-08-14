@@ -17,4 +17,5 @@
     <color name="colorDongNuoc2">#FFFFA500</color>
     <color name="colorToTrinh">#FF008800</color>
     <color name="colorDCHD">#FFFF00FF</color>
+    <color name="colorListView">#FFEFEFEF</color>
 </resources>

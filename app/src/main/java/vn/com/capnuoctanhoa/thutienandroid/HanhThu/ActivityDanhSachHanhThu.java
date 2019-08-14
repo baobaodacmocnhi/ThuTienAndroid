@@ -38,7 +38,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent>  lstDisplayed;
+    private ArrayList<CEntityParent> lstDisplayed;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -102,10 +102,12 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             private int mLastFirstVisibleItem;
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem>=1)
+                if (firstVisibleItem >= 1)
                     floatingActionButton.show();
                 else
                     floatingActionButton.hide();
@@ -181,8 +183,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_down_data:
-                Intent intent=new Intent(getApplicationContext(),ActivityDownDataHanhThu.class);
-                startActivityForResult(intent,1);
+                Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
+                startActivityForResult(intent, 1);
                 return true;
             default:
                 break;
@@ -290,8 +292,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1){
-            if(resultCode== Activity.RESULT_OK)
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK)
                 loadListView();
         }
     }

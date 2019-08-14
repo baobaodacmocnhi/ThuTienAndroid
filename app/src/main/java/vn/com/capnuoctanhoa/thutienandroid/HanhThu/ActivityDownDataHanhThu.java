@@ -6,11 +6,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -137,20 +139,51 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 builderSingle.setCancelable(false);
 
                 ListView lstMessage = new ListView(getApplicationContext());
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_singlechoice);
 
+                //hiện thị k tô mầu
+//                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_item);
+//                try {
+//                    if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
+//                        for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
+//                            arrayAdapter.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
+//                        }
+//                    }
+//                } catch (Exception ex) {
+//                }
+//                lstMessage.setAdapter(arrayAdapter);
+
+                //hiện thị tô mầu
+                ArrayList<String> mylist = new ArrayList<String>();
                 try {
                     if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
-                        int stt = 0;
                         for (int i = 0; i < CLocal.jsonMessage.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonMessage.getJSONObject(i);
-                            arrayAdapter.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
+                            mylist.add(jsonObject.getString("NgayNhan") + " - " + jsonObject.getString("Title") + " - " + jsonObject.getString("Content"));
                         }
                     }
                 } catch (Exception ex) {
                 }
-
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_item,mylist){
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent){
+                        // Get the current item from ListView
+                        View view = super.getView(position,convertView,parent);
+                        if(position %2 == 1)
+                        {
+                            // Set a background color for ListView regular row/item
+                            view.setBackgroundColor(Color.TRANSPARENT);
+                        }
+                        else
+                        {
+                            // Set the background color for alternate row/item
+                            view.setBackgroundColor(getResources().getColor(R.color.colorListView));
+                        }
+                        return view;
+                    }
+                };
                 lstMessage.setAdapter(arrayAdapter);
+
                 builderSingle.setView(lstMessage);
 
                 builderSingle.setNegativeButton(
