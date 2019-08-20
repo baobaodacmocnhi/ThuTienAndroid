@@ -193,7 +193,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
 
     private Uri createImageUri() {
         try {
-            File filesDir = ActivityDongNuoc2.this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File filesDir = ActivityDongNuoc2.this.getExternalFilesDir(CLocal.pathPicture);
             File photoFile = null;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -212,7 +212,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             } else {
                 // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
                 // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
-                Uri photoURI = FileProvider.getUriForFile(ActivityDongNuoc2.this, "thutien_camera_fullsize", photoFile);
+                Uri photoURI = FileProvider.getUriForFile(ActivityDongNuoc2.this, "thutien_file_provider", photoFile);
                 uri = photoURI;
             }
             imgPath = photoFile.getAbsolutePath();

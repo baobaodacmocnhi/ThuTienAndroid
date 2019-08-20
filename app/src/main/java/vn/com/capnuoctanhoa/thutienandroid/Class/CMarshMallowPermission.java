@@ -13,6 +13,9 @@ public class CMarshMallowPermission {
     public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 2;
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 4;
+    public static final int GRANTED = 0;
+    public static final int DENIED = 1;
+    public static final int NEVER = 2;
     Activity activity;
     Context mContext;
 
@@ -74,6 +77,18 @@ public class CMarshMallowPermission {
             Toast.makeText(mContext.getApplicationContext(), "Location permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    public int getPermissionStatus(Activity activity, String permission) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+            return DENIED;
+        } else {
+            if (ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED) {
+                return GRANTED;
+            } else {
+                return NEVER;
+            }
         }
     }
 }

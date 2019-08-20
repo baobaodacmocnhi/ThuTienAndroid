@@ -40,9 +40,10 @@
             android:exported="false"
             android:stopWithTask="false" />
 
+        <!--camera-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="thutien_camera_fullsize"
+            android:authorities="thutien_file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

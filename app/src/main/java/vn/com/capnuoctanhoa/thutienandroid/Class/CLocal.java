@@ -43,7 +43,10 @@ import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
-    public static String FileName = "my_data";
+    public static String pathRoot = Environment.getExternalStorageDirectory()+"/TanHoa/";
+    public static String pathFile = pathRoot+"/File/";
+    public static String pathPicture = pathRoot+"/Picture/";
+    public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "";
