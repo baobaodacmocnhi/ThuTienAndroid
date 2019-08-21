@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,6 +48,8 @@ public class ActivityLenhHuy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lenh_huy);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spnLoai = (Spinner) findViewById(R.id.spnLoai);
         chkCat = (CheckBox) findViewById(R.id.chkCat);
@@ -195,6 +198,18 @@ public class ActivityLenhHuy extends AppCompatActivity {
                 builderSingle.show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class CLenhHuy {

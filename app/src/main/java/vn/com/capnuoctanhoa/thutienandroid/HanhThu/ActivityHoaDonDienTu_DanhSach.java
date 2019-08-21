@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
+package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.PopupMenu;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,14 +25,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class ActivityDanhSachDongNuoc extends AppCompatActivity {
+public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     private Spinner spnFilter, spnSort, spnNhanVien;
     private ExpandableListView listView;
     private CustomAdapterExpandableListView customAdapterExpandableListView;
@@ -46,10 +45,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_dong_nuoc);
+        setContentView(R.layout.activity_hoa_don_dien_tu_danh_sach);
 
         ///clear notifications
-        NotificationManager notificationManager = (NotificationManager) ActivityDanhSachDongNuoc.this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) ActivityHoaDonDienTu_DanhSach.this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -128,40 +127,40 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
-                popup.getMenuInflater().inflate(R.menu.menu_dong_nuoc, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
-                        Intent intent;
-                        switch (id) {
-                            case R.id.action_DongNuoc1:
-                                intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.action_DongNuoc2:
-                                intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.action_MoNuoc:
-                                intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                            case R.id.action_DongTien:
-                                intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
-                                startActivity(intent);
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
+//                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
+//                popup.getMenuInflater().inflate(R.menu.menu_dong_nuoc, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem menuItem) {
+//                        int id = menuItem.getItemId();
+//                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
+//                        Intent intent;
+//                        switch (id) {
+//                            case R.id.action_DongNuoc1:
+//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
+//                                intent.putExtra("MaDN", MaDN.getText().toString());
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_DongNuoc2:
+//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
+//                                intent.putExtra("MaDN", MaDN.getText().toString());
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_MoNuoc:
+//                                intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
+//                                intent.putExtra("MaDN", MaDN.getText().toString());
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_DongTien:
+//                                intent = new Intent(getApplicationContext(), ActivityDongTien.class);
+//                                intent.putExtra("MaDN", MaDN.getText().toString());
+//                                startActivity(intent);
+//                                break;
+//                        }
+//                        return true;
+//                    }
+//                });
+//                popup.show();
                 return false;
             }
         });
@@ -172,12 +171,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 listView.smoothScrollToPosition(0);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadListView();
     }
 
     @Override
@@ -226,7 +219,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_down_data:
-                Intent intent = new Intent(getApplicationContext(), ActivityDownDataDongNuoc.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
                 startActivityForResult(intent, 1);
                 return true;
             default:
@@ -439,5 +432,4 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 loadListView();
         }
     }
-
 }

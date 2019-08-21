@@ -1,6 +1,5 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +32,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
 import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         imgbtnHoaDonDienTu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivityLenhHuy.class);
+                Intent intent = new Intent(MainActivity.this, ActivityHoaDonDienTu_DanhSach.class);
                 startActivity(intent);
             }
         });

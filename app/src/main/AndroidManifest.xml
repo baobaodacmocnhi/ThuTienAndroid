@@ -40,7 +40,7 @@
             android:exported="false"
             android:stopWithTask="false" />
 
-        <!--camera-->
+        <!-- camera -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="thutien_file_provider"
@@ -124,7 +124,10 @@
             android:name=".DongNuoc.ActivityDownDataDongNuoc"
             android:label="@string/title_activity_down_data_dong_nuoc"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".LenhHuy.ActivityLenhHuy"></activity>
+        <activity
+            android:name=".LenhHuy.ActivityLenhHuy"
+            android:label="Lệnh Hủy" />
+        <activity android:name=".HanhThu.ActivityHoaDonDienTu_DanhSach"></activity>
     </application>
 
 </manifest>

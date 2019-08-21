@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/popup_action_DongNuoc"
+        android:id="@+id/action_DongNuoc1"
         android:enabled="true"
         android:title="Đóng Nước Lần 1"/>
     <item
-        android:id="@+id/popup_action_DongNuoc2"
+        android:id="@+id/action_DongNuoc2"
         android:enabled="true"
         android:title="Đóng Nước Lần 2" />
     <item
-        android:id="@+id/popup_action_MoNuoc"
+        android:id="@+id/action_MoNuoc"
         android:enabled="true"
         android:title="Mở Nước" />
     <item
-        android:id="@+id/popup_action_DongTien"
+        android:id="@+id/action_DongTien"
         android:enabled="true"
         android:title="Đóng Tiền" />
 </menu>
