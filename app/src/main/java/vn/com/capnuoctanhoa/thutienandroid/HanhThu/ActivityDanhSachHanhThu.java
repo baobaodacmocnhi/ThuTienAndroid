@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
@@ -38,7 +37,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent> lstDisplayed;
+    private ArrayList<CViewParent> lstDisplayed;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -194,7 +193,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
     public void loadListView() {
         try {
-            lstDisplayed = new ArrayList<CEntityParent>();
+            lstDisplayed = new ArrayList<CViewParent>();
             TongHD = TongCong = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
@@ -255,7 +254,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             ///thiết lập khởi tạo 1 lần đầu để sort
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
-            CEntityParent entity = new CEntityParent();
+            CViewParent entity = new CViewParent();
             entity.setSTT(String.valueOf(lstDisplayed.size() + 1));
             entity.setID(jsonObject.getString("ID"));
 

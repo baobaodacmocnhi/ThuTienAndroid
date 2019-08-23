@@ -1,36 +1,27 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc2;
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongTien;
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityMoNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<CustomAdapterRecyclerViewParent.RecyclerViewHolder>  implements Filterable {
     private Activity activity;
-    private ArrayList<CEntityParent> mOriginalValues;
-    private ArrayList<CEntityParent> mDisplayedValues;
+    private ArrayList<CViewParent> mOriginalValues;
+    private ArrayList<CViewParent> mDisplayedValues;
 
-    public CustomAdapterRecyclerViewParent(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
+    public CustomAdapterRecyclerViewParent(Activity activity, ArrayList<CViewParent> mDisplayedValues) {
         super();
         this.activity=activity;
         this.mDisplayedValues = mDisplayedValues;
@@ -51,7 +42,7 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
         if(getItemCount()>0) {
-            CEntityParent entity = mDisplayedValues.get(position);
+            CViewParent entity = mDisplayedValues.get(position);
 
             holder.STT.setText(entity.getSTT());
             holder.ID.setText(entity.getID());
@@ -187,17 +178,17 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDisplayedValues = (ArrayList<CEntityParent>) results.values; // has the filtered values
+                mDisplayedValues = (ArrayList<CViewParent>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                ArrayList<CEntityParent> FilteredArrList = new ArrayList<CEntityParent>();
+                ArrayList<CViewParent> FilteredArrList = new ArrayList<CViewParent>();
 
                 if (mOriginalValues == null) {
-                    mOriginalValues = new ArrayList<CEntityParent>(mDisplayedValues); // saves the original data in mOriginalValues
+                    mOriginalValues = new ArrayList<CViewParent>(mDisplayedValues); // saves the original data in mOriginalValues
                 }
 
                 /********
@@ -222,7 +213,7 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
                                 || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4a().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4b().toLowerCase().startsWith(constraint.toString())) {
-                            CEntityParent entity = new CEntityParent();
+                            CViewParent entity = new CViewParent();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());
                             entity.setRow1a(mOriginalValues.get(i).getRow1a());

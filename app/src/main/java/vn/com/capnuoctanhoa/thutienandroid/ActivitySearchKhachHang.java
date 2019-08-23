@@ -4,10 +4,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,11 +13,9 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
@@ -80,7 +76,7 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
     private void loadListView(String[] values) {
         try {
 //            ArrayList<String> arrayList = new ArrayList<String>();
-            ArrayList<CEntityParent> lstDisplayed=new ArrayList<>();
+            ArrayList<CViewParent> lstDisplayed=new ArrayList<>();
             JSONArray jsonArray = new JSONArray(values[1]);
             switch (values[0]) {
                 case "DanhBo":
@@ -100,7 +96,7 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
                         edtSoNha.setText(jsonObject.getString("DiaChi").substring(0,jsonObject.getString("DiaChi").indexOf(' ')));
                         edtTenDuong.setText(jsonObject.getString("DiaChi").substring(jsonObject.getString("DiaChi").indexOf(' '),jsonObject.getString("DiaChi").length()));
 
-                        CEntityParent entity = new CEntityParent();
+                        CViewParent entity = new CViewParent();
                         entity.setSTT(String.valueOf(i + 1));
                         entity.setRow1a(jsonObject.getString("Ky"));
                         entity.setRow1b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
@@ -132,7 +128,7 @@ public class ActivitySearchKhachHang extends AppCompatActivity {
 //                                + "\nĐịa Chỉ: " + jsonObject.getString("DiaChi");
 //                        arrayList.add(str);
 
-                        CEntityParent entity = new CEntityParent();
+                        CViewParent entity = new CViewParent();
                         entity.setSTT(String.valueOf(i + 1));
                         entity.setRow1a(new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString());
                         entity.setRow2a(jsonObject.getString("HoTen"));

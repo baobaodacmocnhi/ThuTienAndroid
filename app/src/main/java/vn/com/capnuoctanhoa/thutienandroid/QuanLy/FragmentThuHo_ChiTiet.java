@@ -35,11 +35,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -63,8 +62,8 @@ public class FragmentThuHo_ChiTiet extends Fragment {
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent> listParent;
-    private ArrayList<CEntityChild> listChild;
+    private ArrayList<CViewParent> listParent;
+    private ArrayList<CViewChild> listChild;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
     private JSONArray jsonTong, jsonChiTiet;
 
@@ -287,13 +286,13 @@ public class FragmentThuHo_ChiTiet extends Fragment {
 
     public void addEntityParent(JSONObject jsonObject) {
         try {
-            CEntityParent entity = new CEntityParent();
+            CViewParent entity = new CViewParent();
             entity.setID(jsonObject.getString("MaNV_HanhThu"));
             entity.setRow1a(jsonObject.getString("HoTen"));
             entity.setRow2a(jsonObject.getString("TongHD"));
             entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
             /////////////////////////
-            listChild = new ArrayList<CEntityChild>();
+            listChild = new ArrayList<CViewChild>();
             if (jsonChiTiet != null && jsonChiTiet.length() > 0)
                 for (int i = 0; i < jsonChiTiet.length(); i++) {
                     JSONObject jsonObjectChild = jsonChiTiet.getJSONObject(i);
@@ -312,7 +311,7 @@ public class FragmentThuHo_ChiTiet extends Fragment {
 
     public void addEntityChild(JSONObject jsonObject) {
         try {
-            CEntityChild entity = new CEntityChild();
+            CViewChild entity = new CViewChild();
             entity.setID(jsonObject.getString("MaNV_HanhThu"));
 
             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
@@ -351,7 +350,7 @@ public class FragmentThuHo_ChiTiet extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            listParent = new ArrayList<CEntityParent>();
+            listParent = new ArrayList<CViewParent>();
             TongHD = TongCong = 0;
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {

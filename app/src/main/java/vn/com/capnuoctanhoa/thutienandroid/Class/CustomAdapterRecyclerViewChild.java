@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CustomAdapterRecyclerViewChild extends RecyclerView.Adapter<CustomAdapterRecyclerViewChild.RecyclerViewHolder>  {
-    private ArrayList<CEntityChild> mDisplayedValues;
+    private ArrayList<CViewChild> mDisplayedValues;
 
-    public CustomAdapterRecyclerViewChild(ArrayList<CEntityChild> mDisplayedValues) {
+    public CustomAdapterRecyclerViewChild(ArrayList<CViewChild> mDisplayedValues) {
         super();
         this.mDisplayedValues = mDisplayedValues;
     }
@@ -32,7 +32,7 @@ public class CustomAdapterRecyclerViewChild extends RecyclerView.Adapter<CustomA
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         if(getItemCount()>0) {
-            CEntityChild entity = mDisplayedValues.get(position);
+            CViewChild entity = mDisplayedValues.get(position);
             holder.ID.setText(entity.getID());
             holder.Row1a.setText(entity.getRow1a());
             holder.Row1b.setText(entity.getRow1b());

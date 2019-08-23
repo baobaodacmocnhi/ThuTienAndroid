@@ -3,55 +3,34 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 import java.util.ArrayList;
 
 public class CEntityParent {
-    private String STT;
     private String ID;
-    private String Row1a;
-    private String Row1b;
-    private String Row2a;
-    private String Row2b;
-    private String Row3a;
-    private String Row3b;
-    private String Row4a;
-    private String Row4b;
+    private String MLT;
+    private String DanhBo;
+    private String HoTen;
+    private String DiaChi;
+    private String ModifyDate;
+    private String TinhTrang;
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
-    private Boolean DongNuoc;
-    private Boolean DongNuoc2;
-    private Boolean ToTrinh;
-    private Boolean DCHD;
-    private String ModifyDate;
-    private ArrayList<CEntityChild> listChild ;
+    private Boolean DaThu;
+    private ArrayList<CEntityChild> lstHoaDon;
 
     public CEntityParent() {
-        this.STT = "";
-        this.ID = "";
-        Row1a = "";
-        Row1b = "";
-        Row2a = "";
-        Row2b = "";
-        Row3a = "";
-        Row3b = "";
-        Row4a = "";
-        Row4b = "";
+        ID = "";
+        MLT = "";
+        DanhBo = "";
+        HoTen ="";
+        DiaChi = "";
+        ModifyDate="";
+        TinhTrang="";
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
-         LenhHuy= false;
-         DongNuoc= false;
-        DongNuoc2= false;
-         ToTrinh= false;
-        DCHD= false;
-        listChild = new ArrayList<CEntityChild>();
-    }
-
-    public String getSTT() {
-        return STT;
-    }
-
-    public void setSTT(String STT) {
-        this.STT = STT;
+        LenhHuy = false;
+        DaThu = false;
+        lstHoaDon = new ArrayList<CEntityChild>();
     }
 
     public String getID() {
@@ -62,68 +41,52 @@ public class CEntityParent {
         this.ID = ID;
     }
 
-    public String getRow1a() {
-        return Row1a;
+    public String getMLT() {
+        return MLT;
     }
 
-    public void setRow1a(String row1a) {
-        Row1a = row1a;
+    public void setMLT(String MLT) {
+        this.MLT = MLT;
     }
 
-    public String getRow1b() {
-        return Row1b;
+    public String getDanhBo() {
+        return DanhBo;
     }
 
-    public void setRow1b(String row1b) {
-        Row1b = row1b;
+    public void setDanhBo(String danhBo) {
+        DanhBo = danhBo;
     }
 
-    public String getRow2a() {
-        return Row2a;
+    public String getHoTen() {
+        return HoTen;
     }
 
-    public void setRow2a(String row2a) {
-        Row2a = row2a;
+    public void setHoTen(String hoTen) {
+        HoTen = hoTen;
     }
 
-    public String getRow2b() {
-        return Row2b;
+    public String getDiaChi() {
+        return DiaChi;
     }
 
-    public void setRow2b(String row2b) {
-        Row2b = row2b;
+    public void setDiaChi(String diaChi) {
+        DiaChi = diaChi;
     }
 
-    public String getRow3a() {
-        return Row3a;
+    public String getModifyDate() {
+        return ModifyDate;
     }
 
-    public void setRow3a(String row3a) {
-        Row3a = row3a;
+    public void setModifyDate(String modifyDate) {
+        ModifyDate = modifyDate;
     }
 
-    public String getRow3b() {
-        return Row3b;
+    public String getTinhTrang() {
+        return TinhTrang;
     }
 
-    public void setRow3b(String row3b) {
-        Row3b = row3b;
-    }
-
-    public String getRow4a() {
-        return Row4a;
-    }
-
-    public void setRow4a(String row4a) {
-        Row4a = row4a;
-    }
-
-    public String getRow4b() {
-        return Row4b;
-    }
-
-    public void setRow4b(String row4b) {
-        Row4b = row4b;
+    public void setTinhTrang(String tinhTrang) {
+        TinhTrang = tinhTrang;
     }
 
     public Boolean getGiaiTrach() {
@@ -158,56 +121,19 @@ public class CEntityParent {
         LenhHuy = lenhHuy;
     }
 
-    public Boolean getDongNuoc() {
-        return DongNuoc;
+    public Boolean getDaThu() {
+        return DaThu;
     }
 
-    public void setDongNuoc(Boolean dongNuoc) {
-        DongNuoc = dongNuoc;
+    public void setDaThu(Boolean daThu) {
+        DaThu = daThu;
     }
 
-    public Boolean getDongNuoc2() {
-        return DongNuoc2;
+    public ArrayList<CEntityChild> getLstHoaDon() {
+        return lstHoaDon;
     }
 
-    public void setDongNuoc2(Boolean dongNuoc2) {
-        DongNuoc2 = dongNuoc2;
-    }
-
-    public Boolean getToTrinh() {
-        return ToTrinh;
-    }
-
-    public void setToTrinh(Boolean toTrinh) {
-        ToTrinh = toTrinh;
-    }
-
-    public Boolean getDCHD() {
-        return DCHD;
-    }
-
-    public void setDCHD(Boolean DCHD) {
-        this.DCHD = DCHD;
-    }
-
-    public String getModifyDate() {
-        return ModifyDate;
-    }
-
-    public void setModifyDate(String modifyDate) {
-        ModifyDate = modifyDate;
-    }
-
-    public ArrayList<CEntityChild> getListChild() {
-        return listChild;
-    }
-
-    public void setListChild(ArrayList<CEntityChild> listChild) {
-        this.listChild = listChild;
-    }
-
-    public int getItemChildCount()
-    {
-        return listChild.size();
+    public void setLstHoaDon(ArrayList<CEntityChild> lstHoaDon) {
+        this.lstHoaDon = lstHoaDon;
     }
 }

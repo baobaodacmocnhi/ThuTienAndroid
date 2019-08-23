@@ -27,14 +27,14 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements Filterable {
 
     private Activity activity;
-    private ArrayList<CEntityParent> mOriginalValues;
-    private ArrayList<CEntityParent> mDisplayedValues;
+    private ArrayList<CViewParent> mOriginalValues;
+    private ArrayList<CViewParent> mDisplayedValues;
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private OnLoadMoreListener onLoadMoreListener;
     private boolean isLoading=false,isMoreDataAvailable = true;
 
-    public CustomAdapterRecyclerViewParent_LoadMore(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
+    public CustomAdapterRecyclerViewParent_LoadMore(Activity activity, ArrayList<CViewParent> mDisplayedValues) {
         super();
         this.activity=activity;
         this.mDisplayedValues = mDisplayedValues;
@@ -71,7 +71,7 @@ public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapt
         }
 
         if(getItemViewType(position)==VIEW_TYPE_ITEM){
-            CEntityParent entity = mDisplayedValues.get(position);
+            CViewParent entity = mDisplayedValues.get(position);
             final RecyclerViewHolder recyclerViewHolder=(RecyclerViewHolder)holder;
 
             recyclerViewHolder.STT.setText(entity.getSTT());
@@ -239,17 +239,17 @@ public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapt
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDisplayedValues = (ArrayList<CEntityParent>) results.values; // has the filtered values
+                mDisplayedValues = (ArrayList<CViewParent>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                ArrayList<CEntityParent> FilteredArrList = new ArrayList<CEntityParent>();
+                ArrayList<CViewParent> FilteredArrList = new ArrayList<CViewParent>();
 
                 if (mOriginalValues == null) {
-                    mOriginalValues = new ArrayList<CEntityParent>(mDisplayedValues); // saves the original data in mOriginalValues
+                    mOriginalValues = new ArrayList<CViewParent>(mDisplayedValues); // saves the original data in mOriginalValues
                 }
 
                 /********
@@ -274,7 +274,7 @@ public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapt
                                 || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4a().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4b().toLowerCase().startsWith(constraint.toString())) {
-                            CEntityParent entity = new CEntityParent();
+                            CViewParent entity = new CViewParent();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());
                             entity.setRow1a(mOriginalValues.get(i).getRow1a());

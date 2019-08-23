@@ -2,7 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import java.util.Comparator;
 
-public class CSort implements Comparator<CEntityParent> {
+public class CSort implements Comparator<CViewParent> {
     private String loai;
     private int order = -1;//-1 là tăng dần, 1 là giảm dần
 
@@ -12,7 +12,7 @@ public class CSort implements Comparator<CEntityParent> {
     }
 
     @Override
-    public int compare(CEntityParent o1, CEntityParent o2) {
+    public int compare(CViewParent o1, CViewParent o2) {
         switch (loai) {
             case "ModifyDate":
                 if (o1.getModifyDate().toString().compareTo(o2.getModifyDate().toString()) == 0)

@@ -35,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
@@ -62,7 +62,7 @@ public class FragmentThuHo_Tong extends Fragment {
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent> list;
+    private ArrayList<CViewParent> list;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
 
     public FragmentThuHo_Tong() {
@@ -279,7 +279,7 @@ public class FragmentThuHo_Tong extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 //            recyclerView.setAdapter(null);
-            list = new ArrayList<CEntityParent>();
+            list = new ArrayList<CViewParent>();
             TongHD = TongCong = 0;
             if (CLocal.Doi == true) {
                 if (Integer.parseInt(selectedTo) == 0) {
@@ -301,7 +301,7 @@ public class FragmentThuHo_Tong extends Fragment {
                     JSONArray jsonArray = new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        CEntityParent entity = new CEntityParent();
+                        CViewParent entity = new CViewParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));

@@ -23,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -32,21 +31,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent_LoadMore;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 /**
@@ -70,8 +64,8 @@ public class FragmentDongMoNuoc_ChiTiet extends Fragment {
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
     private long TongHD, TongCong;
-    private ArrayList<CEntityParent> listParent;
-    private ArrayList<CEntityChild> listChild;
+    private ArrayList<CViewParent> listParent;
+    private ArrayList<CViewChild> listChild;
     private CustomAdapterRecyclerViewParent customAdapterRecyclerViewParent;
     private JSONArray jsonTong, jsonChiTiet;
 
@@ -294,12 +288,12 @@ public class FragmentDongMoNuoc_ChiTiet extends Fragment {
 
     public void addEntityParent(JSONObject jsonObject) {
         try {
-            CEntityParent entity = new CEntityParent();
+            CViewParent entity = new CViewParent();
             entity.setID(jsonObject.getString("MaNV_DongNuoc"));
             entity.setRow1a(jsonObject.getString("HoTen"));
             entity.setRow2a(jsonObject.getString("TongHD"));
             /////////////////////////
-            listChild = new ArrayList<CEntityChild>();
+            listChild = new ArrayList<CViewChild>();
             if (jsonChiTiet != null && jsonChiTiet.length() > 0)
                 for (int i = 0; i < jsonChiTiet.length(); i++) {
                     JSONObject jsonObjectChild = jsonChiTiet.getJSONObject(i);
@@ -318,7 +312,7 @@ public class FragmentDongMoNuoc_ChiTiet extends Fragment {
 
     public void addEntityChild(JSONObject jsonObject) {
         try {
-            CEntityChild entity = new CEntityChild();
+            CViewChild entity = new CViewChild();
             entity.setID(jsonObject.getString("MaNV_DongNuoc"));
             String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
             entity.setRow1a(strDanhBo);
@@ -344,7 +338,7 @@ public class FragmentDongMoNuoc_ChiTiet extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            listParent = new ArrayList<CEntityParent>();
+            listParent = new ArrayList<CViewParent>();
             TongHD =  TongCong = 0;
             Boolean DongNuoc = false;
             if (radDongNuoc.isChecked() == true)

@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -55,7 +55,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
     private CustomAdapterRecyclerViewParent_LoadMore customAdapterRecyclerViewParent;
-    private ArrayList<CEntityParent> lstOriginal, lstDisplayed;
+    private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutNhanVien;
     private CardView layoutAutoHide;
     private NestedScrollView nestedScrollView;
@@ -397,8 +397,8 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
     public void loadListView() {
         try {
 //            recyclerView.setAdapter(null);
-            lstOriginal = new ArrayList<CEntityParent>();
-            lstDisplayed = new ArrayList<CEntityParent>();
+            lstOriginal = new ArrayList<CViewParent>();
+            lstDisplayed = new ArrayList<CViewParent>();
             TongHD = TongCong = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
@@ -520,7 +520,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
             ///thiết lập khởi tạo 1 lần đầu để sort
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
-            CEntityParent entity = new CEntityParent();
+            CViewParent entity = new CViewParent();
             entity.setSTT(String.valueOf(lstOriginal.size() + 1));
             entity.setID(jsonObject.getString("ID"));
 
@@ -616,7 +616,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
 //        protected Void doInBackground(Void... voids) {
 //            try {
 ////            recyclerView.setAdapter(null);
-//                lstDisplayed = new ArrayList<CEntityParent>();
+//                lstDisplayed = new ArrayList<CViewParent>();
 //                TongHD = TongCong = 0;
 //                switch (spnFilter.getSelectedItem().toString()) {
 //                    case "Chưa Thu":

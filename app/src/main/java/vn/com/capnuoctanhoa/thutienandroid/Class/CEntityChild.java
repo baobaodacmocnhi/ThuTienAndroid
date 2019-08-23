@@ -1,107 +1,68 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
-import android.graphics.Color;
-
 public class CEntityChild {
-    private String ID;
-    private String Row1a;
-    private String Row1b;
-    private String Row2a;
-    private String Row2b;
-    private String Row3a;
-    private String Row3b;
-    private String Row4a;
-    private String Row4b;
+    private String MaHD;
+    private String Ky;
+    private String TongCong;
+    private String ModifyDate;
+    private String TinhTrang;
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
+    private Boolean DaThu;
 
     public CEntityChild() {
-        this.ID = "";
-        Row1a = "";
-        Row1b = "";
-        Row2a = "";
-        Row2b = "";
-        Row3a = "";
-        Row3b = "";
-        Row4a = "";
-        Row4b = "";
+        MaHD = "";
+        Ky = "";
+        TongCong = "";
+        ModifyDate="";
+        TinhTrang="";
         GiaiTrach = false;
-        TamThu = false;
+        TamThu =false;
         ThuHo = false;
+        LenhHuy = false;
+        DaThu = false;
     }
 
-    public String getID() {
-        return ID;
+    public String getMaHD() {
+        return MaHD;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setMaHD(String maHD) {
+        MaHD = maHD;
     }
 
-    public String getRow1a() {
-        return Row1a;
+    public String getKy() {
+        return Ky;
     }
 
-    public void setRow1a(String row1a) {
-        Row1a = row1a;
+    public void setKy(String ky) {
+        Ky = ky;
     }
 
-    public String getRow1b() {
-        return Row1b;
+    public String getTongCong() {
+        return TongCong;
     }
 
-    public void setRow1b(String row1b) {
-        Row1b = row1b;
+    public void setTongCong(String tongCong) {
+        TongCong = tongCong;
     }
 
-    public String getRow2a() {
-        return Row2a;
+    public String getModifyDate() {
+        return ModifyDate;
     }
 
-    public void setRow2a(String row2a) {
-        Row2a = row2a;
+    public void setModifyDate(String modifyDate) {
+        ModifyDate = modifyDate;
     }
 
-    public String getRow2b() {
-        return Row2b;
+    public String getTinhTrang() {
+        return TinhTrang;
     }
 
-    public void setRow2b(String row2b) {
-        Row2b = row2b;
-    }
-
-    public String getRow3a() {
-        return Row3a;
-    }
-
-    public void setRow3a(String row3a) {
-        Row3a = row3a;
-    }
-
-    public String getRow3b() {
-        return Row3b;
-    }
-
-    public void setRow3b(String row3b) {
-        Row3b = row3b;
-    }
-
-    public String getRow4a() {
-        return Row4a;
-    }
-
-    public void setRow4a(String row4a) {
-        Row4a = row4a;
-    }
-
-    public String getRow4b() {
-        return Row4b;
-    }
-
-    public void setRow4b(String row4b) {
-        Row4b = row4b;
+    public void setTinhTrang(String tinhTrang) {
+        TinhTrang = tinhTrang;
     }
 
     public Boolean getGiaiTrach() {
@@ -136,5 +97,11 @@ public class CEntityChild {
         LenhHuy = lenhHuy;
     }
 
+    public Boolean getDaThu() {
+        return DaThu;
+    }
 
+    public void setDaThu(Boolean daThu) {
+        DaThu = daThu;
+    }
 }

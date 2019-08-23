@@ -359,14 +359,12 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                     CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 }
-                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 if (CLocal.jsonDongNuoc != null) {
+                    SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
                     editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+                    editor.commit();
                 }
-                if (CLocal.jsonMessage != null)
-                    editor.putString("jsonMessage", CLocal.jsonMessage.toString());
-                editor.commit();
                 return true;
             } catch (Exception ex) {
                 return false;

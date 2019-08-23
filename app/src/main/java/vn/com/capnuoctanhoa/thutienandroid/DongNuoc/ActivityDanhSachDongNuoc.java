@@ -28,8 +28,8 @@ import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -39,8 +39,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     private CustomAdapterExpandableListView customAdapterExpandableListView;
     private TextView txtTongHD, txtTongCong;
     private long TongDC, TongCong, TongHD;
-    private ArrayList<CEntityParent> listParent;
-    private ArrayList<CEntityChild> listChild;
+    private ArrayList<CViewParent> listParent;
+    private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -238,7 +238,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     public void loadListView() {
         try {
 //            recyclerView.setAdapter(null);
-            listParent = new ArrayList<CEntityParent>();
+            listParent = new ArrayList<CViewParent>();
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa ĐN":
@@ -331,7 +331,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
 
-            CEntityParent entity = new CEntityParent();
+            CViewParent entity = new CViewParent();
             entity.setSTT(String.valueOf(listParent.size() + 1));
             entity.setID(jsonObject.getString("ID"));
 
@@ -352,7 +352,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             entity.setModifyDate(jsonObject.getString("ModifyDate"));
             ///////////////////////////
 
-            listChild = new ArrayList<CEntityChild>();
+            listChild = new ArrayList<CViewChild>();
 
             if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
                 for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
@@ -415,7 +415,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             if (jsonObject.has("ModifyDate") == false)
                 jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
 
-            CEntityChild entity = new CEntityChild();
+            CViewChild entity = new CViewChild();
             entity.setID(jsonObject.getString("MaHD"));
             entity.setRow1a(jsonObject.getString("Ky"));
             entity.setRow1b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));

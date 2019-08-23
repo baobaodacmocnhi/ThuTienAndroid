@@ -16,10 +16,10 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CustomAdapterExpandableListView extends BaseExpandableListAdapter implements Filterable {
     private Activity activity;
-    private ArrayList<CEntityParent> mOriginalValues;
-    private ArrayList<CEntityParent> mDisplayedValues;
+    private ArrayList<CViewParent> mOriginalValues;
+    private ArrayList<CViewParent> mDisplayedValues;
 
-    public CustomAdapterExpandableListView(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
+    public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues) {
         this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
     }
@@ -31,7 +31,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        ArrayList<CEntityChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
+        ArrayList<CViewChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
         return lstChild.size();
     }
 
@@ -42,7 +42,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<CEntityChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
+        ArrayList<CViewChild> lstChild = this.mDisplayedValues.get(groupPosition).getListChild();
         return lstChild.get(childPosition);
     }
 
@@ -98,7 +98,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder = (ViewHolder) convertView.getTag();
         }
 
-        CEntityParent map = (CEntityParent) getGroup(groupPosition);
+        CViewParent map = (CViewParent) getGroup(groupPosition);
         holder.STT.setText(map.getSTT());
         holder.ID.setText(map.getID());
         if (map.getRow1a().isEmpty() == true && map.getRow1b().isEmpty() == true) {
@@ -180,7 +180,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder = (ViewHolderChild) convertView.getTag();
         }
 
-        CEntityChild map = (CEntityChild) getChild(groupPosition, childPosition);
+        CViewChild map = (CViewChild) getChild(groupPosition, childPosition);
         holder.ID.setText(map.getID());
         holder.Row1a.setText(map.getRow1a());
         holder.Row1b.setText(map.getRow1b());
@@ -237,17 +237,17 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDisplayedValues = (ArrayList<CEntityParent>) results.values; // has the filtered values
+                mDisplayedValues = (ArrayList<CViewParent>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
-                ArrayList<CEntityParent> FilteredArrList = new ArrayList<CEntityParent>();
+                ArrayList<CViewParent> FilteredArrList = new ArrayList<CViewParent>();
 
                 if (mOriginalValues == null) {
-                    mOriginalValues = new ArrayList<CEntityParent>(mDisplayedValues); // saves the original data in mOriginalValues
+                    mOriginalValues = new ArrayList<CViewParent>(mDisplayedValues); // saves the original data in mOriginalValues
                 }
 
                 /********
@@ -272,7 +272,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4a().toLowerCase().startsWith(constraint.toString())
                                 || mOriginalValues.get(i).getRow4b().toLowerCase().startsWith(constraint.toString())) {
-                            CEntityParent entity = new CEntityParent();
+                            CViewParent entity = new CViewParent();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());
                             entity.setRow1a(mOriginalValues.get(i).getRow1a());

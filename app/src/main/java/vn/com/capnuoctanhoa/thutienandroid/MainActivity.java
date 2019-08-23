@@ -18,6 +18,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 
 import java.io.BufferedInputStream;
@@ -27,7 +30,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
@@ -149,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
                 if (CLocal.jsonHanhThu.length() > 1000)
                     CLocal.jsonHanhThu = null;
+            }
+            if (CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", "").equals("") == false) {
+                CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
+                if (CLocal.listHanhThu.size() > 1000)
+                    CLocal.listHanhThu = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
                 CLocal.jsonDongNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));

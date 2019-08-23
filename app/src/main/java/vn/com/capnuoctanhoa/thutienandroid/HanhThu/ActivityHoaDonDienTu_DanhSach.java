@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +27,8 @@ import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
@@ -38,8 +40,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     private CustomAdapterExpandableListView customAdapterExpandableListView;
     private TextView txtTongHD, txtTongCong;
     private long TongDC, TongCong, TongHD;
-    private ArrayList<CEntityParent> listParent;
-    private ArrayList<CEntityChild> listChild;
+    private ArrayList<CViewParent> listParent;
+    private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -127,40 +129,11 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-//                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
-//                popup.getMenuInflater().inflate(R.menu.menu_dong_nuoc, popup.getMenu());
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem menuItem) {
-//                        int id = menuItem.getItemId();
-//                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
-//                        Intent intent;
-//                        switch (id) {
-//                            case R.id.action_DongNuoc1:
-//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
-//                                intent.putExtra("MaDN", MaDN.getText().toString());
-//                                startActivity(intent);
-//                                break;
-//                            case R.id.action_DongNuoc2:
-//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
-//                                intent.putExtra("MaDN", MaDN.getText().toString());
-//                                startActivity(intent);
-//                                break;
-//                            case R.id.action_MoNuoc:
-//                                intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
-//                                intent.putExtra("MaDN", MaDN.getText().toString());
-//                                startActivity(intent);
-//                                break;
-//                            case R.id.action_DongTien:
-//                                intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-//                                intent.putExtra("MaDN", MaDN.getText().toString());
-//                                startActivity(intent);
-//                                break;
-//                        }
-//                        return true;
-//                    }
-//                });
-//                popup.show();
+                TextView DanhBo = (TextView) view.findViewById(R.id.lvID);
+                Intent intent;
+                intent = new Intent(getApplicationContext(), ActivityHoaDonDienTu_ThuTien.class);
+                intent.putExtra("DanhBo", DanhBo.getText().toString());
+                startActivity(intent);
                 return false;
             }
         });
@@ -213,6 +186,12 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        loadListView();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -230,196 +209,120 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
 
     public void loadListView() {
         try {
-//            recyclerView.setAdapter(null);
-            listParent = new ArrayList<CEntityParent>();
+            listParent = new ArrayList<CViewParent>();
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
-                case "Chưa ĐN":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("NgayGiaiTrach")) == false) {
-                                addEntityParent(jsonObject);
-                            }
-                        }
-                    }
-                    break;
-                case "Đã ĐN":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (jsonObject.getString("DongNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                                addEntityParent(jsonObject);
-                            }
-                        }
-                    }
-                    break;
-                case "Chưa MN":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == false && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == true) {
-                                addEntityParent(jsonObject);
-                            }
-                        }
-                    }
-                    break;
-                case "Đã MN":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (jsonObject.getString("MoNuoc") != "null" && Boolean.parseBoolean(jsonObject.getString("MoNuoc")) == true) {
-                                addEntityParent(jsonObject);
+                case "Chưa Thu":
+                case "Đã Thu":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == false) {
+                                addEntityParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 case "Giải Trách":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true && jsonObject.getString("DongPhi") != "null" && Boolean.parseBoolean(jsonObject.getString("DongPhi")) == false) {
-                                addEntityParent(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == true) {
+                                addEntityParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 case "Tạm Thu-Thu Hộ":
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
-                                addEntityParent(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getTamThu() == true || CLocal.listHanhThu.get(i).getThuHo() == true) {
+                                addEntityParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 default:
-                    if (CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-                        for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
-                            addEntityParent(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            addEntityParent(CLocal.listHanhThu.get(i));
                         }
                     }
                     break;
             }
             customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent);
             listView.setAdapter(customAdapterExpandableListView);
-            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongDC), ""));
-            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongHD), "") + "HĐ: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+            txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+
         } catch (Exception e) {
 
         }
     }
 
-    public void addEntityParent(JSONObject jsonObject) {
+    public void addEntityParent(CEntityParent enParent) {
         try {
-            ///thiết lập khởi tạo 1 lần đầu để sort
-            if (jsonObject.has("ModifyDate") == false)
-                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
+            CViewParent enViewParent = new CViewParent();
+            enViewParent.setSTT(String.valueOf(listParent.size() + 1));
+            enViewParent.setID(enParent.getDanhBo());
 
-            CEntityParent entity = new CEntityParent();
-            entity.setSTT(String.valueOf(listParent.size() + 1));
-            entity.setID(jsonObject.getString("ID"));
+            enViewParent.setRow1a(enParent.getMLT());
+            enViewParent.setRow2a(enParent.getDanhBo());
+            enViewParent.setRow3a(enParent.getHoTen());
+            enViewParent.setRow4a(enParent.getDiaChi());
 
-            String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
-            entity.setRow1a(strMLT);
-
-            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-            entity.setRow2a(strDanhBo);
-
-            entity.setRow3a(jsonObject.getString("HoTen"));
-
-            entity.setRow4a(jsonObject.getString("DiaChi"));
-
-            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
-            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
-            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
-            entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
-            entity.setModifyDate(jsonObject.getString("ModifyDate"));
+            enViewParent.setGiaiTrach(enParent.getGiaiTrach());
+            enViewParent.setTamThu(enParent.getTamThu());
+            enViewParent.setThuHo(enParent.getThuHo());
+            enViewParent.setModifyDate(enParent.getModifyDate());
             ///////////////////////////
 
-            listChild = new ArrayList<CEntityChild>();
-
-            if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
-                for (int i = 0; i < CLocal.jsonDongNuocChild.length(); i++) {
-                    JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(i);
-                    Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0, numLenhHuy = 0;
-                    Boolean flagPhiMoNuoc = false;
-                    if (jsonObjectChild.getString("ID").equals(entity.getID()) == true) {
-                        addEntityChild(jsonObjectChild);
-                        ///cập nhật parent
-                        numRowChild++;
-                        if (Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")) == true)
-                            numGiaiTrach++;
-                        else if (Boolean.parseBoolean(jsonObjectChild.getString("TamThu")) == true)
-                            numTamThu++;
-                        else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true) {
-                            numThuHo++;
-                            if (jsonObjectChild.getString("PhiMoNuoc") != "null"&&jsonObjectChild.getString("PhiMoNuoc").equals("0")==false) {
-                                flagPhiMoNuoc = true;
-                            }
-                        }
-                        ///xét lệnh hủy riêng
-                        if (Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")) == true)
-                            numLenhHuy++;
-
-                        if (numGiaiTrach == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "GiaiTrach", "true");
-                            entity.setRow2b("Giải Trách");
-                            entity.setGiaiTrach(true);
-                        } else if (numTamThu == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "TamThu", "true");
-                            entity.setRow2b("Tạm Thu");
-                            entity.setTamThu(true);
-                        } else if (numThuHo == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "ThuHo", "true");
-                            String str = "Thu Hộ";
-                            if (flagPhiMoNuoc == true)
-                                str += " ("+jsonObjectChild.getString("PhiMoNuoc").substring(0,jsonObjectChild.getString("PhiMoNuoc").length()-3)+"k)";
-                            entity.setRow2b(str);
-                            entity.setThuHo(true);
-                        }
-                        ///xét lệnh hủy riêng
-                        if (numLenhHuy == numRowChild) {
-                            CLocal.updateJSON(CLocal.jsonDongNuoc, entity.getID(), "LenhHuy", "true");
-                            entity.setLenhHuy(true);
-                        }
+            listChild = new ArrayList<CViewChild>();
+            Integer TongCongChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
+            if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0)
+                for (int i = 0; i < enParent.getLstHoaDon().size(); i++) {
+                    addEntityChild(enParent.getLstHoaDon().get(i));
+                    ///cập nhật parent
+                    TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
+                    if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
+                        numGiaiTrach++;
+                    else if (enParent.getLstHoaDon().get(i).getTamThu() == true)
+                        numTamThu++;
+                    else if (enParent.getLstHoaDon().get(i).getThuHo() == true) {
+                        numThuHo++;
+                    }
+                    if (numGiaiTrach == enParent.getLstHoaDon().size()) {
+                        enParent.setTinhTrang("Giải Trách");
+                        enParent.setGiaiTrach(true);
+                    } else if (numTamThu == enParent.getLstHoaDon().size()) {
+                        enParent.setTinhTrang("Tạm Thu");
+                        enParent.setTamThu(true);
+                    } else if (numThuHo == enParent.getLstHoaDon().size()) {
+                        enParent.setTinhTrang("Thu Hộ");
+                        enParent.setThuHo(true);
                     }
                 }
-            entity.setListChild(listChild);
-            entity.setRow1b(String.valueOf(listChild.size()) + " HĐ");
+            enViewParent.setListChild(listChild);
+            enViewParent.setRow1b(String.valueOf(listChild.size()) + " HĐ: "+CLocal.formatMoney(TongCongChild.toString(), "đ"));
+            enViewParent.setRow2b(enParent.getTinhTrang());
             TongDC++;
 
-            listParent.add(entity);
+            listParent.add(enViewParent);
         } catch (Exception e) {
         }
     }
 
-    public void addEntityChild(JSONObject jsonObject) {
+    public void addEntityChild(CEntityChild enChild) {
         try {
-            ///thiết lập khởi tạo 1 lần đầu để sort
-            if (jsonObject.has("ModifyDate") == false)
-                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
-
-            CEntityChild entity = new CEntityChild();
-            entity.setID(jsonObject.getString("MaHD"));
-            entity.setRow1a(jsonObject.getString("Ky"));
-            entity.setRow1b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
-            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
-            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
-            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
-            entity.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
-            TongCong += Long.parseLong(jsonObject.getString("TongCong"));
+            CViewChild enViewChild = new CViewChild();
+            enViewChild.setID(enChild.getMaHD());
+            enViewChild.setRow1a(enChild.getKy());
+            enViewChild.setRow1b(CLocal.formatMoney(enChild.getTongCong(), "đ"));
+            enViewChild.setGiaiTrach(enChild.getGiaiTrach());
+            enViewChild.setTamThu(enChild.getTamThu());
+            enViewChild.setThuHo(enChild.getThuHo());
+            TongCong += Long.parseLong(enChild.getTongCong());
             TongHD++;
 
-            listChild.add(entity);
+            listChild.add(enViewChild);
         } catch (Exception e) {
         }
     }

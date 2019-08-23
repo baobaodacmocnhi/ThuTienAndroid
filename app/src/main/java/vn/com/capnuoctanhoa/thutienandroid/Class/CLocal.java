@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
@@ -34,11 +32,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
-
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 
 public class CLocal {
     public static SharedPreferences sharedPreferencesre;
@@ -51,6 +48,7 @@ public class CLocal {
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "";
     public static boolean Doi = false, ToTruong = false;
+    public static ArrayList<CEntityParent> listHanhThu;
 
     public static void initialCLocal() {
         MaNV = HoTen = MaTo = "";
