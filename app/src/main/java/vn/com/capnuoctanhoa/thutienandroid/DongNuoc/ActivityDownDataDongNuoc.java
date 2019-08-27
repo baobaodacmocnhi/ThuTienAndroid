@@ -26,12 +26,17 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
@@ -360,9 +365,59 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 }
                 if (CLocal.jsonDongNuoc != null) {
+                    //khởi tạo ArrayList CEntityParent
+                    CLocal.listDongNuoc = new ArrayList<CEntityParent>();
+                    for (int i = 0; i < CLocal.jsonDongNuoc.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonDongNuoc.getJSONObject(i);
+                        CEntityParent enParent = new CEntityParent();
+                        ///thiết lập khởi tạo 1 lần đầu để sort
+                        if (jsonObject.has("ModifyDate") == false)
+                            enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
+                        else
+                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
+                        enParent.setID(jsonObject.getString("MaDN"));
+
+                        String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
+                        enParent.setMLT(strMLT);
+
+                        String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
+                        enParent.setDanhBo(strDanhBo);
+
+                        enParent.setHoTen(jsonObject.getString("HoTen"));
+                        enParent.setDiaChi(jsonObject.getString("DiaChi"));
+                        enParent.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
+                        enParent.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
+                        enParent.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+                        enParent.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
+                        enParent.setDongNuoc(Boolean.parseBoolean(jsonObject.getString("DongNuoc")));
+                        enParent.setDongPhi(Boolean.parseBoolean(jsonObject.getString("DongPhi")));
+                        enParent.setMoNuoc(Boolean.parseBoolean(jsonObject.getString("MoNuoc")));
+
+                        //khởi tạo ArrayList CEntityChild
+                        ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
+                        if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)
+                            for (int k = 0; k < CLocal.jsonDongNuocChild.length(); k++) {
+                                JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(k);
+                                if (jsonObjectChild.getString("MaDN").equals(enParent.getID()) == true) {
+                                    CEntityChild enChild = new CEntityChild();
+                                    enChild.setMaHD(jsonObjectChild.getString("MaHD"));
+                                    enChild.setKy(jsonObjectChild.getString("Ky"));
+                                    enChild.setTongCong(jsonObjectChild.getString("TongCong"));
+                                    enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
+                                    enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
+                                    enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
+                                    enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
+                                    enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
+                                    listChild.add(enChild);
+                                }
+                            }
+                        enParent.setLstHoaDon(listChild);
+                        CLocal.listDongNuoc.add(enParent);
+                    }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
-                    editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+//                    editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+//                    editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+                    editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
                     editor.commit();
                 }
                 return true;

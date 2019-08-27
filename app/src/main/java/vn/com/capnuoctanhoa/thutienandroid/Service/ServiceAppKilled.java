@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 
+import com.google.gson.Gson;
+
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
 public class ServiceAppKilled extends Service {
@@ -30,9 +32,12 @@ public class ServiceAppKilled extends Service {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             if (CLocal.jsonHanhThu != null)
                 editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
-            if (CLocal.jsonDongNuoc != null) {
-                editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
-                editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+            if(CLocal.listHanhThu!=null)
+                editor.putString("jsonHanhThu_HoaDonDienTu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
+            if (CLocal.listDongNuoc != null) {
+//                editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
+//                editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
+                editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
             }
             if (CLocal.jsonMessage != null)
                 editor.putString("jsonMessage", CLocal.jsonMessage.toString());

@@ -48,12 +48,13 @@ public class CLocal {
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "";
     public static boolean Doi = false, ToTruong = false;
-    public static ArrayList<CEntityParent> listHanhThu;
+    public static ArrayList<CEntityParent> listHanhThu,listDongNuoc;
 
     public static void initialCLocal() {
         MaNV = HoTen = MaTo = "";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
+        listHanhThu=listDongNuoc=null;
     }
 
     public static boolean checkNetworkAvailable(Context context) {

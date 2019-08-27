@@ -15,6 +15,12 @@ public class CEntityParent {
     private Boolean ThuHo;
     private Boolean LenhHuy;
     private Boolean DaThu;
+    private Boolean DongNuoc;
+
+
+
+    private Boolean DongPhi;
+    private Boolean MoNuoc;
     private ArrayList<CEntityChild> lstHoaDon;
 
     public CEntityParent() {
@@ -30,6 +36,9 @@ public class CEntityParent {
         ThuHo = false;
         LenhHuy = false;
         DaThu = false;
+        DongNuoc=false;
+        DongPhi=false;
+        MoNuoc = false;
         lstHoaDon = new ArrayList<CEntityChild>();
     }
 
@@ -127,6 +136,30 @@ public class CEntityParent {
 
     public void setDaThu(Boolean daThu) {
         DaThu = daThu;
+    }
+
+    public Boolean getDongNuoc() {
+        return DongNuoc;
+    }
+
+    public void setDongNuoc(Boolean dongNuoc) {
+        DongNuoc = dongNuoc;
+    }
+
+    public Boolean getDongPhi() {
+        return DongPhi;
+    }
+
+    public void setDongPhi(Boolean dongPhi) {
+        DongPhi = dongPhi;
+    }
+
+    public Boolean getMoNuoc() {
+        return MoNuoc;
+    }
+
+    public void setMoNuoc(Boolean moNuoc) {
+        MoNuoc = moNuoc;
     }
 
     public ArrayList<CEntityChild> getLstHoaDon() {

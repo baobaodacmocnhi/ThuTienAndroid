@@ -48,6 +48,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             editor.putString("MaNV", "");
             editor.putString("HoTen", "");
             editor.putString("jsonHanhThu", "");
+            editor.putString("jsonHanhThu_HoaDonDienTu", "");
             editor.putString("jsonDongNuoc", "");
             editor.putString("jsonDongNuocChild", "");
             editor.putString("jsonMessage", "");

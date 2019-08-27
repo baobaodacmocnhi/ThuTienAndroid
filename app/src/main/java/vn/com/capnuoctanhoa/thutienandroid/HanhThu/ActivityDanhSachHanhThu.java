@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
@@ -191,6 +192,64 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    public void loadListView() {
+//        try {
+//            lstDisplayed = new ArrayList<CViewParent>();
+//            TongHD = TongCong = 0;
+//            switch (spnFilter.getSelectedItem().toString()) {
+//                case "Chưa Thu":
+//                case "Đã Thu":
+//                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+//                        int stt = 0;
+//                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+//                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == false) {
+//                                addEntity(jsonObject);
+//                            }
+//                        }
+//                    }
+//                    break;
+//                case "Giải Trách":
+//                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+//                        int stt = 0;
+//                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+//                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
+//                                addEntity(jsonObject);
+//                            }
+//                        }
+//                    }
+//                    break;
+//                case "Tạm Thu-Thu Hộ":
+//                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+//                        int stt = 0;
+//                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+//                            if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
+//                                addEntity(jsonObject);
+//                            }
+//                        }
+//                    }
+//                    break;
+//                default:
+//                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+//                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
+//                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
+//                            addEntity(jsonObject);
+//                        }
+//                    }
+//                    break;
+//            }
+//            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+//            txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+//
+//            customAdapterListView = new CustomAdapterListView(this, lstDisplayed);
+//            listView.setAdapter(customAdapterListView);
+//
+//        } catch (Exception e) {
+//        }
+//    }
+
     public void loadListView() {
         try {
             lstDisplayed = new ArrayList<CViewParent>();
@@ -198,48 +257,41 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
                 case "Đã Thu":
-                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == false) {
-                                addEntity(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == false) {
+                                addEntity(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 case "Giải Trách":
-                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true) {
-                                addEntity(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == true) {
+                                addEntity(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 case "Tạm Thu-Thu Hộ":
-                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
-                        int stt = 0;
-                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true || Boolean.parseBoolean(jsonObject.getString("TamThu")) == true) {
-                                addEntity(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getThuHo() == true ||CLocal.listHanhThu.get(i).getTamThu() == true) {
+                                addEntity(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
                 default:
-                    if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
-                        for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
-                            JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                            addEntity(jsonObject);
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            addEntity(CLocal.listHanhThu.get(i));
                         }
                     }
                     break;
             }
-            txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongHD.setText("ĐC:"+CLocal.formatMoney(String.valueOf(CLocal.listHanhThu.size()), "")+"- HĐ:"+CLocal.formatMoney(String.valueOf(TongHD), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
             customAdapterListView = new CustomAdapterListView(this, lstDisplayed);
@@ -249,44 +301,78 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         }
     }
 
-    public void addEntity(JSONObject jsonObject) {
+//    public void addEntity(JSONObject jsonObject) {
+//        try {
+//            ///thiết lập khởi tạo 1 lần đầu để sort
+//            if (jsonObject.has("ModifyDate") == false)
+//                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
+//            CViewParent entity = new CViewParent();
+//            entity.setSTT(String.valueOf(lstDisplayed.size() + 1));
+//            entity.setID(jsonObject.getString("ID"));
+//
+//            String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
+//            entity.setRow1a(strMLT);
+//            entity.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+//
+//            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
+//            entity.setRow2a(strDanhBo);
+//            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true)
+//                entity.setRow2b("Giải Trách");
+//            else if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
+//                entity.setRow2b("Tạm Thu");
+//            else if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true)
+//                entity.setRow2b("Thu Hộ");
+//
+//            entity.setRow3a(jsonObject.getString("HoTen"));
+//
+//            entity.setRow4a(jsonObject.getString("DiaChi"));
+//
+//            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
+//            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
+//            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
+//            entity.setModifyDate(jsonObject.getString("ModifyDate"));
+//            TongHD++;
+//            TongCong += Long.parseLong(jsonObject.getString("TongCong"));
+//
+//            lstDisplayed.add(entity);
+//        } catch (Exception e) {
+//        }
+//    }
+
+    public void addEntity(CEntityParent enParent) {
         try {
-            ///thiết lập khởi tạo 1 lần đầu để sort
-            if (jsonObject.has("ModifyDate") == false)
-                jsonObject.put("ModifyDate", CLocal.DateFormat.format(new Date()));
-            CViewParent entity = new CViewParent();
-            entity.setSTT(String.valueOf(lstDisplayed.size() + 1));
-            entity.setID(jsonObject.getString("ID"));
+            for (int i = 0; i < enParent.getLstHoaDon().size(); i++)
+            {
+                CViewParent enViewParent = new CViewParent();
+                enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
+                enViewParent.setID(enParent.getLstHoaDon().get(i).getMaHD());
+                enViewParent.setRow1a(enParent.getMLT());
+                enViewParent.setRow1b(enParent.getLstHoaDon().get(i).getKy() + ": " + CLocal.formatMoney(enParent.getLstHoaDon().get(i).getTongCong(), "đ"));
+                enViewParent.setRow2a(enParent.getDanhBo());
 
-            String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
-            entity.setRow1a(strMLT);
-            entity.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
+                if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
+                    enViewParent.setRow2b("Giải Trách");
+                else if (enParent.getLstHoaDon().get(i).getTamThu() == true)
+                    enViewParent.setRow2b("Tạm Thu");
+                else if (enParent.getLstHoaDon().get(i).getThuHo() == true)
+                    enViewParent.setRow2b("Thu Hộ");
 
-            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
-            entity.setRow2a(strDanhBo);
-            if (Boolean.parseBoolean(jsonObject.getString("GiaiTrach")) == true)
-                entity.setRow2b("Giải Trách");
-            else if (Boolean.parseBoolean(jsonObject.getString("TamThu")) == true)
-                entity.setRow2b("Tạm Thu");
-            else if (Boolean.parseBoolean(jsonObject.getString("ThuHo")) == true)
-                entity.setRow2b("Thu Hộ");
+                enViewParent.setRow3a(enParent.getHoTen());
+                enViewParent.setRow4a(enParent.getDiaChi());
 
-            entity.setRow3a(jsonObject.getString("HoTen"));
+                enViewParent.setGiaiTrach(enParent.getLstHoaDon().get(i).getGiaiTrach());
+                enViewParent.setTamThu(enParent.getLstHoaDon().get(i).getTamThu());
+                enViewParent.setThuHo(enParent.getLstHoaDon().get(i).getThuHo());
+                enViewParent.setModifyDate(enParent.getLstHoaDon().get(i).getModifyDate());
 
-            entity.setRow4a(jsonObject.getString("DiaChi"));
+                TongHD++;
+                TongCong += Long.parseLong(enParent.getLstHoaDon().get(i).getTongCong());
 
-            entity.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
-            entity.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
-            entity.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
-            entity.setModifyDate(jsonObject.getString("ModifyDate"));
-            TongHD++;
-            TongCong += Long.parseLong(jsonObject.getString("TongCong"));
-
-            lstDisplayed.add(entity);
+                lstDisplayed.add(enViewParent);
+            }
         } catch (Exception e) {
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

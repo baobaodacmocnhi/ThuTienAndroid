@@ -10,6 +10,7 @@ public class CEntityChild {
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
+    private String PhiMoNuoc;
     private Boolean DaThu;
 
     public CEntityChild() {
@@ -22,6 +23,7 @@ public class CEntityChild {
         TamThu =false;
         ThuHo = false;
         LenhHuy = false;
+        PhiMoNuoc="";
         DaThu = false;
     }
 
@@ -95,6 +97,14 @@ public class CEntityChild {
 
     public void setLenhHuy(Boolean lenhHuy) {
         LenhHuy = lenhHuy;
+    }
+
+    public String getPhiMoNuoc() {
+        return PhiMoNuoc;
+    }
+
+    public void setPhiMoNuoc(String phiMoNuoc) {
+        PhiMoNuoc = phiMoNuoc;
     }
 
     public Boolean getDaThu() {

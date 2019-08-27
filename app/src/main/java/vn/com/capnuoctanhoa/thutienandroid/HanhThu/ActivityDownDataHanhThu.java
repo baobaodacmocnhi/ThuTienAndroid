@@ -167,18 +167,15 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     }
                 } catch (Exception ex) {
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_item,mylist){
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDownDataHanhThu.this, android.R.layout.select_dialog_item, mylist) {
                     @Override
-                    public View getView(int position, View convertView, ViewGroup parent){
+                    public View getView(int position, View convertView, ViewGroup parent) {
                         // Get the current item from ListView
-                        View view = super.getView(position,convertView,parent);
-                        if(position %2 == 1)
-                        {
+                        View view = super.getView(position, convertView, parent);
+                        if (position % 2 == 1) {
                             // Set a background color for ListView regular row/item
                             view.setBackgroundColor(Color.TRANSPARENT);
-                        }
-                        else
-                        {
+                        } else {
                             // Set the background color for alternate row/item
                             view.setBackgroundColor(getResources().getColor(R.color.colorListView));
                         }
@@ -303,8 +300,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-//            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-//            publishProgress(ws.getDSHoaDonTon(CLocal.sharedPreferencesre.getString("selectedMaNV", ""), currentDate.format(new Date())));
             try {
                 if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
@@ -322,7 +317,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 }
                 if (CLocal.jsonHanhThu != null) {
                     //khởi tạo ArrayList CEntityParent
-                    CLocal.listHanhThu=new ArrayList<CEntityParent>();
+                    CLocal.listHanhThu = new ArrayList<CEntityParent>();
                     for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
                         Boolean flagExist = false;
@@ -330,9 +325,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                             if (CLocal.listHanhThu.get(j).getID().equals(jsonObject.getString("DanhBo")) == true)
                                 flagExist = true;
                         //không có mới thêm
-                        if(flagExist==false)
-                        {
-                            CEntityParent enParent=new CEntityParent();
+                        if (flagExist == false) {
+                            CEntityParent enParent = new CEntityParent();
                             ///thiết lập khởi tạo 1 lần đầu để sort
                             if (jsonObject.has("ModifyDate") == false)
                                 enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
@@ -354,12 +348,11 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
                             //khởi tạo ArrayList CEntityChild
                             ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
-                            Integer numRowChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
                             if (CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0)
                                 for (int k = 0; k < CLocal.jsonHanhThu.length(); k++) {
                                     JSONObject jsonObjectChild = CLocal.jsonHanhThu.getJSONObject(k);
                                     if (jsonObjectChild.getString("DanhBo").equals(enParent.getID()) == true) {
-                                        CEntityChild enChild=new CEntityChild();
+                                        CEntityChild enChild = new CEntityChild();
                                         enChild.setMaHD(jsonObjectChild.getString("MaHD"));
                                         enChild.setKy(jsonObjectChild.getString("Ky"));
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
@@ -367,25 +360,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                         enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
                                         listChild.add(enChild);
-                                        ///cập nhật parent
-//                                        numRowChild++;
-//                                        if (Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")) == true)
-//                                            numGiaiTrach++;
-//                                        else if (Boolean.parseBoolean(jsonObjectChild.getString("TamThu")) == true)
-//                                            numTamThu++;
-//                                        else if (Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")) == true) {
-//                                            numThuHo++;
-//                                        }
-//                                        if (numGiaiTrach == numRowChild) {
-//                                            enParent.setTinhTrang("Giải Trách");
-//                                            enParent.setGiaiTrach(true);
-//                                        } else if (numTamThu == numRowChild) {
-//                                            enParent.setTinhTrang("Tạm Thu");
-//                                            enParent.setTamThu(true);
-//                                        } else if (numThuHo == numRowChild) {
-//                                            enParent.setTinhTrang("Thu Hộ");
-//                                            enParent.setThuHo(true);
-//                                        }
                                     }
                                 }
                             enParent.setLstHoaDon(listChild);
@@ -393,8 +367,9 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                         }
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
+//                    editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
                     editor.putString("jsonHanhThu_HoaDonDienTu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
+                    editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.commit();
                 }
                 return true;
