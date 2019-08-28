@@ -41,52 +41,56 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
 
+        //liên kết hàm [spSendNotificationToClient] sqlserver
+//        if (remoteMessage.getData().get("Action").equals("DangXuat")) {
+//            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+//            editor.putString("Username", "");
+//            editor.putString("Password", "");
+//            editor.putString("MaNV", "");
+//            editor.putString("HoTen", "");
+//            editor.putString("jsonHanhThu", "");
+//            editor.putString("jsonHanhThu_HoaDonDienTu", "");
+//            editor.putString("jsonDongNuoc", "");
+//            editor.putString("jsonDongNuocChild", "");
+//            editor.putString("jsonMessage", "");
+//            editor.putBoolean("Login", false);
+//            editor.commit();
+//            CLocal.jsonHanhThu = CLocal.jsonDongNuoc = CLocal.jsonDongNuocChild = CLocal.jsonMessage = null;
+//            intent = new Intent(this, ActivityDangNhap.class);
+//        } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+//            //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
+//            CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+//
+//            intent = new Intent(this, ActivityDanhSachHanhThu.class);
+//        } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
+//            //action DongPhi cập nhật PhiMoNuoc cho DongNuoc
+////            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+//            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+//
+//            intent = new Intent(this, ActivityDanhSachDongNuoc.class);
+//        } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
+//            //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
+//            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+////            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
+//            intent = new Intent(this, ActivityDanhSachDongNuoc.class);
+//        } else if (remoteMessage.getData().get("Action").equals("LenhHuy")) {
+//            intent = new Intent(this, ActivityLenhHuy.class);
+//        }
         if (remoteMessage.getData().get("Action").equals("DangXuat")) {
-            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            editor.putString("Username", "");
-            editor.putString("Password", "");
-            editor.putString("MaNV", "");
-            editor.putString("HoTen", "");
-            editor.putString("jsonHanhThu", "");
-            editor.putString("jsonHanhThu_HoaDonDienTu", "");
-            editor.putString("jsonDongNuoc", "");
-            editor.putString("jsonDongNuocChild", "");
-            editor.putString("jsonMessage", "");
-            editor.putBoolean("Login", false);
-            editor.commit();
-            CLocal.jsonHanhThu = CLocal.jsonDongNuoc = CLocal.jsonDongNuocChild = CLocal.jsonMessage = null;
-
-            //liên kết hàm [spSendNotificationToClient] sqlserver
-
+            CLocal.initialCLocal();
             intent = new Intent(this, ActivityDangNhap.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
-        } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.jsonHanhThu != null && CLocal.jsonHanhThu.length() > 0) {
+        } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
             //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-            CLocal.updateJSON(CLocal.jsonHanhThu, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
-
+            CLocal.updateArrayList(CLocal.listHanhThu,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
             intent = new Intent(this, ActivityDanhSachHanhThu.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
-        } else if (remoteMessage.getData().get("Action").equals("DongPhi") && CLocal.jsonDongNuoc != null && CLocal.jsonDongNuoc.length() > 0) {
-            //action DongPhi cập nhật PhiMoNuoc cho DongNuoc
-//            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
-            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
-
-            intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
-        } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0) {
+        }  else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
             //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
-            CLocal.updateJSON(CLocal.jsonDongNuocChild, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
-//            CLocal.updateJSON(CLocal.jsonDongNuoc, remoteMessage.getData().get("ID"), remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"));
-
+            CLocal.updateArrayList(CLocal.listDongNuoc,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         } else if (remoteMessage.getData().get("Action").equals("LenhHuy")) {
             intent = new Intent(this, ActivityLenhHuy.class);
         }
+
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
         try {

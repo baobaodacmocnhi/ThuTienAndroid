@@ -165,23 +165,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     try {
                     result=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
                     if (result.isEmpty() == false) {
-                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.putString("Username", "");
-                        editor.putString("Password", "");
-                        editor.putString("MaNV", "");
-                        editor.putString("HoTen", "");
-                        editor.putString("MaTo", "");
-                        editor.putString("jsonHanhThu", "");
-                        editor.putString("jsonHanhThu_HoaDonDienTu", "");
-                        editor.putString("jsonDongNuoc", "");
-                        editor.putString("jsonDongNuocChild", "");
-                        editor.putString("jsonMessage", "");
-                        editor.putString("jsonTo", "");
-                        editor.putString("jsonNhanVien", "");
-                        editor.putBoolean("Doi", false);
-                        editor.putBoolean("ToTruong", false);
-                        editor.putBoolean("Login", false);
-                        editor.commit();
+                        CLocal.initialCLocal();
 
                         publishProgress("DangXuat");
                         return "true";

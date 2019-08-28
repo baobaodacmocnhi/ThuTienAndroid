@@ -31,7 +31,8 @@ public class ServiceAppKilled extends Service {
         try {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
             if (CLocal.jsonHanhThu != null)
-                editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
+//                editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
+                editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
             if(CLocal.listHanhThu!=null)
                 editor.putString("jsonHanhThu_HoaDonDienTu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
             if (CLocal.listDongNuoc != null) {

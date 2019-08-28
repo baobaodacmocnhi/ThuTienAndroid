@@ -40,21 +40,38 @@ import java.util.Locale;
 public class CLocal {
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
-    public static String pathRoot = Environment.getExternalStorageDirectory()+"/TanHoa/";
-    public static String pathFile = pathRoot+"/File/";
-    public static String pathPicture = pathRoot+"/Picture/";
+    public static String pathRoot = Environment.getExternalStorageDirectory() + "/TanHoa/";
+    public static String pathFile = pathRoot + "/File/";
+    public static String pathPicture = pathRoot + "/Picture/";
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "";
     public static boolean Doi = false, ToTruong = false;
-    public static ArrayList<CEntityParent> listHanhThu,listDongNuoc;
+    public static ArrayList<CEntityParent> listHanhThu, listDongNuoc;
 
     public static void initialCLocal() {
+        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+        editor.putString("Username", "");
+        editor.putString("Password", "");
+        editor.putString("MaNV", "");
+        editor.putString("HoTen", "");
+        editor.putString("MaTo", "");
+        editor.putString("jsonHanhThu", "");
+        editor.putString("jsonHanhThu_HoaDonDienTu", "");
+        editor.putString("jsonDongNuoc", "");
+        editor.putString("jsonDongNuocChild", "");
+        editor.putString("jsonMessage", "");
+        editor.putString("jsonTo", "");
+        editor.putString("jsonNhanVien", "");
+        editor.putBoolean("Doi", false);
+        editor.putBoolean("ToTruong", false);
+        editor.putBoolean("Login", false);
+        editor.commit();
         MaNV = HoTen = MaTo = "";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
-        listHanhThu=listDongNuoc=null;
+        listHanhThu = listDongNuoc = null;
     }
 
     public static boolean checkNetworkAvailable(Context context) {
@@ -104,6 +121,32 @@ public class CLocal {
                 }
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateArrayList(ArrayList<CEntityParent> lst, String NameUpdate, String ValueUpdate, String MaHD) {
+        try {
+            for (int i = 0; i < lst.size(); i++) {
+                for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
+                    if (lst.get(i).getLstHoaDon().get(j).getMaHD().equals(MaHD) == true) {
+                        switch (NameUpdate) {
+                            case "GiaiTrach":
+                                lst.get(i).getLstHoaDon().get(j).setGiaiTrach(Boolean.parseBoolean(ValueUpdate));
+                                break;
+                            case "TamThu":
+                                lst.get(i).getLstHoaDon().get(j).setTamThu(Boolean.parseBoolean(ValueUpdate));
+                                break;
+                            case "ThuHo":
+                                lst.get(i).getLstHoaDon().get(j).setThuHo(Boolean.parseBoolean(ValueUpdate));
+                                break;
+                            case "PhiMoNuoc":
+                                lst.get(i).getLstHoaDon().get(j).setPhiMoNuoc(ValueUpdate);
+                                break;
+                        }
+                    }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
