@@ -156,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
 //                if (CLocal.jsonHanhThu.length() > 1000)
 //                    CLocal.jsonHanhThu = null;
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
+                if (CLocal.listHanhThu.size() > 1000)
+                    CLocal.listHanhThu = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", "").equals("") == false) {
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
