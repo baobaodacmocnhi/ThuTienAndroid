@@ -271,8 +271,11 @@ public class MainActivity extends AppCompatActivity {
                             if (CMarshMallowPermission.checkPermissionForExternalStorage() == false) {
                                 CMarshMallowPermission.requestPermissionForExternalStorage();
                             }
-                            if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
-                                return;
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            if (CMarshMallowPermission.checkPermissionForInstallPackage() == false) {
+                                CMarshMallowPermission.requestPermissionForInstallPackage();
+                            }
                         }
                         MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                         myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
@@ -407,12 +410,27 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             try {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                File file = new File( pathdownloaded);
+//                Uri data = FileProvider.getUriForFile(getBaseContext(), "thutien_file_provider", file);
+//                intent.setDataAndType(data, "application/vnd.android.package-archive");
+//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                startActivity(intent);
+                Intent intent;
                 File file = new File( pathdownloaded);
-                Uri data = FileProvider.getUriForFile(getBaseContext(), "thutien_file_provider", file);
-                intent.setDataAndType(data, "application/vnd.android.package-archive");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Uri apkUri = FileProvider.getUriForFile(MainActivity.this, "thutien_file_provider", file);
+                    intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                    intent.setData(apkUri);
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } else {
+                    Uri apkUri = Uri.fromFile(file);
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
                 startActivity(intent);
+
             } catch (Exception e) {
                 Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }

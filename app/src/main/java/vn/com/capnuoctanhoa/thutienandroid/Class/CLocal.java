@@ -38,6 +38,20 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CLocal {
+    //Android 1.5 	Cupcake 	27/4/2009
+    //Android 1.6	Donut 	15/9/2009
+    //Android 2.0 - 2.1 	Eclair 	26/9/2009 (phát hành lần đầu)
+    //Android 2.2 - 2.2.3 	Froyo 	20/5/2010 (phát hành lần đầu)
+    //Android 2.3 - 2.3.7 	Gingerbread 	6/12/2010 (phát hành lần đầu)
+    //Android 3.0 - 3.2.6 	Honeycomb 	22/2/2011 (phát hành lần đầu)
+    //Android 4.0 - 4.0.4 	Ice Cream Sandwich 	18/10/2011 (phát hành lần đầu)
+    //Android 4.1 - 4.3.1 	Jelly Bean 	9/7/2012 (phát hành lần đầu)
+    //Android 4.4 - 4.4.4 	KitKat 	31/10/2013 (phát hành lần đầu)
+    //Android 5.0 - 5.1.1 	Lollipop 	12/11/2014 (phát hành lần đầu)
+    //Android 6.0 - 6.0.1 	Marshmallow 	5/10/2015 (phát hành lần đầu)
+    //Android 7.0 - 7.1.2 	Nougat 	22/8/2016 (phát hành lần đầu)
+    //Android 8.0 - 8.1 	Oreo 	21/8/2017 (phát hành lần đầu)
+
     public static SharedPreferences sharedPreferencesre;
     public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
     public static String pathRoot = Environment.getExternalStorageDirectory() + "/TanHoa/";

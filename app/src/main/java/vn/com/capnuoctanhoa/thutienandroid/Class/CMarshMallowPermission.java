@@ -13,6 +13,7 @@ public class CMarshMallowPermission {
     public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 2;
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 4;
+    public static final int REQUEST_INSTALL_PACKAGES_REQUEST_CODE = 4;
     public static final int GRANTED = 0;
     public static final int DENIED = 1;
     public static final int NEVER = 2;
@@ -22,6 +23,13 @@ public class CMarshMallowPermission {
     public CMarshMallowPermission(Activity activity) {
         this.activity = activity;
         this.mContext = activity;
+    }
+
+    public boolean checkPermissionForInstallPackage() {
+        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.REQUEST_INSTALL_PACKAGES) == PackageManager.PERMISSION_GRANTED ) {
+            return true;
+        } else
+            return false;
     }
 
     public boolean checkPermissionForExternalStorage() {
@@ -48,6 +56,14 @@ public class CMarshMallowPermission {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void requestPermissionForInstallPackage() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.REQUEST_INSTALL_PACKAGES)) {
+            Toast.makeText(mContext.getApplicationContext(), "External Storage permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, REQUEST_INSTALL_PACKAGES_REQUEST_CODE);
         }
     }
 
