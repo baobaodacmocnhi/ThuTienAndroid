@@ -33,8 +33,6 @@ public class ServiceAppKilled extends Service {
             if (CLocal.listHanhThu != null)
 //                editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
                 editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
-            if(CLocal.listHanhThu!=null)
-                editor.putString("jsonHanhThu_HoaDonDienTu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
             if (CLocal.listDongNuoc != null) {
 //                editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
 //                editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());

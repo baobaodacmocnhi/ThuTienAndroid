@@ -72,9 +72,7 @@ public class CLocal {
         editor.putString("HoTen", "");
         editor.putString("MaTo", "");
         editor.putString("jsonHanhThu", "");
-        editor.putString("jsonHanhThu_HoaDonDienTu", "");
         editor.putString("jsonDongNuoc", "");
-        editor.putString("jsonDongNuocChild", "");
         editor.putString("jsonMessage", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -82,6 +80,8 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.commit();
+        editor.remove("jsonHanhThu_HoaDonDienTu").commit();
+        editor.remove("jsonDongNuocChild").commit();
         MaNV = HoTen = MaTo = "";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
@@ -156,6 +156,12 @@ public class CLocal {
                                 break;
                             case "PhiMoNuoc":
                                 lst.get(i).getLstHoaDon().get(j).setPhiMoNuoc(ValueUpdate);
+                                break;
+                            case "DaThu":
+                                lst.get(i).getLstHoaDon().get(j).setDaThu(Boolean.parseBoolean(ValueUpdate));
+                                break;
+                            case "InPhieuBao":
+                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao(Boolean.parseBoolean(ValueUpdate));
                                 break;
                         }
                     }

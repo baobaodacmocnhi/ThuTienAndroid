@@ -12,6 +12,7 @@ public class CEntityChild {
     private Boolean LenhHuy;
     private String PhiMoNuoc;
     private Boolean DaThu;
+    private Boolean InPhieuBao;
 
     public CEntityChild() {
         MaHD = "";
@@ -113,5 +114,13 @@ public class CEntityChild {
 
     public void setDaThu(Boolean daThu) {
         DaThu = daThu;
+    }
+
+    public Boolean getInPhieuBao() {
+        return InPhieuBao;
+    }
+
+    public void setInPhieuBao(Boolean inPhieuBao) {
+        InPhieuBao = inPhieuBao;
     }
 }

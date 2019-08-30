@@ -151,16 +151,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
 
+            if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true){
+                ServiceFirebaseInstanceID serviceFirebaseInstanceID=new ServiceFirebaseInstanceID();
+                serviceFirebaseInstanceID.onTokenRefresh();
+            }
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
 //                CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
 //                if (CLocal.jsonHanhThu.length() > 1000)
 //                    CLocal.jsonHanhThu = null;
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
-                if (CLocal.listHanhThu.size() > 1000)
-                    CLocal.listHanhThu = null;
-            }
-            if (CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", "").equals("") == false) {
-                CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu_HoaDonDienTu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
                 if (CLocal.listHanhThu.size() > 1000)
                     CLocal.listHanhThu = null;
             }

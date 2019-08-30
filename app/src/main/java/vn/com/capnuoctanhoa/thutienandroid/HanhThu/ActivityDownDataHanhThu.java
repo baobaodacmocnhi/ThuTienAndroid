@@ -368,7 +368,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
 //                    editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
-                    editor.putString("jsonHanhThu_HoaDonDienTu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.commit();
                 }
