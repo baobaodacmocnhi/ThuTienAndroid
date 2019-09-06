@@ -21,9 +21,9 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
-    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtTongCong;
+    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi,edtPhiMoNuoc, edtTongCong;
     private ListView listView;
-    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao, btnXoa;
+    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao,btnInPhieuNgungNuoc, btnXoa;
     private Integer index;
 
     @Override
@@ -37,12 +37,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
+        edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
         edtTongCong = (EditText) findViewById(R.id.edtTongCong);
         listView = (ListView) findViewById(R.id.listView);
         btnTruoc = (Button) findViewById(R.id.btnTruoc);
         btnSau = (Button) findViewById(R.id.btnSau);
         btnThuTien = (Button) findViewById(R.id.btnThuTien);
         btnInPhieuBao = (Button) findViewById(R.id.btnInPhieuBao);
+        btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
         try {
@@ -107,6 +109,17 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         });
 
+        btnInPhieuNgungNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,20 +174,9 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                     if (CLocal.listHanhThu.get(i).getDanhBo().equals(DanhBo) == true) {
                         index = i;
-                        edtMLT.setText(CLocal.listHanhThu.get(i).getMLT());
-                        edtDanhBo.setText(CLocal.listHanhThu.get(i).getDanhBo());
-                        edtHoTen.setText(CLocal.listHanhThu.get(i).getHoTen());
-                        edtDiaChi.setText(CLocal.listHanhThu.get(i).getDiaChi());
-                        Integer TongCong = 0;
-                        for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
-                            TongCong += Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
-                            arrayList.add(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
-                        }
-                        edtTongCong.setText(CLocal.formatMoney(TongCong.toString(), "đ"));
+                        fillLayout(index);
                     }
                 }
-                ArrayAdapter<String>  arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
-                listView.setAdapter(arrayAdapter);
             }
         } catch (Exception ex) {
 
@@ -184,17 +186,24 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private void fillLayout(Integer i) {
         try {
             if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                ArrayList<String> arrayList = new ArrayList<String>();
                 if (i >= 0 && i < CLocal.listHanhThu.size()) {
                     edtMLT.setText(CLocal.listHanhThu.get(i).getMLT());
                     edtDanhBo.setText(CLocal.listHanhThu.get(i).getDanhBo());
                     edtHoTen.setText(CLocal.listHanhThu.get(i).getHoTen());
                     edtDiaChi.setText(CLocal.listHanhThu.get(i).getDiaChi());
-                    Integer TongCong = 0;
+                    Integer PhiMoNuoc=0,TongCong = 0;
                     for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
                         TongCong += Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
+                        arrayList.add(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
+                        PhiMoNuoc=Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getPhiMoNuoc());
                     }
+                    TongCong +=PhiMoNuoc;
+                    edtPhiMoNuoc.setText(CLocal.formatMoney(PhiMoNuoc.toString(), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(TongCong.toString(), "đ"));
                 }
+                ArrayAdapter<String>  arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+                listView.setAdapter(arrayAdapter);
             }
         } catch (Exception ex) {
 

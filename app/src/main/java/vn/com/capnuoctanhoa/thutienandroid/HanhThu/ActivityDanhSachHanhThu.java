@@ -259,7 +259,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 case "Đã Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            for (int j = 0; i < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
                                 if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == false) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
@@ -294,7 +294,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 case "Giải Trách":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            for (int j = 0; i < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
                                 if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
@@ -329,7 +329,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 case "Tạm Thu-Thu Hộ":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            for (int j = 0; i < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
                                 if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
@@ -364,7 +364,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 default:
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            for (int j = 0; i < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
                                 CViewParent enViewParent = new CViewParent();
                                 enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
                                 enViewParent.setID(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD());

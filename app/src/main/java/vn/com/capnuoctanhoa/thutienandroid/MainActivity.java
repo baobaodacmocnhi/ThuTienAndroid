@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,7 @@ import java.util.ArrayList;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
@@ -41,13 +44,14 @@ import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach
 import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
+
+import static vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu;
-    private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
+    private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
 
     @Override
@@ -151,15 +155,16 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
 
-            if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true){
-                ServiceFirebaseInstanceID serviceFirebaseInstanceID=new ServiceFirebaseInstanceID();
+            if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true) {
+                ServiceFirebaseInstanceID serviceFirebaseInstanceID = new ServiceFirebaseInstanceID();
                 serviceFirebaseInstanceID.onTokenRefresh();
             }
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
 //                CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
 //                if (CLocal.jsonHanhThu.length() > 1000)
 //                    CLocal.jsonHanhThu = null;
-                CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
+                CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                }.getType());
                 if (CLocal.listHanhThu.size() > 1000)
                     CLocal.listHanhThu = null;
             }
@@ -168,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
 //                CLocal.jsonDongNuocChild = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuocChild", ""));
 //                if(CLocal.jsonDongNuoc.length()>1000)
 //                    CLocal.jsonDongNuoc=null;
-                CLocal.listDongNuoc= new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""), new TypeToken<ArrayList<CEntityParent>>(){}.getType());
+                CLocal.listDongNuoc = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                }.getType());
                 if (CLocal.listDongNuoc.size() > 1000)
                     CLocal.listDongNuoc = null;
             }
@@ -269,13 +275,13 @@ public class MainActivity extends AppCompatActivity {
 //                            myAsyncTask.execute("Version");
 //                        }
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (CMarshMallowPermission.checkPermissionForExternalStorage() == false) {
-                                CMarshMallowPermission.requestPermissionForExternalStorage();
+                            if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                                cMarshMallowPermission.requestPermissionForExternalStorage();
                             }
                         }
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            if (CMarshMallowPermission.checkPermissionForInstallPackage() == false) {
-                                CMarshMallowPermission.requestPermissionForInstallPackage();
+                            if (cMarshMallowPermission.checkPermissionForInstallPackage() == false) {
+                                cMarshMallowPermission.requestPermissionForInstallPackage();
                             }
                         }
                         MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
@@ -368,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
                 // Output stream
                 //extension must change (mp3,mp4,zip,apk etc.)
                 pathdownloaded = CLocal.pathRoot + fileName[0] + "." + fileName[1];
-                OutputStream output = new FileOutputStream( pathdownloaded);
+                OutputStream output = new FileOutputStream(pathdownloaded);
 
                 byte data[] = new byte[1024];
 
@@ -410,31 +416,69 @@ public class MainActivity extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            try {
+            installapk();
+        }
+    }
+
+    public void installapk()
+    {
+        try {
 //                Intent intent = new Intent(Intent.ACTION_VIEW);
 //                File file = new File( pathdownloaded);
 //                Uri data = FileProvider.getUriForFile(getBaseContext(), "thutien_file_provider", file);
 //                intent.setDataAndType(data, "application/vnd.android.package-archive");
 //                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //                startActivity(intent);
-                Intent intent;
-                File file = new File( pathdownloaded);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Uri apkUri = FileProvider.getUriForFile(MainActivity.this, "thutien_file_provider", file);
-                    intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                    intent.setData(apkUri);
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                } else {
-                    Uri apkUri = Uri.fromFile(file);
-                    intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                }
-                startActivity(intent);
-
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Intent intent;
+            File file = new File(pathdownloaded);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri apkUri = FileProvider.getUriForFile(MainActivity.this, "thutien_file_provider", file);
+                intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                intent.setData(apkUri);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                Uri apkUri = Uri.fromFile(file);
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
+            startActivity(intent);
+            finish();
+
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CMarshMallowPermission.READ_EXTERNAL_STORAGE_REQUEST_CODE:
+            case CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                } else {
+                    //not granted
+                }
+                break;
+            case CMarshMallowPermission.REQUEST_INSTALL_PACKAGES_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    installapk();
+                } else {
+                    //not granted
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Intent startApp = new Intent("vn.com.capnuoctanhoa.thutienandroid");
+//        startActivity(startApp);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

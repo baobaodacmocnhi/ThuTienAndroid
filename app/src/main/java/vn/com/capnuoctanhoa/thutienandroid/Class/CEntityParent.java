@@ -16,9 +16,6 @@ public class CEntityParent {
     private Boolean LenhHuy;
     private Boolean DaThu;
     private Boolean DongNuoc;
-
-
-
     private Boolean DongPhi;
     private Boolean MoNuoc;
     private ArrayList<CEntityChild> lstHoaDon;

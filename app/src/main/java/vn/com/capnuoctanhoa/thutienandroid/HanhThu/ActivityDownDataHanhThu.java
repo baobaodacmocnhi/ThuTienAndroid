@@ -359,6 +359,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                         enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                         enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
+                                        enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                         listChild.add(enChild);
                                     }
                                 }
