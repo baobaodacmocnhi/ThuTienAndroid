@@ -46,8 +46,6 @@ import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 
-import static vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE;
-
 public class MainActivity extends AppCompatActivity {
     private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu;
@@ -181,10 +179,10 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
             }
-//            if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
-//                Toast.makeText(MainActivity.this, "Không có Internet", Toast.LENGTH_LONG).show();
-//                return;
-//            }
+            if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
+                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter","");
+            }
+
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);
             imgbtnLenhHuy.setVisibility(View.GONE);
@@ -235,13 +233,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_search_khach_hang:
-                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHangWeb.class);
+                 intent = new Intent(MainActivity.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             case R.id.action_settings:
-
+                 intent = new Intent(MainActivity.this, ActivitySettings.class);
+                startActivity(intent);
                 return true;
             default:
                 break;
