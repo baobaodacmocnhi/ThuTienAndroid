@@ -87,7 +87,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
         btnTimKiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityLenhHuy.this) == false) {
                     Toast.makeText(getApplicationContext(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -100,7 +100,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityLenhHuy.this) == false) {
                     Toast.makeText(getApplicationContext(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

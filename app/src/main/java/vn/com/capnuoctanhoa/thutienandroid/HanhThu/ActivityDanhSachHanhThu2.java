@@ -120,7 +120,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDanhSachHanhThu2.this) == false) {
                     Toast.makeText(ActivityDanhSachHanhThu2.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

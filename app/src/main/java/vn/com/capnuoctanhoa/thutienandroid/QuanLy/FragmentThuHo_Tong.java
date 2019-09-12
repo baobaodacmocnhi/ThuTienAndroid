@@ -180,7 +180,7 @@ public class FragmentThuHo_Tong extends Fragment {
         btnXem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(getActivity().getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(getActivity()) == false) {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

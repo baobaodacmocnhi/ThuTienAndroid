@@ -40,7 +40,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDangNhap.this) == false) {
                     Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -52,7 +52,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDangNhap.this) == false) {
                     Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

@@ -35,6 +35,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDownDataDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDownDataHanhThu extends AppCompatActivity {
@@ -124,7 +125,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDownDataHanhThu.this) == false) {
                     Toast.makeText(getApplicationContext(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

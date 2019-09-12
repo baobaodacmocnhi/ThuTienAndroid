@@ -165,7 +165,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(getApplicationContext()) == false) {
+                if (CLocal.checkNetworkAvailable(ActivityDownDataDongNuoc.this) == false) {
                     Toast.makeText(getApplicationContext(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }

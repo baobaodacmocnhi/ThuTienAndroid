@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -57,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (cMarshMallowPermission.checkAllPermissionForAPP()) {
+
+        }
+
 //        File folder = new File(CLocal.pathRoot);
 //        if (!folder.exists()) {
 //            folder.mkdirs();
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 //        if (!folder.exists()) {
 //            folder.mkdirs();
 //        }
+
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.fileName_SharedPreferences, MODE_PRIVATE);
 
         imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
@@ -180,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
             }
             if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
-                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter","");
+                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
 
             imgbtnQuanLy.setVisibility(View.GONE);
@@ -236,11 +245,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.action_search_khach_hang:
-                 intent = new Intent(MainActivity.this, ActivitySearchKhachHangWeb.class);
+                intent = new Intent(MainActivity.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             case R.id.action_settings:
-                 intent = new Intent(MainActivity.this, ActivitySettings.class);
+                intent = new Intent(MainActivity.this, ActivitySettings.class);
                 startActivity(intent);
                 return true;
             default:
@@ -274,18 +283,12 @@ public class MainActivity extends AppCompatActivity {
 //                            MyAsyncTask myAsyncTask = new MyAsyncTask();
 //                            myAsyncTask.execute("Version");
 //                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
-                                cMarshMallowPermission.requestPermissionForExternalStorage();
-                            }
+                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
+                            MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+                            myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
                         }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            if (cMarshMallowPermission.checkPermissionForInstallPackage() == false) {
-                                cMarshMallowPermission.requestPermissionForInstallPackage();
-                            }
-                        }
-                        MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                        myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                        else
+                            CLocal.showPopupMessage(MainActivity.this,"Bạn chưa cấp quyền cho App");
                     }
                 });
                 AlertDialog alertDialog = builder.create();
@@ -420,8 +423,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void installapk()
-    {
+    public void installapk() {
         try {
 //                Intent intent = new Intent(Intent.ACTION_VIEW);
 //                File file = new File( pathdownloaded);
@@ -469,10 +471,86 @@ public class MainActivity extends AppCompatActivity {
                     //not granted
                 }
                 break;
+            case CMarshMallowPermission.APP_PERMISSIONS_REQUEST_CODE:
+                HashMap<String, Integer> permissionResults = new HashMap<>();
+                int deniedCount = 0;
+
+                //gather permission grant results
+                for (int i = 0; i < grantResults.length; i++)
+                    //add only permissions which are denied
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        permissionResults.put(permissions[i], grantResults[i]);
+                        deniedCount++;
+                    }
+                //check if all permissions are granted
+                if (deniedCount == 0) {
+                    //proceed ahead with the app
+                }
+                //alleast one or all permissions are denied
+                else {
+                    for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
+                        String permName = entry.getKey();
+                        int permResult = entry.getValue();
+                        //permissions is denied (this is the first time, when "never ask again" is not checked)
+                        //so ask again explaining to usage of permission
+                        //shouldShowRequestPermissionRationale will return true
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName)) {
+                            //show dialog of explanation
+                            showDialog("", "App cần cấp Tất Cả Quyền để hoạt động ổn định", "Yes, Cấp Quyền", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    cMarshMallowPermission.checkAllPermissionForAPP();
+                                }
+                            }, "No, Đóng App", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            }, false);
+                        }
+                        //permissions is denied (and never ask again is checked)
+                        //shouldShowRequestPermissionRationale will return false
+                        else {
+                            //ask user to go to settings and manually allow permissions
+                            showDialog("", "Bạn đã Từ Chối Cấp Quyền. Đồng ý Tất Cả Quyền tại [Cài Đặt] > [Quyền Ứng Dụng]", "Đi đến Cài Đặt", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    //go to app settings
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS, Uri.fromParts("package", getPackageName(), null));
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }, "No, Đóng App", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            }, false);
+                        }
+                    }
+                }
+                break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
 
+    public AlertDialog showDialog(String title, String msg, String positiveLabel, DialogInterface.OnClickListener positiveOnClick, String negativeLabel, DialogInterface.OnClickListener negativeOnClick, boolean isCancelAble) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setCancelable(isCancelAble);
+        builder.setMessage(msg);
+        builder.setPositiveButton(positiveLabel, positiveOnClick);
+        builder.setNegativeButton(negativeLabel, negativeOnClick);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return alertDialog;
     }
 
     @Override

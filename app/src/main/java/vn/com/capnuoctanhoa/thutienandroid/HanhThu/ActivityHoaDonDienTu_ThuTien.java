@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.R;
@@ -25,6 +27,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private ListView listView;
     private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao,btnInPhieuNgungNuoc, btnXoa;
     private Integer index;
+    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnInPhieuBao = (Button) findViewById(R.id.btnInPhieuBao);
         btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
+
+        thermalPrinter=new ThermalPrinter(ActivityHoaDonDienTu_ThuTien.this);
 
         try {
             String DanhBo = getIntent().getStringExtra("DanhBo");
@@ -83,6 +88,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                 CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDaThu(true);
+                                thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
                             }
                         }
                     }
@@ -100,6 +106,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                 CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao(true);
+                                thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(index));
                             }
                         }
                     }
@@ -113,7 +120,13 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
+                                thermalPrinter.printDongNuoc(CLocal.listHanhThu.get(index));
+                            }
+                        }
+                    }
                 } catch (Exception ex) {
 
                 }
@@ -188,15 +201,16 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                 ArrayList<String> arrayList = new ArrayList<String>();
                 if (i >= 0 && i < CLocal.listHanhThu.size()) {
-                    edtMLT.setText(CLocal.listHanhThu.get(i).getMLT());
-                    edtDanhBo.setText(CLocal.listHanhThu.get(i).getDanhBo());
-                    edtHoTen.setText(CLocal.listHanhThu.get(i).getHoTen());
-                    edtDiaChi.setText(CLocal.listHanhThu.get(i).getDiaChi());
+                    CEntityParent item=CLocal.listHanhThu.get(i);
+                    edtMLT.setText(item.getMLT());
+                    edtDanhBo.setText(item.getDanhBo());
+                    edtHoTen.setText(item.getHoTen());
+                    edtDiaChi.setText(item.getDiaChi());
                     Integer PhiMoNuoc=0,TongCong = 0;
-                    for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
-                        TongCong += Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
-                        arrayList.add(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
-                        PhiMoNuoc=Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getPhiMoNuoc());
+                    for (int j = 0; j < item.getLstHoaDon().size(); j++) {
+                        TongCong += Integer.parseInt(item.getLstHoaDon().get(j).getTongCong());
+                        arrayList.add(item.getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(item.getLstHoaDon().get(j).getTongCong(), "đ"));
+                        PhiMoNuoc=Integer.parseInt(item.getLstHoaDon().get(j).getPhiMoNuoc());
                     }
                     TongCong +=PhiMoNuoc;
                     edtPhiMoNuoc.setText(CLocal.formatMoney(PhiMoNuoc.toString(), "đ"));

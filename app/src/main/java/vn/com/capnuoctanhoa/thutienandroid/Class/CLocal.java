@@ -1,9 +1,11 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -61,7 +63,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV = "", HoTen = "", MaTo = "",ThermalPrinter="";
+    public static String MaNV = "", HoTen = "", MaTo = "", ThermalPrinter = "";
     public static boolean Doi = false, ToTruong = false;
     public static ArrayList<CEntityParent> listHanhThu, listDongNuoc;
 
@@ -90,8 +92,8 @@ public class CLocal {
         listHanhThu = listDongNuoc = null;
     }
 
-    public static boolean checkNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean checkNetworkAvailable(Activity activity) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
             return true;
@@ -99,8 +101,27 @@ public class CLocal {
             return false;
     }
 
-    public static void showPopupMessage(Context context, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public static boolean checkBluetoothAvaible() {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null)
+            return bluetoothAdapter.isEnabled();
+        else
+            return false;
+    }
+
+    public static void openBluetoothSettings(Activity activity) {
+        Intent intent = new Intent();
+        intent.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+        activity.startActivity(intent);
+    }
+
+    public static void setOnBluetooth(Activity activity) {
+        Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        activity.startActivityForResult(intent, 1);
+    }
+
+    public static void showPopupMessage(Activity activity, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);
         builder.setCancelable(false);
@@ -377,17 +398,17 @@ public class CLocal {
 
     // Created by imrankst1221@gmail.com
     // UNICODE 0x23 = #
-    public static final byte[] UNICODE_TEXT = new byte[] {0x23, 0x23, 0x23,
-            0x23, 0x23, 0x23,0x23, 0x23, 0x23,0x23, 0x23, 0x23,0x23, 0x23, 0x23,
-            0x23, 0x23, 0x23,0x23, 0x23, 0x23,0x23, 0x23, 0x23,0x23, 0x23, 0x23,
+    public static final byte[] UNICODE_TEXT = new byte[]{0x23, 0x23, 0x23,
+            0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23,
+            0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23,
             0x23, 0x23, 0x23};
 
     private static String hexStr = "0123456789ABCDEF";
-    private static String[] binaryArray = { "0000", "0001", "0010", "0011",
+    private static String[] binaryArray = {"0000", "0001", "0010", "0011",
             "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011",
-            "1100", "1101", "1110", "1111" };
+            "1100", "1101", "1110", "1111"};
 
-    public static byte[] decodeBitmap(Bitmap bmp){
+    public static byte[] decodeBitmap(Bitmap bmp) {
         int bmpWidth = bmp.getWidth();
         int bmpHeight = bmp.getHeight();
 
@@ -450,7 +471,7 @@ public class CLocal {
         heightHexString = heightHexString + "00";
 
         List<String> commandList = new ArrayList<String>();
-        commandList.add(commandHexString+widthHexString+heightHexString);
+        commandList.add(commandHexString + widthHexString + heightHexString);
         commandList.addAll(bmpHexList);
 
         return hexList2Byte(commandList);
@@ -530,61 +551,6 @@ public class CLocal {
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }
-
-    //PrinterCommands
-    public static final byte HT = 0x9;
-    public static final byte LF = 0x0A;
-    public static final byte CR = 0x0D;
-    public static final byte ESC = 0x1B;
-    public static final byte DLE = 0x10;
-    public static final byte GS = 0x1D;
-    public static final byte FS = 0x1C;
-    public static final byte STX = 0x02;
-    public static final byte US = 0x1F;
-    public static final byte CAN = 0x18;
-    public static final byte CLR = 0x0C;
-    public static final byte EOT = 0x04;
-
-    public static final byte[] INIT = {27, 64};
-    public static byte[] FEED_LINE = {10};
-
-    public static byte[] SELECT_FONT_A = {20, 33, 0};
-    public static byte[] SELECT_FONT_B = {20, 33, 1};
-
-    public static byte[] SET_BAR_CODE_HEIGHT = {29, 104, 100};
-    public static byte[] PRINT_BAR_CODE_1 = {29, 107, 2};
-    public static byte[] SEND_NULL_BYTE = {0x00};
-
-    public static byte[] SELECT_PRINT_SHEET = {0x1B, 0x63, 0x30, 0x02};
-    public static byte[] FEED_PAPER_AND_CUT = {0x1D, 0x56, 66, 0x00};
-
-    public static byte[] SELECT_CYRILLIC_CHARACTER_CODE_TABLE = {0x1B, 0x74, 0x11};
-
-    public static byte[] SELECT_BIT_IMAGE_MODE = {0x1B, 0x2A, 33, -128, 0};
-    public static byte[] SET_LINE_SPACING_24 = {0x1B, 0x33, 24};
-    public static byte[] SET_LINE_SPACING_30 = {0x1B, 0x33, 30};
-
-    public static byte[] TRANSMIT_DLE_PRINTER_STATUS = {0x10, 0x04, 0x01};
-    public static byte[] TRANSMIT_DLE_OFFLINE_PRINTER_STATUS = {0x10, 0x04, 0x02};
-    public static byte[] TRANSMIT_DLE_ERROR_STATUS = {0x10, 0x04, 0x03};
-    public static byte[] TRANSMIT_DLE_ROLL_PAPER_SENSOR_STATUS = {0x10, 0x04, 0x04};
-
-    public static final byte[] ESC_FONT_COLOR_DEFAULT = new byte[] { 0x1B, 'r',0x00 };
-    public static final byte[] FS_FONT_ALIGN = new byte[] { 0x1C, 0x21, 1, 0x1B,
-            0x21, 1 };
-    public static final byte[] ESC_ALIGN_LEFT = new byte[] { 0x1b, 'a', 0x00 };
-    public static final byte[] ESC_ALIGN_RIGHT = new byte[] { 0x1b, 'a', 0x02 };
-    public static final byte[] ESC_ALIGN_CENTER = new byte[] { 0x1b, 'a', 0x01 };
-    public static final byte[] ESC_CANCEL_BOLD = new byte[] { 0x1B, 0x45, 0 };
-
-
-    /*********************************************/
-    public static final byte[] ESC_HORIZONTAL_CENTERS = new byte[] { 0x1B, 0x44, 20, 28, 00};
-    public static final byte[] ESC_CANCLE_HORIZONTAL_CENTERS = new byte[] { 0x1B, 0x44, 00 };
-    /*********************************************/
-
-    public static final byte[] ESC_ENTER = new byte[] { 0x1B, 0x4A, 0x40 };
-    public static final byte[] PRINTE_TEST = new byte[] { 0x1D, 0x28, 0x41 };
 
     //endregion
 
