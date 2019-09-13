@@ -207,9 +207,9 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, toadoY, 70, 2, 1));
+                stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1));
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -224,9 +224,9 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, toadoY, 70, 2, 1));
+                stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, toadoY, 60, 2, 1));
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -242,10 +242,10 @@ public class ThermalPrinter {
                 printTop();
 
                 stringBuilder.append(printLine("THÔNG BÁO", 4, toadoY, 100, 2, 1));
-                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY+10, 50, 2, 1));
+                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY+20, 40, 2, 1));
 
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -278,7 +278,7 @@ public class ThermalPrinter {
         for (int i = 0; i < boldNumber; i++) {
             builder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n");
         }
-        this.toadoY += toadoY+30;
+        this.toadoY = toadoY+30;
         return builder.toString();
     }
 
