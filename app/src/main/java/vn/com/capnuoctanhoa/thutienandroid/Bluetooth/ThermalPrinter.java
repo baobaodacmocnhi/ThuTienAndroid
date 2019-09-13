@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.widget.ArrayAdapter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +34,10 @@ public class ThermalPrinter {
     private final byte[] ESC = {0x1b};
     private StringBuilder stringBuilder;
     private CEntityParent entityParent;
-private int y = 5;
+    private int toadoX = 10;
+    private int toadoY = 20;
+    private int widthFont = 1;
+    private int heightFont = 1;
 
     public BluetoothDevice getBluetoothDevice() {
         return bluetoothDevice;
@@ -172,7 +173,7 @@ private int y = 5;
         }
     }
 
-    public void disconnectBluetoothDevice(){
+    public void disconnectBluetoothDevice() {
         try {
             stopWorker = true;
             outputStream.close();
@@ -183,34 +184,33 @@ private int y = 5;
         }
     }
 
-    public void printPhieuBao(CEntityParent entityParent)
-    {
-        this.entityParent=entityParent;
-        MyAsyncTask myAsyncTask=new MyAsyncTask();
+    public void printPhieuBao(CEntityParent entityParent) {
+        this.entityParent = entityParent;
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("PhieuBao");
     }
 
-    public void printHoaDon(CEntityParent entityParent)
-    {
-        this.entityParent=entityParent;
-        MyAsyncTask myAsyncTask=new MyAsyncTask();
+    public void printHoaDon(CEntityParent entityParent) {
+        this.entityParent = entityParent;
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("HoaDon");
     }
 
-    public void printDongNuoc(CEntityParent entityParent)
-    {
-        this.entityParent=entityParent;
-        MyAsyncTask myAsyncTask=new MyAsyncTask();
+    public void printDongNuoc(CEntityParent entityParent) {
+        this.entityParent = entityParent;
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("DongNuoc");
     }
 
     private void printPhieuBao_Data() {
         try {
-            if(entityParent!=null) {
+            if (entityParent != null) {
                 printTop();
-                y = handlingYMoreThan450(y, 75);
-                stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, y, 80, 2, 1));
-                stringBuilder.append("\n\n\n}\n");
+
+                stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, toadoY, 70, 2, 1));
+                //in dòng cuối
+                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
             }
@@ -221,11 +221,13 @@ private int y = 5;
 
     private void printHoaDon_Data() {
         try {
-            if(entityParent!=null) {
+            if (entityParent != null) {
                 printTop();
-                y = handlingYMoreThan450(y, 75);
-                stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, y, 80, 2, 1));
-                        stringBuilder.append("\n\n\n}\n");
+
+                stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, toadoY, 70, 2, 1));
+                //in dòng cuối
+                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
             }
@@ -236,10 +238,15 @@ private int y = 5;
 
     private void printDongNuoc_Data() {
         try {
-            if(entityParent!=null) {
+            if (entityParent != null) {
                 printTop();
-                stringBuilder.append(printLine("THÔNG BÁO NGƯNG CUNG CẤP NƯỚC", 4, y, 80, 2, 1));
-                stringBuilder.append("\n\n\n}\n");
+
+                stringBuilder.append(printLine("THÔNG BÁO", 4, toadoY, 100, 2, 1));
+                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY+10, 50, 2, 1));
+
+                //in dòng cuối
+                stringBuilder.append(printLine(" ", 1, toadoY+30, 10, 1, 1));
+                stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
             }
@@ -248,31 +255,30 @@ private int y = 5;
         }
     }
 
-    private void printTop()
-    {
+    private void printTop() {
         try {
+            this.toadoY=20;
             outputStream.write((ESC));
 
             stringBuilder = new StringBuilder();
             stringBuilder.append("EZ\n");
             stringBuilder.append("{PRINT:\n");
-            stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, y, 25, 1, 1));
-            y = handlingYMoreThan450(y, 25);
-            stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, y, 40, 1, 1));
-            y = handlingYMoreThan450(y, 50);
-            stringBuilder.append(printLine("Tổng đài: 1900.6489", 4, y, 10, 2, 2));
+            stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, toadoY, 25, 1, 1));
+            stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, toadoY, 40, 1, 1));
+            stringBuilder.append(printLine("Tổng đài: 1900.6489", 2, toadoY, 80, 1, 1));
+            toadoY+=20;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private String printLine(String data, int boldNumber, java.lang.Object... args) {
-        String base = "@%d,%d:TIMNR,HMULT%d,VMULT%d|" + data + "|\n";
+    private String printLine(String data, int boldNumber, int toadoY, int toadoX, int widthFont, int heightFont) {
+        String base = "@" + toadoY + "," + toadoX + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < boldNumber; i++) {
-            builder.append(String.format(base, args));
-            args[1] = (int) args[1] + 1;
+            builder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n");
         }
+        this.toadoY += toadoY+30;
         return builder.toString();
     }
 
@@ -307,15 +313,16 @@ private int y = 5;
         return dateTime;
     }
 
-    public class MyAsyncTask extends AsyncTask<String,Void,Void>
-    {
+    public class MyAsyncTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... strings) {
             switch (strings[0]) {
                 case "PhieuBao":
                     printPhieuBao_Data();
+                    break;
                 case "HoaDon":
-                   printHoaDon_Data();
+                    printHoaDon_Data();
+                    break;
                 case "DongNuoc":
                     printDongNuoc_Data();
                     break;
