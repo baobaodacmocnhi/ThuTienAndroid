@@ -209,7 +209,7 @@ public class ThermalPrinter {
 
                 stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1));
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -226,7 +226,7 @@ public class ThermalPrinter {
 
                 stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, toadoY, 60, 2, 1));
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -241,11 +241,11 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("THÔNG BÁO", 4, toadoY, 100, 2, 1));
-                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY+20, 40, 2, 1));
+                stringBuilder.append(printLine("THÔNG BÁO TẠM", 4, toadoY, 80, 2, 1));
+                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY + 20, 40, 2, 1));
 
                 //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY+100, 10, 1, 1));
+                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
@@ -257,7 +257,7 @@ public class ThermalPrinter {
 
     private void printTop() {
         try {
-            this.toadoY=20;
+            this.toadoY = 20;
             outputStream.write((ESC));
 
             stringBuilder = new StringBuilder();
@@ -266,7 +266,7 @@ public class ThermalPrinter {
             stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, toadoY, 25, 1, 1));
             stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, toadoY, 40, 1, 1));
             stringBuilder.append(printLine("Tổng đài: 1900.6489", 2, toadoY, 80, 1, 1));
-            toadoY+=20;
+            toadoY += 20;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -278,7 +278,7 @@ public class ThermalPrinter {
         for (int i = 0; i < boldNumber; i++) {
             builder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n");
         }
-        this.toadoY = toadoY+30;
+        this.toadoY = toadoY + 30;
         return builder.toString();
     }
 

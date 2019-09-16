@@ -199,6 +199,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 return true;
             case R.id.action_down_data:
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
+                intent.putExtra("LoaiDownData", "HoaDonDienTu");
                 startActivityForResult(intent, 1);
                 return true;
             default:
@@ -217,7 +218,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).getGiaiTrach() == false) {
-                                addEntityParent(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
@@ -226,7 +227,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).getGiaiTrach() == true) {
-                                addEntityParent(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
@@ -235,7 +236,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).getTamThu() == true || CLocal.listHanhThu.get(i).getThuHo() == true) {
-                                addEntityParent(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
@@ -243,7 +244,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 default:
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            addEntityParent(CLocal.listHanhThu.get(i));
+                            addViewParent(CLocal.listHanhThu.get(i));
                         }
                     }
                     break;
@@ -258,7 +259,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         }
     }
 
-    public void addEntityParent(CEntityParent enParent) {
+    public void addViewParent(CEntityParent enParent) {
         try {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
@@ -278,7 +279,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             listChild = new ArrayList<CViewChild>();
             Integer TongCongChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
             for (int i = 0; i < enParent.getLstHoaDon().size(); i++) {
-                addEntityChild(enParent.getLstHoaDon().get(i));
+                addViewChild(enParent.getLstHoaDon().get(i));
                 ///cập nhật parent
                 TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
                 if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
@@ -299,7 +300,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 enParent.setTinhTrang("Thu Hộ");
                 enParent.setThuHo(true);
             }
-
+            enViewParent.setTBDongNuoc(enParent.getLstHoaDon().get(0).getTBDongNuoc());
+            enViewParent.setLenhHuy(enParent.getLstHoaDon().get(0).getLenhHuy());
             enViewParent.setListChild(listChild);
             enViewParent.setRow1b(String.valueOf(listChild.size()) + " HĐ: " + CLocal.formatMoney(TongCongChild.toString(), "đ"));
             enViewParent.setRow2b(enParent.getTinhTrang());
@@ -307,10 +309,11 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
 
             listParent.add(enViewParent);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public void addEntityChild(CEntityChild enChild) {
+    public void addViewChild(CEntityChild enChild) {
         try {
             CViewChild enViewChild = new CViewChild();
             enViewChild.setID(enChild.getMaHD());
@@ -319,11 +322,14 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             enViewChild.setGiaiTrach(enChild.getGiaiTrach());
             enViewChild.setTamThu(enChild.getTamThu());
             enViewChild.setThuHo(enChild.getThuHo());
+            enViewChild.setTBDongNuoc(enChild.getTBDongNuoc());
+            enViewChild.setLenhHuy(enChild.getLenhHuy());
             TongCong += Long.parseLong(enChild.getTongCong());
             TongHD++;
 
             listChild.add(enViewChild);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

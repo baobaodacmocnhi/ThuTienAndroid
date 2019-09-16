@@ -136,7 +136,10 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
 //            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
 //        else
 //            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-
+        if (map.getTBDongNuoc() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
+        else
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
         if (map.getLenhHuy() == true)
             holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
         else
@@ -219,6 +222,8 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         else
             holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
+        if (map.getTBDongNuoc() == true)
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
         if (map.getLenhHuy() == true)
             holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 

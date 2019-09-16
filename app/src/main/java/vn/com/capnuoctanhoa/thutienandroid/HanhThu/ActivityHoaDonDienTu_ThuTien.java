@@ -23,9 +23,9 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
-    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi,edtPhiMoNuoc, edtTongCong;
+    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInTBDongNuoc_Ngay, edtInPhieuBao_Ngay, edtPhiMoNuoc, edtTongCong;
     private ListView listView;
-    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao,btnInPhieuNgungNuoc, btnXoa;
+    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao, btnInPhieuNgungNuoc, btnXoa;
     private Integer index;
     private ThermalPrinter thermalPrinter;
 
@@ -40,6 +40,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
+        edtInTBDongNuoc_Ngay = (EditText) findViewById(R.id.edtInTBDongNuoc_Ngay);
+        edtInPhieuBao_Ngay = (EditText) findViewById(R.id.edtInPhieuBao_Ngay);
         edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
         edtTongCong = (EditText) findViewById(R.id.edtTongCong);
         listView = (ListView) findViewById(R.id.listView);
@@ -50,7 +52,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
-        thermalPrinter=new ThermalPrinter(ActivityHoaDonDienTu_ThuTien.this);
+        thermalPrinter = new ThermalPrinter(ActivityHoaDonDienTu_ThuTien.this);
 
         try {
             String DanhBo = getIntent().getStringExtra("DanhBo");
@@ -73,7 +75,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnSau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (index < CLocal.listHanhThu.size()-1) {
+                if (index < CLocal.listHanhThu.size() - 1) {
                     index++;
                 }
                 fillLayout(index);
@@ -87,7 +89,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDaThu(true);
+                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                 thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
                             }
                         }
@@ -105,7 +107,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao(true);
+                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_DienThoai(true);
                                 thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(index));
                             }
                         }
@@ -145,7 +147,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDaThu(false);
+                                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                             }
                                         }
                                     }
@@ -164,7 +166,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 }
             }
         });
-
 
     }
 
@@ -201,22 +202,24 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                 ArrayList<String> arrayList = new ArrayList<String>();
                 if (i >= 0 && i < CLocal.listHanhThu.size()) {
-                    CEntityParent item=CLocal.listHanhThu.get(i);
+                    CEntityParent item = CLocal.listHanhThu.get(i);
                     edtMLT.setText(item.getMLT());
                     edtDanhBo.setText(item.getDanhBo());
                     edtHoTen.setText(item.getHoTen());
                     edtDiaChi.setText(item.getDiaChi());
-                    Integer PhiMoNuoc=0,TongCong = 0;
+                    edtInPhieuBao_Ngay.setText(item.getLstHoaDon().get(0).getInPhieuBao_Ngay_DienThoai());
+                    edtInTBDongNuoc_Ngay.setText(item.getLstHoaDon().get(0).getTBDongNuoc_Ngay());
+                    Integer PhiMoNuoc = 0, TongCong = 0;
                     for (int j = 0; j < item.getLstHoaDon().size(); j++) {
                         TongCong += Integer.parseInt(item.getLstHoaDon().get(j).getTongCong());
                         arrayList.add(item.getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(item.getLstHoaDon().get(j).getTongCong(), "đ"));
-                        PhiMoNuoc=Integer.parseInt(item.getLstHoaDon().get(j).getPhiMoNuoc());
+                        PhiMoNuoc = Integer.parseInt(item.getLstHoaDon().get(j).getPhiMoNuoc());
                     }
-                    TongCong +=PhiMoNuoc;
+                    TongCong += PhiMoNuoc;
                     edtPhiMoNuoc.setText(CLocal.formatMoney(PhiMoNuoc.toString(), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(TongCong.toString(), "đ"));
                 }
-                ArrayAdapter<String>  arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 listView.setAdapter(arrayAdapter);
             }
         } catch (Exception ex) {

@@ -11,8 +11,13 @@ public class CEntityChild {
     private Boolean ThuHo;
     private Boolean LenhHuy;
     private String PhiMoNuoc;
-    private Boolean DaThu;
-    private Boolean InPhieuBao;
+    private Boolean DangNgan_DienThoai;
+    private Boolean InPhieuBao_DienThoai;
+    private String InPhieuBao_Ngay_DienThoai;
+    private Boolean XoaDangNgan_DienThoai;
+    private String XoaDangNgan_Ngay_DienThoai;
+    private Boolean TBDongNuoc;
+    private String TBDongNuoc_Ngay;
 
     public CEntityChild() {
         MaHD = "";
@@ -25,7 +30,13 @@ public class CEntityChild {
         ThuHo = false;
         LenhHuy = false;
         PhiMoNuoc="";
-        DaThu = false;
+        DangNgan_DienThoai = false;
+        InPhieuBao_DienThoai=false;
+        InPhieuBao_Ngay_DienThoai="";
+        XoaDangNgan_DienThoai=false;
+        XoaDangNgan_Ngay_DienThoai="";
+        TBDongNuoc=false;
+        TBDongNuoc_Ngay="";
     }
 
     public String getMaHD() {
@@ -108,19 +119,59 @@ public class CEntityChild {
         PhiMoNuoc = phiMoNuoc;
     }
 
-    public Boolean getDaThu() {
-        return DaThu;
+    public Boolean getDangNgan_DienThoai() {
+        return DangNgan_DienThoai;
     }
 
-    public void setDaThu(Boolean daThu) {
-        DaThu = daThu;
+    public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
+        DangNgan_DienThoai = dangNgan_DienThoai;
     }
 
-    public Boolean getInPhieuBao() {
-        return InPhieuBao;
+    public Boolean getInPhieuBao_DienThoai() {
+        return InPhieuBao_DienThoai;
     }
 
-    public void setInPhieuBao(Boolean inPhieuBao) {
-        InPhieuBao = inPhieuBao;
+    public void setInPhieuBao_DienThoai(Boolean inPhieuBao_DienThoai) {
+        InPhieuBao_DienThoai = inPhieuBao_DienThoai;
+    }
+
+    public String getInPhieuBao_Ngay_DienThoai() {
+        return InPhieuBao_Ngay_DienThoai;
+    }
+
+    public void setInPhieuBao_Ngay_DienThoai(String inPhieuBao_Ngay_DienThoai) {
+        InPhieuBao_Ngay_DienThoai = inPhieuBao_Ngay_DienThoai;
+    }
+
+    public Boolean getXoaDangNgan_DienThoai() {
+        return XoaDangNgan_DienThoai;
+    }
+
+    public void setXoaDangNgan_DienThoai(Boolean xoaDangNgan_DienThoai) {
+        XoaDangNgan_DienThoai = xoaDangNgan_DienThoai;
+    }
+
+    public String getXoaDangNgan_Ngay_DienThoai() {
+        return XoaDangNgan_Ngay_DienThoai;
+    }
+
+    public void setXoaDangNgan_Ngay_DienThoai(String xoaDangNgan_Ngay_DienThoai) {
+        XoaDangNgan_Ngay_DienThoai = xoaDangNgan_Ngay_DienThoai;
+    }
+
+    public Boolean getTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(Boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
+    }
+
+    public String getTBDongNuoc_Ngay() {
+        return TBDongNuoc_Ngay;
+    }
+
+    public void setTBDongNuoc_Ngay(String TBDongNuoc_Ngay) {
+        this.TBDongNuoc_Ngay = TBDongNuoc_Ngay;
     }
 }

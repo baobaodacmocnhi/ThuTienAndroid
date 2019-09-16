@@ -44,7 +44,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
     private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutTo, layoutNhanVien;
     private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien;
-    private String selectedMaNV = "";
+    private String selectedMaNV = "",LoaiDownData="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,11 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         spnKy = (Spinner) findViewById(R.id.spnKy);
         layoutTo = (LinearLayout) findViewById(R.id.layoutTo);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
+
+        try {
+             LoaiDownData = getIntent().getStringExtra("LoaiDownData");
+        } catch (Exception ex) {
+        }
 
         //cast to an ArrayAdapter
         ArrayAdapter spnNamAdapter = (ArrayAdapter) spnNam.getAdapter();
@@ -302,20 +307,40 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                if (CLocal.Doi == false && CLocal.ToTruong == false)
-                    selectedMaNV = CLocal.MaNV;
-                if (selectedMaNV.equals("0")) {
-                    CLocal.jsonHanhThu = new JSONArray();
-                    for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-                        for (int j = 0; j < jsonResult.length(); j++) {
-                            JSONObject jsonObject = jsonResult.getJSONObject(j);
-                            CLocal.jsonHanhThu.put(jsonObject);
+                if(LoaiDownData.equals("HoaDonDienTu")==false) {
+                    if (CLocal.Doi == false && CLocal.ToTruong == false)
+                        selectedMaNV = CLocal.MaNV;
+                    if (selectedMaNV.equals("0")) {
+                        CLocal.jsonHanhThu = new JSONArray();
+                        for (int i = 1; i < spnID_NhanVien.size(); i++) {
+                            JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                            for (int j = 0; j < jsonResult.length(); j++) {
+                                JSONObject jsonObject = jsonResult.getJSONObject(j);
+                                CLocal.jsonHanhThu.put(jsonObject);
+                            }
                         }
+                    } else {
+                        CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                     }
-                } else {
-                    CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                 }
+                else
+                {
+                    if (CLocal.Doi == false && CLocal.ToTruong == false)
+                        selectedMaNV = CLocal.MaNV;
+                    if (selectedMaNV.equals("0")) {
+                        CLocal.jsonHanhThu = new JSONArray();
+                        for (int i = 1; i < spnID_NhanVien.size(); i++) {
+                            JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon_HoaDonDienTu(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                            for (int j = 0; j < jsonResult.length(); j++) {
+                                JSONObject jsonObject = jsonResult.getJSONObject(j);
+                                CLocal.jsonHanhThu.put(jsonObject);
+                            }
+                        }
+                    } else {
+                        CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon_HoaDonDienTu(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                    }
+                }
+
                 if (CLocal.jsonHanhThu != null) {
                     //khởi tạo ArrayList CEntityParent
                     CLocal.listHanhThu = new ArrayList<CEntityParent>();
@@ -360,7 +385,18 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                         enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                         enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
+                                        enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
+                                        enChild.setInPhieuBao_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("InPhieuBao_DienThoai")));
+                                        enChild.setInPhieuBao_Ngay_DienThoai(jsonObjectChild.getString("InPhieuBao_Ngay_DienThoai"));
+                                        enChild.setXoaDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("XoaDangNgan_DienThoai")));
+                                        enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai"));
+                                        enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay"));
+                                        if(enChild.getTBDongNuoc_Ngay().equals("null")==true)
+                                            enChild.setTBDongNuoc(false);
+                                        else
+                                            enChild.setTBDongNuoc(true);
                                         enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
+                                        enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
                                         listChild.add(enChild);
                                     }
                                 }
@@ -369,7 +405,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                         }
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-//                    editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
                     editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.commit();
                 }

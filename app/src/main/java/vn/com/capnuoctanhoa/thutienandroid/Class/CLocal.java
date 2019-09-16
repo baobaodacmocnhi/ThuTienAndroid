@@ -181,10 +181,10 @@ public class CLocal {
                                 lst.get(i).getLstHoaDon().get(j).setPhiMoNuoc(ValueUpdate);
                                 break;
                             case "DaThu":
-                                lst.get(i).getLstHoaDon().get(j).setDaThu(Boolean.parseBoolean(ValueUpdate));
+                                lst.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(Boolean.parseBoolean(ValueUpdate));
                                 break;
                             case "InPhieuBao":
-                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao(Boolean.parseBoolean(ValueUpdate));
+                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao_DienThoai(Boolean.parseBoolean(ValueUpdate));
                                 break;
                         }
                     }

@@ -14,7 +14,8 @@ public class CEntityParent {
     private Boolean TamThu;
     private Boolean ThuHo;
     private Boolean LenhHuy;
-    private Boolean DaThu;
+    private Boolean DangNgan_DienThoai;
+    private Boolean TBDongNuoc;
     private Boolean DongNuoc;
     private Boolean DongPhi;
     private Boolean MoNuoc;
@@ -32,7 +33,8 @@ public class CEntityParent {
         TamThu = false;
         ThuHo = false;
         LenhHuy = false;
-        DaThu = false;
+        DangNgan_DienThoai = false;
+        TBDongNuoc=false;
         DongNuoc=false;
         DongPhi=false;
         MoNuoc = false;
@@ -127,12 +129,20 @@ public class CEntityParent {
         LenhHuy = lenhHuy;
     }
 
-    public Boolean getDaThu() {
-        return DaThu;
+    public Boolean getDangNgan_DienThoai() {
+        return DangNgan_DienThoai;
     }
 
-    public void setDaThu(Boolean daThu) {
-        DaThu = daThu;
+    public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
+        DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
+    public Boolean getTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(Boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
     }
 
     public Boolean getDongNuoc() {

@@ -16,6 +16,7 @@ public class CViewParent {
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
+    private Boolean TBDongNuoc;
     private Boolean LenhHuy;
     private Boolean DongNuoc;
     private Boolean DongNuoc2;
@@ -38,11 +39,13 @@ public class CViewParent {
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
+        TBDongNuoc=false;
         LenhHuy = false;
         DongNuoc = false;
         DongNuoc2 = false;
         ToTrinh = false;
         DCHD = false;
+
         listChild = new ArrayList<CViewChild>();
     }
 
@@ -148,6 +151,14 @@ public class CViewParent {
 
     public void setThuHo(Boolean thuHo) {
         ThuHo = thuHo;
+    }
+
+    public Boolean getTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(Boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
     }
 
     public Boolean getLenhHuy() {

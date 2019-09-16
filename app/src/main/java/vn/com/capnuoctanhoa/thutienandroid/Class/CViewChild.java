@@ -15,6 +15,7 @@ public class CViewChild {
     private Boolean GiaiTrach;
     private Boolean TamThu;
     private Boolean ThuHo;
+    private Boolean TBDongNuoc;
     private Boolean LenhHuy;
 
     public CViewChild() {
@@ -127,6 +128,14 @@ public class CViewChild {
 
     public void setThuHo(Boolean thuHo) {
         ThuHo = thuHo;
+    }
+
+    public Boolean getTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(Boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
     }
 
     public Boolean getLenhHuy() {

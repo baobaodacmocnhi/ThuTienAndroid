@@ -184,6 +184,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 return true;
             case R.id.action_down_data:
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
+                intent.putExtra("LoaiDownData", "HoaDon");
                 startActivityForResult(intent, 1);
                 return true;
             default:
