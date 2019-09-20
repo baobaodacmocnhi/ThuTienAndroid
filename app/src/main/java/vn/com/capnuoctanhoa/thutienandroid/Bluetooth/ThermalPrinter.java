@@ -6,12 +6,16 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +35,7 @@ public class ThermalPrinter {
     private byte[] readBuffer;
     private int readBufferPosition;
     private volatile boolean stopWorker;
-    private final byte[] ESC = {0x1b};
+    private final byte[] ESC = {0x1B};
     private StringBuilder stringBuilder;
     private CEntityParent entityParent;
     private int toadoX = 10;
@@ -113,7 +117,6 @@ public class ThermalPrinter {
             bluetoothSocket.connect();
             outputStream = bluetoothSocket.getOutputStream();
             inputStream = bluetoothSocket.getInputStream();
-
             beginListenData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,11 +210,37 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("PHIẾU BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1));
-                //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
-                stringBuilder.append("}\n");
-                outputStream.write(stringBuilder.toString().getBytes());
+                printText("THÔNG BÁO TIỀN NƯỚC", 4, 0, 45, 1, 1);
+                printText("CHƯA THANH TOÁN", 4, 0, 65, 1, 1);
+
+                initialPrinter();
+                printNewLine(1);
+                outputStream.write(ESC);
+                outputStream.write((" Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
+                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+                outputStream.write(("Danh bộ:").getBytes());
+
+                printText(entityParent.getDanhBo(), 3, 0, 0, 2, 2);
+
+                initialPrinter();
+                printNewLine(1);
+                outputStream.write(ESC);
+                outputStream.write(("Hóa đơn:\n").getBytes());
+                int TongCong=0;
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ")+"\n").getBytes());
+                    TongCong+=Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                }
+                outputStream.write(("Tổng số tiền: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + " chưa thanh toán\n").getBytes());
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                outputStream.write(("Quý khách hàng vui lòng thanh toán trong 7 ngày\n").getBytes());
+                outputStream.write(("Kể từ ngày: " + currentDate.format(new Date()).toString() + "\n").getBytes());
+                outputStream.write(("Quá thời hạn trên, Công ty sẽ tạm ngưng dịch vụ cung cấp nước theo quy định. Mọi thắc mắc đề nghị quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước.\n").getBytes());
+                outputStream.write(("Trân trọng kính chào.\n").getBytes());
+                outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                outputStream.write(("Ngày gửi: " + currentDate.format(new Date()).toString() + "\n").getBytes());
+
+                printNewLine(3);
                 outputStream.flush();
             }
         } catch (Exception ex) {
@@ -224,11 +253,16 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("BIÊN NHẬN THU TIỀN", 4, toadoY, 60, 2, 1));
-                //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
-                stringBuilder.append("}\n");
-                outputStream.write(stringBuilder.toString().getBytes());
+//                printText("BIÊN NHẬN THU TIỀN", 4, 0, 55, 2, 1);
+
+//                outputStream.write(ESC);
+//                printNewLine(1);
+//                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
+//                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+//                outputStream.write(("Danh bộ:\n").getBytes());
+//                printText(entityParent.getDanhBo(), 3, 0, 0, 3, 1);
+
+                printNewLine(3);
                 outputStream.flush();
             }
         } catch (Exception ex) {
@@ -241,13 +275,13 @@ public class ThermalPrinter {
             if (entityParent != null) {
                 printTop();
 
-                stringBuilder.append(printLine("THÔNG BÁO TẠM", 4, toadoY, 80, 2, 1));
-                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY + 20, 40, 2, 1));
-
-                //in dòng cuối
-                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
-                stringBuilder.append("}\n");
-                outputStream.write(stringBuilder.toString().getBytes());
+//                stringBuilder.append(printLine("THÔNG BÁO TẠM", 4, toadoY, 80, 2, 1));
+//                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY + 20, 40, 2, 1));
+//
+//                //in dòng cuối
+//                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
+//                stringBuilder.append("}\n");
+//                outputStream.write(stringBuilder.toString().getBytes());
                 outputStream.flush();
             }
         } catch (Exception ex) {
@@ -257,29 +291,155 @@ public class ThermalPrinter {
 
     private void printTop() {
         try {
-            this.toadoY = 20;
-            outputStream.write((ESC));
+//            this.toadoY = 20;
+//            outputStream.write(ESC);
+//
+//            stringBuilder = new StringBuilder();
+//            stringBuilder.append("EZ\n");
+//            stringBuilder.append("{PRINT:\n");
+//            stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, toadoY, 25, 1, 1));
+//            stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, toadoY, 40, 1, 1));
+//            stringBuilder.append(printLine("Tổng đài: 1900.6489", 2, toadoY, 80, 1, 1));
+//            toadoY += 20;
 
-            stringBuilder = new StringBuilder();
-            stringBuilder.append("EZ\n");
-            stringBuilder.append("{PRINT:\n");
-            stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, toadoY, 25, 1, 1));
-            stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, toadoY, 40, 1, 1));
-            stringBuilder.append(printLine("Tổng đài: 1900.6489", 2, toadoY, 80, 1, 1));
-            toadoY += 20;
+            resetPrinter();
+            setLineSpacing();
+            printText("CTY CP CẤP NƯỚC TÂN HÒA", 3, 0, 25, 1, 1);
+            printText("95 PHẠM HỮU CHÍ, P12, Q5", 1, 0, 40, 1, 1);
+            printText("Tổng đài: 1900.6489", 2, 0, 80, 1, 1);
+            initialPrinter();
+            printNewLine(1);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private String printLine(String data, int boldNumber, int toadoY, int toadoX, int widthFont, int heightFont) {
-        String base = "@" + toadoY + "," + toadoX + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n";
+    //initial printer
+    private void initialPrinter() {
+            resetPrinter();
+            setLineSpacing();
+            setTimeNewRoman();
+    }
+
+    //reset printer
+    private void resetPrinter() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x40});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //set font Times New Roman
+    private void setTimeNewRoman() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x77, 0x35});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //set line spacing
+    private void setLineSpacing() {
+        try {
+            //set line spacing using minimun units
+            outputStream.write(new byte[]{0x1B, '2'});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //print new line
+    private void printNewLine(int numberLine) {
+        try {
+            for (int i = 0; i < numberLine; i++) {
+                outputStream.write(new byte[]{0x0A});
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private String printLine(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
+//        String base = "@" + toadoY + "," + toadoX + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + content + "|\n";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < boldNumber; i++) {
-            builder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + data + "|\n");
+            builder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + content + "|\n");
         }
         this.toadoY = toadoY + 30;
         return builder.toString();
+    }
+
+    //print custom
+    private void printText(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
+        try {
+            outputStream.write(ESC);
+            stringBuilder = new StringBuilder();
+            stringBuilder.append("EZ{PRINT:");
+            for (int i = 0; i < boldNumber; i++) {
+                stringBuilder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + content + "|");
+            }
+            stringBuilder.append("}");
+            outputStream.write(stringBuilder.toString().getBytes());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //print custom
+    private void printText(String content, int size, int align) {
+        //Print config "mode"
+
+//        [0x1b,0x21,0x00] //default
+//        [0x1b,0x21,0x01] //small font
+//        [0x1b,0x21,0x08] //bold
+//        [0x1b,0x21,0x10] //doubleHeight
+//        [0x1b,0x21,0x20] //doubleWidth
+//        [0x1b,0x21,0x30] //doubleHeightAndWidth
+
+        byte[] cc = new byte[]{0x1B, 0x21, 0x03};  // 0- normal size text
+        byte[] bb = new byte[]{0x1B, 0x21, 0x05};  // 1- bold
+        byte[] bb1 = new byte[]{0x1B, 0x21, 0x10}; // 2- bold Double-high
+        byte[] bb2 = new byte[]{0x1B, 0x21, 0x20}; // 3- bold Double-wide
+        byte[] bb3 = new byte[]{0x1B, 0x21, 0x30}; // 4- bold Double-high and double-wide
+        try {
+            switch (size) {
+                case 0:
+                    outputStream.write(cc);
+                    break;
+                case 1:
+                    outputStream.write(bb);
+                    break;
+                case 2:
+                    outputStream.write(bb1);
+                    break;
+                case 3:
+                    outputStream.write(bb2);
+                    break;
+                case 4:
+                    outputStream.write(bb3);
+                    break;
+            }
+
+            switch (align) {
+                case 0:
+                    //left align
+                    outputStream.write(new byte[]{0x1B, 'a', 0});
+                    break;
+                case 1:
+                    //center align
+                    outputStream.write(new byte[]{0x1B, 'a', 1});
+                    break;
+                case 2:
+                    //right align
+                    outputStream.write(new byte[]{0x1B, 'a', 2});
+                    break;
+            }
+            outputStream.write(content.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static String padLeft(String s, int n) {

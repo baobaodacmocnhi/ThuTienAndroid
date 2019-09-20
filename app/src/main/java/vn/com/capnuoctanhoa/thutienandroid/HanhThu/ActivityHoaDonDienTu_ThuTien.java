@@ -25,7 +25,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInTBDongNuoc_Ngay, edtInPhieuBao_Ngay, edtPhiMoNuoc, edtTongCong;
     private ListView listView;
-    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao, btnInPhieuNgungNuoc, btnXoa;
+    private Button btnTruoc, btnSau, btnThuTien,btnInBienNhan, btnInPhieuBao, btnInPhieuNgungNuoc, btnXoa;
     private Integer index;
     private ThermalPrinter thermalPrinter;
 
@@ -48,6 +48,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnTruoc = (Button) findViewById(R.id.btnTruoc);
         btnSau = (Button) findViewById(R.id.btnSau);
         btnThuTien = (Button) findViewById(R.id.btnThuTien);
+        btnInBienNhan = (Button) findViewById(R.id.btnInBienNhan);
         btnInPhieuBao = (Button) findViewById(R.id.btnInPhieuBao);
         btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
@@ -90,6 +91,24 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                 CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
+        btnInBienNhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
+                                if(CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getDangNgan_DienThoai()==true)
                                 thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
                             }
                         }
@@ -225,5 +244,11 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         } catch (Exception ex) {
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        thermalPrinter.disconnectBluetoothDevice();
+        super.onDestroy();
     }
 }
