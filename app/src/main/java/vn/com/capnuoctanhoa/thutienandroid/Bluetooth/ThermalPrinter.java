@@ -209,27 +209,19 @@ public class ThermalPrinter {
         try {
             if (entityParent != null) {
                 printTop();
-
-                printText("THÔNG BÁO TIỀN NƯỚC", 4, 0, 45, 1, 1);
-                printText("CHƯA THANH TOÁN", 4, 0, 65, 1, 1);
-
-                initialPrinter();
+                outputStream.write("THÔNG BÁO TIỀN NƯỚC\n".getBytes());
+                outputStream.write("CHƯA THANH TOÁN\n".getBytes());
                 printNewLine(1);
-                outputStream.write(ESC);
-                outputStream.write((" Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
+                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
                 outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
                 outputStream.write(("Danh bộ:").getBytes());
 
-                printText(entityParent.getDanhBo(), 3, 0, 0, 2, 2);
-
-                initialPrinter();
-                printNewLine(1);
-                outputStream.write(ESC);
-                outputStream.write(("Hóa đơn:\n").getBytes());
-                int TongCong=0;
+                outputStream.write(entityParent.getDanhBo().getBytes());
+                outputStream.write((" Hóa đơn:\n").getBytes());
+                int TongCong = 0;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ")+"\n").getBytes());
-                    TongCong+=Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
+                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
                 }
                 outputStream.write(("Tổng số tiền: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + " chưa thanh toán\n").getBytes());
                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -252,18 +244,12 @@ public class ThermalPrinter {
         try {
             if (entityParent != null) {
                 printTop();
-
-//                printText("BIÊN NHẬN THU TIỀN", 4, 0, 55, 2, 1);
-
-//                outputStream.write(ESC);
+//                outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
 //                printNewLine(1);
-//                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
-//                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
-//                outputStream.write(("Danh bộ:\n").getBytes());
-//                printText(entityParent.getDanhBo(), 3, 0, 0, 3, 1);
-
-                printNewLine(3);
-                outputStream.flush();
+//
+//                outputStream.write(new byte[]{0x0C});
+//                printNewLine(3);
+//                outputStream.flush();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -274,14 +260,11 @@ public class ThermalPrinter {
         try {
             if (entityParent != null) {
                 printTop();
+                outputStream.write("THÔNG BÁO TẠM\n".getBytes());
+                outputStream.write("NGƯNG CUNG CẤP NƯỚC\n".getBytes());
+                printNewLine(1);
 
-//                stringBuilder.append(printLine("THÔNG BÁO TẠM", 4, toadoY, 80, 2, 1));
-//                stringBuilder.append(printLine("NGƯNG CUNG CẤP NƯỚC", 4, toadoY + 20, 40, 2, 1));
-//
-//                //in dòng cuối
-//                stringBuilder.append(printLine(" ", 1, toadoY + 100, 10, 1, 1));
-//                stringBuilder.append("}\n");
-//                outputStream.write(stringBuilder.toString().getBytes());
+                printNewLine(3);
                 outputStream.flush();
             }
         } catch (Exception ex) {
@@ -304,11 +287,12 @@ public class ThermalPrinter {
 
             resetPrinter();
             setLineSpacing();
-            printText("CTY CP CẤP NƯỚC TÂN HÒA", 3, 0, 25, 1, 1);
-            printText("95 PHẠM HỮU CHÍ, P12, Q5", 1, 0, 40, 1, 1);
-            printText("Tổng đài: 1900.6489", 2, 0, 80, 1, 1);
-            initialPrinter();
+            setTimeNewRoman();
+            outputStream.write("CTY CP CẤP NƯỚC TÂN HÒA\n".getBytes());
+            outputStream.write("95 PHẠM HỮU CHÍ, P12, Q5\n".getBytes());
+            outputStream.write("Tổng đài: 1900.6489\n".getBytes());
             printNewLine(1);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -316,9 +300,9 @@ public class ThermalPrinter {
 
     //initial printer
     private void initialPrinter() {
-            resetPrinter();
-            setLineSpacing();
-            setTimeNewRoman();
+        resetPrinter();
+        setLineSpacing();
+        setTimeNewRoman();
     }
 
     //reset printer
@@ -349,6 +333,49 @@ public class ThermalPrinter {
         }
     }
 
+    private void setSizeNormal() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x21, 0x05});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setBold(Boolean bold) {
+        try {
+            if(bold==true)
+            outputStream.write(new byte[]{0x1B, 0x45});
+            else
+                outputStream.write(new byte[]{0x1B, 0x46});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSizeDoubleHigh() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x21, 0x10});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSizeDoubleWidth() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x21, 0x20});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSizeDoubleHighWidth() {
+        try {
+            outputStream.write(new byte[]{0x1B, 0x21, 0x30});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //print new line
     private void printNewLine(int numberLine) {
         try {
@@ -361,7 +388,7 @@ public class ThermalPrinter {
     }
 
 
-    private String printLine(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
+    private String printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
 //        String base = "@" + toadoY + "," + toadoX + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + content + "|\n";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < boldNumber; i++) {

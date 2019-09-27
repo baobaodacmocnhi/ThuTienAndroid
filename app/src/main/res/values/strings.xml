@@ -70,6 +70,12 @@
         <item>Đã Thu</item>
         <item>Giải Trách</item>
     </string-array>
+    <string-array name="filter_hanhthu_hoadondientu_array">
+        <item>Tất Cả</item>
+        <item>Tạm Thu-Thu Hộ</item>
+        <item>Đã Thu</item>
+        <item>Chưa Thu</item>
+    </string-array>
     <string-array name="filter_dongnuoc_array">
         <item>Tất Cả</item>
         <item>Chưa ĐN</item>

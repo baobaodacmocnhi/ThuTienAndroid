@@ -214,19 +214,18 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
-                case "Đã Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == false) {
+                            if (CLocal.listHanhThu.get(i).getDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).getGiaiTrach() == false && CLocal.listHanhThu.get(i).getTamThu() == false && CLocal.listHanhThu.get(i).getThuHo() == false) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
                     }
                     break;
-                case "Giải Trách":
+                case "Đã Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == true) {
+                            if (CLocal.listHanhThu.get(i).getDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getGiaiTrach() == false && CLocal.listHanhThu.get(i).getTamThu() == false && CLocal.listHanhThu.get(i).getThuHo() == false) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -235,7 +234,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Tạm Thu-Thu Hộ":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getTamThu() == true || CLocal.listHanhThu.get(i).getThuHo() == true) {
+                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == true || CLocal.listHanhThu.get(i).getTamThu() == true || CLocal.listHanhThu.get(i).getThuHo() == true) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -262,6 +261,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     public void addViewParent(CEntityParent enParent) {
         try {
             CViewParent enViewParent = new CViewParent();
+            enViewParent.setModifyDate(enParent.getModifyDate());
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
             enViewParent.setID(enParent.getDanhBo());
 
@@ -270,38 +270,23 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getDiaChi());
 
-            enViewParent.setGiaiTrach(enParent.getGiaiTrach());
-            enViewParent.setTamThu(enParent.getTamThu());
             enViewParent.setThuHo(enParent.getThuHo());
-            enViewParent.setModifyDate(enParent.getModifyDate());
+            enViewParent.setTamThu(enParent.getTamThu());
+            enViewParent.setGiaiTrach(enParent.getGiaiTrach());
+            enViewParent.setTBDongNuoc(enParent.getTBDongNuoc());
+            enViewParent.setLenhHuy(enParent.getLenhHuy());
+
             ///////////////////////////
 
             listChild = new ArrayList<CViewChild>();
-            Integer TongCongChild = 0, numGiaiTrach = 0, numTamThu = 0, numThuHo = 0;
+            Integer TongCongChild = 0;
             for (int i = 0; i < enParent.getLstHoaDon().size(); i++) {
                 addViewChild(enParent.getLstHoaDon().get(i));
                 ///cập nhật parent
                 TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
-                if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
-                    numGiaiTrach++;
-                else if (enParent.getLstHoaDon().get(i).getTamThu() == true)
-                    numTamThu++;
-                else if (enParent.getLstHoaDon().get(i).getThuHo() == true) {
-                    numThuHo++;
-                }
             }
-            if (numGiaiTrach == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Giải Trách");
-                enParent.setGiaiTrach(true);
-            } else if (numTamThu == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Tạm Thu");
-                enParent.setTamThu(true);
-            } else if (numThuHo == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Thu Hộ");
-                enParent.setThuHo(true);
-            }
+
             enViewParent.setTBDongNuoc(enParent.getLstHoaDon().get(0).getTBDongNuoc());
-            enViewParent.setLenhHuy(enParent.getLstHoaDon().get(0).getLenhHuy());
             enViewParent.setListChild(listChild);
             enViewParent.setRow1b(String.valueOf(listChild.size()) + " HĐ: " + CLocal.formatMoney(TongCongChild.toString(), "đ"));
             enViewParent.setRow2b(enParent.getTinhTrang());

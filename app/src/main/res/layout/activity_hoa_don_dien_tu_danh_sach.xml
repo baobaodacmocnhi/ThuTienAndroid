@@ -27,7 +27,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:entries="@array/filter_hanhthu_array"
+        android:entries="@array/filter_hanhthu_hoadondientu_array"
         android:gravity="center"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +63,8 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
         app:layout_constraintEnd_toEndOf="parent"

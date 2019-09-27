@@ -130,18 +130,12 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.Row4b.setText(map.getRow4b());
         }
 
-//        if (map.getGiaiTrach() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
-//        else if (map.getTamThu() == true || map.getThuHo() == true)
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
-//        else
-//            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-        if (map.getTBDongNuoc() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
-        else
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-        if (map.getLenhHuy() == true)
+        if (map.getGiaiTrach() == true || map.getTamThu() == true || map.getThuHo() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
+        else if (map.getLenhHuy() == true)
             holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+        else if (map.getTBDongNuoc() == true)
+            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
         else
             holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
 
@@ -215,17 +209,14 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.Row4a.setText(map.getRow4a());
             holder.Row4b.setText(map.getRow4b());
         }
-        if (map.getGiaiTrach() == true)
+        if (map.getGiaiTrach() == true || map.getTamThu() == true || map.getThuHo() == true)
             holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorGiaiTrach));
-        else if (map.getTamThu() == true || map.getThuHo() == true)
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorTamThu));
+        else if (map.getLenhHuy() == true)
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+        else if (map.getTBDongNuoc() == true)
+            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
         else
             holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
-
-        if (map.getTBDongNuoc() == true)
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
-        if (map.getLenhHuy() == true)
-            holder.layoutChild.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
 
         return convertView;
     }

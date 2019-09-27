@@ -5,18 +5,18 @@ public class CEntityChild {
     private String Ky;
     private String TongCong;
     private String ModifyDate;
-    private String TinhTrang;
-    private Boolean GiaiTrach;
-    private Boolean TamThu;
     private Boolean ThuHo;
+    private Boolean TamThu;
+    private Boolean GiaiTrach;
+    private Boolean TBDongNuoc;
     private Boolean LenhHuy;
+    private String TinhTrang;
     private String PhiMoNuoc;
     private Boolean DangNgan_DienThoai;
     private Boolean InPhieuBao_DienThoai;
     private String InPhieuBao_Ngay_DienThoai;
     private Boolean XoaDangNgan_DienThoai;
     private String XoaDangNgan_Ngay_DienThoai;
-    private Boolean TBDongNuoc;
     private String TBDongNuoc_Ngay;
 
     public CEntityChild() {
@@ -24,11 +24,11 @@ public class CEntityChild {
         Ky = "";
         TongCong = "";
         ModifyDate="";
-        TinhTrang="";
-        GiaiTrach = false;
-        TamThu =false;
         ThuHo = false;
+        TamThu =false;
+        GiaiTrach = false;
         LenhHuy = false;
+        TinhTrang="";
         PhiMoNuoc="";
         DangNgan_DienThoai = false;
         InPhieuBao_DienThoai=false;
