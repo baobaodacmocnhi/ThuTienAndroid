@@ -12,31 +12,35 @@ public class CEntityChild {
     private Boolean LenhHuy;
     private String TinhTrang;
     private String PhiMoNuoc;
+    private String PhiMoNuocThuHo;
     private Boolean DangNgan_DienThoai;
-    private Boolean InPhieuBao_DienThoai;
-    private String InPhieuBao_Ngay_DienThoai;
-    private Boolean XoaDangNgan_DienThoai;
     private String XoaDangNgan_Ngay_DienThoai;
+    private String InPhieuBao_Ngay;
+    private String InPhieuBao2_Ngay;
+    private String InPhieuBao2_NgayHen;
     private String TBDongNuoc_Ngay;
+    private String TBDongNuoc_NgayHen;
 
     public CEntityChild() {
         MaHD = "";
         Ky = "";
         TongCong = "";
-        ModifyDate="";
+        ModifyDate = "";
         ThuHo = false;
-        TamThu =false;
+        TamThu = false;
         GiaiTrach = false;
         LenhHuy = false;
-        TinhTrang="";
-        PhiMoNuoc="";
+        TinhTrang = "";
+        PhiMoNuoc = "";
+        PhiMoNuocThuHo = "";
         DangNgan_DienThoai = false;
-        InPhieuBao_DienThoai=false;
-        InPhieuBao_Ngay_DienThoai="";
-        XoaDangNgan_DienThoai=false;
-        XoaDangNgan_Ngay_DienThoai="";
-        TBDongNuoc=false;
-        TBDongNuoc_Ngay="";
+        XoaDangNgan_Ngay_DienThoai = "";
+        InPhieuBao_Ngay = "";
+        InPhieuBao2_Ngay = "";
+        InPhieuBao2_NgayHen = "";
+        TBDongNuoc = false;
+        TBDongNuoc_Ngay = "";
+        TBDongNuoc_NgayHen = "";
     }
 
     public String getMaHD() {
@@ -119,36 +123,20 @@ public class CEntityChild {
         PhiMoNuoc = phiMoNuoc;
     }
 
+    public String getPhiMoNuocThuHo() {
+        return PhiMoNuocThuHo;
+    }
+
+    public void setPhiMoNuocThuHo(String phiMoNuocThuHo) {
+        PhiMoNuocThuHo = phiMoNuocThuHo;
+    }
+
     public Boolean getDangNgan_DienThoai() {
         return DangNgan_DienThoai;
     }
 
     public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
         DangNgan_DienThoai = dangNgan_DienThoai;
-    }
-
-    public Boolean getInPhieuBao_DienThoai() {
-        return InPhieuBao_DienThoai;
-    }
-
-    public void setInPhieuBao_DienThoai(Boolean inPhieuBao_DienThoai) {
-        InPhieuBao_DienThoai = inPhieuBao_DienThoai;
-    }
-
-    public String getInPhieuBao_Ngay_DienThoai() {
-        return InPhieuBao_Ngay_DienThoai;
-    }
-
-    public void setInPhieuBao_Ngay_DienThoai(String inPhieuBao_Ngay_DienThoai) {
-        InPhieuBao_Ngay_DienThoai = inPhieuBao_Ngay_DienThoai;
-    }
-
-    public Boolean getXoaDangNgan_DienThoai() {
-        return XoaDangNgan_DienThoai;
-    }
-
-    public void setXoaDangNgan_DienThoai(Boolean xoaDangNgan_DienThoai) {
-        XoaDangNgan_DienThoai = xoaDangNgan_DienThoai;
     }
 
     public String getXoaDangNgan_Ngay_DienThoai() {
@@ -159,12 +147,28 @@ public class CEntityChild {
         XoaDangNgan_Ngay_DienThoai = xoaDangNgan_Ngay_DienThoai;
     }
 
-    public Boolean getTBDongNuoc() {
-        return TBDongNuoc;
+    public String getInPhieuBao_Ngay() {
+        return InPhieuBao_Ngay;
     }
 
-    public void setTBDongNuoc(Boolean TBDongNuoc) {
-        this.TBDongNuoc = TBDongNuoc;
+    public void setInPhieuBao_Ngay(String inPhieuBao_Ngay) {
+        InPhieuBao_Ngay = inPhieuBao_Ngay;
+    }
+
+    public String getInPhieuBao2_Ngay() {
+        return InPhieuBao2_Ngay;
+    }
+
+    public void setInPhieuBao2_Ngay(String inPhieuBao2_Ngay) {
+        InPhieuBao2_Ngay = inPhieuBao2_Ngay;
+    }
+
+    public String getInPhieuBao2_NgayHen() {
+        return InPhieuBao2_NgayHen;
+    }
+
+    public void setInPhieuBao2_NgayHen(String inPhieuBao2_NgayHen) {
+        InPhieuBao2_NgayHen = inPhieuBao2_NgayHen;
     }
 
     public String getTBDongNuoc_Ngay() {
@@ -174,4 +178,22 @@ public class CEntityChild {
     public void setTBDongNuoc_Ngay(String TBDongNuoc_Ngay) {
         this.TBDongNuoc_Ngay = TBDongNuoc_Ngay;
     }
+
+    public String getTBDongNuoc_NgayHen() {
+        return TBDongNuoc_NgayHen;
+    }
+
+    public void setTBDongNuoc_NgayHen(String TBDongNuoc_NgayHen) {
+        this.TBDongNuoc_NgayHen = TBDongNuoc_NgayHen;
+    }
+
+    public Boolean getTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(Boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
+    }
+
+
 }

@@ -15,7 +15,9 @@ import android.widget.ListView;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -127,7 +129,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_DienThoai(true);
+                                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(new Date()));
                                 if(thermalPrinter!=null)
                                 thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(index));
                             }
@@ -229,7 +232,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     edtDanhBo.setText(item.getDanhBo());
                     edtHoTen.setText(item.getHoTen());
                     edtDiaChi.setText(item.getDiaChi());
-                    edtInPhieuBao_Ngay.setText(item.getLstHoaDon().get(0).getInPhieuBao_Ngay_DienThoai());
+                    edtInPhieuBao_Ngay.setText(item.getLstHoaDon().get(0).getInPhieuBao_Ngay());
                     edtInTBDongNuoc_Ngay.setText(item.getLstHoaDon().get(0).getTBDongNuoc_Ngay());
                     Integer PhiMoNuoc = 0, TongCong = 0;
                     for (int j = 0; j < item.getLstHoaDon().size(); j++) {
@@ -251,6 +254,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if(thermalPrinter!=null)
         thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
     }

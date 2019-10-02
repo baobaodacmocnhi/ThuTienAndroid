@@ -286,7 +286,6 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
             }
 
-            enViewParent.setTBDongNuoc(enParent.getLstHoaDon().get(0).getTBDongNuoc());
             enViewParent.setListChild(listChild);
             enViewParent.setRow1b(String.valueOf(listChild.size()) + " HĐ: " + CLocal.formatMoney(TongCongChild.toString(), "đ"));
             enViewParent.setRow2b(enParent.getTinhTrang());

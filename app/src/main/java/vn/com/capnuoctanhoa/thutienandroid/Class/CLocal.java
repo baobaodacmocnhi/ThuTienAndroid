@@ -177,15 +177,58 @@ public class CLocal {
                             case "ThuHo":
                                 lst.get(i).getLstHoaDon().get(j).setThuHo(Boolean.parseBoolean(ValueUpdate));
                                 break;
-                            case "PhiMoNuoc":
-                                lst.get(i).getLstHoaDon().get(j).setPhiMoNuoc(ValueUpdate);
+                            case "PhiMoNuocThuHo":
+                                lst.get(i).getLstHoaDon().get(j).setPhiMoNuocThuHo(ValueUpdate);
                                 break;
                             case "DaThu":
                                 lst.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(Boolean.parseBoolean(ValueUpdate));
                                 break;
                             case "InPhieuBao":
-                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao_DienThoai(Boolean.parseBoolean(ValueUpdate));
+                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao_Ngay(ValueUpdate);
                                 break;
+                        }
+                        //update TinhTrang
+                        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
+                        for (CEntityChild item : lst.get(i).getLstHoaDon()) {
+                            if (item.getGiaiTrach() == true)
+                                GiaiTrach++;
+                            else if (item.getTamThu() == true)
+                                TamThu++;
+                            else if (item.getThuHo() == true) {
+                                ThuHo++;
+                                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
+                                    PhiMoNuocThuHo++;
+                            }
+                            else if (item.getLenhHuy() == true)
+                                LenhHuy++;
+                            else if (item.getTBDongNuoc() == true)
+                                TBDongNuoc++;
+
+                            if (item.getDangNgan_DienThoai() == true)
+                                DangNgan_DienThoai++;
+                        }
+
+                        if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setGiaiTrach(true);
+                            lst.get(i).setTinhTrang("Giải Trách");
+                        } else if (TamThu == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setTamThu(true);
+                            lst.get(i).setTinhTrang("Tạm Thu");
+                        } else if (ThuHo == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setThuHo(true);
+                            String str="Thu Hộ";
+                            if (PhiMoNuocThuHo == lst.get(i).getLstHoaDon().size())
+                                str+=" (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+                            lst.get(i).setTinhTrang(str);
+                        } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setLenhHuy(true);
+                        } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setTBDongNuoc(true);
+                        }
+
+                        if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
+                            lst.get(i).setDangNgan_DienThoai(true);
+                            lst.get(i).setTinhTrang("Đã Thu");
                         }
                     }
             }

@@ -378,23 +378,21 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setMaHD(jsonObjectChild.getString("MaHD"));
                                         enChild.setKy(jsonObjectChild.getString("Ky"));
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
-                                        enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
-                                        enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                         enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
-                                        if (jsonObjectChild.has("DangNgan_DienThoai") == true)
-                                            enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
+                                        enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
+                                        enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
                                         if (jsonObjectChild.has("LenhHuy") == true)
                                             enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
-                                        if (jsonObjectChild.has("PhiMoNuoc") == true)
-                                            enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
-                                        if (jsonObjectChild.has("InPhieuBao_DienThoai") == true)
-                                            enChild.setInPhieuBao_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("InPhieuBao_DienThoai")));
-                                        if (jsonObjectChild.has("InPhieuBao_Ngay_DienThoai") == true)
-                                            enChild.setInPhieuBao_Ngay_DienThoai(jsonObjectChild.getString("InPhieuBao_Ngay_DienThoai"));
-                                        if (jsonObjectChild.has("XoaDangNgan_DienThoai") == true)
-                                            enChild.setXoaDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("XoaDangNgan_DienThoai")));
+                                        if (jsonObjectChild.has("DangNgan_DienThoai") == true)
+                                            enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
                                         if (jsonObjectChild.has("XoaDangNgan_Ngay_DienThoai") == true)
                                             enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai"));
+                                        if (jsonObjectChild.has("InPhieuBao_Ngay") == true)
+                                            enChild.setInPhieuBao_Ngay(jsonObjectChild.getString("InPhieuBao_Ngay"));
+                                        if (jsonObjectChild.has("InPhieuBao2_Ngay") == true)
+                                            enChild.setInPhieuBao2_Ngay(jsonObjectChild.getString("InPhieuBao2_Ngay"));
+                                        if (jsonObjectChild.has("InPhieuBao2_NgayHen") == true)
+                                            enChild.setInPhieuBao2_NgayHen(jsonObjectChild.getString("InPhieuBao2_NgayHen"));
                                         if (jsonObjectChild.has("TBDongNuoc_Ngay") == true) {
                                             enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay"));
                                             if (enChild.getTBDongNuoc_Ngay().equals("null") == true)
@@ -402,6 +400,10 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             else
                                                 enChild.setTBDongNuoc(true);
                                         }
+                                        if (jsonObjectChild.has("TBDongNuoc_NgayHen") == true)
+                                            enChild.setTBDongNuoc_NgayHen(jsonObjectChild.getString("TBDongNuoc_NgayHen"));
+                                        if (jsonObjectChild.has("PhiMoNuoc") == true)
+                                            enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                         listChild.add(enChild);
                                     }
                                 }

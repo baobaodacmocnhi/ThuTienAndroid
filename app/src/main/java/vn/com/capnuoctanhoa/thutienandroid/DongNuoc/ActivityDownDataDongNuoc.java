@@ -385,10 +385,6 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
 
                         enParent.setHoTen(jsonObject.getString("HoTen"));
                         enParent.setDiaChi(jsonObject.getString("DiaChi"));
-                        enParent.setGiaiTrach(Boolean.parseBoolean(jsonObject.getString("GiaiTrach")));
-                        enParent.setTamThu(Boolean.parseBoolean(jsonObject.getString("TamThu")));
-                        enParent.setThuHo(Boolean.parseBoolean(jsonObject.getString("ThuHo")));
-                        enParent.setLenhHuy(Boolean.parseBoolean(jsonObject.getString("LenhHuy")));
                         enParent.setDongNuoc(Boolean.parseBoolean(jsonObject.getString("DongNuoc")));
                         enParent.setDongPhi(Boolean.parseBoolean(jsonObject.getString("DongPhi")));
                         enParent.setMoNuoc(Boolean.parseBoolean(jsonObject.getString("MoNuoc")));
@@ -400,17 +396,50 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                 JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(k);
                                 if (jsonObjectChild.getString("MaDN").equals(enParent.getID()) == true) {
                                     CEntityChild enChild = new CEntityChild();
+                                    enChild.setModifyDate(enParent.getModifyDate());
                                     enChild.setMaHD(jsonObjectChild.getString("MaHD"));
                                     enChild.setKy(jsonObjectChild.getString("Ky"));
                                     enChild.setTongCong(jsonObjectChild.getString("TongCong"));
                                     enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                     enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                     enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
+                                    enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo"));
                                     enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
-                                    enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                     listChild.add(enChild);
                                 }
                             }
+                        //update TinhTrang
+                        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
+                        for (CEntityChild item : listChild) {
+                            if (item.getGiaiTrach() == true)
+                                GiaiTrach++;
+                            else if (item.getTamThu() == true)
+                                TamThu++;
+                            else if (item.getThuHo() == true) {
+                                ThuHo++;
+                                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
+                                    PhiMoNuocThuHo++;
+                            }
+                            else if (item.getLenhHuy() == true)
+                                LenhHuy++;
+                        }
+
+                        if (GiaiTrach == listChild.size()) {
+                            enParent.setGiaiTrach(true);
+                            enParent.setTinhTrang("Giải Trách");
+                        } else if (TamThu == listChild.size()) {
+                            enParent.setTamThu(true);
+                            enParent.setTinhTrang("Tạm Thu");
+                        } else if (ThuHo == listChild.size()) {
+                            enParent.setThuHo(true);
+                            String str="Thu Hộ";
+                            if (PhiMoNuocThuHo == listChild.size())
+                                str+=" (" + listChild.get(0).getPhiMoNuocThuHo().substring(0, listChild.get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+                            enParent.setTinhTrang(str);
+                        } else if (LenhHuy == listChild.size()) {
+                            enParent.setLenhHuy(true);
+                        }
+
                         enParent.setLstHoaDon(listChild);
                         CLocal.listDongNuoc.add(enParent);
                     }

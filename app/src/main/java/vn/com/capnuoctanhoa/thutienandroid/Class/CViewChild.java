@@ -31,6 +31,7 @@ public class CViewChild {
         GiaiTrach = false;
         TamThu = false;
         ThuHo = false;
+         TBDongNuoc=false;
         LenhHuy=false;
     }
 

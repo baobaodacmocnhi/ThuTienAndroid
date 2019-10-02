@@ -317,6 +317,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
     public void addEntityParent(CEntityParent enParent) {
         try {
             CViewParent enViewParent = new CViewParent();
+            enViewParent.setModifyDate(enParent.getModifyDate());
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
             enViewParent.setID(enParent.getID());
 
@@ -329,7 +330,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             enViewParent.setTamThu(enParent.getTamThu());
             enViewParent.setThuHo(enParent.getThuHo());
             enViewParent.setLenhHuy(enParent.getLenhHuy());
-            enViewParent.setModifyDate(enParent.getModifyDate());
+
             ///////////////////////////
 
             listChild = new ArrayList<CViewChild>();
@@ -339,37 +340,6 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 addEntityChild(enParent.getLstHoaDon().get(i));
                 ///cập nhật parent
                 TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
-                if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
-                    numGiaiTrach++;
-                else if (enParent.getLstHoaDon().get(i).getTamThu() == true)
-                    numTamThu++;
-                else if (enParent.getLstHoaDon().get(i).getThuHo() == true) {
-                    numThuHo++;
-                    if (enParent.getLstHoaDon().get(i).getPhiMoNuoc() != "null" && enParent.getLstHoaDon().get(i).getPhiMoNuoc().equals("0") == false) {
-                        flagPhiMoNuoc = true;
-                    }
-                }
-                ///xét lệnh hủy riêng
-                if (enParent.getLstHoaDon().get(i).getLenhHuy() == true)
-                    numLenhHuy++;
-            }
-            if (numGiaiTrach == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Giải Trách");
-                enParent.setGiaiTrach(true);
-            } else if (numTamThu == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Tạm Thu");
-                enParent.setTamThu(true);
-            } else if (numThuHo == enParent.getLstHoaDon().size()) {
-                String str = "Thu Hộ";
-                if (flagPhiMoNuoc == true)
-                    str += " (" + enParent.getLstHoaDon().get(0).getPhiMoNuoc().substring(0, enParent.getLstHoaDon().get(0).getPhiMoNuoc().length() - 3) + "k)";
-                enParent.setTinhTrang(str);
-                enParent.setThuHo(true);
-            }
-            ///xét lệnh hủy riêng
-            if (numLenhHuy == enParent.getLstHoaDon().size()) {
-                enParent.setTinhTrang("Lệnh Hủy");
-                enParent.setLenhHuy(true);
             }
 
             enViewParent.setListChild(listChild);
