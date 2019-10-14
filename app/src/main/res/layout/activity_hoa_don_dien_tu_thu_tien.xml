@@ -14,12 +14,15 @@
             android:id="@+id/edtInTBDongNuoc_Ngay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView49"
-            app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao_Ngay" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edtInTBDongNuoc_NgayHen"
+            app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_NgayHen" />
 
         <TextView
             android:id="@+id/textView49"
@@ -36,13 +39,16 @@
             android:id="@+id/edtInPhieuBao_Ngay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView48"
-            app:layout_constraintTop_toBottomOf="@+id/btnInBienNhan" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edtInPhieuBao2_Ngay"
+            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuNgungNuoc" />
 
         <TextView
             android:id="@+id/textView43"
@@ -220,10 +226,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="In Phiếu Ngưng Nước"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTruoc" />
+            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuNoTienNuoc" />
 
         <Button
             android:id="@+id/btnInBienNhan"
@@ -287,7 +292,113 @@
             android:layout_marginTop="8dp"
             android:text="Xóa"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_NgayHen" />
+
+        <Button
+            android:id="@+id/btnInPhieuNoTienNuoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="IN PHIẾU NỢ TIỀN NƯỚC"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSoNgayHen" />
+
+        <TextView
+            android:id="@+id/textView51"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Số Ngày"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editSoNgayHen" />
+
+        <EditText
+            android:id="@+id/editSoNgayHen"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="3"
+            app:layout_constraintStart_toEndOf="@+id/textView51"
+            app:layout_constraintTop_toBottomOf="@+id/btnTruoc" />
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Ngày Hẹn TB Đóng Nước"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtInTBDongNuoc_NgayHen" />
+
+        <EditText
+            android:id="@+id/edtInTBDongNuoc_NgayHen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView52"
             app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_Ngay" />
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Ngày In Phiếu Báo 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtInPhieuBao2_Ngay" />
+
+        <EditText
+            android:id="@+id/edtInPhieuBao2_Ngay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edtInPhieuBao2_NgayHen"
+            app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao_Ngay" />
+
+        <TextView
+            android:id="@+id/textView54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Ngày Hẹn Phiếu Báo 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edtInPhieuBao2_NgayHen" />
+
+        <EditText
+            android:id="@+id/edtInPhieuBao2_NgayHen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edtInTBDongNuoc_Ngay"
+            app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_Ngay" />
     </android.support.constraint.ConstraintLayout>
 
 </ScrollView>
