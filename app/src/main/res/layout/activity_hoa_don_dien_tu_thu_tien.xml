@@ -48,7 +48,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edtInPhieuBao2_Ngay"
-            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuNgungNuoc" />
+            app:layout_constraintTop_toBottomOf="@+id/btnTBDongNuoc" />
 
         <TextView
             android:id="@+id/textView43"
@@ -221,12 +221,12 @@
             app:layout_constraintTop_toBottomOf="@+id/edtPhiMoNuoc" />
 
         <Button
-            android:id="@+id/btnInPhieuNgungNuoc"
+            android:id="@+id/btnTBDongNuoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:text="In Đóng Nước"
+            android:text="TB Đóng Nước"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtSoNgayHen" />
 
@@ -241,13 +241,13 @@
             app:layout_constraintTop_toTopOf="@+id/btnTruoc" />
 
         <Button
-            android:id="@+id/btnInPhieuBao"
+            android:id="@+id/btnPhieuBao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="In Phiếu Báo"
+            android:text="Phiếu Báo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnThuTien" />
 
@@ -284,12 +284,12 @@
             app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_NgayHen" />
 
         <Button
-            android:id="@+id/btnInPhieuNoTienNuoc"
+            android:id="@+id/btnPhieuBao2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="In Nợ Tiền Nước"
+            android:text="Nợ Tiền Nước"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtSoNgayHen" />
 
@@ -313,8 +313,8 @@
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="3"
-            app:layout_constraintEnd_toStartOf="@+id/btnInPhieuNoTienNuoc"
-            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuBao" />
+            app:layout_constraintEnd_toStartOf="@+id/btnPhieuBao2"
+            app:layout_constraintTop_toBottomOf="@+id/btnPhieuBao" />
 
         <TextView
             android:id="@+id/textView52"

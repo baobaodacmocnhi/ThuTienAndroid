@@ -29,7 +29,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInPhieuBao_Ngay, edtInPhieuBao2_Ngay, edtInPhieuBao2_NgayHen, edtInTBDongNuoc_Ngay, edtInTBDongNuoc_NgayHen, edtSoNgayHen, edtPhiMoNuoc, edtTongCong;
     private ListView listView;
-    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao, btnInPhieuNoTienNuoc, btnInPhieuNgungNuoc, btnXoa;
+    private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private Integer index;
     private ThermalPrinter thermalPrinter;
 
@@ -56,9 +56,9 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnTruoc = (Button) findViewById(R.id.btnTruoc);
         btnSau = (Button) findViewById(R.id.btnSau);
         btnThuTien = (Button) findViewById(R.id.btnThuTien);
-        btnInPhieuBao = (Button) findViewById(R.id.btnInPhieuBao);
-        btnInPhieuNoTienNuoc = (Button) findViewById(R.id.btnInPhieuNoTienNuoc);
-        btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
+        btnPhieuBao = (Button) findViewById(R.id.btnPhieuBao);
+        btnPhieuBao2 = (Button) findViewById(R.id.btnPhieuBao2);
+        btnTBDongNuoc = (Button) findViewById(R.id.btnTBDongNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
         try {
@@ -113,7 +113,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         });
 
 
-        btnInPhieuBao.setOnClickListener(new View.OnClickListener() {
+        btnPhieuBao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -137,7 +137,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         });
 
-        btnInPhieuNoTienNuoc.setOnClickListener(new View.OnClickListener() {
+        btnPhieuBao2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -167,7 +167,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         });
 
-        btnInPhieuNgungNuoc.setOnClickListener(new View.OnClickListener() {
+        btnTBDongNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
