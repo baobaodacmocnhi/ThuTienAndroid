@@ -226,20 +226,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:text="In Phiếu Ngưng Nước"
+            android:text="In Đóng Nước"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuNoTienNuoc" />
-
-        <Button
-            android:id="@+id/btnInBienNhan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:text="In Biên Nhận"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuBao" />
+            app:layout_constraintTop_toBottomOf="@+id/edtSoNgayHen" />
 
         <Button
             android:id="@+id/btnSau"
@@ -287,45 +276,45 @@
             android:id="@+id/btnXoa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="Xóa"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_NgayHen" />
 
         <Button
             android:id="@+id/btnInPhieuNoTienNuoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:text="IN PHIẾU NỢ TIỀN NƯỚC"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editSoNgayHen" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="In Nợ Tiền Nước"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtSoNgayHen" />
 
         <TextView
             android:id="@+id/textView51"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="Số Ngày"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editSoNgayHen" />
+            android:text="Số Ngày Hẹn"
+            app:layout_constraintEnd_toStartOf="@+id/edtSoNgayHen"
+            app:layout_constraintTop_toTopOf="@+id/edtSoNgayHen" />
 
         <EditText
-            android:id="@+id/editSoNgayHen"
+            android:id="@+id/edtSoNgayHen"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="3"
-            app:layout_constraintStart_toEndOf="@+id/textView51"
-            app:layout_constraintTop_toBottomOf="@+id/btnTruoc" />
+            app:layout_constraintEnd_toStartOf="@+id/btnInPhieuNoTienNuoc"
+            app:layout_constraintTop_toBottomOf="@+id/btnInPhieuBao" />
 
         <TextView
             android:id="@+id/textView52"

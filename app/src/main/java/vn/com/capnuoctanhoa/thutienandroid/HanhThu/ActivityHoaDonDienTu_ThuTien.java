@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
@@ -26,9 +27,9 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
-    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInPhieuBao_Ngay, edtInPhieuBao2_Ngay, edtInPhieuBao2_NgayHen, edtInTBDongNuoc_Ngay, edtInTBDongNuoc_NgayHen, edtPhiMoNuoc, edtTongCong;
+    private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInPhieuBao_Ngay, edtInPhieuBao2_Ngay, edtInPhieuBao2_NgayHen, edtInTBDongNuoc_Ngay, edtInTBDongNuoc_NgayHen, edtSoNgayHen, edtPhiMoNuoc, edtTongCong;
     private ListView listView;
-    private Button btnTruoc, btnSau, btnThuTien, btnInBienNhan, btnInPhieuBao, btnInPhieuNgungNuoc, btnXoa;
+    private Button btnTruoc, btnSau, btnThuTien, btnInPhieuBao, btnInPhieuNoTienNuoc, btnInPhieuNgungNuoc, btnXoa;
     private Integer index;
     private ThermalPrinter thermalPrinter;
 
@@ -48,14 +49,15 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         edtInPhieuBao2_NgayHen = (EditText) findViewById(R.id.edtInPhieuBao2_NgayHen);
         edtInTBDongNuoc_Ngay = (EditText) findViewById(R.id.edtInTBDongNuoc_Ngay);
         edtInTBDongNuoc_NgayHen = (EditText) findViewById(R.id.edtInTBDongNuoc_NgayHen);
+        edtSoNgayHen = (EditText) findViewById(R.id.edtSoNgayHen);
         edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
         edtTongCong = (EditText) findViewById(R.id.edtTongCong);
         listView = (ListView) findViewById(R.id.listView);
         btnTruoc = (Button) findViewById(R.id.btnTruoc);
         btnSau = (Button) findViewById(R.id.btnSau);
         btnThuTien = (Button) findViewById(R.id.btnThuTien);
-        btnInBienNhan = (Button) findViewById(R.id.btnInBienNhan);
         btnInPhieuBao = (Button) findViewById(R.id.btnInPhieuBao);
+        btnInPhieuNoTienNuoc = (Button) findViewById(R.id.btnInPhieuNoTienNuoc);
         btnInPhieuNgungNuoc = (Button) findViewById(R.id.btnInPhieuNgungNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
@@ -94,10 +96,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getDangNgan_DienThoai() == false) {
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                }
                                 if (thermalPrinter != null)
-                                    thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
+                                    thermalPrinter.printThuTien(CLocal.listHanhThu.get(index));
                             }
+                            CLocal.updateCEntityParent(CLocal.listHanhThu, index);
+                            btnSau.performClick();
                         }
                     }
                 } catch (Exception ex) {
@@ -106,24 +112,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         });
 
-        btnInBienNhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
-                        if (index >= 0 && index < CLocal.listHanhThu.size()) {
-                            for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getDangNgan_DienThoai() == true)
-                                    if (thermalPrinter != null)
-                                        thermalPrinter.printHoaDon(CLocal.listHanhThu.get(index));
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-
-                }
-            }
-        });
 
         btnInPhieuBao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +120,45 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(new Date()));
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("null") == true) {
+                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(new Date()));
+                                }
                                 if (thermalPrinter != null)
                                     thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(index));
                             }
+                            CLocal.updateCEntityParent(CLocal.listHanhThu, index);
+                            btnSau.performClick();
+                        }
+                    }
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
+        btnInPhieuNoTienNuoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("null") == true) {
+                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(new Date()));
+                                    Date dt = new Date();
+                                    Calendar c = Calendar.getInstance();
+                                    c.setTime(dt);
+                                    c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
+                                    dt = c.getTime();
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                                }
+                            }
+                            if (thermalPrinter != null)
+                                thermalPrinter.printPhieuBao2(CLocal.listHanhThu.get(index));
+                            CLocal.updateCEntityParent(CLocal.listHanhThu, index);
+                            btnSau.performClick();
                         }
                     }
                 } catch (Exception ex) {
@@ -152,9 +174,21 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (thermalPrinter != null)
-                                    thermalPrinter.printDongNuoc(CLocal.listHanhThu.get(index));
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("null") == true) {
+                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(new Date()));
+                                    Date dt = new Date();
+                                    Calendar c = Calendar.getInstance();
+                                    c.setTime(dt);
+                                    c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
+                                    dt = c.getTime();
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt));
+                                }
                             }
+                            if (thermalPrinter != null)
+                                thermalPrinter.printTBDongNuoc(CLocal.listHanhThu.get(index));
+                            CLocal.updateCEntityParent(CLocal.listHanhThu, index);
+                            btnSau.performClick();
                         }
                     }
                 } catch (Exception ex) {
@@ -177,6 +211,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                                 CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                             }
+                                            CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                                         }
                                     }
                                 }
@@ -236,7 +271,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     edtHoTen.setText(item.getHoTen());
                     edtDiaChi.setText(item.getDiaChi());
                     edtInPhieuBao_Ngay.setText(item.getLstHoaDon().get(0).getInPhieuBao_Ngay());
+                    edtInPhieuBao2_Ngay.setText(item.getLstHoaDon().get(0).getInPhieuBao2_Ngay());
+                    edtInPhieuBao2_NgayHen.setText(item.getLstHoaDon().get(0).getInPhieuBao2_NgayHen());
                     edtInTBDongNuoc_Ngay.setText(item.getLstHoaDon().get(0).getTBDongNuoc_Ngay());
+                    edtInTBDongNuoc_NgayHen.setText(item.getLstHoaDon().get(0).getTBDongNuoc_NgayHen());
                     Integer PhiMoNuoc = 0, TongCong = 0;
                     for (int j = 0; j < item.getLstHoaDon().size(); j++) {
                         TongCong += Integer.parseInt(item.getLstHoaDon().get(j).getTongCong());

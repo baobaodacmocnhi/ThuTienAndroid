@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -187,22 +186,46 @@ public class ThermalPrinter {
         }
     }
 
+    //
+
+    public void printThuTien(CEntityParent entityParent) {
+        this.entityParent = entityParent;
+        MyAsyncTask myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute("ThuTien");
+    }
+
     public void printPhieuBao(CEntityParent entityParent) {
         this.entityParent = entityParent;
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("PhieuBao");
     }
 
-    public void printHoaDon(CEntityParent entityParent) {
+    public void printPhieuBao2(CEntityParent entityParent) {
         this.entityParent = entityParent;
         MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("HoaDon");
+        myAsyncTask.execute("PhieuBao2");
     }
 
-    public void printDongNuoc(CEntityParent entityParent) {
+    public void printTBDongNuoc(CEntityParent entityParent) {
         this.entityParent = entityParent;
         MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("DongNuoc");
+        myAsyncTask.execute("TBDongNuoc");
+    }
+
+    private void printThuTien_Data() {
+        try {
+            if (entityParent != null) {
+                printTop();
+//                outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
+//                printNewLine(1);
+//
+//                outputStream.write(new byte[]{0x0C});
+//                printNewLine(3);
+//                outputStream.flush();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void printPhieuBao_Data() {
@@ -240,23 +263,42 @@ public class ThermalPrinter {
         }
     }
 
-    private void printHoaDon_Data() {
+    private void printPhieuBao2_Data() {
         try {
             if (entityParent != null) {
                 printTop();
-//                outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
-//                printNewLine(1);
-//
-//                outputStream.write(new byte[]{0x0C});
-//                printNewLine(3);
-//                outputStream.flush();
+                outputStream.write("THÔNG BÁO TIỀN NƯỚC\n".getBytes());
+                outputStream.write("CHƯA THANH TOÁN\n".getBytes());
+                printNewLine(1);
+                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
+                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+                outputStream.write(("Danh bộ:").getBytes());
+
+                outputStream.write(entityParent.getDanhBo().getBytes());
+                outputStream.write((" Hóa đơn:\n").getBytes());
+                int TongCong = 0;
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
+                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                }
+                outputStream.write(("Tổng số tiền: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + " chưa thanh toán\n").getBytes());
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                outputStream.write(("Quý khách hàng vui lòng thanh toán trong 7 ngày\n").getBytes());
+                outputStream.write(("Kể từ ngày: " + currentDate.format(new Date()).toString() + "\n").getBytes());
+                outputStream.write(("Quá thời hạn trên, Công ty sẽ tạm ngưng dịch vụ cung cấp nước theo quy định. Mọi thắc mắc đề nghị quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước.\n").getBytes());
+                outputStream.write(("Trân trọng kính chào.\n").getBytes());
+                outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                outputStream.write(("Ngày gửi: " + currentDate.format(new Date()).toString() + "\n").getBytes());
+
+                printNewLine(3);
+                outputStream.flush();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void printDongNuoc_Data() {
+    private void printTBDongNuoc_Data() {
         try {
             if (entityParent != null) {
                 printTop();
@@ -343,8 +385,8 @@ public class ThermalPrinter {
 
     private void setBold(Boolean bold) {
         try {
-            if(bold==true)
-            outputStream.write(new byte[]{0x1B, 0x45});
+            if (bold == true)
+                outputStream.write(new byte[]{0x1B, 0x45});
             else
                 outputStream.write(new byte[]{0x1B, 0x46});
         } catch (IOException e) {
@@ -504,17 +546,22 @@ public class ThermalPrinter {
         @Override
         protected Void doInBackground(String... strings) {
             switch (strings[0]) {
+                case "ThuTien":
+                    printThuTien_Data();
+                    break;
                 case "PhieuBao":
                     printPhieuBao_Data();
                     break;
-                case "HoaDon":
-                    printHoaDon_Data();
+                case "PhieuBao2":
+                    printPhieuBao2_Data();
                     break;
-                case "DongNuoc":
-                    printDongNuoc_Data();
+                case "TBDongNuoc":
+                    printTBDongNuoc_Data();
                     break;
             }
             return null;
         }
     }
+
+
 }

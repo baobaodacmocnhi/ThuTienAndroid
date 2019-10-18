@@ -24,6 +24,8 @@ import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,6 +148,17 @@ public class CLocal {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static void updateArrayListToJson()
+    {
+        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+        if (CLocal.listHanhThu != null)
+            editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
+        if (CLocal.listDongNuoc != null) {
+            editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
+        }
+        editor.commit();
+    }
+
     public static void updateJSON(JSONArray jsonArray, String ID, String Key, String Value) {
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -167,6 +180,7 @@ public class CLocal {
             for (int i = 0; i < lst.size(); i++) {
                 for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
                     if (lst.get(i).getLstHoaDon().get(j).getMaHD().equals(MaHD) == true) {
+                    //update child
                         switch (NameUpdate) {
                             case "GiaiTrach":
                                 lst.get(i).getLstHoaDon().get(j).setGiaiTrach(Boolean.parseBoolean(ValueUpdate));
@@ -187,54 +201,70 @@ public class CLocal {
                                 lst.get(i).getLstHoaDon().get(j).setInPhieuBao_Ngay(ValueUpdate);
                                 break;
                         }
-                        //update TinhTrang
-                        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
-                        for (CEntityChild item : lst.get(i).getLstHoaDon()) {
-                            if (item.getGiaiTrach() == true)
-                                GiaiTrach++;
-                            else if (item.getTamThu() == true)
-                                TamThu++;
-                            else if (item.getThuHo() == true) {
-                                ThuHo++;
-                                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
-                                    PhiMoNuocThuHo++;
-                            }
-                            else if (item.getLenhHuy() == true)
-                                LenhHuy++;
-                            else if (item.getTBDongNuoc() == true)
-                                TBDongNuoc++;
-
-                            if (item.getDangNgan_DienThoai() == true)
-                                DangNgan_DienThoai++;
-                        }
-
-                        if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setGiaiTrach(true);
-                            lst.get(i).setTinhTrang("Giải Trách");
-                        } else if (TamThu == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setTamThu(true);
-                            lst.get(i).setTinhTrang("Tạm Thu");
-                        } else if (ThuHo == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setThuHo(true);
-                            String str="Thu Hộ";
-                            if (PhiMoNuocThuHo == lst.get(i).getLstHoaDon().size())
-                                str+=" (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
-                            lst.get(i).setTinhTrang(str);
-                        } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setLenhHuy(true);
-                        } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setTBDongNuoc(true);
-                        }
-
-                        if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
-                            lst.get(i).setDangNgan_DienThoai(true);
-                            lst.get(i).setTinhTrang("Đã Thu");
-                        }
+                        //gọi update lại parent
+                        updateCEntityParent(lst,i);
                     }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void updateCEntityParent(ArrayList<CEntityParent> lst,int i)
+    {
+        //update TinhTrang
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
+        for (CEntityChild item : lst.get(i).getLstHoaDon()) {
+            if (item.getGiaiTrach() == true)
+                GiaiTrach++;
+            else if (item.getTamThu() == true)
+                TamThu++;
+            else if (item.getThuHo() == true) {
+                ThuHo++;
+                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
+                    PhiMoNuocThuHo++;
+            }
+            else if (item.getLenhHuy() == true)
+                LenhHuy++;
+            else if (item.getTBDongNuoc() == true)
+                TBDongNuoc++;
+
+            if (item.getDangNgan_DienThoai() == true)
+                DangNgan_DienThoai++;
+        }
+
+        lst.get(i).setGiaiTrach(false);
+        lst.get(i).setTamThu(false);
+        lst.get(i).setThuHo(false);
+        lst.get(i).setLenhHuy(false);
+        lst.get(i).setTBDongNuoc(false);
+        lst.get(i).setDangNgan_DienThoai(false);
+        lst.get(i).setTinhTrang("");
+
+        if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setGiaiTrach(true);
+            lst.get(i).setTinhTrang("Giải Trách");
+        } else if (TamThu == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setTamThu(true);
+            lst.get(i).setTinhTrang("Tạm Thu");
+        } else if (ThuHo == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setThuHo(true);
+            String str="Thu Hộ";
+            if (PhiMoNuocThuHo == lst.get(i).getLstHoaDon().size())
+                str+=" (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+            lst.get(i).setTinhTrang(str);
+        } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setLenhHuy(true);
+        } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setTBDongNuoc(true);
+        }
+
+        if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setDangNgan_DienThoai(true);
+            lst.get(i).setTinhTrang("Đã Thu");
+        }
+        //goi update lại json hệ thống
+        updateArrayListToJson();
     }
 
     public static String formatMoney(String price, String symbol) {
