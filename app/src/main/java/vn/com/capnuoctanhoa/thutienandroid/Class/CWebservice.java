@@ -302,6 +302,50 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String update_GhiChu(String MaNV, String DanhBo, String DienThoai, String GiaBieu, String NiemChi, String DiemBe) {
+        String SOAP_ACTION = "http://tempuri.org/update_GhiChu";
+        String OPERATION_NAME = "update_GhiChu";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaNV");
+        pi.setValue(MaNV);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("DienThoai");
+        pi.setValue(DienThoai);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("GiaBieu");
+        pi.setValue(GiaBieu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("NiemChi");
+        pi.setValue(NiemChi);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("DiemBe");
+        pi.setValue(DiemBe);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     //đóng nước
     public String getDSDongNuoc(String MaNV_DongNuoc, String FromNgayGiao, String ToNgayGiao) {
         String SOAP_ACTION = "http://tempuri.org/GetDSDongNuoc";

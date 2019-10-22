@@ -3,7 +3,7 @@
     package="vn.com.capnuoctanhoa.thutienandroid">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -124,11 +124,11 @@
         <activity
             android:name=".HanhThu.ActivityDownDataHanhThu"
             android:label="@string/title_activity_down_data_hanh_thu"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DongNuoc.ActivityDownDataDongNuoc"
             android:label="@string/title_activity_down_data_dong_nuoc"
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".LenhHuy.ActivityLenhHuy"
             android:label="Lệnh Hủy" />
@@ -153,8 +153,18 @@
             android:name=".HanhThu.ActivityHoaDonDienTu_ThuTien"
             android:label="Thu Tiền"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".ActivitySettings"
-            android:label="Cài đặt"></activity>
+        <activity
+            android:name=".ActivitySettings"
+            android:label="Cài đặt" />
+        <activity
+            android:name=".HanhThu.ActivityHoaDonDienTu_Search"
+            android:label="Tìm Kiếm"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".HanhThu.ActivityHoaDonDienTu_GhiChu"
+            android:label="Ghi Chú"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+
     </application>
 
 </manifest>

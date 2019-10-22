@@ -1,11 +1,13 @@
 package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,10 +22,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySearchKhachHangWeb;
+import vn.com.capnuoctanhoa.thutienandroid.ActivitySettings;
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.MainActivity;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
@@ -233,10 +238,26 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu, this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_thutien, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.action_search_khach_hang:
+                intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_Search.class);
+                startActivityForResult(intent, 1);
+                return true;
+            case R.id.action_ghichu:
+                intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_GhiChu.class);
+                startActivity(intent);
                 return true;
             default:
                 break;
@@ -290,6 +311,15 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         } catch (Exception ex) {
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK)
+                fillLayout(data.getStringExtra("DanhBo"));
         }
     }
 
