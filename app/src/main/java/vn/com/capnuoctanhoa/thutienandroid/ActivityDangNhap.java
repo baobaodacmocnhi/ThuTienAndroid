@@ -134,6 +134,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         editor.putString("MaNV", jsonObject.getString("MaND"));
                         editor.putString("HoTen", jsonObject.getString("HoTen"));
                         editor.putString("MaTo", jsonObject.getString("MaTo"));
+                        editor.putString("DienThoai", jsonObject.getString("DienThoai"));
                         editor.putString("jsonHanhThu", "");
                         editor.putString("jsonDongNuoc", "");
                         editor.putString("jsonMessage", "");

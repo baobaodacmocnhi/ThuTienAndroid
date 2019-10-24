@@ -98,7 +98,7 @@ public class ThermalPrinter {
                     {
                         lstBluetoothDevice.add(pairedDev);
                         arrayList.add(pairedDev.getName());
-                        break;
+//                        break;
                     }
                 }
             }
@@ -215,13 +215,33 @@ public class ThermalPrinter {
     private void printThuTien_Data() {
         try {
             if (entityParent != null) {
-                printTop();
-//                outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
-//                printNewLine(1);
-//
-//                outputStream.write(new byte[]{0x0C});
-//                printNewLine(3);
-//                outputStream.flush();
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    printTop();
+                    outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
+                    printNewLine(1);
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
+                    outputStream.write(("Ngày thu: " + entityParent.getLstHoaDon().get(i).getNgayGiaiTrach() + "\n").getBytes());
+                    outputStream.write(("Khách hàng: " + entityParent.getHoTen() + "\n").getBytes());
+                    outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+                    outputStream.write(("Danh bộ: " + entityParent.getDanhBo() + "\n").getBytes());
+                    outputStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc() + "\n").getBytes());
+                    outputStream.write(("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + " m3\n").getBytes());
+                    outputStream.write(("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + " Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay() + "\n").getBytes());
+                    printHangNgang();
+                    outputStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ") + "\n").getBytes());
+                    outputStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ") + "\n").getBytes());
+                    outputStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ") + "\n").getBytes());
+                    outputStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ") + "\n").getBytes());
+                    outputStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()) + ".\n").getBytes());
+                    printHangNgang();
+                    outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    outputStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    printHangNgang();
+                    outputStream.write("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    printNewLine(3);
+                    outputStream.flush();
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -231,32 +251,36 @@ public class ThermalPrinter {
     private void printPhieuBao_Data() {
         try {
             if (entityParent != null) {
-                printTop();
-                outputStream.write("THÔNG BÁO TIỀN NƯỚC\n".getBytes());
-                outputStream.write("CHƯA THANH TOÁN\n".getBytes());
-                printNewLine(1);
-                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
-                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
-                outputStream.write(("Danh bộ:").getBytes());
-
-                outputStream.write(entityParent.getDanhBo().getBytes());
-                outputStream.write((" Hóa đơn:\n").getBytes());
-                int TongCong = 0;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
-                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                    printTop();
+                    outputStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
+                    printNewLine(1);
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
+                    outputStream.write(("Khách hàng: " + entityParent.getHoTen() + "\n").getBytes());
+                    outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+                    outputStream.write(("Danh bộ: " + entityParent.getDanhBo() + "\n").getBytes());
+                    outputStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc() + "\n").getBytes());
+                    outputStream.write(("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + " m3\n").getBytes());
+                    outputStream.write(("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + " Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay() + "\n").getBytes());
+                    printHangNgang();
+                    outputStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ") + "\n").getBytes());
+                    outputStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ") + "\n").getBytes());
+                    outputStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ") + "\n").getBytes());
+                    outputStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ") + "\n").getBytes());
+                    outputStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()) + ".\n").getBytes());
+                    String[] str = entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().split(" ");
+                    outputStream.write(("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0] + "\n").getBytes());
+                    outputStream.write("Trân trọng kính chào.\n".getBytes());
+                    printHangNgang();
+                    outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    outputStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    outputStream.write(("Ngày gửi: " + str[0] + "\n").getBytes());
+                    printHangNgang();
+                    outputStream.write("Trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    printNewLine(3);
+                    outputStream.flush();
                 }
-                outputStream.write(("Tổng số tiền: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + " chưa thanh toán\n").getBytes());
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-                outputStream.write(("Quý khách hàng vui lòng thanh toán trong 7 ngày\n").getBytes());
-                outputStream.write(("Kể từ ngày: " + currentDate.format(new Date()).toString() + "\n").getBytes());
-                outputStream.write(("Quá thời hạn trên, Công ty sẽ tạm ngưng dịch vụ cung cấp nước theo quy định. Mọi thắc mắc đề nghị quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước.\n").getBytes());
-                outputStream.write(("Trân trọng kính chào.\n").getBytes());
-                outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
-                outputStream.write(("Ngày gửi: " + currentDate.format(new Date()).toString() + "\n").getBytes());
-
-                printNewLine(3);
-                outputStream.flush();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -270,26 +294,33 @@ public class ThermalPrinter {
                 outputStream.write("THÔNG BÁO TIỀN NƯỚC\n".getBytes());
                 outputStream.write("CHƯA THANH TOÁN\n".getBytes());
                 printNewLine(1);
-                outputStream.write(("Kính gửi KH: " + entityParent.getHoTen() + "\n").getBytes());
+                outputStream.write(("Kính gửi: " + entityParent.getHoTen() + "\n").getBytes());
                 outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
-                outputStream.write(("Danh bộ:").getBytes());
-
-                outputStream.write(entityParent.getDanhBo().getBytes());
-                outputStream.write((" Hóa đơn:\n").getBytes());
+                outputStream.write(("Danh bộ: " + entityParent.getDanhBo() + "\n").getBytes());
+                outputStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc() + "\n").getBytes());
+                printHangNgang();
+                outputStream.write(("Hóa đơn:\n").getBytes());
                 int TongCong = 0;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                     outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
                     TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
                 }
-                outputStream.write(("Tổng số tiền: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + " chưa thanh toán\n").getBytes());
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-                outputStream.write(("Quý khách hàng vui lòng thanh toán trong 7 ngày\n").getBytes());
-                outputStream.write(("Kể từ ngày: " + currentDate.format(new Date()).toString() + "\n").getBytes());
-                outputStream.write(("Quá thời hạn trên, Công ty sẽ tạm ngưng dịch vụ cung cấp nước theo quy định. Mọi thắc mắc đề nghị quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước.\n").getBytes());
+                outputStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
+                outputStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + ".\n").getBytes());
+//                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
+                outputStream.write(("Để được cung cấp nước liên tục đề nghị Quý khách vui lòng thanh toán trước ngày " + str[0] + "\n").getBytes());
+                outputStream.write(("Nếu quá thời hạn trên khách hàng chưa thanh toán, Công ty sẽ tạm ngưng cung cấp nước theo quy định.\n").getBytes());
+                outputStream.write(("Mọi thắc mắc đề nghị Quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước\n").getBytes());
                 outputStream.write(("Trân trọng kính chào.\n").getBytes());
+                printHangNgang();
                 outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
-                outputStream.write(("Ngày gửi: " + currentDate.format(new Date()).toString() + "\n").getBytes());
-
+                outputStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                 str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().split(" ");
+                outputStream.write(("Ngày gửi: " + str[0] + "\n").getBytes());
+                printHangNgang();
+                outputStream.write("Trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+                outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
                 printNewLine(3);
                 outputStream.flush();
             }
@@ -305,7 +336,32 @@ public class ThermalPrinter {
                 outputStream.write("THÔNG BÁO TẠM\n".getBytes());
                 outputStream.write("NGƯNG CUNG CẤP NƯỚC\n".getBytes());
                 printNewLine(1);
-
+                outputStream.write(("Kính gửi: " + entityParent.getHoTen() + "\n").getBytes());
+                outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+                outputStream.write(("Danh bộ: " + entityParent.getDanhBo() + "\n").getBytes());
+                outputStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc() + "\n").getBytes());
+                printHangNgang();
+                String[] str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_NgayHen().split(" ");
+                outputStream.write(("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " + str[0] + "\n").getBytes());
+                outputStream.write(("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:\n").getBytes());
+                int TongCong = 0;
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
+                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                }
+                outputStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
+                outputStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + ".\n").getBytes());
+                printHangNgang();
+                outputStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.\n").getBytes());
+                outputStream.write(("Trân trọng kính chào.\n").getBytes());
+                printHangNgang();
+                outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                outputStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                 str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().split(" ");
+                outputStream.write(("Ngày gửi: " + str[0] + "\n").getBytes());
+                printHangNgang();
+                outputStream.write("Trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+                outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
                 printNewLine(3);
                 outputStream.flush();
             }
@@ -418,6 +474,14 @@ public class ThermalPrinter {
         }
     }
 
+    private void printHangNgang() {
+        try {
+            outputStream.write(".....................\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //print new line
     private void printNewLine(int numberLine) {
         try {
@@ -428,7 +492,6 @@ public class ThermalPrinter {
             e.printStackTrace();
         }
     }
-
 
     private String printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
 //        String base = "@" + toadoY + "," + toadoX + ":TIMNR,HMULT" + widthFont + ",VMULT" + heightFont + "|" + content + "|\n";

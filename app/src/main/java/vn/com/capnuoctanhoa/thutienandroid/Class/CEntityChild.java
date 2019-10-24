@@ -3,7 +3,17 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 public class CEntityChild {
     private String MaHD;
     private String Ky;
+    private String GiaBan;
+    private String ThueGTGT;
+    private String PhiBVMT;
     private String TongCong;
+    private String GiaBieu;
+    private String DinhMuc;
+    private String CSC;
+    private String CSM;
+    private String TieuThu;
+    private String TuNgay;
+    private String DenNgay;
     private String ModifyDate;
     private Boolean ThuHo;
     private Boolean TamThu;
@@ -14,6 +24,7 @@ public class CEntityChild {
     private String PhiMoNuoc;
     private String PhiMoNuocThuHo;
     private Boolean DangNgan_DienThoai;
+    private String NgayGiaiTrach;
     private String XoaDangNgan_Ngay_DienThoai;
     private String InPhieuBao_Ngay;
     private String InPhieuBao2_Ngay;
@@ -24,7 +35,17 @@ public class CEntityChild {
     public CEntityChild() {
         MaHD = "";
         Ky = "";
+        GiaBan="";
+        ThueGTGT="";
+        PhiBVMT="";
         TongCong = "";
+       GiaBieu= "";
+        DinhMuc= "";
+         CSC= "";
+         CSM= "";
+        TieuThu= "";
+         TuNgay= "";
+         DenNgay= "";
         ModifyDate = "";
         ThuHo = false;
         TamThu = false;
@@ -34,6 +55,7 @@ public class CEntityChild {
         PhiMoNuoc = "";
         PhiMoNuocThuHo = "";
         DangNgan_DienThoai = false;
+        NgayGiaiTrach="";
         XoaDangNgan_Ngay_DienThoai = "";
         InPhieuBao_Ngay = "";
         InPhieuBao2_Ngay = "";
@@ -59,12 +81,92 @@ public class CEntityChild {
         Ky = ky;
     }
 
+    public String getGiaBan() {
+        return GiaBan;
+    }
+
+    public void setGiaBan(String giaBan) {
+        GiaBan = giaBan;
+    }
+
+    public String getThueGTGT() {
+        return ThueGTGT;
+    }
+
+    public void setThueGTGT(String thueGTGT) {
+        ThueGTGT = thueGTGT;
+    }
+
+    public String getPhiBVMT() {
+        return PhiBVMT;
+    }
+
+    public void setPhiBVMT(String phiBVMT) {
+        PhiBVMT = phiBVMT;
+    }
+
     public String getTongCong() {
         return TongCong;
     }
 
     public void setTongCong(String tongCong) {
         TongCong = tongCong;
+    }
+
+    public String getGiaBieu() {
+        return GiaBieu;
+    }
+
+    public void setGiaBieu(String giaBieu) {
+        GiaBieu = giaBieu;
+    }
+
+    public String getDinhMuc() {
+        return DinhMuc;
+    }
+
+    public void setDinhMuc(String dinhMuc) {
+        DinhMuc = dinhMuc;
+    }
+
+    public String getCSC() {
+        return CSC;
+    }
+
+    public void setCSC(String CSC) {
+        this.CSC = CSC;
+    }
+
+    public String getCSM() {
+        return CSM;
+    }
+
+    public void setCSM(String CSM) {
+        this.CSM = CSM;
+    }
+
+    public String getTieuThu() {
+        return TieuThu;
+    }
+
+    public void setTieuThu(String tieuThu) {
+        TieuThu = tieuThu;
+    }
+
+    public String getTuNgay() {
+        return TuNgay;
+    }
+
+    public void setTuNgay(String tuNgay) {
+        TuNgay = tuNgay;
+    }
+
+    public String getDenNgay() {
+        return DenNgay;
+    }
+
+    public void setDenNgay(String denNgay) {
+        DenNgay = denNgay;
     }
 
     public String getModifyDate() {
@@ -137,6 +239,14 @@ public class CEntityChild {
 
     public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
         DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
+    public String getNgayGiaiTrach() {
+        return NgayGiaiTrach;
+    }
+
+    public void setNgayGiaiTrach(String ngayGiaiTrach) {
+        NgayGiaiTrach = ngayGiaiTrach;
     }
 
     public String getXoaDangNgan_Ngay_DienThoai() {

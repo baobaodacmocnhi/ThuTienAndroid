@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +66,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV = "", HoTen = "", MaTo = "", ThermalPrinter = "";
+    public static String MaNV = "", HoTen = "", MaTo = "", DienThoai="",ThermalPrinter = "";
     public static boolean Doi = false, ToTruong = false;
     public static ArrayList<CEntityParent> listHanhThu, listDongNuoc;
 
@@ -76,6 +77,7 @@ public class CLocal {
         editor.putString("MaNV", "");
         editor.putString("HoTen", "");
         editor.putString("MaTo", "");
+        editor.putString("DienThoai", "");
         editor.putString("jsonHanhThu", "");
         editor.putString("jsonDongNuoc", "");
         editor.putString("jsonMessage", "");
@@ -88,7 +90,7 @@ public class CLocal {
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = "";
+        MaNV = HoTen = MaTo = DienThoai="";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listDongNuoc = null;
@@ -148,8 +150,7 @@ public class CLocal {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void updateArrayListToJson()
-    {
+    public static void updateArrayListToJson() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
         if (CLocal.listHanhThu != null)
             editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
@@ -180,7 +181,7 @@ public class CLocal {
             for (int i = 0; i < lst.size(); i++) {
                 for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
                     if (lst.get(i).getLstHoaDon().get(j).getMaHD().equals(MaHD) == true) {
-                    //update child
+                        //update child
                         switch (NameUpdate) {
                             case "GiaiTrach":
                                 lst.get(i).getLstHoaDon().get(j).setGiaiTrach(Boolean.parseBoolean(ValueUpdate));
@@ -202,7 +203,7 @@ public class CLocal {
                                 break;
                         }
                         //gọi update lại parent
-                        updateCEntityParent(lst,i);
+                        updateCEntityParent(lst, i);
                     }
             }
         } catch (Exception e) {
@@ -210,10 +211,9 @@ public class CLocal {
         }
     }
 
-    public static void updateCEntityParent(ArrayList<CEntityParent> lst,int i)
-    {
+    public static void updateCEntityParent(ArrayList<CEntityParent> lst, int i) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : lst.get(i).getLstHoaDon()) {
             if (item.getGiaiTrach() == true)
                 GiaiTrach++;
@@ -223,8 +223,7 @@ public class CLocal {
                 ThuHo++;
                 if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
                     PhiMoNuocThuHo++;
-            }
-            else if (item.getLenhHuy() == true)
+            } else if (item.getLenhHuy() == true)
                 LenhHuy++;
             else if (item.getTBDongNuoc() == true)
                 TBDongNuoc++;
@@ -249,9 +248,9 @@ public class CLocal {
             lst.get(i).setTinhTrang("Tạm Thu");
         } else if (ThuHo == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setThuHo(true);
-            String str="Thu Hộ";
+            String str = "Thu Hộ";
             if (PhiMoNuocThuHo == lst.get(i).getLstHoaDon().size())
-                str+=" (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+                str += " (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
             lst.get(i).setTinhTrang(str);
         } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setLenhHuy(true);
@@ -627,38 +626,90 @@ public class CLocal {
 
     //endregion
 
-    /*private void LoadListView() {
-        try {
-            File directory = new File(CLocal.Path);
-            if (directory.length() > 0) {
-                File[] files = directory.listFiles();
-                ArrayList<String> array = new ArrayList<>();
-                for (int i = 0; i < files.length; i++) {
-                    array.add(files[i].getName());
+    //region ConvertMoneyToWord
+
+    public static HashMap<String, String> hm_tien = new HashMap<String, String>() {
+        {
+            put("0", "không");
+            put("1", "một");
+            put("2", "hai");
+            put("3", "ba");
+            put("4", "bốn");
+            put("5", "năm");
+            put("6", "sáu");
+            put("7", "bảy");
+            put("8", "tám");
+            put("9", "chín");
+        }
+    };
+    public static HashMap<String, String> hm_hanh = new HashMap<String, String>() {
+        {
+            put("1", "đồng");
+            put("2", "mươi");
+            put("3", "trăm");
+            put("4", "nghìn");
+            put("5", "mươi");
+            put("6", "trăm");
+            put("7", "triệu");
+            put("8", "mươi");
+            put("9", "trăm");
+            put("10", "tỷ");
+            put("11", "mươi");
+            put("12", "trăm");
+            put("13", "nghìn");
+            put("14", "mươi");
+            put("15", "trăm");
+
+        }
+    };
+
+    public static String ConvertMoneyToWord(String money) {
+        String kq = "";
+        money = money.replace(".", "");
+        String arr_temp[] = money.split(",");
+        if (!TextUtils.isDigitsOnly(arr_temp[0])) {
+            return "";
+        }
+        String m = arr_temp[0];
+        int dem = m.length();
+        String dau = "";
+        int flag10 = 1;
+        while (!m.equals("")) {
+            if (m.length() <= 3 && m.length() > 1 && Long.parseLong(m) == 0) {
+
+            } else {
+                dau = m.substring(0, 1);
+                if (dem % 3 == 1 && m.startsWith("1") && flag10 == 0) {
+                    kq += "mốt ";
+                    flag10 = 0;
+                } else if (dem % 3 == 2 && m.startsWith("1")) {
+                    kq += "mười ";
+                    flag10 = 1;
+                } else if (dem % 3 == 2 && m.startsWith("0") && m.length() >= 2 && !m.substring(1, 2).equals("0")) {
+                    //System.out.println("a  "+m.substring(1, 2));
+                    kq += "lẻ ";
+                    flag10 = 1;
+                } else {
+                    if (!m.startsWith("0")) {
+                        kq += hm_tien.get(dau) + " ";
+                        flag10 = 0;
+                    }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, array);
-                lstView.setAdapter(adapter);
+                if (dem%3!=1 &&m.startsWith("0") && m.length()>1) {
+                } else {
+                    if (dem % 3 == 2 && (m.startsWith("1") || m.startsWith("0"))) {//mười
+                    } else {
+                        kq += hm_hanh.get(dem + "") + " ";
+                    }
+                }
             }
-        } catch (Exception e) {
+            m = m.substring(1);
+            dem = m.length();
         }
-    }*/
+        kq=kq.substring(0, kq.length() - 1);
+        return kq;
+    }
 
-        /*private String GetFile(String fileName) {
-        try {
-            FileInputStream inputStream = getContext().openFileInput(fileName);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String data = "";
-            StringBuilder builder = new StringBuilder();
-            while ((data = reader.readLine()) != null) {
-                builder.append(data);
-                builder.append("\n");
-            }
-            inputStream.close();
-            return builder.toString();
-        } catch (Exception e) {
-        }
-        return "";
-    }*/
-
+    //endregion
 
 }

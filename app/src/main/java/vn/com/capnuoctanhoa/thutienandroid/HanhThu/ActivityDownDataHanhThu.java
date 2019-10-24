@@ -290,7 +290,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, String, Boolean> {
+    public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -377,7 +377,17 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setModifyDate(enParent.getModifyDate());
                                         enChild.setMaHD(jsonObjectChild.getString("MaHD"));
                                         enChild.setKy(jsonObjectChild.getString("Ky"));
+                                        enChild.setGiaBan(jsonObjectChild.getString("GiaBan"));
+                                        enChild.setThueGTGT(jsonObjectChild.getString("ThueGTGT"));
+                                        enChild.setPhiBVMT(jsonObjectChild.getString("PhiBVMT"));
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
+                                        enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
+                                        enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc"));
+                                        enChild.setCSC(jsonObjectChild.getString("CSC"));
+                                        enChild.setCSM(jsonObjectChild.getString("CSM"));
+                                        enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
+                                        enChild.setTuNgay(jsonObjectChild.getString("TuNgay"));
+                                        enChild.setDenNgay(jsonObjectChild.getString("DenNgay"));
                                         enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                         enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                         enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
@@ -385,6 +395,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
                                         if (jsonObjectChild.has("DangNgan_DienThoai") == true)
                                             enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
+                                        if (jsonObjectChild.has("NgayGiaiTrach") == true)
+                                            enChild.setNgayGiaiTrach(jsonObjectChild.getString("NgayGiaiTrach"));
                                         if (jsonObjectChild.has("XoaDangNgan_Ngay_DienThoai") == true)
                                             enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai"));
                                         if (jsonObjectChild.has("InPhieuBao_Ngay") == true)

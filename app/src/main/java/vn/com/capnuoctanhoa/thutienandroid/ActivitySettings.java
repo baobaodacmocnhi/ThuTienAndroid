@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
 public class ActivitySettings extends AppCompatActivity {
+    private Button btnGetThermal;
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
@@ -27,12 +29,21 @@ public class ActivitySettings extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        btnGetThermal=(Button) findViewById(R.id.btnGetThermal);
         lstView = (ListView) findViewById(R.id.lstView);
 
-        thermalPrinter=new ThermalPrinter(ActivitySettings.this);
-        //add danh sách thiết bị vào listview
-        arrayBluetoothAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, thermalPrinter.getArrayList());
-        lstView.setAdapter(arrayBluetoothAdapter);
+        MyAsyncTask_Thermal myAsyncTask_thermal=new MyAsyncTask_Thermal();
+        myAsyncTask_thermal.execute();
+//        thermalPrinter=new ThermalPrinter(ActivitySettings.this);
+
+        btnGetThermal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadListView();
+//                String []str="10/10/2019 12:12:10".split(" ");
+//                CLocal.showPopupMessage(ActivitySettings.this,str[0]);
+            }
+        });
 
         lstView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,6 +59,20 @@ public class ActivitySettings extends AppCompatActivity {
             }
         });
 
+    }
+
+    public  void loadListView()
+    {
+        if(thermalPrinter!=null) {
+            //add danh sách thiết bị vào listview
+            arrayBluetoothAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, thermalPrinter.getArrayList());
+            lstView.setAdapter(arrayBluetoothAdapter);
+        }
+        else
+        {
+            MyAsyncTask_Thermal myAsyncTask_thermal=new MyAsyncTask_Thermal();
+            myAsyncTask_thermal.execute();
+        }
     }
 
     @Override
@@ -67,6 +92,15 @@ public class ActivitySettings extends AppCompatActivity {
     protected void onDestroy() {
         thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
+    }
+
+    public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            thermalPrinter = new ThermalPrinter(ActivitySettings.this);
+            return null;
+        }
     }
 }
 

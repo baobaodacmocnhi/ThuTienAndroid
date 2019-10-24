@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
+                CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
