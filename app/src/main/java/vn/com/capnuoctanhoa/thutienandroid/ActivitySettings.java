@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
@@ -40,8 +42,10 @@ public class ActivitySettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadListView();
-//                String []str="10/10/2019 12:12:10".split(" ");
-//                CLocal.showPopupMessage(ActivitySettings.this,str[0]);
+
+//                String str="Bằng chữ: một trăm năm mươi hai ng";
+//                CLocal.showPopupMessage(ActivitySettings.this,String.valueOf(str.length()));
+
             }
         });
 

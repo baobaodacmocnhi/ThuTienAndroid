@@ -386,6 +386,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setHoTen(jsonObject.getString("HoTen"));
                         enParent.setDiaChi(jsonObject.getString("DiaChi"));
                         enParent.setDongNuoc(Boolean.parseBoolean(jsonObject.getString("DongNuoc")));
+                        enParent.setDongNuoc2(Boolean.parseBoolean(jsonObject.getString("DongNuoc2")));
                         enParent.setDongPhi(Boolean.parseBoolean(jsonObject.getString("DongPhi")));
                         enParent.setMoNuoc(Boolean.parseBoolean(jsonObject.getString("MoNuoc")));
 

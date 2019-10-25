@@ -125,7 +125,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 case "DangNhap":
                     try {
                     result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (result.isEmpty() == false&&result.equals("[]")==false) {
+                    if (result.isEmpty() == false&&result.equals("[]")==false&&result.contains("Connection refused")==false) {
                         JSONArray jsonArray = new JSONArray(result);
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -163,7 +163,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                 case "DangXuat":
                     try {
                     result=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (result.isEmpty() == false) {
+                    if (result.isEmpty() == false&&result.contains("Connection refused")==false) {
                         CLocal.initialCLocal();
 
                         publishProgress("DangXuat");

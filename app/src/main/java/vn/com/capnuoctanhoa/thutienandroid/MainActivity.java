@@ -327,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(s.contains("Connection refused")==false)
             updateApp(s);
         }
     }
