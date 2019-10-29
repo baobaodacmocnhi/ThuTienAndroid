@@ -35,17 +35,17 @@ public class CEntityChild {
     public CEntityChild() {
         MaHD = "";
         Ky = "";
-        GiaBan="";
-        ThueGTGT="";
-        PhiBVMT="";
+        GiaBan = "";
+        ThueGTGT = "";
+        PhiBVMT = "";
         TongCong = "";
-       GiaBieu= "";
-        DinhMuc= "";
-         CSC= "";
-         CSM= "";
-        TieuThu= "";
-         TuNgay= "";
-         DenNgay= "";
+        GiaBieu = "";
+        DinhMuc = "";
+        CSC = "";
+        CSM = "";
+        TieuThu = "";
+        TuNgay = "";
+        DenNgay = "";
         ModifyDate = "";
         ThuHo = false;
         TamThu = false;
@@ -55,7 +55,7 @@ public class CEntityChild {
         PhiMoNuoc = "";
         PhiMoNuocThuHo = "";
         DangNgan_DienThoai = false;
-        NgayGiaiTrach="";
+        NgayGiaiTrach = "";
         XoaDangNgan_Ngay_DienThoai = "";
         InPhieuBao_Ngay = "";
         InPhieuBao2_Ngay = "";

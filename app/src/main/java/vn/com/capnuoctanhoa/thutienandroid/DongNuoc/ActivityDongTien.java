@@ -29,7 +29,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongTien extends AppCompatActivity {
     private TextView txtTongCong;
     private EditText edtMaDN;
-    private Button btnDongTien;
+    private Button btnDongTien,btnIn;
     private ListView lstView;
     private ArrayList<CHoaDon> lstHoaDon;
     private ArrayList<String> arrayList;
@@ -50,6 +50,7 @@ public class ActivityDongTien extends AppCompatActivity {
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         btnDongTien = (Button) findViewById(R.id.btnDongTien);
+        btnIn = (Button) findViewById(R.id.btnIn);
         lstView = (ListView) findViewById(R.id.lstView);
 
         // CHOICE_MODE_NONE: Không cho phép lựa chọn (Mặc định).
@@ -93,6 +94,13 @@ public class ActivityDongTien extends AppCompatActivity {
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute("DongTien");
+            }
+        });
+
+        btnIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

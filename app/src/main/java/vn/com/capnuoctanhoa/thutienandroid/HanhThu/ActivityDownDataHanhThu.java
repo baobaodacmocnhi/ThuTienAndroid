@@ -75,7 +75,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
         //cast to an ArrayAdapter
         ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
-        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1));
+        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1));
         //set the default according to value
         spnKy.setSelection(spnKyPosition);
 
@@ -396,68 +396,69 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         if (jsonObjectChild.has("DangNgan_DienThoai") == true)
                                             enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
                                         if (jsonObjectChild.has("NgayGiaiTrach") == true)
-                                            enChild.setNgayGiaiTrach(jsonObjectChild.getString("NgayGiaiTrach"));
+                                            enChild.setNgayGiaiTrach(jsonObjectChild.getString("NgayGiaiTrach").replace("null", ""));
                                         if (jsonObjectChild.has("XoaDangNgan_Ngay_DienThoai") == true)
-                                            enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai"));
+                                            enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
                                         if (jsonObjectChild.has("InPhieuBao_Ngay") == true)
-                                            enChild.setInPhieuBao_Ngay(jsonObjectChild.getString("InPhieuBao_Ngay"));
+                                            enChild.setInPhieuBao_Ngay(jsonObjectChild.getString("InPhieuBao_Ngay").replace("null", ""));
                                         if (jsonObjectChild.has("InPhieuBao2_Ngay") == true)
-                                            enChild.setInPhieuBao2_Ngay(jsonObjectChild.getString("InPhieuBao2_Ngay"));
+                                            enChild.setInPhieuBao2_Ngay(jsonObjectChild.getString("InPhieuBao2_Ngay").replace("null", ""));
                                         if (jsonObjectChild.has("InPhieuBao2_NgayHen") == true)
-                                            enChild.setInPhieuBao2_NgayHen(jsonObjectChild.getString("InPhieuBao2_NgayHen"));
+                                            enChild.setInPhieuBao2_NgayHen(jsonObjectChild.getString("InPhieuBao2_NgayHen").replace("null", ""));
                                         if (jsonObjectChild.has("TBDongNuoc_Ngay") == true) {
-                                            enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay"));
+                                            enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay").replace("null", ""));
                                             if (enChild.getTBDongNuoc_Ngay().equals("null") == true)
                                                 enChild.setTBDongNuoc(false);
                                             else
                                                 enChild.setTBDongNuoc(true);
                                         }
                                         if (jsonObjectChild.has("TBDongNuoc_NgayHen") == true)
-                                            enChild.setTBDongNuoc_NgayHen(jsonObjectChild.getString("TBDongNuoc_NgayHen"));
+                                            enChild.setTBDongNuoc_NgayHen(jsonObjectChild.getString("TBDongNuoc_NgayHen").replace("null", ""));
                                         if (jsonObjectChild.has("PhiMoNuoc") == true)
                                             enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                         listChild.add(enChild);
                                     }
                                 }
-                            //update TinhTrang
-                            int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0;
-                            for (CEntityChild item : listChild) {
-                                if (item.getGiaiTrach() == true)
-                                    GiaiTrach++;
-                                else if (item.getTamThu() == true)
-                                    TamThu++;
-                                else if (item.getThuHo() == true)
-                                    ThuHo++;
-                                else if (item.getLenhHuy() == true)
-                                    LenhHuy++;
-                                else if (item.getTBDongNuoc() == true)
-                                    TBDongNuoc++;
-
-                                if (item.getDangNgan_DienThoai() == true)
-                                    DangNgan_DienThoai++;
-                            }
-
-                            if (GiaiTrach == listChild.size()) {
-                                enParent.setGiaiTrach(true);
-                                enParent.setTinhTrang("Giải Trách");
-                            } else if (TamThu == listChild.size()) {
-                                enParent.setTamThu(true);
-                                enParent.setTinhTrang("Tạm Thu");
-                            } else if (ThuHo == listChild.size()) {
-                                enParent.setThuHo(true);
-                                enParent.setTinhTrang("Thu Hộ");
-                            } else if (LenhHuy == listChild.size()) {
-                                enParent.setLenhHuy(true);
-                            } else if (TBDongNuoc == listChild.size()) {
-                                enParent.setTBDongNuoc(true);
-                            }
-
-                            if (DangNgan_DienThoai == listChild.size()) {
-                                enParent.setDangNgan_DienThoai(true);
-                                enParent.setTinhTrang("Đã Thu");
-                            }
+//                            //update TinhTrang
+//                            int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0;
+//                            for (CEntityChild item : listChild) {
+//                                if (item.getGiaiTrach() == true)
+//                                    GiaiTrach++;
+//                                else if (item.getTamThu() == true)
+//                                    TamThu++;
+//                                else if (item.getThuHo() == true)
+//                                    ThuHo++;
+//                                else if (item.getLenhHuy() == true)
+//                                    LenhHuy++;
+//                                else if (item.getTBDongNuoc() == true)
+//                                    TBDongNuoc++;
+//
+//                                if (item.getDangNgan_DienThoai() == true)
+//                                    DangNgan_DienThoai++;
+//                            }
+//
+//                            if (GiaiTrach == listChild.size()) {
+//                                enParent.setGiaiTrach(true);
+//                                enParent.setTinhTrang("Giải Trách");
+//                            } else if (TamThu == listChild.size()) {
+//                                enParent.setTamThu(true);
+//                                enParent.setTinhTrang("Tạm Thu");
+//                            } else if (ThuHo == listChild.size()) {
+//                                enParent.setThuHo(true);
+//                                enParent.setTinhTrang("Thu Hộ");
+//                            } else if (LenhHuy == listChild.size()) {
+//                                enParent.setLenhHuy(true);
+//                            } else if (TBDongNuoc == listChild.size()) {
+//                                enParent.setTBDongNuoc(true);
+//                            }
+//
+//                            if (DangNgan_DienThoai == listChild.size()) {
+//                                enParent.setDangNgan_DienThoai(true);
+//                                enParent.setTinhTrang("Đã Thu");
+//                            }
 
                             enParent.setLstHoaDon(listChild);
+                            enParent = CLocal.updateCEntityParent(enParent);
                             CLocal.listHanhThu.add(enParent);
                         }
                     }

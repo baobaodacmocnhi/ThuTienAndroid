@@ -47,7 +47,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
     private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc;
-    private Button btnDongNuoc;
+    private Button btnDongNuoc,btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
     private Bitmap imgCapture;
@@ -80,6 +80,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
+        btnIn = (Button) findViewById(R.id.btnIn);
         chkButChi = (CheckBox) findViewById(R.id.chkButChi);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkKhoaKhac=(CheckBox)  findViewById(R.id.chkKhoaKhac);
@@ -149,6 +150,13 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute("DongNuoc");
                 }
+            }
+        });
+
+        btnIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

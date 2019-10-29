@@ -32,10 +32,14 @@ public class CEntityParent {
     private String SoThan;
     private String ChiMatSo;
     private String ChiKhoaGoc;
+    private String ViTri;
     private String LyDo;
     private String NgayDN1;
     private String ChiSoDN1;
     private String NiemChi1;
+    private String NgayMN;
+    private String ChiSoMN;
+
     private ArrayList<CEntityChild> lstHoaDon;
 
     public CEntityParent() {
@@ -68,10 +72,13 @@ public class CEntityParent {
         SoThan = "";
         ChiMatSo = "";
         ChiKhoaGoc = "";
+        ViTri="";
         LyDo = "";
         NgayDN1 = "";
         ChiSoDN1 = "";
         NiemChi1 = "";
+        NgayMN="";
+        ChiSoMN="";
         lstHoaDon = new ArrayList<CEntityChild>();
     }
 
@@ -307,6 +314,14 @@ public class CEntityParent {
         ChiKhoaGoc = chiKhoaGoc;
     }
 
+    public String getViTri() {
+        return ViTri;
+    }
+
+    public void setViTri(String viTri) {
+        ViTri = viTri;
+    }
+
     public String getLyDo() {
         return LyDo;
     }
@@ -337,6 +352,22 @@ public class CEntityParent {
 
     public void setNiemChi1(String niemChi1) {
         NiemChi1 = niemChi1;
+    }
+
+    public String getNgayMN() {
+        return NgayMN;
+    }
+
+    public void setNgayMN(String ngayMN) {
+        NgayMN = ngayMN;
+    }
+
+    public String getChiSoMN() {
+        return ChiSoMN;
+    }
+
+    public void setChiSoMN(String chiSoMN) {
+        ChiSoMN = chiSoMN;
     }
 
     public ArrayList<CEntityChild> getLstHoaDon() {

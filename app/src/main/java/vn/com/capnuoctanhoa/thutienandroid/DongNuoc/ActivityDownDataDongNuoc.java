@@ -389,6 +389,25 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setDongNuoc2(Boolean.parseBoolean(jsonObject.getString("DongNuoc2")));
                         enParent.setDongPhi(Boolean.parseBoolean(jsonObject.getString("DongPhi")));
                         enParent.setMoNuoc(Boolean.parseBoolean(jsonObject.getString("MoNuoc")));
+                        enParent.setButChi(Boolean.parseBoolean(jsonObject.getString("ButChi")));
+                        enParent.setKhoaTu(Boolean.parseBoolean(jsonObject.getString("KhoaTu")));
+                        enParent.setKhoaKhac(Boolean.parseBoolean(jsonObject.getString("KhoaKhac")));
+                        enParent.setNgayDN(jsonObject.getString("NgayDN").replace("null", ""));
+                        enParent.setChiSoDN(jsonObject.getString("ChiSoDN").replace("null", ""));
+                        enParent.setNiemChi(jsonObject.getString("NiemChi").replace("null", ""));
+                        enParent.setKhoaKhac_GhiChu(jsonObject.getString("KhoaKhac_GhiChu").replace("null", ""));
+                        enParent.setHieu(jsonObject.getString("Hieu"));
+                        enParent.setCo(jsonObject.getString("Co"));
+                        enParent.setSoThan(jsonObject.getString("SoThan"));
+                        enParent.setChiMatSo(jsonObject.getString("ChiMatSo").replace("null", ""));
+                        enParent.setChiKhoaGoc(jsonObject.getString("ChiKhoaGoc").replace("null", ""));
+                        enParent.setViTri(jsonObject.getString("ViTri").replace("null", ""));
+                        enParent.setLyDo(jsonObject.getString("LyDo").replace("null", ""));
+                        enParent.setNgayDN1(jsonObject.getString("NgayDN1").replace("null", ""));
+                        enParent.setChiSoDN1(jsonObject.getString("ChiSoDN1").replace("null", ""));
+                        enParent.setNiemChi1(jsonObject.getString("NiemChi1").replace("null", ""));
+                        enParent.setNgayMN(jsonObject.getString("NgayMN").replace("null", ""));
+                        enParent.setChiSoMN(jsonObject.getString("ChiSoMN").replace("null", ""));
 
                         //khởi tạo ArrayList CEntityChild
                         ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
@@ -404,44 +423,44 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                     enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                     enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));
                                     enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
-                                    enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo"));
+                                    enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo").replace("null", ""));
                                     enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
                                     listChild.add(enChild);
                                 }
                             }
                         //update TinhTrang
-                        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, LenhHuy = 0,PhiMoNuocThuHo=0;
-                        for (CEntityChild item : listChild) {
-                            if (item.getGiaiTrach() == true)
-                                GiaiTrach++;
-                            else if (item.getTamThu() == true)
-                                TamThu++;
-                            else if (item.getThuHo() == true) {
-                                ThuHo++;
-                                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
-                                    PhiMoNuocThuHo++;
-                            }
-                            else if (item.getLenhHuy() == true)
-                                LenhHuy++;
-                        }
-
-                        if (GiaiTrach == listChild.size()) {
-                            enParent.setGiaiTrach(true);
-                            enParent.setTinhTrang("Giải Trách");
-                        } else if (TamThu == listChild.size()) {
-                            enParent.setTamThu(true);
-                            enParent.setTinhTrang("Tạm Thu");
-                        } else if (ThuHo == listChild.size()) {
-                            enParent.setThuHo(true);
-                            String str="Thu Hộ";
-                            if (PhiMoNuocThuHo == listChild.size())
-                                str+=" (" + listChild.get(0).getPhiMoNuocThuHo().substring(0, listChild.get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
-                            enParent.setTinhTrang(str);
-                        } else if (LenhHuy == listChild.size()) {
-                            enParent.setLenhHuy(true);
-                        }
+//                        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+//                        for (CEntityChild item : listChild) {
+//                            if (item.getGiaiTrach() == true)
+//                                GiaiTrach++;
+//                            else if (item.getTamThu() == true)
+//                                TamThu++;
+//                            else if (item.getThuHo() == true) {
+//                                ThuHo++;
+//                                if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
+//                                    PhiMoNuocThuHo++;
+//                            } else if (item.getLenhHuy() == true)
+//                                LenhHuy++;
+//                        }
+//
+//                        if (GiaiTrach == listChild.size()) {
+//                            enParent.setGiaiTrach(true);
+//                            enParent.setTinhTrang("Giải Trách");
+//                        } else if (TamThu == listChild.size()) {
+//                            enParent.setTamThu(true);
+//                            enParent.setTinhTrang("Tạm Thu");
+//                        } else if (ThuHo == listChild.size()) {
+//                            enParent.setThuHo(true);
+//                            String str = "Thu Hộ";
+//                            if (PhiMoNuocThuHo == listChild.size())
+//                                str += " (" + listChild.get(0).getPhiMoNuocThuHo().substring(0, listChild.get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+//                            enParent.setTinhTrang(str);
+//                        } else if (LenhHuy == listChild.size()) {
+//                            enParent.setLenhHuy(true);
+//                        }
 
                         enParent.setLstHoaDon(listChild);
+                        enParent = CLocal.updateCEntityParent(enParent);
                         CLocal.listDongNuoc.add(enParent);
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();

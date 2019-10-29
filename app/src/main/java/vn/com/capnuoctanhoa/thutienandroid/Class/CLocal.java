@@ -66,7 +66,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV = "", HoTen = "", MaTo = "", DienThoai="",ThermalPrinter = "";
+    public static String MaNV = "", HoTen = "", MaTo = "", DienThoai = "", ThermalPrinter = "";
     public static boolean Doi = false, ToTruong = false;
     public static ArrayList<CEntityParent> listHanhThu, listDongNuoc;
 
@@ -90,7 +90,7 @@ public class CLocal {
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai="";
+        MaNV = HoTen = MaTo = DienThoai = "";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listDongNuoc = null;
@@ -221,7 +221,7 @@ public class CLocal {
                 TamThu++;
             else if (item.getThuHo() == true) {
                 ThuHo++;
-                if (item.getPhiMoNuocThuHo() != "null" && item.getPhiMoNuocThuHo().equals("0") == false)
+                if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
                     PhiMoNuocThuHo++;
             } else if (item.getLenhHuy() == true)
                 LenhHuy++;
@@ -264,6 +264,60 @@ public class CLocal {
         }
         //goi update lại json hệ thống
         updateArrayListToJson();
+    }
+
+    public static CEntityParent updateCEntityParent(CEntityParent en) {
+        //update TinhTrang
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+        for (CEntityChild item : en.getLstHoaDon()) {
+            if (item.getGiaiTrach() == true)
+                GiaiTrach++;
+            else if (item.getTamThu() == true)
+                TamThu++;
+            else if (item.getThuHo() == true) {
+                ThuHo++;
+                if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
+                    PhiMoNuocThuHo++;
+            } else if (item.getLenhHuy() == true)
+                LenhHuy++;
+            else if (item.getTBDongNuoc() == true)
+                TBDongNuoc++;
+
+            if (item.getDangNgan_DienThoai() == true)
+                DangNgan_DienThoai++;
+        }
+
+        en.setGiaiTrach(false);
+        en.setTamThu(false);
+        en.setThuHo(false);
+        en.setLenhHuy(false);
+        en.setTBDongNuoc(false);
+        en.setDangNgan_DienThoai(false);
+        en.setTinhTrang("");
+
+        if (GiaiTrach == en.getLstHoaDon().size()) {
+            en.setGiaiTrach(true);
+            en.setTinhTrang("Giải Trách");
+        } else if (TamThu == en.getLstHoaDon().size()) {
+            en.setTamThu(true);
+            en.setTinhTrang("Tạm Thu");
+        } else if (ThuHo == en.getLstHoaDon().size()) {
+            en.setThuHo(true);
+            String str = "Thu Hộ";
+            if (PhiMoNuocThuHo == en.getLstHoaDon().size())
+                str += " (" + en.getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, en.getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
+            en.setTinhTrang(str);
+        } else if (LenhHuy == en.getLstHoaDon().size()) {
+            en.setLenhHuy(true);
+        } else if (TBDongNuoc == en.getLstHoaDon().size()) {
+            en.setTBDongNuoc(true);
+        }
+
+        if (DangNgan_DienThoai == en.getLstHoaDon().size()) {
+            en.setDangNgan_DienThoai(true);
+            en.setTinhTrang("Đã Thu");
+        }
+        return en;
     }
 
     public static String formatMoney(String price, String symbol) {
@@ -695,7 +749,7 @@ public class CLocal {
                         flag10 = 0;
                     }
                 }
-                if (dem%3!=1 &&m.startsWith("0") && m.length()>1) {
+                if (dem % 3 != 1 && m.startsWith("0") && m.length() > 1) {
                 } else {
                     if (dem % 3 == 2 && (m.startsWith("1") || m.startsWith("0"))) {//mười
                     } else {
@@ -706,7 +760,7 @@ public class CLocal {
             m = m.substring(1);
             dem = m.length();
         }
-        kq=kq.substring(0, kq.length() - 1);
+        kq = kq.substring(0, kq.length() - 1);
         return kq;
     }
 

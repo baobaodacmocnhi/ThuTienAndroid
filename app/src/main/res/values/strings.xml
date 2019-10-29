@@ -63,6 +63,11 @@
         <item>Mục đứt</item>
         <item>Đứt</item>
     </string-array>
+    <string-array name="vitri_array">
+        <item></item>
+        <item>Trong</item>
+        <item>Ngoài</item>
+    </string-array>
     <string-array name="filter_hanhthu_array">
         <item>Tất Cả</item>
         <item>Tạm Thu-Thu Hộ</item>

@@ -11,14 +11,20 @@
         style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="Đóng Nước Lần 2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="In"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -291,10 +297,10 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
-                app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc"
-                android:visibility="invisible" />
+                app:layout_constraintTop_toBottomOf="@+id/spnViTri" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -434,6 +440,26 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Vị Trí"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnViTri" />
+
+            <Spinner
+                android:id="@+id/spnViTri"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/vitri_array"
+                app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
+                app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
