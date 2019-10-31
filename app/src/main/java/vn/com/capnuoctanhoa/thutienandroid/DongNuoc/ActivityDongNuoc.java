@@ -28,7 +28,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -37,6 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
@@ -45,10 +45,10 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN,edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo,edtKhoaKhac_GhiChu;
-    private Spinner spnChiMatSo, spnChiKhoaGoc,spnViTri;
-    private Button btnDongNuoc,btnIn;
-    private CheckBox chkButChi,chkKhoaTu, chkKhoaKhac;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
+    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
+    private Button btnDongNuoc, btnIn;
+    private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
@@ -82,9 +82,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
         btnIn = (Button) findViewById(R.id.btnIn);
-        chkButChi=(CheckBox)  findViewById(R.id.chkButChi);
-        chkKhoaTu=(CheckBox)  findViewById(R.id.chkKhoaTu);
-        chkKhoaKhac=(CheckBox)  findViewById(R.id.chkKhoaKhac);
+        chkButChi = (CheckBox) findViewById(R.id.chkButChi);
+        chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
+        chkKhoaKhac = (CheckBox) findViewById(R.id.chkKhoaKhac);
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
-                imgCapture=null;
+                imgCapture = null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDongNuoc.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -162,7 +162,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (CLocal.checkNetworkAvailable(ActivityDongNuoc.this) == false) {
-                    Toast.makeText(ActivityDongNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
+                    CLocal.showToastMessage(ActivityDongNuoc.this, "Không có Internet");
                     return;
                 }
                 if (edtMaDN.getText().toString().equals("") == false && edtChiSoDN.getText().toString().equals("") == false) {
@@ -180,9 +180,13 @@ public class ActivityDongNuoc extends AppCompatActivity {
         });
 
         try {
-            String MaDN = getIntent().getStringExtra("MaDN");
-            if (MaDN.equals("") == false) {
-                fillDongNuoc(MaDN);
+//            String MaDN = getIntent().getStringExtra("MaDN");
+//            if (MaDN.equals("") == false) {
+//                fillDongNuoc(MaDN);
+//            }
+            int index = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (index > -1) {
+                fillDongNuoc(index);
             }
         } catch (Exception ex) {
         }
@@ -190,13 +194,13 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -274,17 +278,41 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     edtHieu.setText(jsonObject.getString("Hieu"));
                     edtCo.setText(jsonObject.getString("Co"));
                     edtSoThan.setText(jsonObject.getString("SoThan"));
-                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     edtNgayDN.setText(currentDate.format(new Date()));
-                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN").replace("null", ""));
+                    edtChiSoDN.setText(jsonObject.getString("ChiSoDN"));
                     setSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
                     setSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
-                    edtLyDo.setText(jsonObject.getString("LyDo").replace("null", ""));
+                    edtLyDo.setText(jsonObject.getString("LyDo"));
                     break;
                 }
             }
         } catch (Exception ex) {
-            Toast.makeText(ActivityDongNuoc.this, ex.toString(), Toast.LENGTH_SHORT).show();
+            CLocal.showToastMessage(ActivityDongNuoc.this, ex.getMessage());
+        }
+    }
+
+    public void fillDongNuoc(int Index) {
+        try {
+            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            edtMaDN.setText(en.getID());
+            edtDanhBo.setText(en.getDanhBo());
+            edtMLT.setText(en.getMLT());
+            edtHoTen.setText(en.getHoTen());
+            edtDiaChi.setText(en.getDiaChi());
+            edtHieu.setText(en.getHieu());
+            edtCo.setText(en.getCo());
+            edtSoThan.setText(en.getSoThan());
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            edtNgayDN.setText(currentDate.format(new Date()));
+            edtChiSoDN.setText(en.getChiSoDN());
+            setSpinnerSelection(spnChiMatSo, en.getChiMatSo());
+            setSpinnerSelection(spnChiKhoaGoc, en.getChiKhoaGoc());
+            setSpinnerSelection(spnViTri, en.getViTri());
+            edtLyDo.setText(en.getLyDo());
+
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityDongNuoc.this, ex.getMessage());
         }
     }
 
@@ -341,11 +369,12 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
                     String result = ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
-                            String.valueOf(chkButChi.isChecked()),String.valueOf(chkKhoaTu.isChecked()),edtNiemChi.getText().toString(),String.valueOf(chkKhoaKhac.isChecked()),edtKhoaKhac_GhiChu.getText().toString(),
-                            edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(), spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(),spnViTri.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
-                    if (Boolean.parseBoolean(result) == true)
+                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(),
+                            edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(), spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), spnViTri.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
+                    if (Boolean.parseBoolean(result) == true) {
+
                         return "THÀNH CÔNG";
-                    else
+                    } else
                         return "THẤT BẠI";
             }
             return null;

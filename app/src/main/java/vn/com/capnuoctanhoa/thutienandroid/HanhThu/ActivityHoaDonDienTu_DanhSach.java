@@ -216,7 +216,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Chưa Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).getGiaiTrach() == false && CLocal.listHanhThu.get(i).getTamThu() == false && CLocal.listHanhThu.get(i).getThuHo() == false) {
+                            if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -225,7 +225,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Đã Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getGiaiTrach() == false && CLocal.listHanhThu.get(i).getTamThu() == false && CLocal.listHanhThu.get(i).getThuHo() == false) {
+                            if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -234,7 +234,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Tạm Thu-Thu Hộ":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).getGiaiTrach() == true || CLocal.listHanhThu.get(i).getTamThu() == true || CLocal.listHanhThu.get(i).getThuHo() == true) {
+                            if (CLocal.listHanhThu.get(i).isGiaiTrach() == true || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true) {
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -270,11 +270,11 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getDiaChi());
 
-            enViewParent.setThuHo(enParent.getThuHo());
-            enViewParent.setTamThu(enParent.getTamThu());
-            enViewParent.setGiaiTrach(enParent.getGiaiTrach());
-            enViewParent.setTBDongNuoc(enParent.getTBDongNuoc());
-            enViewParent.setLenhHuy(enParent.getLenhHuy());
+            enViewParent.setThuHo(enParent.isThuHo());
+            enViewParent.setTamThu(enParent.isTamThu());
+            enViewParent.setGiaiTrach(enParent.isGiaiTrach());
+            enViewParent.setTBDongNuoc(enParent.isTBDongNuoc());
+            enViewParent.setLenhHuy(enParent.isLenhHuy());
 
             ///////////////////////////
 
@@ -303,11 +303,11 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             enViewChild.setID(enChild.getMaHD());
             enViewChild.setRow1a(enChild.getKy());
             enViewChild.setRow1b(CLocal.formatMoney(enChild.getTongCong(), "đ"));
-            enViewChild.setGiaiTrach(enChild.getGiaiTrach());
-            enViewChild.setTamThu(enChild.getTamThu());
-            enViewChild.setThuHo(enChild.getThuHo());
-            enViewChild.setTBDongNuoc(enChild.getTBDongNuoc());
-            enViewChild.setLenhHuy(enChild.getLenhHuy());
+            enViewChild.setGiaiTrach(enChild.isGiaiTrach());
+            enViewChild.setTamThu(enChild.isTamThu());
+            enViewChild.setThuHo(enChild.isThuHo());
+            enViewChild.setTBDongNuoc(enChild.isTBDongNuoc());
+            enViewChild.setLenhHuy(enChild.isLenhHuy());
             TongCong += Long.parseLong(enChild.getTongCong());
             TongHD++;
 

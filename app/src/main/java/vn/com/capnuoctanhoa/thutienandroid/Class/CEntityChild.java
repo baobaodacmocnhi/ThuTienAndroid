@@ -15,15 +15,15 @@ public class CEntityChild {
     private String TuNgay;
     private String DenNgay;
     private String ModifyDate;
-    private Boolean ThuHo;
-    private Boolean TamThu;
-    private Boolean GiaiTrach;
-    private Boolean TBDongNuoc;
-    private Boolean LenhHuy;
+    private boolean ThuHo;
+    private boolean TamThu;
+    private boolean GiaiTrach;
+    private boolean TBDongNuoc;
+    private boolean LenhHuy;
     private String TinhTrang;
     private String PhiMoNuoc;
     private String PhiMoNuocThuHo;
-    private Boolean DangNgan_DienThoai;
+    private boolean DangNgan_DienThoai;
     private String NgayGiaiTrach;
     private String XoaDangNgan_Ngay_DienThoai;
     private String InPhieuBao_Ngay;
@@ -52,8 +52,8 @@ public class CEntityChild {
         GiaiTrach = false;
         LenhHuy = false;
         TinhTrang = "";
-        PhiMoNuoc = "";
-        PhiMoNuocThuHo = "";
+        PhiMoNuoc = "0";
+        PhiMoNuocThuHo = "0";
         DangNgan_DienThoai = false;
         NgayGiaiTrach = "";
         XoaDangNgan_Ngay_DienThoai = "";
@@ -177,44 +177,60 @@ public class CEntityChild {
         ModifyDate = modifyDate;
     }
 
+    public boolean isThuHo() {
+        return ThuHo;
+    }
+
+    public void setThuHo(boolean thuHo) {
+        ThuHo = thuHo;
+    }
+
+    public boolean isTamThu() {
+        return TamThu;
+    }
+
+    public void setTamThu(boolean tamThu) {
+        TamThu = tamThu;
+    }
+
+    public boolean isGiaiTrach() {
+        return GiaiTrach;
+    }
+
+    public void setGiaiTrach(boolean giaiTrach) {
+        GiaiTrach = giaiTrach;
+    }
+
+    public boolean isTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
+    }
+
+    public boolean isLenhHuy() {
+        return LenhHuy;
+    }
+
+    public void setLenhHuy(boolean lenhHuy) {
+        LenhHuy = lenhHuy;
+    }
+
+    public boolean isDangNgan_DienThoai() {
+        return DangNgan_DienThoai;
+    }
+
+    public void setDangNgan_DienThoai(boolean dangNgan_DienThoai) {
+        DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
     public String getTinhTrang() {
         return TinhTrang;
     }
 
     public void setTinhTrang(String tinhTrang) {
         TinhTrang = tinhTrang;
-    }
-
-    public Boolean getGiaiTrach() {
-        return GiaiTrach;
-    }
-
-    public void setGiaiTrach(Boolean giaiTrach) {
-        GiaiTrach = giaiTrach;
-    }
-
-    public Boolean getTamThu() {
-        return TamThu;
-    }
-
-    public void setTamThu(Boolean tamThu) {
-        TamThu = tamThu;
-    }
-
-    public Boolean getThuHo() {
-        return ThuHo;
-    }
-
-    public void setThuHo(Boolean thuHo) {
-        ThuHo = thuHo;
-    }
-
-    public Boolean getLenhHuy() {
-        return LenhHuy;
-    }
-
-    public void setLenhHuy(Boolean lenhHuy) {
-        LenhHuy = lenhHuy;
     }
 
     public String getPhiMoNuoc() {
@@ -231,14 +247,6 @@ public class CEntityChild {
 
     public void setPhiMoNuocThuHo(String phiMoNuocThuHo) {
         PhiMoNuocThuHo = phiMoNuocThuHo;
-    }
-
-    public Boolean getDangNgan_DienThoai() {
-        return DangNgan_DienThoai;
-    }
-
-    public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
-        DangNgan_DienThoai = dangNgan_DienThoai;
     }
 
     public String getNgayGiaiTrach() {
@@ -297,13 +305,6 @@ public class CEntityChild {
         this.TBDongNuoc_NgayHen = TBDongNuoc_NgayHen;
     }
 
-    public Boolean getTBDongNuoc() {
-        return TBDongNuoc;
-    }
-
-    public void setTBDongNuoc(Boolean TBDongNuoc) {
-        this.TBDongNuoc = TBDongNuoc;
-    }
 
 
 }

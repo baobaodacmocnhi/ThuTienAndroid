@@ -3,29 +3,30 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 import java.util.ArrayList;
 
 public class CEntityParent {
+    private int Index;
     private String ID;
     private String MLT;
     private String DanhBo;
     private String HoTen;
     private String DiaChi;
     private String ModifyDate;
-    private Boolean ThuHo;
-    private Boolean TamThu;
-    private Boolean GiaiTrach;
-    private Boolean TBDongNuoc;
-    private Boolean LenhHuy;
+    private boolean ThuHo;
+    private boolean TamThu;
+    private boolean GiaiTrach;
+    private boolean TBDongNuoc;
+    private boolean LenhHuy;
     private String TinhTrang;
-    private Boolean DangNgan_DienThoai;
-    private Boolean DongNuoc;
-    private Boolean DongNuoc2;
-    private Boolean DongPhi;
-    private Boolean MoNuoc;
+    private boolean DangNgan_DienThoai;
+    private boolean DongNuoc;
+    private boolean DongNuoc2;
+    private boolean DongPhi;
+    private boolean MoNuoc;
     private String NgayDN;
     private String ChiSoDN;
-    private Boolean ButChi;
-    private Boolean KhoaTu;
+    private boolean ButChi;
+    private boolean KhoaTu;
     private String NiemChi;
-    private Boolean KhoaKhac;
+    private boolean KhoaKhac;
     private String KhoaKhac_GhiChu;
     private String Hieu;
     private String Co;
@@ -43,6 +44,7 @@ public class CEntityParent {
     private ArrayList<CEntityChild> lstHoaDon;
 
     public CEntityParent() {
+        Index=-1;
         ID = "";
         MLT = "";
         DanhBo = "";
@@ -82,6 +84,14 @@ public class CEntityParent {
         lstHoaDon = new ArrayList<CEntityChild>();
     }
 
+    public int getIndex() {
+        return Index;
+    }
+
+    public void setIndex(int index) {
+        Index = index;
+    }
+    
     public String getID() {
         return ID;
     }
@@ -130,92 +140,116 @@ public class CEntityParent {
         ModifyDate = modifyDate;
     }
 
+    public boolean isThuHo() {
+        return ThuHo;
+    }
+
+    public void setThuHo(boolean thuHo) {
+        ThuHo = thuHo;
+    }
+
+    public boolean isTamThu() {
+        return TamThu;
+    }
+
+    public void setTamThu(boolean tamThu) {
+        TamThu = tamThu;
+    }
+
+    public boolean isGiaiTrach() {
+        return GiaiTrach;
+    }
+
+    public void setGiaiTrach(boolean giaiTrach) {
+        GiaiTrach = giaiTrach;
+    }
+
+    public boolean isTBDongNuoc() {
+        return TBDongNuoc;
+    }
+
+    public void setTBDongNuoc(boolean TBDongNuoc) {
+        this.TBDongNuoc = TBDongNuoc;
+    }
+
+    public boolean isLenhHuy() {
+        return LenhHuy;
+    }
+
+    public void setLenhHuy(boolean lenhHuy) {
+        LenhHuy = lenhHuy;
+    }
+
+    public boolean isDangNgan_DienThoai() {
+        return DangNgan_DienThoai;
+    }
+
+    public void setDangNgan_DienThoai(boolean dangNgan_DienThoai) {
+        DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
+    public boolean isDongNuoc() {
+        return DongNuoc;
+    }
+
+    public void setDongNuoc(boolean dongNuoc) {
+        DongNuoc = dongNuoc;
+    }
+
+    public boolean isDongNuoc2() {
+        return DongNuoc2;
+    }
+
+    public void setDongNuoc2(boolean dongNuoc2) {
+        DongNuoc2 = dongNuoc2;
+    }
+
+    public boolean isDongPhi() {
+        return DongPhi;
+    }
+
+    public void setDongPhi(boolean dongPhi) {
+        DongPhi = dongPhi;
+    }
+
+    public boolean isMoNuoc() {
+        return MoNuoc;
+    }
+
+    public void setMoNuoc(boolean moNuoc) {
+        MoNuoc = moNuoc;
+    }
+
+    public boolean isButChi() {
+        return ButChi;
+    }
+
+    public void setButChi(boolean butChi) {
+        ButChi = butChi;
+    }
+
+    public boolean isKhoaTu() {
+        return KhoaTu;
+    }
+
+    public void setKhoaTu(boolean khoaTu) {
+        KhoaTu = khoaTu;
+    }
+
+    public boolean isKhoaKhac() {
+        return KhoaKhac;
+    }
+
+    public void setKhoaKhac(boolean khoaKhac) {
+        KhoaKhac = khoaKhac;
+    }
+
     public String getTinhTrang() {
         return TinhTrang;
     }
 
     public void setTinhTrang(String tinhTrang) {
         TinhTrang = tinhTrang;
-    }
-
-    public Boolean getGiaiTrach() {
-        return GiaiTrach;
-    }
-
-    public void setGiaiTrach(Boolean giaiTrach) {
-        GiaiTrach = giaiTrach;
-    }
-
-    public Boolean getTamThu() {
-        return TamThu;
-    }
-
-    public void setTamThu(Boolean tamThu) {
-        TamThu = tamThu;
-    }
-
-    public Boolean getThuHo() {
-        return ThuHo;
-    }
-
-    public void setThuHo(Boolean thuHo) {
-        ThuHo = thuHo;
-    }
-
-    public Boolean getLenhHuy() {
-        return LenhHuy;
-    }
-
-    public void setLenhHuy(Boolean lenhHuy) {
-        LenhHuy = lenhHuy;
-    }
-
-    public Boolean getDangNgan_DienThoai() {
-        return DangNgan_DienThoai;
-    }
-
-    public void setDangNgan_DienThoai(Boolean dangNgan_DienThoai) {
-        DangNgan_DienThoai = dangNgan_DienThoai;
-    }
-
-    public Boolean getTBDongNuoc() {
-        return TBDongNuoc;
-    }
-
-    public void setTBDongNuoc(Boolean TBDongNuoc) {
-        this.TBDongNuoc = TBDongNuoc;
-    }
-
-    public Boolean getDongNuoc() {
-        return DongNuoc;
-    }
-
-    public void setDongNuoc(Boolean dongNuoc) {
-        DongNuoc = dongNuoc;
-    }
-
-    public Boolean getDongPhi() {
-        return DongPhi;
-    }
-
-    public void setDongPhi(Boolean dongPhi) {
-        DongPhi = dongPhi;
-    }
-
-    public Boolean getMoNuoc() {
-        return MoNuoc;
-    }
-
-    public void setMoNuoc(Boolean moNuoc) {
-        MoNuoc = moNuoc;
-    }
-
-    public Boolean getDongNuoc2() {
-        return DongNuoc2;
-    }
-
-    public void setDongNuoc2(Boolean dongNuoc2) {
-        DongNuoc2 = dongNuoc2;
     }
 
     public String getNgayDN() {
@@ -234,36 +268,12 @@ public class CEntityParent {
         ChiSoDN = chiSoDN;
     }
 
-    public Boolean getButChi() {
-        return ButChi;
-    }
-
-    public void setButChi(Boolean butChi) {
-        ButChi = butChi;
-    }
-
-    public Boolean getKhoaTu() {
-        return KhoaTu;
-    }
-
-    public void setKhoaTu(Boolean khoaTu) {
-        KhoaTu = khoaTu;
-    }
-
     public String getNiemChi() {
         return NiemChi;
     }
 
     public void setNiemChi(String niemChi) {
         NiemChi = niemChi;
-    }
-
-    public Boolean getKhoaKhac() {
-        return KhoaKhac;
-    }
-
-    public void setKhoaKhac(Boolean khoaKhac) {
-        KhoaKhac = khoaKhac;
     }
 
     public String getKhoaKhac_GhiChu() {

@@ -105,9 +105,13 @@ public class ActivityDongTien extends AppCompatActivity {
         });
 
         try {
-            String MaDN = getIntent().getStringExtra("MaDN");
-            if (MaDN.equals("") == false) {
-                fillDongNuoc(MaDN);
+//            String MaDN = getIntent().getStringExtra("MaDN");
+//            if (MaDN.equals("") == false) {
+//                fillDongNuoc(MaDN);
+//            }
+            int index = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (index > -1) {
+                fillDongNuoc(index);
             }
         } catch (Exception ex) {
         }
@@ -219,7 +223,38 @@ public class ActivityDongTien extends AppCompatActivity {
             txtTongCong.setText(CLocal.formatMoney("0", "đ"));
 
         } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+            CLocal.showToastMessage(ActivityDongTien.this, ex.getMessage());
+        }
+    }
+
+    private void fillDongNuoc(int Index)
+    {
+        try {
+            lstHoaDon = new ArrayList<CHoaDon>();
+            arrayList = new ArrayList<String>();
+
+            for (int i = 0; i < CLocal.listDongNuoc.get(Index).getLstHoaDon().size(); i++)
+            {
+                CHoaDon entity = new CHoaDon();
+                entity.setMaHD(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getMaHD());
+                entity.setKy(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getKy());
+                entity.setTongCong(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getTongCong());
+                lstHoaDon.add(entity);
+
+                if (lstMaHD.isEmpty() == true)
+                    lstMaHD = entity.getMaHD();
+                else
+                    lstMaHD += "," + entity.getMaHD();
+
+                arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ"));
+            }
+
+            arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+            lstView.setAdapter(arrayAdapter);
+            txtTongCong.setText(CLocal.formatMoney("0", "đ"));
+
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityDongTien.this, ex.getMessage());
         }
     }
 

@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -139,6 +140,11 @@ public class CLocal {
         alertDialog.show();
     }
 
+    public static void showToastMessage(Activity activity, String message)
+    {
+        Toast.makeText(activity, message,Toast.LENGTH_SHORT).show();
+    }
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -215,20 +221,20 @@ public class CLocal {
         //update TinhTrang
         int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : lst.get(i).getLstHoaDon()) {
-            if (item.getGiaiTrach() == true)
+            if (item.isGiaiTrach() == true)
                 GiaiTrach++;
-            else if (item.getTamThu() == true)
+            else if (item.isTamThu() == true)
                 TamThu++;
-            else if (item.getThuHo() == true) {
+            else if (item.isThuHo() == true) {
                 ThuHo++;
                 if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
                     PhiMoNuocThuHo++;
-            } else if (item.getLenhHuy() == true)
+            } else if (item.isLenhHuy() == true)
                 LenhHuy++;
-            else if (item.getTBDongNuoc() == true)
+            else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
 
-            if (item.getDangNgan_DienThoai() == true)
+            if (item.isDangNgan_DienThoai() == true)
                 DangNgan_DienThoai++;
         }
 
@@ -270,20 +276,20 @@ public class CLocal {
         //update TinhTrang
         int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : en.getLstHoaDon()) {
-            if (item.getGiaiTrach() == true)
+            if (item.isGiaiTrach() == true)
                 GiaiTrach++;
-            else if (item.getTamThu() == true)
+            else if (item.isTamThu() == true)
                 TamThu++;
-            else if (item.getThuHo() == true) {
+            else if (item.isThuHo() == true) {
                 ThuHo++;
                 if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
                     PhiMoNuocThuHo++;
-            } else if (item.getLenhHuy() == true)
+            } else if (item.isLenhHuy() == true)
                 LenhHuy++;
-            else if (item.getTBDongNuoc() == true)
+            else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
 
-            if (item.getDangNgan_DienThoai() == true)
+            if (item.isDangNgan_DienThoai() == true)
                 DangNgan_DienThoai++;
         }
 

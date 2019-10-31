@@ -108,7 +108,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getDangNgan_DienThoai() == false) {
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
                                     CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                     SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                     CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(new Date()));

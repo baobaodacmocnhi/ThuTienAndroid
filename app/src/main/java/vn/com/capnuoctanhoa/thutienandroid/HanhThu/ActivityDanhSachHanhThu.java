@@ -261,7 +261,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
-                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == false) {
+                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
                                     enViewParent.setID(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD());
@@ -269,19 +269,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                                     enViewParent.setRow1b(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + ": " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
                                     enViewParent.setRow2a(CLocal.listHanhThu.get(i).getDanhBo());
 
-                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true)
                                         enViewParent.setRow2b("Giải Trách");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true)
                                         enViewParent.setRow2b("Tạm Thu");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true)
                                         enViewParent.setRow2b("Thu Hộ");
 
                                     enViewParent.setRow3a(CLocal.listHanhThu.get(i).getHoTen());
                                     enViewParent.setRow4a(CLocal.listHanhThu.get(i).getDiaChi());
 
-                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach());
-                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu());
-                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo());
+                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach());
+                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu());
+                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo());
                                     enViewParent.setModifyDate(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getModifyDate());
 
                                     TongHD++;
@@ -296,7 +296,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
-                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true) {
+                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
                                     enViewParent.setID(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD());
@@ -304,19 +304,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                                     enViewParent.setRow1b(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + ": " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
                                     enViewParent.setRow2a(CLocal.listHanhThu.get(i).getDanhBo());
 
-                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true)
                                         enViewParent.setRow2b("Giải Trách");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true)
                                         enViewParent.setRow2b("Tạm Thu");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true)
                                         enViewParent.setRow2b("Thu Hộ");
 
                                     enViewParent.setRow3a(CLocal.listHanhThu.get(i).getHoTen());
                                     enViewParent.setRow4a(CLocal.listHanhThu.get(i).getDiaChi());
 
-                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach());
-                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu());
-                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo());
+                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach());
+                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu());
+                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo());
                                     enViewParent.setModifyDate(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getModifyDate());
 
                                     TongHD++;
@@ -331,7 +331,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
-                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true) {
+                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true) {
                                     CViewParent enViewParent = new CViewParent();
                                     enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
                                     enViewParent.setID(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD());
@@ -339,19 +339,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                                     enViewParent.setRow1b(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + ": " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
                                     enViewParent.setRow2a(CLocal.listHanhThu.get(i).getDanhBo());
 
-                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true)
                                         enViewParent.setRow2b("Giải Trách");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true)
                                         enViewParent.setRow2b("Tạm Thu");
-                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true)
+                                    else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true)
                                         enViewParent.setRow2b("Thu Hộ");
 
                                     enViewParent.setRow3a(CLocal.listHanhThu.get(i).getHoTen());
                                     enViewParent.setRow4a(CLocal.listHanhThu.get(i).getDiaChi());
 
-                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach());
-                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu());
-                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo());
+                                    enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach());
+                                    enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu());
+                                    enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo());
                                     enViewParent.setModifyDate(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getModifyDate());
 
                                     TongHD++;
@@ -373,19 +373,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                                 enViewParent.setRow1b(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy() + ": " + CLocal.formatMoney(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong(), "đ"));
                                 enViewParent.setRow2a(CLocal.listHanhThu.get(i).getDanhBo());
 
-                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach() == true)
+                                if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true)
                                     enViewParent.setRow2b("Giải Trách");
-                                else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu() == true)
+                                else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true)
                                     enViewParent.setRow2b("Tạm Thu");
-                                else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo() == true)
+                                else if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true)
                                     enViewParent.setRow2b("Thu Hộ");
 
                                 enViewParent.setRow3a(CLocal.listHanhThu.get(i).getHoTen());
                                 enViewParent.setRow4a(CLocal.listHanhThu.get(i).getDiaChi());
 
-                                enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaiTrach());
-                                enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTamThu());
-                                enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getThuHo());
+                                enViewParent.setGiaiTrach(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach());
+                                enViewParent.setTamThu(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu());
+                                enViewParent.setThuHo(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo());
                                 enViewParent.setModifyDate(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getModifyDate());
 
                                 TongHD++;
@@ -455,19 +455,19 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                 enViewParent.setRow1b(enParent.getLstHoaDon().get(i).getKy() + ": " + CLocal.formatMoney(enParent.getLstHoaDon().get(i).getTongCong(), "đ"));
                 enViewParent.setRow2a(enParent.getDanhBo());
 
-                if (enParent.getLstHoaDon().get(i).getGiaiTrach() == true)
+                if (enParent.getLstHoaDon().get(i).isGiaiTrach() == true)
                     enViewParent.setRow2b("Giải Trách");
-                else if (enParent.getLstHoaDon().get(i).getTamThu() == true)
+                else if (enParent.getLstHoaDon().get(i).isTamThu() == true)
                     enViewParent.setRow2b("Tạm Thu");
-                else if (enParent.getLstHoaDon().get(i).getThuHo() == true)
+                else if (enParent.getLstHoaDon().get(i).isThuHo() == true)
                     enViewParent.setRow2b("Thu Hộ");
 
                 enViewParent.setRow3a(enParent.getHoTen());
                 enViewParent.setRow4a(enParent.getDiaChi());
 
-                enViewParent.setGiaiTrach(enParent.getLstHoaDon().get(i).getGiaiTrach());
-                enViewParent.setTamThu(enParent.getLstHoaDon().get(i).getTamThu());
-                enViewParent.setThuHo(enParent.getLstHoaDon().get(i).getThuHo());
+                enViewParent.setGiaiTrach(enParent.getLstHoaDon().get(i).isGiaiTrach());
+                enViewParent.setTamThu(enParent.getLstHoaDon().get(i).isTamThu());
+                enViewParent.setThuHo(enParent.getLstHoaDon().get(i).isThuHo());
                 enViewParent.setModifyDate(enParent.getLstHoaDon().get(i).getModifyDate());
 
                 TongHD++;

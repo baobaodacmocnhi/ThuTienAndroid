@@ -449,6 +449,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Vị Trí"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/spnViTri" />
 
@@ -458,6 +459,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:entries="@array/vitri_array"
+                android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
                 app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc" />
 

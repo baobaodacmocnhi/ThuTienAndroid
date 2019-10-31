@@ -344,7 +344,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     CLocal.listHanhThu = new ArrayList<CEntityParent>();
                     for (int i = 0; i < CLocal.jsonHanhThu.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonHanhThu.getJSONObject(i);
-                        Boolean flagExist = false;
+                        boolean flagExist = false;
                         for (int j = 0; j < CLocal.listHanhThu.size(); j++)
                             if (CLocal.listHanhThu.get(j).getID().equals(jsonObject.getString("DanhBo")) == true)
                                 flagExist = true;
@@ -356,6 +356,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                 enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
                             else
                                 enParent.setModifyDate(jsonObject.getString("ModifyDate"));
+                            enParent.setIndex(CLocal.listHanhThu.size());
                             enParent.setID(jsonObject.getString("DanhBo"));
 
                             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
@@ -468,6 +469,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 }
                 return true;
             } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDownDataHanhThu.this, ex.getMessage());
                 return false;
             }
         }

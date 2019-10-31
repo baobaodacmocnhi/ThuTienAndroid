@@ -136,27 +136,27 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         int id = menuItem.getItemId();
-                        TextView MaDN = (TextView) view.findViewById(R.id.lvID);
+                        TextView ID = (TextView) view.findViewById(R.id.lvID);
                         Intent intent;
                         switch (id) {
                             case R.id.action_DongNuoc1:
                                 intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                intent.putExtra("Index", ID.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.action_DongNuoc2:
                                 intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                intent.putExtra("Index", ID.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.action_MoNuoc:
                                 intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                intent.putExtra("Index", ID.getText().toString());
                                 startActivity(intent);
                                 break;
                             case R.id.action_DongTien:
                                 intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-                                intent.putExtra("MaDN", MaDN.getText().toString());
+                                intent.putExtra("Index", ID.getText().toString());
                                 startActivity(intent);
                                 break;
                         }
@@ -246,7 +246,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Chưa ĐN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getDongNuoc() == false && CLocal.listDongNuoc.get(i).getGiaiTrach() == false) {
+                            if (CLocal.listDongNuoc.get(i).isDongNuoc() == false && CLocal.listDongNuoc.get(i).isGiaiTrach() == false) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -255,7 +255,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Đã ĐN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getDongNuoc() == true) {
+                            if (CLocal.listDongNuoc.get(i).isDongNuoc() == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -264,7 +264,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Chưa MN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getMoNuoc() == false && CLocal.listDongNuoc.get(i).getDongPhi() == true) {
+                            if (CLocal.listDongNuoc.get(i).isMoNuoc() == false && CLocal.listDongNuoc.get(i).isDongPhi() == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -273,7 +273,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Đã MN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getMoNuoc() == true) {
+                            if (CLocal.listDongNuoc.get(i).isMoNuoc() == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -282,7 +282,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Giải Trách":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getGiaiTrach() == true) {
+                            if (CLocal.listDongNuoc.get(i).isGiaiTrach() == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -291,7 +291,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Tạm Thu-Thu Hộ":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).getThuHo() == true || CLocal.listDongNuoc.get(i).getTamThu() == true) {
+                            if (CLocal.listDongNuoc.get(i).isThuHo() == true || CLocal.listDongNuoc.get(i).isTamThu() == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -319,17 +319,17 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setModifyDate(enParent.getModifyDate());
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
-            enViewParent.setID(enParent.getID());
+            enViewParent.setID(String.valueOf(enParent.getIndex()));
 
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getDiaChi());
 
-            enViewParent.setGiaiTrach(enParent.getGiaiTrach());
-            enViewParent.setTamThu(enParent.getTamThu());
-            enViewParent.setThuHo(enParent.getThuHo());
-            enViewParent.setLenhHuy(enParent.getLenhHuy());
+            enViewParent.setGiaiTrach(enParent.isGiaiTrach());
+            enViewParent.setTamThu(enParent.isTamThu());
+            enViewParent.setThuHo(enParent.isThuHo());
+            enViewParent.setLenhHuy(enParent.isLenhHuy());
 
             ///////////////////////////
 
@@ -358,10 +358,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             enViewChild.setID(enChild.getMaHD());
             enViewChild.setRow1a(enChild.getKy());
             enViewChild.setRow1b(CLocal.formatMoney(enChild.getTongCong(), "đ"));
-            enViewChild.setGiaiTrach(enChild.getGiaiTrach());
-            enViewChild.setTamThu(enChild.getTamThu());
-            enViewChild.setThuHo(enChild.getThuHo());
-            enViewChild.setLenhHuy(enChild.getLenhHuy());
+            enViewChild.setGiaiTrach(enChild.isGiaiTrach());
+            enViewChild.setTamThu(enChild.isTamThu());
+            enViewChild.setThuHo(enChild.isThuHo());
+            enViewChild.setLenhHuy(enChild.isLenhHuy());
             TongCong += Long.parseLong(enChild.getTongCong());
             TongHD++;
 
