@@ -52,6 +52,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
+    private int Index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,9 +185,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            int index = Integer.parseInt(getIntent().getStringExtra("Index"));
-            if (index > -1) {
-                fillDongNuoc(index);
+            Index = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (Index > -1) {
+                fillDongNuoc(Index);
             }
         } catch (Exception ex) {
         }
@@ -303,14 +304,25 @@ public class ActivityDongNuoc extends AppCompatActivity {
             edtHieu.setText(en.getHieu());
             edtCo.setText(en.getCo());
             edtSoThan.setText(en.getSoThan());
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            edtNgayDN.setText(currentDate.format(new Date()));
-            edtChiSoDN.setText(en.getChiSoDN());
+
             setSpinnerSelection(spnChiMatSo, en.getChiMatSo());
             setSpinnerSelection(spnChiKhoaGoc, en.getChiKhoaGoc());
             setSpinnerSelection(spnViTri, en.getViTri());
             edtLyDo.setText(en.getLyDo());
-
+            if (en.isDongNuoc2() == false) {
+                if (en.isDongNuoc() == true) {
+                    edtNgayDN.setText(en.getNgayDN());
+                    edtChiSoDN.setText(en.getChiSoDN());
+                    edtNiemChi.setText(en.getNiemChi());
+                } else {
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    edtNgayDN.setText(currentDate.format(new Date()));
+                }
+            } else {
+                edtNgayDN.setText(en.getNgayDN1());
+                edtChiSoDN.setText(en.getChiSoDN1());
+                edtNiemChi.setText(en.getNiemChi1());
+            }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDongNuoc.this, ex.getMessage());
         }
@@ -372,6 +384,18 @@ public class ActivityDongNuoc extends AppCompatActivity {
                             String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(),
                             edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(), spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), spnViTri.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
+                        CLocal.listDongNuoc.get(Index).setDongNuoc(true);
+                        CLocal.listDongNuoc.get(Index).setNgayDN(edtNgayDN.getText().toString());
+                        CLocal.listDongNuoc.get(Index).setChiSoDN(edtChiSoDN.getText().toString());
+                        CLocal.listDongNuoc.get(Index).setButChi(chkButChi.isChecked());
+                        CLocal.listDongNuoc.get(Index).setKhoaTu(chkKhoaTu.isChecked());
+                        CLocal.listDongNuoc.get(Index).setNiemChi(edtNiemChi.getText().toString());
+                        CLocal.listDongNuoc.get(Index).setKhoaKhac(chkKhoaKhac.isChecked());
+                        CLocal.listDongNuoc.get(Index).setKhoaKhac_GhiChu(edtKhoaKhac_GhiChu.getText().toString());
+                        CLocal.listDongNuoc.get(Index).setChiMatSo(spnChiMatSo.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(Index).setChiKhoaGoc(spnChiKhoaGoc.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(Index).setViTri(spnViTri.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(Index).setLyDo(edtLyDo.getText().toString());
 
                         return "THÀNH CÔNG";
                     } else

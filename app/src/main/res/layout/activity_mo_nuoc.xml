@@ -283,7 +283,7 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
-                app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc" />
+                app:layout_constraintTop_toBottomOf="@+id/spnViTri" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -354,6 +354,28 @@
                 android:text="Ngày MN"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtNgayMN" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Vị Trí"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnViTri" />
+
+            <Spinner
+                android:id="@+id/spnViTri"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/vitri_array"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
+                app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

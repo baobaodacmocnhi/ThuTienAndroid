@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
@@ -44,12 +45,13 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityMoNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtMLT,edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
-    private Spinner spnChiMatSo, spnChiKhoaGoc;
-    private Button  btnMoNuoc;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
+    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
+    private Button btnMoNuoc;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityMoNuoc.this);
+    private int Index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         edtLyDo = (EditText) findViewById(R.id.edtLyDo);
         spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
         spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
+        spnViTri = (Spinner) findViewById(R.id.spnViTri);
 
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
@@ -87,7 +90,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     if (CMarshMallowPermission.checkPermissionForExternalStorage() == false)
                         return;
                 }
-                imgCapture=null;
+                imgCapture = null;
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityMoNuoc.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Chọn lựa hành động");
@@ -95,7 +98,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                 builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri  imgUri = createImageUri();
+                        Uri imgUri = createImageUri();
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         if (intent.resolveActivity(ActivityMoNuoc.this.getPackageManager()) != null) {
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
@@ -114,7 +117,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                             intent.addCategory(Intent.CATEGORY_OPENABLE);
                             startActivityForResult(intent, 2);
                         } else if (Build.VERSION.SDK_INT > 19) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(intent, 2);
                         }
                     }
@@ -138,7 +141,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     Toast.makeText(ActivityMoNuoc.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(edtMaDN.getText().toString().equals("")==false&&edtChiSoMN.getText().toString().equals("")==false) {
+                if (edtMaDN.getText().toString().equals("") == false && edtChiSoMN.getText().toString().equals("") == false) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute("MoNuoc");
                 }
@@ -146,9 +149,13 @@ public class ActivityMoNuoc extends AppCompatActivity {
         });
 
         try {
-            String MaDN= getIntent().getStringExtra("MaDN");
-            if (MaDN.equals("")==false) {
-                fillDongNuoc(MaDN);
+//            String MaDN = getIntent().getStringExtra("MaDN");
+//            if (MaDN.equals("") == false) {
+//                fillDongNuoc(MaDN);
+//            }
+            Index = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (Index > -1) {
+                fillDongNuoc(Index);
             }
         } catch (Exception ex) {
         }
@@ -156,13 +163,13 @@ public class ActivityMoNuoc extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,7 +182,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
             bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
             imgCapture = bitmap;
             imgThumb.setImageBitmap(bitmap);
-        }else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
             String strPath = CLocal.getPathFromUri(this, uri);
             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
@@ -233,15 +240,43 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     edtSoThan.setText(jsonObject.getString("SoThan"));
                     SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
                     edtNgayMN.setText(currentDate.format(new Date()));
-                    edtChiSoMN.setText(jsonObject.getString("ChiSoMN").replace("null",""));
-                    setSpinnerSelection(spnChiMatSo,jsonObject.getString("ChiMatSo"));
-                    setSpinnerSelection(spnChiKhoaGoc,jsonObject.getString("ChiKhoaGoc"));
-                    edtLyDo.setText(jsonObject.getString("LyDo").replace("null",""));
+                    edtChiSoMN.setText(jsonObject.getString("ChiSoMN").replace("null", ""));
+                    setSpinnerSelection(spnChiMatSo, jsonObject.getString("ChiMatSo"));
+                    setSpinnerSelection(spnChiKhoaGoc, jsonObject.getString("ChiKhoaGoc"));
+                    edtLyDo.setText(jsonObject.getString("LyDo").replace("null", ""));
                     break;
                 }
             }
         } catch (Exception ex) {
-            Toast.makeText(ActivityMoNuoc.this, ex.toString(), Toast.LENGTH_SHORT).show();
+            CLocal.showToastMessage(ActivityMoNuoc.this, ex.getMessage());
+        }
+    }
+
+    public void fillDongNuoc(int Index) {
+        try {
+            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            edtMaDN.setText(en.getID());
+            edtDanhBo.setText(en.getDanhBo());
+            edtMLT.setText(en.getMLT());
+            edtHoTen.setText(en.getHoTen());
+            edtDiaChi.setText(en.getDiaChi());
+            edtHieu.setText(en.getHieu());
+            edtCo.setText(en.getCo());
+            edtSoThan.setText(en.getSoThan());
+
+            setSpinnerSelection(spnChiMatSo, en.getChiMatSo());
+            setSpinnerSelection(spnChiKhoaGoc, en.getChiKhoaGoc());
+            setSpinnerSelection(spnViTri, en.getViTri());
+            edtLyDo.setText(en.getLyDo());
+            if (en.isMoNuoc() == false) {
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                edtNgayMN.setText(currentDate.format(new Date()));
+            } else {
+                edtNgayMN.setText(en.getNgayDN1());
+                edtChiSoMN.setText(en.getChiSoDN1());
+            }
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityMoNuoc.this, ex.getMessage());
         }
     }
 
@@ -266,8 +301,8 @@ public class ActivityMoNuoc extends AppCompatActivity {
         });
 
         ImageView imageView = new ImageView(ActivityMoNuoc.this);
-        imageView.setImageBitmap(((BitmapDrawable)imgThumb.getDrawable()).getBitmap());
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams( 1000,1000));
+        imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
         builder.show();
     }
 
@@ -291,7 +326,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
                 case "MoNuoc":
                     if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == false)
                         return "CHƯA NHẬP ĐÓNG NƯỚC";
-                    if(Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString()))==true)
+                    if (Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString())) == true)
                         return "ĐÃ NHẬP RỒI";
 
                     String imgString = "NULL";
@@ -299,11 +334,15 @@ public class ActivityMoNuoc extends AppCompatActivity {
                         Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
                         imgString = CLocal.convertBitmapToString(reizeImage);
                     }
-                        String result= ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.MaNV);
-                        if(Boolean.parseBoolean(result)==true)
-                            return "THÀNH CÔNG";
-                        else
-                            return "THẤT BẠI";
+                    String result = ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.MaNV);
+                    if (Boolean.parseBoolean(result) == true) {
+                        CLocal.listDongNuoc.get(Index).setMoNuoc(true);
+                        CLocal.listDongNuoc.get(Index).setNgayMN(edtNgayMN.getText().toString());
+                        CLocal.listDongNuoc.get(Index).setChiSoMN(edtChiSoMN.getText().toString());
+
+                        return "THÀNH CÔNG";
+                    } else
+                        return "THẤT BẠI";
             }
             return null;
         }
@@ -319,7 +358,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-                CLocal.showPopupMessage(ActivityMoNuoc.this, s);
+            CLocal.showPopupMessage(ActivityMoNuoc.this, s);
         }
 
     }
