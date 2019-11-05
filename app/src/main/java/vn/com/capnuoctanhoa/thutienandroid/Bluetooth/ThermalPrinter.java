@@ -337,7 +337,7 @@ public class ThermalPrinter {
                     printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()), 1, toadoY, 0, 1, 1);
                     String[] str = entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().split(" ");
                     printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
-                    printEZ("Trân trọng kính chào." + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                    printEZ("Trân trọng kính chào." , 1, toadoY, 0, 1, 1);
                     printEZHangNgang();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
@@ -469,21 +469,21 @@ public class ThermalPrinter {
                 printEZHangNgang();
                 String[] str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_NgayHen().split(" ");
                 printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " + str[0], 1, toadoY, 0, 1, 1);
-                printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:" + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
+                printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:" , 1, toadoY, 0, 1, 1);
                 int TongCong = 0;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                     printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 1, toadoY, 0, 1, 1);
                     TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
                 }
-                printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
-                printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
+                printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") , 1, toadoY, 0, 1, 1);
+                printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) , 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
                 printEZ("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.", 1, toadoY, 0, 1, 1);
                 printEZ("Trân trọng kính chào." , 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
                 printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                 printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().split(" ");
+                str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().split(" ");
                 printEZ("Ngày gửi: " + str[0], 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
                 printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);

@@ -408,7 +408,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             enChild.setInPhieuBao2_NgayHen(jsonObjectChild.getString("InPhieuBao2_NgayHen").replace("null", ""));
                                         if (jsonObjectChild.has("TBDongNuoc_Ngay") == true) {
                                             enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay").replace("null", ""));
-                                            if (enChild.getTBDongNuoc_Ngay().equals("null") == true)
+                                            if (enChild.getTBDongNuoc_Ngay().equals("") == true)
                                                 enChild.setTBDongNuoc(false);
                                             else
                                                 enChild.setTBDongNuoc(true);
