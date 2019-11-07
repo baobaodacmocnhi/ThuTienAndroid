@@ -322,7 +322,6 @@ public class ThermalPrinter {
 //                    printNewLine(3);
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 30, 2, 1);
                     printEZ("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), 1, toadoY, 100, 2, 1);
-                    printEZ("Ngày thu: " + entityParent.getLstHoaDon().get(i).getNgayGiaiTrach(), 1, toadoY, 0, 1, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
                     printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
@@ -341,7 +340,7 @@ public class ThermalPrinter {
                     printEZHangNgang();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày gửi: " + str[0], 1, toadoY, 0, 1, 1);
+                    printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay(), 1, toadoY, 0, 1, 1);
                     printEZHangNgang();
                     printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
@@ -412,8 +411,8 @@ public class ThermalPrinter {
                 printEZHangNgang();
                 printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                 printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().split(" ");
-                printEZ("Ngày gửi: " + str[0], 1, toadoY, 0, 1, 1);
+//                str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().split(" ");
+                printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
                 printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                 printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
@@ -483,8 +482,8 @@ public class ThermalPrinter {
                 printEZHangNgang();
                 printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                 printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().split(" ");
-                printEZ("Ngày gửi: " + str[0], 1, toadoY, 0, 1, 1);
+//                str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().split(" ");
+                printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
                 printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                 printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);

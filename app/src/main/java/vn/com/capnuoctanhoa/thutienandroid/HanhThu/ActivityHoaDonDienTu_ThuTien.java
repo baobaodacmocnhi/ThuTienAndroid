@@ -69,7 +69,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnTBDongNuoc = (Button) findViewById(R.id.btnTBDongNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
-        MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
         myAsyncTask_thermal.execute();
         ws = new CWebservice();
 
@@ -107,13 +107,16 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 try {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            Date dateCapNhat = new Date();
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                 if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
                                     CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
-                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(new Date()));
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
                                 }
                             }
+                            MyAsyncTask_XuLy myAsyncTask_xuLy=new MyAsyncTask_XuLy();
+                            myAsyncTask_xuLy.execute("DangNgan");
                             CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -138,12 +141,15 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 try {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            Date dateCapNhat = new Date();
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("null") == true) {
-                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(new Date()));
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == true) {
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
                                 }
                             }
+                            MyAsyncTask_XuLy myAsyncTask_xuLy=new MyAsyncTask_XuLy();
+                            myAsyncTask_xuLy.execute("PhieuBao");
                             CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -167,11 +173,12 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 try {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            Date dateCapNhat = new Date();
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("null") == true) {
-                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(new Date()));
-                                    Date dt = new Date();
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true) {
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
+                                    Date dt = dateCapNhat;
                                     Calendar c = Calendar.getInstance();
                                     c.setTime(dt);
                                     c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
@@ -179,6 +186,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
                                 }
                             }
+                            MyAsyncTask_XuLy myAsyncTask_xuLy=new MyAsyncTask_XuLy();
+                            myAsyncTask_xuLy.execute("PhieuBao2");
                             CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -202,11 +211,12 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 try {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         if (index >= 0 && index < CLocal.listHanhThu.size()) {
+                            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                            Date dateCapNhat = new Date();
                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
-                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("null") == true) {
-                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(new Date()));
-                                    Date dt = new Date();
+                                if (CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == true) {
+                                    CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
+                                    Date dt = dateCapNhat;
                                     Calendar c = Calendar.getInstance();
                                     c.setTime(dt);
                                     c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
@@ -214,6 +224,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt));
                                 }
                             }
+                            MyAsyncTask_XuLy myAsyncTask_xuLy=new MyAsyncTask_XuLy();
+                            myAsyncTask_xuLy.execute("TBDongNuoc");
                             CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -245,6 +257,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                             for (int j = 0; j < CLocal.listHanhThu.get(index).getLstHoaDon().size(); j++) {
                                                 CLocal.listHanhThu.get(index).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                             }
+                                            MyAsyncTask_XuLy myAsyncTask_xuLy=new MyAsyncTask_XuLy();
+                                            myAsyncTask_xuLy.execute("XoaDangNgan");
                                             CLocal.updateCEntityParent(CLocal.listHanhThu, index);
                                         }
                                     }
@@ -381,19 +395,19 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     MaHDs += "," + CLocal.listHanhThu.get(index).getLstHoaDon().get(j).getMaHD();
             switch (strings[0]) {
                 case "DangNgan":
-                    ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getNgayGiaiTrach().replace("/", ""), "");
+                    ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getNgayGiaiTrach(), "");
                     break;
                 case "PhieuBao":
-                    ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao_Ngay().replace("/", ""), "");
+                    ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao_Ngay(), "");
                     break;
                 case "PhieuBao2":
-                    ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao2_Ngay().replace("/", ""), CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao2_NgayHen().replace("/", ""));
+                    ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao2_Ngay(), CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getInPhieuBao2_NgayHen());
                     break;
                 case "TBDongNuoc":
-                    ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getTBDongNuoc_Ngay().replace("/", ""), CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getTBDongNuoc_NgayHen().replace("/", ""));
+                    ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getTBDongNuoc_Ngay(), CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getTBDongNuoc_NgayHen());
                     break;
                 case "XoaDangNgan":
-                    ws.XuLy_HoaDonDienTu("XoaDangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getXoaDangNgan_Ngay_DienThoai().replace("/", ""), "");
+                    ws.XuLy_HoaDonDienTu("XoaDangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(index).getLstHoaDon().get(0).getXoaDangNgan_Ngay_DienThoai(), "");
                     break;
             }
             return null;
