@@ -31,8 +31,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDongNuoc">
+        app:layout_constraintTop_toBottomOf="@+id/btnDongNuoc"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,20 +67,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:text="Khóa Khác"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chkButChi" />
+                app:layout_constraintTop_toTopOf="@+id/edtKhoaKhac_GhiChu" />
 
             <EditText
                 android:id="@+id/edtKhoaKhac_GhiChu"
-                android:layout_width="262dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:ems="5"
                 android:inputType="number"
                 android:textSize="14sp"
-                tools:layout_editor_absoluteX="114dp"
-                tools:layout_editor_absoluteY="329dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/chkKhoaKhac"
+                app:layout_constraintTop_toBottomOf="@+id/edtNiemChi" />
 
             <EditText
                 android:id="@+id/edtNiemChi"

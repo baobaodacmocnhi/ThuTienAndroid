@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
@@ -232,13 +233,14 @@ public class ActivityDongTien extends AppCompatActivity {
         try {
             lstHoaDon = new ArrayList<CHoaDon>();
             arrayList = new ArrayList<String>();
-
-            for (int i = 0; i < CLocal.listDongNuoc.get(Index).getLstHoaDon().size(); i++)
+            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            edtMaDN.setText(en.getID());
+            for (int i = 0; i < en.getLstHoaDon().size(); i++)
             {
                 CHoaDon entity = new CHoaDon();
-                entity.setMaHD(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getMaHD());
-                entity.setKy(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getKy());
-                entity.setTongCong(CLocal.listDongNuoc.get(Index).getLstHoaDon().get(i).getTongCong());
+                entity.setMaHD(en.getLstHoaDon().get(i).getMaHD());
+                entity.setKy(en.getLstHoaDon().get(i).getKy());
+                entity.setTongCong(en.getLstHoaDon().get(i).getTongCong());
                 lstHoaDon.add(entity);
 
                 if (lstMaHD.isEmpty() == true)

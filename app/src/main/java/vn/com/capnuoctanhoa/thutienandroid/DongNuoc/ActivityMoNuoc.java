@@ -272,8 +272,8 @@ public class ActivityMoNuoc extends AppCompatActivity {
                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 edtNgayMN.setText(currentDate.format(new Date()));
             } else {
-                edtNgayMN.setText(en.getNgayDN1());
-                edtChiSoMN.setText(en.getChiSoDN1());
+                edtNgayMN.setText(en.getNgayMN());
+                edtChiSoMN.setText(en.getChiSoMN());
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityMoNuoc.this, ex.getMessage());
@@ -324,10 +324,10 @@ public class ActivityMoNuoc extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "MoNuoc":
-                    if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == false)
-                        return "CHƯA NHẬP ĐÓNG NƯỚC";
-                    if (Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString())) == true)
-                        return "ĐÃ NHẬP RỒI";
+//                    if (Boolean.parseBoolean(ws.checkExist_DongNuoc(edtMaDN.getText().toString())) == false)
+//                        return "CHƯA NHẬP ĐÓNG NƯỚC";
+//                    if (Boolean.parseBoolean(ws.checkExist_MoNuoc(edtMaDN.getText().toString())) == true)
+//                        return "ĐÃ NHẬP RỒI";
 
                     String imgString = "NULL";
                     if (imgCapture != null) {
