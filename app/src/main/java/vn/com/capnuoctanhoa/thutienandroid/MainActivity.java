@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 //                    CLocal.jsonHanhThu = null;
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
-                if (CLocal.listHanhThu.size() > 1000)
+                if (CLocal.listHanhThu.size() > 2000)
                     CLocal.listHanhThu = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 //                    CLocal.jsonDongNuoc=null;
                 CLocal.listDongNuoc = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
-                if (CLocal.listDongNuoc.size() > 1000)
+                if (CLocal.listDongNuoc.size() > 2000)
                     CLocal.listDongNuoc = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {

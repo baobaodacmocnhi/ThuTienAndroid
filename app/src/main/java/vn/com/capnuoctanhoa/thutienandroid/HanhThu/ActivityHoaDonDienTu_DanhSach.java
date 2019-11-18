@@ -129,10 +129,11 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                TextView DanhBo = (TextView) view.findViewById(R.id.lvID);
+                TextView STT = (TextView) view.findViewById(R.id.lvSTT);
+                int i=Integer.parseInt(STT.getText().toString()) - 1;
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityHoaDonDienTu_ThuTien.class);
-                intent.putExtra("DanhBo", DanhBo.getText().toString());
+                intent.putExtra("STT", String.valueOf(i));
                 startActivity(intent);
                 return false;
             }
@@ -211,12 +212,14 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     public void loadListView() {
         try {
             listParent = new ArrayList<CViewParent>();
+            CLocal.listHanhThuView = new ArrayList<CEntityParent>();
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -226,6 +229,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -235,6 +239,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).isGiaiTrach() == true || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
                         }
@@ -243,6 +248,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 default:
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                             addViewParent(CLocal.listHanhThu.get(i));
                         }
                     }
@@ -253,8 +259,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
-        } catch (Exception e) {
-
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityHoaDonDienTu_DanhSach.this, ex.getMessage());
         }
     }
 
@@ -263,7 +269,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setModifyDate(enParent.getModifyDate());
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
-            enViewParent.setID(enParent.getDanhBo());
+            enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());

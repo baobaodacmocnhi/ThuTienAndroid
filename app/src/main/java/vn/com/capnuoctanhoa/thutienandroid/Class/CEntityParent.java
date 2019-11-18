@@ -3,7 +3,6 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 import java.util.ArrayList;
 
 public class CEntityParent {
-    private int Index;
     private String ID;
     private String MLT;
     private String DanhBo;
@@ -40,11 +39,11 @@ public class CEntityParent {
     private String NiemChi1;
     private String NgayMN;
     private String ChiSoMN;
-
+    private boolean Sync;
+    private String XuLy;
     private ArrayList<CEntityChild> lstHoaDon;
 
     public CEntityParent() {
-        Index=-1;
         ID = "";
         MLT = "";
         DanhBo = "";
@@ -81,17 +80,11 @@ public class CEntityParent {
         NiemChi1 = "";
         NgayMN="";
         ChiSoMN="";
+        Sync=false;
+        XuLy="";
         lstHoaDon = new ArrayList<CEntityChild>();
     }
 
-    public int getIndex() {
-        return Index;
-    }
-
-    public void setIndex(int index) {
-        Index = index;
-    }
-    
     public String getID() {
         return ID;
     }
@@ -378,6 +371,22 @@ public class CEntityParent {
 
     public void setChiSoMN(String chiSoMN) {
         ChiSoMN = chiSoMN;
+    }
+
+    public boolean isSync() {
+        return Sync;
+    }
+
+    public void setSync(boolean sync) {
+        Sync = sync;
+    }
+
+    public String getXuLy() {
+        return XuLy;
+    }
+
+    public void setXuLy(String xuLy) {
+        XuLy = xuLy;
     }
 
     public ArrayList<CEntityChild> getLstHoaDon() {

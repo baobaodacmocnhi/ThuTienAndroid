@@ -40,6 +40,7 @@ public class ActivityDongTien extends AppCompatActivity {
     private String lstMaHD = "";
     private String danhBo = "";
     private JSONArray jsonArrayHoaDonTon = null;
+    private  int STT=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +111,9 @@ public class ActivityDongTien extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            int index = Integer.parseInt(getIntent().getStringExtra("Index"));
-            if (index > -1) {
-                fillDongNuoc(index);
+            STT = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (STT > -1) {
+                fillDongNuoc(STT);
             }
         } catch (Exception ex) {
         }
@@ -228,12 +229,12 @@ public class ActivityDongTien extends AppCompatActivity {
         }
     }
 
-    private void fillDongNuoc(int Index)
+    private void fillDongNuoc(int STT)
     {
         try {
             lstHoaDon = new ArrayList<CHoaDon>();
             arrayList = new ArrayList<String>();
-            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            CEntityParent en = CLocal.listDongNuoc.get(STT);
             edtMaDN.setText(en.getID());
             for (int i = 0; i < en.getLstHoaDon().size(); i++)
             {

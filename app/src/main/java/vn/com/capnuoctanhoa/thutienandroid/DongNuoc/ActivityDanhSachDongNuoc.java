@@ -136,27 +136,28 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         int id = menuItem.getItemId();
-                        TextView ID = (TextView) view.findViewById(R.id.lvID);
+                        TextView STT = (TextView) view.findViewById(R.id.lvSTT);
+                        int i=Integer.parseInt(STT.getText().toString()) - 1;
                         Intent intent;
                         switch (id) {
                             case R.id.action_DongNuoc1:
                                 intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
-                                intent.putExtra("Index", ID.getText().toString());
+                                intent.putExtra("STT", String.valueOf(i));
                                 startActivity(intent);
                                 break;
                             case R.id.action_DongNuoc2:
                                 intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
-                                intent.putExtra("Index", ID.getText().toString());
+                                intent.putExtra("STT", String.valueOf(i));
                                 startActivity(intent);
                                 break;
                             case R.id.action_MoNuoc:
                                 intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
-                                intent.putExtra("Index", ID.getText().toString());
+                                intent.putExtra("STT", String.valueOf(i));
                                 startActivity(intent);
                                 break;
                             case R.id.action_DongTien:
                                 intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-                                intent.putExtra("Index", ID.getText().toString());
+                                intent.putExtra("STT",String.valueOf(i));
                                 startActivity(intent);
                                 break;
                         }
@@ -319,7 +320,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setModifyDate(enParent.getModifyDate());
             enViewParent.setSTT(String.valueOf(listParent.size() + 1));
-            enViewParent.setID(String.valueOf(enParent.getIndex()));
+            enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());

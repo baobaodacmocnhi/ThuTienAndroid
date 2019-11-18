@@ -356,7 +356,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                 enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
                             else
                                 enParent.setModifyDate(jsonObject.getString("ModifyDate"));
-                            enParent.setIndex(CLocal.listHanhThu.size());
                             enParent.setID(jsonObject.getString("DanhBo"));
 
                             String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();

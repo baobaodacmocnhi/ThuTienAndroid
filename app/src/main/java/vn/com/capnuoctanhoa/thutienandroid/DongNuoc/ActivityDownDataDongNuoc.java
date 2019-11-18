@@ -375,7 +375,6 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
                         else
                             enParent.setModifyDate(jsonObject.getString("ModifyDate"));
-                        enParent.setIndex(CLocal.listDongNuoc.size());
                         enParent.setID(jsonObject.getString("MaDN"));
 
                         String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();

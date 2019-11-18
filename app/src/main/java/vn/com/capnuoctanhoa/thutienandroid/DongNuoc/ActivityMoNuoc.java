@@ -51,7 +51,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityMoNuoc.this);
-    private int Index = -1;
+    private int STT = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,9 +153,9 @@ public class ActivityMoNuoc extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            Index = Integer.parseInt(getIntent().getStringExtra("Index"));
-            if (Index > -1) {
-                fillDongNuoc(Index);
+            STT = Integer.parseInt(getIntent().getStringExtra("Index"));
+            if (STT > -1) {
+                fillDongNuoc(STT);
             }
         } catch (Exception ex) {
         }
@@ -252,9 +252,9 @@ public class ActivityMoNuoc extends AppCompatActivity {
         }
     }
 
-    public void fillDongNuoc(int Index) {
+    public void fillDongNuoc(int STT) {
         try {
-            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            CEntityParent en = CLocal.listDongNuoc.get(STT);
             edtMaDN.setText(en.getID());
             edtDanhBo.setText(en.getDanhBo());
             edtMLT.setText(en.getMLT());
@@ -336,9 +336,9 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     }
                     String result = ws.themMoNuoc(edtMaDN.getText().toString(), imgString, edtNgayMN.getText().toString(), edtChiSoMN.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
-                        CLocal.listDongNuoc.get(Index).setMoNuoc(true);
-                        CLocal.listDongNuoc.get(Index).setNgayMN(edtNgayMN.getText().toString());
-                        CLocal.listDongNuoc.get(Index).setChiSoMN(edtChiSoMN.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setMoNuoc(true);
+                        CLocal.listDongNuoc.get(STT).setNgayMN(edtNgayMN.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setChiSoMN(edtChiSoMN.getText().toString());
 
                         return "THÀNH CÔNG";
                     } else

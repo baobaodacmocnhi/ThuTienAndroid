@@ -52,7 +52,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
-    private int Index = -1;
+    private int STT = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,9 +185,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            Index = Integer.parseInt(getIntent().getStringExtra("Index"));
-            if (Index > -1) {
-                fillDongNuoc(Index);
+            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
+            if (STT > -1) {
+                fillDongNuoc(STT);
             }
         } catch (Exception ex) {
         }
@@ -293,9 +293,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
         }
     }
 
-    public void fillDongNuoc(int Index) {
+    public void fillDongNuoc(int STT) {
         try {
-            CEntityParent en = CLocal.listDongNuoc.get(Index);
+            CEntityParent en = CLocal.listDongNuoc.get(STT);
             edtMaDN.setText(en.getID());
             edtDanhBo.setText(en.getDanhBo());
             edtMLT.setText(en.getMLT());
@@ -384,18 +384,18 @@ public class ActivityDongNuoc extends AppCompatActivity {
                             String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(),
                             edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(), spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), spnViTri.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
-                        CLocal.listDongNuoc.get(Index).setDongNuoc(true);
-                        CLocal.listDongNuoc.get(Index).setNgayDN(edtNgayDN.getText().toString());
-                        CLocal.listDongNuoc.get(Index).setChiSoDN(edtChiSoDN.getText().toString());
-                        CLocal.listDongNuoc.get(Index).setButChi(chkButChi.isChecked());
-                        CLocal.listDongNuoc.get(Index).setKhoaTu(chkKhoaTu.isChecked());
-                        CLocal.listDongNuoc.get(Index).setNiemChi(edtNiemChi.getText().toString());
-                        CLocal.listDongNuoc.get(Index).setKhoaKhac(chkKhoaKhac.isChecked());
-                        CLocal.listDongNuoc.get(Index).setKhoaKhac_GhiChu(edtKhoaKhac_GhiChu.getText().toString());
-                        CLocal.listDongNuoc.get(Index).setChiMatSo(spnChiMatSo.getSelectedItem().toString());
-                        CLocal.listDongNuoc.get(Index).setChiKhoaGoc(spnChiKhoaGoc.getSelectedItem().toString());
-                        CLocal.listDongNuoc.get(Index).setViTri(spnViTri.getSelectedItem().toString());
-                        CLocal.listDongNuoc.get(Index).setLyDo(edtLyDo.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setDongNuoc(true);
+                        CLocal.listDongNuoc.get(STT).setNgayDN(edtNgayDN.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setChiSoDN(edtChiSoDN.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setButChi(chkButChi.isChecked());
+                        CLocal.listDongNuoc.get(STT).setKhoaTu(chkKhoaTu.isChecked());
+                        CLocal.listDongNuoc.get(STT).setNiemChi(edtNiemChi.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setKhoaKhac(chkKhoaKhac.isChecked());
+                        CLocal.listDongNuoc.get(STT).setKhoaKhac_GhiChu(edtKhoaKhac_GhiChu.getText().toString());
+                        CLocal.listDongNuoc.get(STT).setChiMatSo(spnChiMatSo.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(STT).setChiKhoaGoc(spnChiKhoaGoc.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(STT).setViTri(spnViTri.getSelectedItem().toString());
+                        CLocal.listDongNuoc.get(STT).setLyDo(edtLyDo.getText().toString());
 
                         return "THÀNH CÔNG";
                     } else
