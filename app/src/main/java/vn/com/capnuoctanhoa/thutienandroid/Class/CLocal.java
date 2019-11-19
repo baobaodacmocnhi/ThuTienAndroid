@@ -69,7 +69,7 @@ public class CLocal {
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "", DienThoai = "", ThermalPrinter = "";
     public static boolean Doi = false, ToTruong = false;
-    public static ArrayList<CEntityParent> listHanhThu,listHanhThuView, listDongNuoc;
+    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -93,8 +93,8 @@ public class CLocal {
         editor.remove("jsonDongNuocChild").commit();
         MaNV = HoTen = MaTo = DienThoai = "";
         Doi = ToTruong = false;
-        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien =null;
-        listHanhThu =listHanhThuView= listDongNuoc =  null;
+        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
+        listHanhThu = listHanhThuView = listDongNuoc = null;
     }
 
     public static boolean checkNetworkAvailable(Activity activity) {
@@ -140,9 +140,8 @@ public class CLocal {
         alertDialog.show();
     }
 
-    public static void showToastMessage(Activity activity, String message)
-    {
-        Toast.makeText(activity, message,Toast.LENGTH_SHORT).show();
+    public static void showToastMessage(Activity activity, String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -156,6 +155,7 @@ public class CLocal {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    //update list to Json
     public static void updateArrayListToJson() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
         if (CLocal.listHanhThu != null)
@@ -182,7 +182,8 @@ public class CLocal {
         }
     }
 
-    public static void updateArrayList(ArrayList<CEntityParent> lst, String NameUpdate, String ValueUpdate, String MaHD) {
+    //update giá trí child
+    public static void updateValueChild(ArrayList<CEntityParent> lst, String NameUpdate, String ValueUpdate, String MaHD) {
         try {
             for (int i = 0; i < lst.size(); i++) {
                 for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
@@ -209,7 +210,7 @@ public class CLocal {
                                 break;
                         }
                         //gọi update lại parent
-                        updateCEntityParent(lst, i);
+                        updateTinhTrangParent(lst, i);
                     }
             }
         } catch (Exception e) {
@@ -217,7 +218,8 @@ public class CLocal {
         }
     }
 
-    public static void updateCEntityParent(ArrayList<CEntityParent> lst, int i) {
+    //update tình trạng parent
+    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, int i) {
         //update TinhTrang
         int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : lst.get(i).getLstHoaDon()) {
@@ -269,10 +271,21 @@ public class CLocal {
             lst.get(i).setTinhTrang("Đã Thu");
         }
         //goi update lại json hệ thống
+//        updateArrayListToJson();
+    }
+
+    //update tình trạng parent
+    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst,CEntityParent entityParentUpdate) {
+        for (int i=0;i<lst.size();i++)
+        if(lst.get(i).getID().equals(entityParentUpdate.getID())){
+            lst.get(i).setCEntityParent(entityParentUpdate);
+        }
+        //goi update lại json hệ thống
         updateArrayListToJson();
     }
 
-    public static CEntityParent updateCEntityParent(CEntityParent en) {
+    //update tình trạng parent
+    public static CEntityParent updateTinhTrangParent(CEntityParent en) {
         //update TinhTrang
         int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : en.getLstHoaDon()) {
@@ -326,6 +339,7 @@ public class CLocal {
         return en;
     }
 
+    //convert tiền thành chữ
     public static String formatMoney(String price, String symbol) {
 
         NumberFormat format = new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)

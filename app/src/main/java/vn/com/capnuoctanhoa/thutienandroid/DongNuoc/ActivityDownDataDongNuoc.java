@@ -460,7 +460,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
 //                        }
 
                         enParent.setLstHoaDon(listChild);
-                        enParent = CLocal.updateCEntityParent(enParent);
+                        enParent = CLocal.updateTinhTrangParent(enParent);
                         CLocal.listDongNuoc.add(enParent);
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();

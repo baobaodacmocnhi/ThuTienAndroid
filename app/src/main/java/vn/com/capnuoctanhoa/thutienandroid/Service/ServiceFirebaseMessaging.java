@@ -81,11 +81,12 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             intent = new Intent(this, ActivityDangNhap.class);
         } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
             //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-            CLocal.updateArrayList(CLocal.listHanhThu,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
+            CLocal.updateValueChild(CLocal.listHanhThu,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
+            CLocal.updateValueChild(CLocal.listHanhThuView,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
             intent = new Intent(this, ActivityDanhSachHanhThu.class);
         }  else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
             //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
-            CLocal.updateArrayList(CLocal.listDongNuoc,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
+            CLocal.updateValueChild(CLocal.listDongNuoc,  remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"),remoteMessage.getData().get("ID"));
             intent = new Intent(this, ActivityDanhSachDongNuoc.class);
         } else if (remoteMessage.getData().get("Action").equals("LenhHuy")) {
             intent = new Intent(this, ActivityLenhHuy.class);

@@ -458,7 +458,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 //                            }
 
                             enParent.setLstHoaDon(listChild);
-                            enParent = CLocal.updateCEntityParent(enParent);
+                            enParent = CLocal.updateTinhTrangParent(enParent);
                             CLocal.listHanhThu.add(enParent);
                         }
                     }

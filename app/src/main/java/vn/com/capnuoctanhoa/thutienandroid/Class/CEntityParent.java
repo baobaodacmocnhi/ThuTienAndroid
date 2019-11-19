@@ -396,4 +396,47 @@ public class CEntityParent {
     public void setLstHoaDon(ArrayList<CEntityChild> lstHoaDon) {
         this.lstHoaDon = lstHoaDon;
     }
+
+    public  void setCEntityParent(CEntityParent entityParent)
+    {
+        ID = entityParent.getID();
+        MLT = entityParent.getMLT();
+        DanhBo = entityParent.getDanhBo();
+        HoTen = entityParent.getHoTen();
+        DiaChi = entityParent.getDiaChi();
+        ModifyDate = entityParent.getModifyDate();
+        ThuHo = entityParent.isThuHo();
+        TamThu = entityParent.isTamThu();
+        GiaiTrach = entityParent.isGiaiTrach();
+        LenhHuy = entityParent.isLenhHuy();
+        TinhTrang = entityParent.getTinhTrang();
+        DangNgan_DienThoai = entityParent.isDangNgan_DienThoai();
+        TBDongNuoc = entityParent.isTBDongNuoc();
+        DongNuoc = entityParent.isDongNuoc();
+        DongNuoc2 = entityParent.isDongNuoc2();
+        DongPhi = entityParent.isDongPhi();
+        MoNuoc = entityParent.isMoNuoc();
+        NgayDN = entityParent.getNgayDN();
+        ChiSoDN = entityParent.getChiSoDN();
+        ButChi = entityParent.isButChi();
+        KhoaTu = entityParent.isKhoaTu();
+        NiemChi = entityParent.getNiemChi();
+        KhoaKhac = entityParent.isKhoaKhac();
+        KhoaKhac_GhiChu = entityParent.getKhoaKhac_GhiChu();
+        Hieu = entityParent.getHieu();
+        Co = entityParent.getCo();
+        SoThan = entityParent.getSoThan();
+        ChiMatSo = entityParent.getChiMatSo();
+        ChiKhoaGoc = entityParent.getChiKhoaGoc();
+        ViTri=entityParent.getViTri();
+        LyDo = entityParent.getLyDo();
+        NgayDN1 = entityParent.getNgayDN1();
+        ChiSoDN1 = entityParent.getChiSoDN1();
+        NiemChi1 = entityParent.getNiemChi1();
+        NgayMN=entityParent.getNgayMN();
+        ChiSoMN=entityParent.getChiSoMN();
+        Sync=entityParent.isSync();
+        XuLy=entityParent.getXuLy();
+        lstHoaDon = entityParent.getLstHoaDon();
+    }
 }
