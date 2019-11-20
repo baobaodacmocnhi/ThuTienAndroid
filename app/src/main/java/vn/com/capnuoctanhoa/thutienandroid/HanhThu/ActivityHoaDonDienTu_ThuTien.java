@@ -279,9 +279,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
                                         if (STT >= 0 && STT < CLocal.listHanhThuView.size()) {
-                                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++) {
-                                                CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
-                                            }
+                                            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                            Date dateCapNhat = new Date();
+                                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                                                if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getXoaDangNgan_Ngay_DienThoai().equals("") == true) {
+                                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
+                                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
+                                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
+                                                }
                                             CLocal.listHanhThuView.get(STT).setSync(true);
                                             CLocal.listHanhThuView.get(STT).setXuLy("XoaDangNgan");
                                             MyAsyncTask_XuLy myAsyncTask_xuLy = new MyAsyncTask_XuLy();

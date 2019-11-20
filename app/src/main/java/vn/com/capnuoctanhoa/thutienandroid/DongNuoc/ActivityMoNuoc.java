@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -47,11 +48,12 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayMN, edtChiSoMN, edtHieu, edtCo, edtSoThan, edtLyDo;
     private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
-    private Button btnMoNuoc;
+    private Button btnMoNuoc, btnIn;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityMoNuoc.this);
     private int STT = -1;
+    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,10 @@ public class ActivityMoNuoc extends AppCompatActivity {
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
 
         btnMoNuoc = (Button) findViewById(R.id.btnMoNuoc);
+        btnIn = (Button) findViewById(R.id.btnIn);
+
+//        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+//        myAsyncTask_thermal.execute();
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +151,16 @@ public class ActivityMoNuoc extends AppCompatActivity {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute("MoNuoc");
                 }
+            }
+        });
+
+        btnIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
+                if (CLocal.listDongNuoc.get(STT).isMoNuoc() == true)
+                    if (thermalPrinter != null)
+                        thermalPrinter.printMoNuoc(CLocal.listDongNuoc.get(STT));
             }
         });
 
@@ -304,6 +320,26 @@ public class ActivityMoNuoc extends AppCompatActivity {
         imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
         builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
         builder.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (thermalPrinter != null)
+            thermalPrinter.disconnectBluetoothDevice();
+        super.onDestroy();
+    }
+
+    public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityMoNuoc.this, ex.getMessage());
+            }
+            return null;
+        }
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {

@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -53,6 +54,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private Bitmap imgCapture;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
     private int STT = -1;
+    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,9 @@ public class ActivityDongNuoc extends AppCompatActivity {
         chkButChi = (CheckBox) findViewById(R.id.chkButChi);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkKhoaKhac = (CheckBox) findViewById(R.id.chkKhoaKhac);
+
+//        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+//        myAsyncTask_thermal.execute();
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +181,10 @@ public class ActivityDongNuoc extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
+                if (CLocal.listDongNuoc.get(STT).isDongNuoc() == true)
+                    if (thermalPrinter != null)
+                        thermalPrinter.printDongNuoc(CLocal.listDongNuoc.get(STT));
             }
         });
 
@@ -352,6 +360,26 @@ public class ActivityDongNuoc extends AppCompatActivity {
         imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
         builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
         builder.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (thermalPrinter != null)
+            thermalPrinter.disconnectBluetoothDevice();
+        super.onDestroy();
+    }
+
+    public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDongNuoc.this, ex.getMessage());
+            }
+            return null;
+        }
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {

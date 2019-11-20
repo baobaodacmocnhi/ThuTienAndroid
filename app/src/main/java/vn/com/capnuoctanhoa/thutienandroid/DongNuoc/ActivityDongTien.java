@@ -20,8 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -30,7 +33,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongTien extends AppCompatActivity {
     private TextView txtTongCong;
     private EditText edtMaDN;
-    private Button btnDongTien,btnIn;
+    private Button btnDongTien, btnIn;
     private ListView lstView;
     private ArrayList<CHoaDon> lstHoaDon;
     private ArrayList<String> arrayList;
@@ -40,7 +43,8 @@ public class ActivityDongTien extends AppCompatActivity {
     private String lstMaHD = "";
     private String danhBo = "";
     private JSONArray jsonArrayHoaDonTon = null;
-    private  int STT=-1;
+    private int STT = -1;
+    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,9 @@ public class ActivityDongTien extends AppCompatActivity {
         btnDongTien = (Button) findViewById(R.id.btnDongTien);
         btnIn = (Button) findViewById(R.id.btnIn);
         lstView = (ListView) findViewById(R.id.lstView);
+
+//        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+//        myAsyncTask_thermal.execute();
 
         // CHOICE_MODE_NONE: Không cho phép lựa chọn (Mặc định).
         // ( listView.setItemChecked(..) không làm việc với CHOICE_MODE_NONE).
@@ -102,7 +109,9 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+                if (thermalPrinter != null)
+                    thermalPrinter.printThuTien(CLocal.listDongNuoc.get(STT));
             }
         });
 
@@ -229,15 +238,13 @@ public class ActivityDongTien extends AppCompatActivity {
         }
     }
 
-    private void fillDongNuoc(int STT)
-    {
+    private void fillDongNuoc(int STT) {
         try {
             lstHoaDon = new ArrayList<CHoaDon>();
             arrayList = new ArrayList<String>();
             CEntityParent en = CLocal.listDongNuoc.get(STT);
             edtMaDN.setText(en.getID());
-            for (int i = 0; i < en.getLstHoaDon().size(); i++)
-            {
+            for (int i = 0; i < en.getLstHoaDon().size(); i++) {
                 CHoaDon entity = new CHoaDon();
                 entity.setMaHD(en.getLstHoaDon().get(i).getMaHD());
                 entity.setKy(en.getLstHoaDon().get(i).getKy());
@@ -280,6 +287,26 @@ public class ActivityDongTien extends AppCompatActivity {
             }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (thermalPrinter != null)
+            thermalPrinter.disconnectBluetoothDevice();
+        super.onDestroy();
+    }
+
+    public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDongTien.this, ex.getMessage());
+            }
+            return null;
+        }
+    }
+
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
@@ -302,9 +329,21 @@ public class ActivityDongTien extends AppCompatActivity {
                     if (selectedMaHDs.equals("") == true)
                         return "CHƯA CHỌN HÓA ĐƠN";
                     result = ws.dangNganDongNuoc(CLocal.MaNV, selectedMaHDs);
-                    if (Boolean.parseBoolean(result) == true)
+                    if (Boolean.parseBoolean(result) == true) {
+                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date dateCapNhat = new Date();
+                        for (int j = 0; j < CLocal.listDongNuoc.get(STT).getLstHoaDon().size(); j++) {
+                            if (CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    && CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).isThuHo() == false
+                                    && CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                    && CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
+                                CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                CLocal.listDongNuoc.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                            }
+                        }
+                        CLocal.updateTinhTrangParent(CLocal.listDongNuoc, STT);
                         return "THÀNH CÔNG";
-                    else
+                    } else
                         return "THẤT BẠI";
                 case "GetHoaDonTon":
                     result = ws.getDSHoaDonTon_DongNuoc(danhBo, lstMaHD);
@@ -337,8 +376,8 @@ public class ActivityDongTien extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if(s.equals("false")==false)
-            CLocal.showPopupMessage(ActivityDongTien.this, s);
+            if (s.equals("false") == false)
+                CLocal.showPopupMessage(ActivityDongTien.this, s);
         }
 
     }

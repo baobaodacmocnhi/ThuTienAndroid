@@ -19,11 +19,8 @@ import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -239,6 +236,36 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).isGiaiTrach() == true || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "In Phiếu Báo":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getInPhieuBao_Ngay().equals("") == false||CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "In TB Đóng Nước":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getTBDongNuoc_Ngay().equals("") == false) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "Xóa Đăng Ngân":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getXoaDangNgan_Ngay_DienThoai().equals("") == false) {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
