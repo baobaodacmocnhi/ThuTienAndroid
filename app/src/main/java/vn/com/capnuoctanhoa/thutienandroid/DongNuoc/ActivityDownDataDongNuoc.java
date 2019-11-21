@@ -419,17 +419,27 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                     enChild.setModifyDate(enParent.getModifyDate());
                                     enChild.setMaHD(jsonObjectChild.getString("MaHD"));
                                     enChild.setKy(jsonObjectChild.getString("Ky"));
-                                    enChild.setGiaBan(jsonObjectChild.getString("GiaBan"));
-                                    enChild.setThueGTGT(jsonObjectChild.getString("ThueGTGT"));
-                                    enChild.setPhiBVMT(jsonObjectChild.getString("PhiBVMT"));
+                                    if (jsonObjectChild.has("GiaBan") == true)
+                                        enChild.setGiaBan(jsonObjectChild.getString("GiaBan"));
+                                    if (jsonObjectChild.has("ThueGTGT") == true)
+                                        enChild.setThueGTGT(jsonObjectChild.getString("ThueGTGT"));
+                                    if (jsonObjectChild.has("PhiBVMT") == true)
+                                        enChild.setPhiBVMT(jsonObjectChild.getString("PhiBVMT"));
                                     enChild.setTongCong(jsonObjectChild.getString("TongCong"));
-                                    enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
-                                    enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
-                                    enChild.setCSC(jsonObjectChild.getString("CSC"));
-                                    enChild.setCSM(jsonObjectChild.getString("CSM"));
-                                    enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
-                                    enChild.setTuNgay(jsonObjectChild.getString("TuNgay"));
-                                    enChild.setDenNgay(jsonObjectChild.getString("DenNgay"));
+                                    if (jsonObjectChild.has("GiaBieu") == true)
+                                        enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
+                                    if (jsonObjectChild.has("DinhMuc") == true)
+                                        enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
+                                    if (jsonObjectChild.has("CSC") == true)
+                                        enChild.setCSC(jsonObjectChild.getString("CSC"));
+                                    if (jsonObjectChild.has("CSM") == true)
+                                        enChild.setCSM(jsonObjectChild.getString("CSM"));
+                                    if (jsonObjectChild.has("TieuThu") == true)
+                                        enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
+                                    if (jsonObjectChild.has("TuNgay") == true)
+                                        enChild.setTuNgay(jsonObjectChild.getString("TuNgay"));
+                                    if (jsonObjectChild.has("DenNgay") == true)
+                                        enChild.setDenNgay(jsonObjectChild.getString("DenNgay"));
 
                                     enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                     enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));

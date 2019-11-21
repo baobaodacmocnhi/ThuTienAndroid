@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -120,7 +121,7 @@ public class ActivityDongTien extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            STT = Integer.parseInt(getIntent().getStringExtra("Index"));
+            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
                 fillDongNuoc(STT);
             }
@@ -244,6 +245,7 @@ public class ActivityDongTien extends AppCompatActivity {
             arrayList = new ArrayList<String>();
             CEntityParent en = CLocal.listDongNuoc.get(STT);
             edtMaDN.setText(en.getID());
+            danhBo=en.getDanhBo().replace(" ","");
             for (int i = 0; i < en.getLstHoaDon().size(); i++) {
                 CHoaDon entity = new CHoaDon();
                 entity.setMaHD(en.getLstHoaDon().get(i).getMaHD());
@@ -280,6 +282,95 @@ public class ActivityDongTien extends AppCompatActivity {
                     lstHoaDon.add(entity);
 
                     arrayList.add(jsonObjectHoaDonTon.getString("Ky") + " : " + CLocal.formatMoney(jsonObjectHoaDonTon.getString("TongCong"), "đ"));
+                    int index = -1;
+                    boolean exists = false;
+                    for (int i = 0; i < CLocal.listDongNuoc.get(STT).getLstHoaDon().size(); i++)
+                        if (CLocal.listDongNuoc.get(STT).getLstHoaDon().get(i).getMaHD().equals(jsonObjectHoaDonTon.getString("MaHD")) == true) {
+                            index = i;
+                            exists = true;
+                            break;
+                        }
+                    if (exists == true) {
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setMaHD(jsonObjectHoaDonTon.getString("MaHD"));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setKy(jsonObjectHoaDonTon.getString("Ky"));
+                        if (jsonObjectHoaDonTon.has("GiaBan") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setGiaBan(jsonObjectHoaDonTon.getString("GiaBan"));
+                        if (jsonObjectHoaDonTon.has("ThueGTGT") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setThueGTGT(jsonObjectHoaDonTon.getString("ThueGTGT"));
+                        if (jsonObjectHoaDonTon.has("PhiBVMT") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setPhiBVMT(jsonObjectHoaDonTon.getString("PhiBVMT"));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setTongCong(jsonObjectHoaDonTon.getString("TongCong"));
+                        if (jsonObjectHoaDonTon.has("GiaBieu") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setGiaBieu(jsonObjectHoaDonTon.getString("GiaBieu"));
+                        if (jsonObjectHoaDonTon.has("DinhMuc") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setDinhMuc(jsonObjectHoaDonTon.getString("DinhMuc").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("CSC") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setCSC(jsonObjectHoaDonTon.getString("CSC"));
+                        if (jsonObjectHoaDonTon.has("CSM") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setCSM(jsonObjectHoaDonTon.getString("CSM"));
+                        if (jsonObjectHoaDonTon.has("TieuThu") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setTieuThu(jsonObjectHoaDonTon.getString("TieuThu"));
+                        if (jsonObjectHoaDonTon.has("TuNgay") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setTuNgay(jsonObjectHoaDonTon.getString("TuNgay"));
+                        if (jsonObjectHoaDonTon.has("DenNgay") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setDenNgay(jsonObjectHoaDonTon.getString("DenNgay"));
+
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setGiaiTrach(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("GiaiTrach")));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setTamThu(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("TamThu")));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setThuHo(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("ThuHo")));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setPhiMoNuocThuHo(jsonObjectHoaDonTon.getString("PhiMoNuocThuHo").replace("null", ""));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setLenhHuy(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("LenhHuy")));
+
+                        if (jsonObjectHoaDonTon.has("DangNgan_DienThoai") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("DangNgan_DienThoai")));
+                        if (jsonObjectHoaDonTon.has("NgayGiaiTrach") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setNgayGiaiTrach(jsonObjectHoaDonTon.getString("NgayGiaiTrach").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("XoaDangNgan_Ngay_DienThoai") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setXoaDangNgan_Ngay_DienThoai(jsonObjectHoaDonTon.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("PhiMoNuoc") == true)
+                            CLocal.listDongNuoc.get(STT).getLstHoaDon().get(index).setPhiMoNuoc(jsonObjectHoaDonTon.getString("PhiMoNuoc"));
+                    } else {
+                        CEntityChild enChild = new CEntityChild();
+                        enChild.setMaHD(jsonObjectHoaDonTon.getString("MaHD"));
+                        enChild.setKy(jsonObjectHoaDonTon.getString("Ky"));
+                        if (jsonObjectHoaDonTon.has("GiaBan") == true)
+                            enChild.setGiaBan(jsonObjectHoaDonTon.getString("GiaBan"));
+                        if (jsonObjectHoaDonTon.has("ThueGTGT") == true)
+                            enChild.setThueGTGT(jsonObjectHoaDonTon.getString("ThueGTGT"));
+                        if (jsonObjectHoaDonTon.has("PhiBVMT") == true)
+                            enChild.setPhiBVMT(jsonObjectHoaDonTon.getString("PhiBVMT"));
+                        enChild.setTongCong(jsonObjectHoaDonTon.getString("TongCong"));
+                        if (jsonObjectHoaDonTon.has("GiaBieu") == true)
+                            enChild.setGiaBieu(jsonObjectHoaDonTon.getString("GiaBieu"));
+                        if (jsonObjectHoaDonTon.has("DinhMuc") == true)
+                            enChild.setDinhMuc(jsonObjectHoaDonTon.getString("DinhMuc").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("CSC") == true)
+                            enChild.setCSC(jsonObjectHoaDonTon.getString("CSC"));
+                        if (jsonObjectHoaDonTon.has("CSM") == true)
+                            enChild.setCSM(jsonObjectHoaDonTon.getString("CSM"));
+                        if (jsonObjectHoaDonTon.has("TieuThu") == true)
+                            enChild.setTieuThu(jsonObjectHoaDonTon.getString("TieuThu"));
+                        if (jsonObjectHoaDonTon.has("TuNgay") == true)
+                            enChild.setTuNgay(jsonObjectHoaDonTon.getString("TuNgay"));
+                        if (jsonObjectHoaDonTon.has("DenNgay") == true)
+                            enChild.setDenNgay(jsonObjectHoaDonTon.getString("DenNgay"));
+
+                        enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("GiaiTrach")));
+                        enChild.setTamThu(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("TamThu")));
+                        enChild.setThuHo(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("ThuHo")));
+                        enChild.setPhiMoNuocThuHo(jsonObjectHoaDonTon.getString("PhiMoNuocThuHo").replace("null", ""));
+                        enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("LenhHuy")));
+
+                        if (jsonObjectHoaDonTon.has("DangNgan_DienThoai") == true)
+                            enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("DangNgan_DienThoai")));
+                        if (jsonObjectHoaDonTon.has("NgayGiaiTrach") == true)
+                            enChild.setNgayGiaiTrach(jsonObjectHoaDonTon.getString("NgayGiaiTrach").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("XoaDangNgan_Ngay_DienThoai") == true)
+                            enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectHoaDonTon.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
+                        if (jsonObjectHoaDonTon.has("PhiMoNuoc") == true)
+                            enChild.setPhiMoNuoc(jsonObjectHoaDonTon.getString("PhiMoNuoc"));
+                        CLocal.listDongNuoc.get(STT).getLstHoaDon().add(enChild);
+                    }
                 }
                 arrayAdapter.notifyDataSetChanged();
             } catch (Exception ex) {

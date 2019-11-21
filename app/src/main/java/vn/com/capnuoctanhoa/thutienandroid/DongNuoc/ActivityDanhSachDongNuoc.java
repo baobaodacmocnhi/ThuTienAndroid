@@ -265,7 +265,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 case "Chưa MN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
-                            if (CLocal.listDongNuoc.get(i).isMoNuoc() == false && CLocal.listDongNuoc.get(i).isDongPhi() == true) {
+                            if (CLocal.listDongNuoc.get(i).isMoNuoc() == false && CLocal.listDongNuoc.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().equals("") == true) {
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
