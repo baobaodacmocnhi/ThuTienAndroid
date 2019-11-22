@@ -176,7 +176,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
 //            if (MaDN.equals("") == false) {
 //                fillDongNuoc(MaDN);
 //            }
-            STT = Integer.parseInt(getIntent().getStringExtra("Index"));
+            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
                 fillDongNuoc(STT);
             }
