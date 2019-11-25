@@ -43,16 +43,16 @@ public class ActivityHoaDonDienTu_Search extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 lst = new ArrayList<>();
-                if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
-                    for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                        if (CLocal.listHanhThu.get(i).getDanhBo().replace(" ","").contains(s.toString().toUpperCase())
-                                || CLocal.listHanhThu.get(i).getHoTen().contains(s.toString().toUpperCase())
-                                || CLocal.listHanhThu.get(i).getDiaChi().contains(s.toString().toUpperCase())) {
+                if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
+                    for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
+                        if (CLocal.listHanhThuView.get(i).getDanhBo().replace(" ","").contains(s.toString().toUpperCase())
+                                || CLocal.listHanhThuView.get(i).getHoTen().contains(s.toString().toUpperCase())
+                                || CLocal.listHanhThuView.get(i).getDiaChi().contains(s.toString().toUpperCase())) {
                             CViewParent enViewParent = new CViewParent();
-                            enViewParent.setRow1a(CLocal.listHanhThu.get(i).getMLT());
-                            enViewParent.setRow2a(CLocal.listHanhThu.get(i).getDanhBo());
-                            enViewParent.setRow3a(CLocal.listHanhThu.get(i).getHoTen());
-                            enViewParent.setRow4a(CLocal.listHanhThu.get(i).getDiaChi());
+                            enViewParent.setRow1a(CLocal.listHanhThuView.get(i).getMLT());
+                            enViewParent.setRow2a(CLocal.listHanhThuView.get(i).getDanhBo());
+                            enViewParent.setRow3a(CLocal.listHanhThuView.get(i).getHoTen());
+                            enViewParent.setRow4a(CLocal.listHanhThuView.get(i).getDiaChi());
                             lst.add(enViewParent);
 
                         }

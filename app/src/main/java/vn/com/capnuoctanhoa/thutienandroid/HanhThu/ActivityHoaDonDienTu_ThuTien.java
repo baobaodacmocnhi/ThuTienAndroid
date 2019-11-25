@@ -350,11 +350,12 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThuView.get(i).getDanhBo().equals(DanhBo) == true) {
                         STT = i;
                         fillLayout(STT);
+                        break;
                     }
                 }
             }
         } catch (Exception ex) {
-
+            CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, ex.getMessage());
         }
     }
 
@@ -382,6 +383,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     TongCong += PhiMoNuoc;
                     edtPhiMoNuoc.setText(CLocal.formatMoney(PhiMoNuoc.toString(), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(TongCong.toString(), "đ"));
+                    
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 listView.setAdapter(arrayAdapter);
