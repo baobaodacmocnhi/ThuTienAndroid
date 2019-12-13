@@ -383,7 +383,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     TongCong += PhiMoNuoc;
                     edtPhiMoNuoc.setText(CLocal.formatMoney(PhiMoNuoc.toString(), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(TongCong.toString(), "đ"));
-                    
+
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 listView.setAdapter(arrayAdapter);

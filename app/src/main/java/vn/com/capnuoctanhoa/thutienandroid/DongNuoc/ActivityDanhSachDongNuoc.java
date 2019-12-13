@@ -242,12 +242,14 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
         try {
 //            recyclerView.setAdapter(null);
             listParent = new ArrayList<CViewParent>();
+            CLocal.listDongNuocView = new ArrayList<CEntityParent>();
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa ĐN":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isDongNuoc() == false && CLocal.listDongNuoc.get(i).isGiaiTrach() == false) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -257,6 +259,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isDongNuoc() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -266,6 +269,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isMoNuoc() == false && CLocal.listDongNuoc.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().equals("") == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -275,6 +279,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isMoNuoc() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -284,6 +289,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isGiaiTrach() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -293,6 +299,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isThuHo() == true || CLocal.listDongNuoc.get(i).isTamThu() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
                         }
@@ -301,6 +308,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                 default:
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                            CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                             addEntityParent(CLocal.listDongNuoc.get(i));
                         }
                     }

@@ -69,7 +69,7 @@ public class CLocal {
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV = "", HoTen = "", MaTo = "", DienThoai = "", ThermalPrinter = "";
     public static boolean Doi = false, ToTruong = false;
-    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc;
+    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc,listDongNuocView;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -94,7 +94,7 @@ public class CLocal {
         MaNV = HoTen = MaTo = DienThoai = "";
         Doi = ToTruong = false;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
-        listHanhThu = listHanhThuView = listDongNuoc = null;
+        listHanhThu = listHanhThuView = listDongNuoc =listDongNuocView= null;
     }
 
     public static boolean checkNetworkAvailable(Activity activity) {

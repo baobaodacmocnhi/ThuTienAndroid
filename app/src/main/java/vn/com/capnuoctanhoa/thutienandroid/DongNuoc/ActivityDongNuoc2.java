@@ -165,9 +165,9 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 thermalPrinter = new ThermalPrinter(ActivityDongNuoc2.this);
-                if (CLocal.listDongNuoc.get(STT).isDongNuoc2() == true)
+                if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
                     if (thermalPrinter != null)
-                        thermalPrinter.printDongNuoc(CLocal.listDongNuoc.get(STT));
+                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -275,29 +275,30 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
 
     public void fillDongNuoc(int STT) {
         try {
-            CEntityParent en = CLocal.listDongNuoc.get(STT);
-            edtMaDN.setText(en.getID());
-            edtDanhBo.setText(en.getDanhBo());
-            edtMLT.setText(en.getMLT());
-            edtHoTen.setText(en.getHoTen());
-            edtDiaChi.setText(en.getDiaChi());
-            edtHieu.setText(en.getHieu());
-            edtCo.setText(en.getCo());
-            edtSoThan.setText(en.getSoThan());
+            if (CLocal.listDongNuocView != null && CLocal.listDongNuocView.size() > 0) {
+                CEntityParent en = CLocal.listDongNuocView.get(STT);
+                edtMaDN.setText(en.getID());
+                edtDanhBo.setText(en.getDanhBo());
+                edtMLT.setText(en.getMLT());
+                edtHoTen.setText(en.getHoTen());
+                edtDiaChi.setText(en.getDiaChi());
+                edtHieu.setText(en.getHieu());
+                edtCo.setText(en.getCo());
+                edtSoThan.setText(en.getSoThan());
 
-            setSpinnerSelection(spnChiMatSo, en.getChiMatSo());
-            setSpinnerSelection(spnChiKhoaGoc, en.getChiKhoaGoc());
-            setSpinnerSelection(spnViTri, en.getViTri());
-            edtLyDo.setText(en.getLyDo());
-            if (en.isDongNuoc2() == true) {
-                edtNgayDN.setText(en.getNgayDN());
-                edtChiSoDN.setText(en.getChiSoDN());
-                edtNiemChi.setText(en.getNiemChi());
-            } else {
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                edtNgayDN.setText(currentDate.format(new Date()));
+                setSpinnerSelection(spnChiMatSo, en.getChiMatSo());
+                setSpinnerSelection(spnChiKhoaGoc, en.getChiKhoaGoc());
+                setSpinnerSelection(spnViTri, en.getViTri());
+                edtLyDo.setText(en.getLyDo());
+                if (en.isDongNuoc2() == true) {
+                    edtNgayDN.setText(en.getNgayDN());
+                    edtChiSoDN.setText(en.getChiSoDN());
+                    edtNiemChi.setText(en.getNiemChi());
+                } else {
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    edtNgayDN.setText(currentDate.format(new Date()));
+                }
             }
-
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDongNuoc2.this, ex.getMessage());
         }
@@ -380,14 +381,14 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                     String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
                             String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
-                        CLocal.listDongNuoc.get(STT).setNgayDN1(CLocal.listDongNuoc.get(STT).getNgayDN());
-                        CLocal.listDongNuoc.get(STT).setChiSoDN1(CLocal.listDongNuoc.get(STT).getChiSoDN());
-                        CLocal.listDongNuoc.get(STT).setNiemChi1(CLocal.listDongNuoc.get(STT).getNiemChi());
+                        CLocal.listDongNuocView.get(STT).setNgayDN1(CLocal.listDongNuocView.get(STT).getNgayDN());
+                        CLocal.listDongNuocView.get(STT).setChiSoDN1(CLocal.listDongNuocView.get(STT).getChiSoDN());
+                        CLocal.listDongNuocView.get(STT).setNiemChi1(CLocal.listDongNuocView.get(STT).getNiemChi());
                         //
-                        CLocal.listDongNuoc.get(STT).setDongNuoc2(true);
-                        CLocal.listDongNuoc.get(STT).setNgayDN(edtNgayDN.getText().toString());
-                        CLocal.listDongNuoc.get(STT).setChiSoDN(edtChiSoDN.getText().toString());
-                        CLocal.listDongNuoc.get(STT).setNiemChi(edtNiemChi.getText().toString());
+                        CLocal.listDongNuocView.get(STT).setDongNuoc2(true);
+                        CLocal.listDongNuocView.get(STT).setNgayDN(edtNgayDN.getText().toString());
+                        CLocal.listDongNuocView.get(STT).setChiSoDN(edtChiSoDN.getText().toString());
+                        CLocal.listDongNuocView.get(STT).setNiemChi(edtNiemChi.getText().toString());
                         return "THÀNH CÔNG";
                     } else
                         return "THẤT BẠI";
