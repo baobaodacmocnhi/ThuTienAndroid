@@ -111,7 +111,7 @@ public class ActivityDongTien extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                if (thermalPrinter != null)
+                if (thermalPrinter != null&&thermalPrinter.getBluetoothDevice()!=null)
                     thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
             }
         });

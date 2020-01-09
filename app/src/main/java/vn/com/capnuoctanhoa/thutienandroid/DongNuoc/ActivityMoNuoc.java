@@ -158,8 +158,8 @@ public class ActivityMoNuoc extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
-                if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
-                    if (thermalPrinter != null)
+                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                    if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
                         thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
             }
         });

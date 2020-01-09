@@ -2,9 +2,11 @@ package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CViewChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterExpandableListView;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -185,8 +188,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onStart();
         loadListView();
+        super.onStart();
     }
 
     @Override
@@ -199,6 +202,9 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
                 intent.putExtra("LoaiDownData", "HoaDonDienTu");
                 startActivityForResult(intent, 1);
+                return true;
+            case R.id.action_sync_data:
+                MyAsyncTask_XuLyTon myAsyncTask_xuLyTon=new MyAsyncTask_XuLyTon();
                 return true;
             default:
                 break;
@@ -356,6 +362,101 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK)
                 loadListView();
+        }
+    }
+
+    public class MyAsyncTask_XuLyTon extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityHoaDonDienTu_DanhSach.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                for (int i = 0; i < CLocal.listHanhThu.size(); i++)
+                    if (CLocal.listHanhThu.get(i).isSync() == true) {
+                        boolean result = false;
+                        String MaHDs = "";
+
+                        switch (CLocal.listHanhThu.get(i).getXuLy()) {
+                            case "DangNgan":
+                                for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true) {
+                                        if (MaHDs.equals("") == true)
+                                            MaHDs += CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                        else
+                                            MaHDs += "," + CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                    }
+                                result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getNgayGiaiTrach(), ""));
+                                break;
+                            case "PhieuBao":
+                                for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == false) {
+                                        if (MaHDs.equals("") == true)
+                                            MaHDs += CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                        else
+                                            MaHDs += "," + CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                    }
+                                result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getInPhieuBao_Ngay(), ""));
+                                break;
+                            case "PhieuBao2":
+                                for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == false) {
+                                        if (MaHDs.equals("") == true)
+                                            MaHDs += CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                        else
+                                            MaHDs += "," + CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                    }
+                                result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getInPhieuBao2_Ngay(), CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getInPhieuBao2_NgayHen()));
+                                break;
+                            case "TBDongNuoc":
+                                for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == false) {
+                                        if (MaHDs.equals("") == true)
+                                            MaHDs += CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                        else
+                                            MaHDs += "," + CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                    }
+                                result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getTBDongNuoc_Ngay(), CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen()));
+                                break;
+                            case "XoaDangNgan":
+                                for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                    if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getXoaDangNgan_Ngay_DienThoai().equals("") == false) {
+                                        if (MaHDs.equals("") == true)
+                                            MaHDs += CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                        else
+                                            MaHDs += "," + CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaHD();
+                                    }
+                                result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("XoaDangNgan", CLocal.MaNV, MaHDs, CLocal.listHanhThu.get(i).getLstHoaDon().get(CLocal.listHanhThu.get(i).getLstHoaDon().size() - 1).getXoaDangNgan_Ngay_DienThoai(), ""));
+                                break;
+                        }
+                        if (result == true) {
+                            CLocal.listHanhThu.get(i).setSync(false);
+                            CLocal.listHanhThu.get(i).setXuLy("");
+//                            CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
+                        }
+                    }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityHoaDonDienTu_DanhSach.this, ex.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            super.onPostExecute(aVoid);
         }
     }
 }

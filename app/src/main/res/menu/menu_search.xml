@@ -14,4 +14,10 @@
         android:title="Tải Dữ Liệu"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_sync_data"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="Đồng Bộ"
+        app:showAsAction="always" />
+
 </menu>

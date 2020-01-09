@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
@@ -25,7 +27,7 @@ public class ThermalPrinter {
     private Activity activity;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket bluetoothSocket;
-    private BluetoothDevice bluetoothDevice;
+    private BluetoothDevice bluetoothDevice = null;
     private ArrayList<BluetoothDevice> lstBluetoothDevice;
     private ArrayList<String> arrayList;
     private OutputStream outputStream;
@@ -36,7 +38,7 @@ public class ThermalPrinter {
     private volatile boolean stopWorker;
     private final byte[] ESC = {0x1B};
     private StringBuilder stringBuilder;
-    private CEntityParent entityParent;
+    //    private CEntityParent entityParent;
     private int toadoX = 10;
     private int toadoY = 20;
     private int widthFont = 1;
@@ -85,39 +87,40 @@ public class ThermalPrinter {
             bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             if (bluetoothAdapter == null) {
                 arrayList.add("Chưa có kết nối nào");
-            }
-            if (bluetoothAdapter.isEnabled() == false) {
+            } else if (bluetoothAdapter.isEnabled() == false) {
                 CLocal.setOnBluetooth(activity);
-            }
+                Set<BluetoothDevice> pairedDevice = bluetoothAdapter.getBondedDevices();
 
-            Set<BluetoothDevice> pairedDevice = bluetoothAdapter.getBondedDevices();
-
-            if (pairedDevice.size() > 0) {
-                for (BluetoothDevice pairedDev : pairedDevice) {
-                    // My Bluetoth printer name is BTP_F09F1A
+                if (pairedDevice.size() > 0) {
+                    for (BluetoothDevice pairedDev : pairedDevice) {
+                        // My Bluetoth printer name is BTP_F09F1A
 //                    if (pairedDev.getName().equals("BTP_F09F1A"))
-                    {
-                        lstBluetoothDevice.add(pairedDev);
-                        arrayList.add(pairedDev.getName());
+                        {
+                            lstBluetoothDevice.add(pairedDev);
+                            arrayList.add(pairedDev.getName());
 //                        break;
+                        }
                     }
                 }
             }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     private void openBluetoothPrinter() {
         try {
-            //Standard uuid from string //
-            UUID uuidSting = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-            bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(uuidSting);
-            bluetoothSocket.connect();
-            outputStream = bluetoothSocket.getOutputStream();
-            inputStream = bluetoothSocket.getInputStream();
-            beginListenData();
+            if (bluetoothSocket == null) {
+                //Standard uuid from string //
+                UUID uuidSting = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+                bluetoothSocket = bluetoothDevice.createRfcommSocketToServiceRecord(uuidSting);
+                bluetoothSocket.connect();
+                outputStream = bluetoothSocket.getOutputStream();
+                inputStream = bluetoothSocket.getInputStream();
+//                beginListenData();
+            } else if (bluetoothSocket.isConnected() == false)
+                bluetoothSocket.connect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,65 +186,18 @@ public class ThermalPrinter {
             inputStream.close();
             bluetoothSocket.close();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Log.e("disconnectBluetooth", ex.getMessage());
         }
     }
 
     //
 
     public void printThuTien(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("ThuTien");
-    }
-
-    public void printPhieuBao(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("PhieuBao");
-    }
-
-    public void printPhieuBao2(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("PhieuBao2");
-    }
-
-    public void printTBDongNuoc(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("TBDongNuoc");
-    }
-
-    public void printDongNuoc(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("DongNuoc");
-    }
-
-    public void printDongNuoc2(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("DongNuoc2");
-    }
-
-    public void printMoNuoc(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("MoNuoc");
-    }
-
-    public void printPhiMoNuoc(CEntityParent entityParent) {
-        this.entityParent = entityParent;
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("PhiMoNuoc");
-    }
-
-    private void printThuTien_Data() {
         try {
             if (entityParent != null) {
-                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    printTop();
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                    if (entityParent.getLstHoaDon().get(i).isDangNgan_DienThoai() == true) {
+                        printTop();
 //                    outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
 //                    printNewLine(1);
 //                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
@@ -265,41 +221,98 @@ public class ThermalPrinter {
 //                    outputStream.write("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
 //                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
 //                    printNewLine(3);
-                    printEZ("BIÊN NHẬN THU TIỀN", 4, toadoY, 40, 2, 1);
-                    printEZ("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), 1, toadoY, 100, 2, 1);
-                    printEZ("Ngày thu: " + entityParent.getLstHoaDon().get(i).getNgayGiaiTrach(), 1, toadoY, 0, 1, 1);
-                    printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
-                    printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
-                    printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc(), 1, toadoY, 0, 1, 1);
-                    printEZ("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
-                    printEZ("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + "  Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay(), 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
-                    printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()), 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
-                    printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
-                    printEZTheEnd();
-                    outputStream.flush();
-                }
+                        printEZ("BIÊN NHẬN THU TIỀN", 4, toadoY, 40, 2, 1);
+                        printEZ("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), 1, toadoY, 100, 2, 1);
+                        printEZ("Ngày thu: " + entityParent.getLstHoaDon().get(i).getNgayGiaiTrach(), 1, toadoY, 0, 1, 1);
+                        printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
+                        printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
+                        printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
+                        printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc(), 1, toadoY, 0, 1, 1);
+                        printEZ("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
+                        printEZ("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + "  Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay(), 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
+                        printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()), 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                        printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
+                        printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
+                        printEZTheEnd();
+                        outputStream.flush();
+                    }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void printPhieuBao_Data() {
+    public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) {
+        try {
+            if (entityChild != null) {
+                printTop();
+//                    outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
+//                    printNewLine(1);
+//                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
+//                    outputStream.write(("Ngày thu: " + entityParent.getLstHoaDon().get(i).getNgayGiaiTrach() + "\n").getBytes());
+//                    outputStream.write(("Khách hàng: " + entityParent.getHoTen() + "\n").getBytes());
+//                    outputStream.write(("Địa chỉ: " + entityParent.getDiaChi() + "\n").getBytes());
+//                    outputStream.write(("Danh bộ: " + entityParent.getDanhBo() + "\n").getBytes());
+//                    outputStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc() + "\n").getBytes());
+//                    outputStream.write(("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + " m3\n").getBytes());
+//                    outputStream.write(("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + " Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay() + "\n").getBytes());
+//                    printHangNgang();
+//                    outputStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ") + "\n").getBytes());
+//                    outputStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ") + "\n").getBytes());
+//                    outputStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ") + "\n").getBytes());
+//                    outputStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ") + "\n").getBytes());
+//                    outputStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()) + ".\n").getBytes());
+//                    printHangNgang();
+//                    outputStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+//                    outputStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+//                    printHangNgang();
+//                    outputStream.write("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+//                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+//                    printNewLine(3);
+                printEZ("BIÊN NHẬN THU TIỀN", 4, toadoY, 40, 2, 1);
+                printEZ("Kỳ: " + entityChild.getKy(), 1, toadoY, 100, 2, 1);
+                printEZ("Ngày thu: " + entityChild.getNgayGiaiTrach(), 1, toadoY, 0, 1, 1);
+                printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
+                printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
+                printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
+                printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
+                printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
+                printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
+                printEZHangNgang();
+                printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
+                printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
+                printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
+                printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityChild.getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
+                printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
+                printEZHangNgang();
+                printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                printEZHangNgang();
+                printEZ("Quý khách in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
+                printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
+                printEZTheEnd();
+                outputStream.flush();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void printPhieuBao(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    printTop();
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                    if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
+                        printTop();
 //                    outputStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
 //                    printNewLine(1);
 //                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
@@ -326,40 +339,40 @@ public class ThermalPrinter {
 //                    outputStream.write("Trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
 //                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
 //                    printNewLine(3);
-                    printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 30, 2, 1);
-                    printEZ("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), 1, toadoY, 100, 2, 1);
-                    printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
-                    printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
-                    printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc(), 1, toadoY, 0, 1, 1);
-                    printEZ("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
-                    printEZ("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + "  Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay(), 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
-                    printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()), 1, toadoY, 0, 1, 1);
-                    String[] str = entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().split(" ");
-                    printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
-                    printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
-                    printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay(), 1, toadoY, 0, 1, 1);
-                    printEZHangNgang();
-                    printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
-                    printEZTheEnd();
-                    outputStream.flush();
-                }
+                        printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 30, 2, 1);
+                        printEZ("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), 1, toadoY, 100, 2, 1);
+                        printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
+                        printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
+                        printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
+                        printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(i).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(i).getDinhMuc(), 1, toadoY, 0, 1, 1);
+                        printEZ("CSC: " + entityParent.getLstHoaDon().get(i).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(i).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(i).getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
+                        printEZ("Từ: " + entityParent.getLstHoaDon().get(i).getTuNgay() + "  Đến: " + entityParent.getLstHoaDon().get(i).getDenNgay(), 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
+                        printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityParent.getLstHoaDon().get(i).getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
+                        printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityParent.getLstHoaDon().get(i).getTongCong()), 1, toadoY, 0, 1, 1);
+                        String[] str = entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().split(" ");
+                        printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
+                        printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                        printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                        printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay(), 1, toadoY, 0, 1, 1);
+                        printEZHangNgang();
+                        printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
+                        printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
+                        printEZTheEnd();
+                        outputStream.flush();
+                    }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void printPhieuBao2_Data() {
+    public void printPhieuBao2(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -403,10 +416,11 @@ public class ThermalPrinter {
                 printEZHangNgang();
                 printEZ("Hóa đơn:", 1, toadoY, 0, 1, 1);
                 int TongCong = 0;
-                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 1, toadoY, 0, 1, 1);
-                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                }
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                    if (entityParent.getLstHoaDon().get(i).getInPhieuBao2_Ngay().equals("") == false) {
+                        printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 1, toadoY, 0, 1, 1);
+                        TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                    }
                 printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 2, toadoY, 0, 1, 1);
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
                 String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
@@ -430,7 +444,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printTBDongNuoc_Data() {
+    public void printTBDongNuoc(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -476,10 +490,11 @@ public class ThermalPrinter {
                 printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " + str[0], 1, toadoY, 0, 1, 1);
                 printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:", 1, toadoY, 0, 1, 1);
                 int TongCong = 0;
-                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 1, toadoY, 0, 1, 1);
-                    TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                }
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                    if (entityParent.getLstHoaDon().get(i).getTBDongNuoc_Ngay().equals("") == false) {
+                        printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 1, toadoY, 0, 1, 1);
+                        TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+                    }
                 printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 1, toadoY, 0, 1, 1);
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
                 printEZHangNgang();
@@ -501,7 +516,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printDongNuoc_Data() {
+    public void printDongNuoc(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -586,7 +601,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printDongNuoc2_Data() {
+    public void printDongNuoc2(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -657,7 +672,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printMoNuoc_Data() {
+    public void printMoNuoc(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -731,7 +746,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printPhiMoNuoc_Data() {
+    public void printPhiMoNuoc(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
                 printTop();
@@ -1065,39 +1080,6 @@ public class ThermalPrinter {
         dateTime[0] = c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
         dateTime[1] = c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
         return dateTime;
-    }
-
-    public class MyAsyncTask extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... strings) {
-            switch (strings[0]) {
-                case "ThuTien":
-                    printThuTien_Data();
-                    break;
-                case "PhieuBao":
-                    printPhieuBao_Data();
-                    break;
-                case "PhieuBao2":
-                    printPhieuBao2_Data();
-                    break;
-                case "TBDongNuoc":
-                    printTBDongNuoc_Data();
-                    break;
-                case "DongNuoc":
-                    printDongNuoc_Data();
-                    break;
-                case "DongNuoc2":
-                    printDongNuoc2_Data();
-                    break;
-                case "MoNuoc":
-                    printMoNuoc_Data();
-                    break;
-                case "PhiMoNuoc":
-                    printPhiMoNuoc_Data();
-                    break;
-            }
-            return null;
-        }
     }
 
 
