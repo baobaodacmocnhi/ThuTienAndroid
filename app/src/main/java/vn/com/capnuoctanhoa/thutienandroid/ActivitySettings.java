@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,10 +21,13 @@ import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
 public class ActivitySettings extends AppCompatActivity {
+    private EditText edtMayInDaChon;
     private Button btnGetThermal;
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
+    private RadioButton radTrucTiep, radGianTiep;
+    private RadioGroup radGroupSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +36,18 @@ public class ActivitySettings extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnGetThermal=(Button) findViewById(R.id.btnGetThermal);
+        edtMayInDaChon = (EditText) findViewById(R.id.edtMayInDaChon);
+        btnGetThermal = (Button) findViewById(R.id.btnGetThermal);
         lstView = (ListView) findViewById(R.id.lstView);
+        radTrucTiep = (RadioButton) findViewById(R.id.radTrucTiep);
+        radGianTiep = (RadioButton) findViewById(R.id.radGianTiep);
+        radGroupSync = (RadioGroup) findViewById(R.id.radGroupSync);
 
-        MyAsyncTask_Thermal myAsyncTask_thermal=new MyAsyncTask_Thermal();
+        MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
         myAsyncTask_thermal.execute();
 //        thermalPrinter=new ThermalPrinter(ActivitySettings.this);
 
+        edtMayInDaChon.setText(CLocal.ThermalPrinter);
         btnGetThermal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,25 +66,48 @@ public class ActivitySettings extends AppCompatActivity {
                 try {
                     thermalPrinter.setBluetoothDevice(thermalPrinter.getLstBluetoothDevice().get(position));
                     CLocal.ThermalPrinter = thermalPrinter.getBluetoothDevice().getName();
+                    edtMayInDaChon.setText(CLocal.ThermalPrinter);
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("ThermalPrinter", thermalPrinter.getBluetoothDevice().getName());
                     editor.commit();
-                }catch (Exception ex){}
+                } catch (Exception ex) {
+                }
             }
         });
 
+        if (CLocal.SyncTrucTiep == true)
+            radTrucTiep.setChecked(true);
+        else
+            radGianTiep.setChecked(true);
+
+        radGroupSync.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View radioButton = radGroupSync.findViewById(checkedId);
+                int index = radGroupSync.indexOfChild(radioButton);
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                switch (index) {
+                    case 0: // first button
+                        CLocal.SyncTrucTiep = true;
+                        editor.putBoolean("SyncTrucTiep", true);
+                        break;
+                    case 1: // secondbutton
+                        CLocal.SyncTrucTiep = false;
+                        editor.putBoolean("SyncTrucTiep", false);
+                        break;
+                }
+                editor.commit();
+            }
+        });
     }
 
-    public  void loadListView()
-    {
-        if(thermalPrinter!=null) {
+    public void loadListView() {
+        if (thermalPrinter != null) {
             //add danh sách thiết bị vào listview
             arrayBluetoothAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, thermalPrinter.getArrayList());
             lstView.setAdapter(arrayBluetoothAdapter);
-        }
-        else
-        {
-            MyAsyncTask_Thermal myAsyncTask_thermal=new MyAsyncTask_Thermal();
+        } else {
+            MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
             myAsyncTask_thermal.execute();
         }
     }

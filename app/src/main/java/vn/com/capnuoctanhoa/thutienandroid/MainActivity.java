@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
+                CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);

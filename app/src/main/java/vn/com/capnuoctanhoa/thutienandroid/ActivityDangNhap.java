@@ -126,6 +126,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     try {
                     result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
                     if (result.isEmpty() == false&&result.equals("[]")==false&&result.contains("Connection refused")==false) {
+                        CLocal.initialCLocal();
                         JSONArray jsonArray = new JSONArray(result);
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();

@@ -158,7 +158,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ActivitySettings"
-            android:label="Cài đặt" />
+            android:label="Cài đặt"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".HanhThu.ActivityHoaDonDienTu_Search"
             android:label="Tìm Kiếm"

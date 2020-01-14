@@ -16,6 +16,11 @@ public class CEntityParent {
     private boolean LenhHuy;
     private String TinhTrang;
     private boolean DangNgan_DienThoai;
+    private boolean InPhieuBao;
+
+
+
+    private boolean InPhieuBao2;
     private boolean DongNuoc;
     private boolean DongNuoc2;
     private boolean DongPhi;
@@ -56,6 +61,8 @@ public class CEntityParent {
         LenhHuy = false;
         TinhTrang = "";
         DangNgan_DienThoai = false;
+        InPhieuBao=false;
+        InPhieuBao2=false;
         TBDongNuoc = false;
         DongNuoc = false;
         DongNuoc2 = false;
@@ -179,6 +186,22 @@ public class CEntityParent {
 
     public void setDangNgan_DienThoai(boolean dangNgan_DienThoai) {
         DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
+    public boolean isInPhieuBao() {
+        return InPhieuBao;
+    }
+
+    public void setInPhieuBao(boolean inPhieuBao) {
+        InPhieuBao = inPhieuBao;
+    }
+
+    public boolean isInPhieuBao2() {
+        return InPhieuBao2;
+    }
+
+    public void setInPhieuBao2(boolean inPhieuBao2) {
+        InPhieuBao2 = inPhieuBao2;
     }
 
     public boolean isDongNuoc() {

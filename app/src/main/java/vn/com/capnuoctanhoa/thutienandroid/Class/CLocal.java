@@ -67,9 +67,9 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV = "", HoTen = "", MaTo = "", DienThoai = "", ThermalPrinter = "";
-    public static boolean Doi = false, ToTruong = false;
-    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc,listDongNuocView;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter;
+    public static boolean Doi, ToTruong, SyncTrucTiep;
+    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -88,13 +88,15 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.putString("ThermalPrinter", "");
+        editor.putBoolean("SyncTrucTiep", true);
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai = "";
+        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = "";
         Doi = ToTruong = false;
+        SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
-        listHanhThu = listHanhThuView = listDongNuoc =listDongNuocView= null;
+        listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
     }
 
     public static boolean checkNetworkAvailable(Activity activity) {
@@ -221,7 +223,7 @@ public class CLocal {
     //update tình trạng parent
     public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, int i) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : lst.get(i).getLstHoaDon()) {
             if (item.isGiaiTrach() == true)
                 GiaiTrach++;
@@ -235,6 +237,10 @@ public class CLocal {
                 LenhHuy++;
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
+            else if (item.getInPhieuBao2_Ngay().equals("") == false)
+                InPhieuBao2++;
+            else if (item.getInPhieuBao_Ngay().equals("") == false)
+                InPhieuBao++;
 
             if (item.isDangNgan_DienThoai() == true)
                 DangNgan_DienThoai++;
@@ -264,22 +270,29 @@ public class CLocal {
             lst.get(i).setLenhHuy(true);
         } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setTBDongNuoc(true);
+        } else if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setInPhieuBao2(true);
+            lst.get(i).setTinhTrang("Phiếu Báo 2");
+        } else if (InPhieuBao == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setInPhieuBao(true);
+            lst.get(i).setTinhTrang("Phiếu Báo");
         }
 
         if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setDangNgan_DienThoai(true);
             lst.get(i).setTinhTrang("Đã Thu");
         }
+
         //goi update lại json hệ thống
 //        updateArrayListToJson();
     }
 
     //update tình trạng parent
-    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst,CEntityParent entityParentUpdate) {
-        for (int i=0;i<lst.size();i++)
-        if(lst.get(i).getID().equals(entityParentUpdate.getID())){
-            lst.get(i).setCEntityParent(entityParentUpdate);
-        }
+    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, CEntityParent entityParentUpdate) {
+        for (int i = 0; i < lst.size(); i++)
+            if (lst.get(i).getID().equals(entityParentUpdate.getID())) {
+                lst.get(i).setCEntityParent(entityParentUpdate);
+            }
         //goi update lại json hệ thống
         updateArrayListToJson();
     }
@@ -287,7 +300,7 @@ public class CLocal {
     //update tình trạng parent
     public static CEntityParent updateTinhTrangParent(CEntityParent en) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : en.getLstHoaDon()) {
             if (item.isGiaiTrach() == true)
                 GiaiTrach++;
@@ -301,6 +314,10 @@ public class CLocal {
                 LenhHuy++;
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
+            else if (item.getInPhieuBao2_Ngay().equals("") == false)
+                InPhieuBao2++;
+            else if (item.getInPhieuBao_Ngay().equals("") == false)
+                InPhieuBao++;
 
             if (item.isDangNgan_DienThoai() == true)
                 DangNgan_DienThoai++;
@@ -330,12 +347,18 @@ public class CLocal {
             en.setLenhHuy(true);
         } else if (TBDongNuoc == en.getLstHoaDon().size()) {
             en.setTBDongNuoc(true);
+        } else if (InPhieuBao2 == en.getLstHoaDon().size()) {
+            en.setInPhieuBao2(true);
+            en.setTinhTrang("Phiếu Báo 2");
+        } else if (InPhieuBao == en.getLstHoaDon().size()) {
+            en.setInPhieuBao(true);
+            en.setTinhTrang("Phiếu Báo");
         }
-
         if (DangNgan_DienThoai == en.getLstHoaDon().size()) {
             en.setDangNgan_DienThoai(true);
             en.setTinhTrang("Đã Thu");
         }
+
         return en;
     }
 
@@ -486,7 +509,8 @@ public class CLocal {
         return null;
     }
 
-    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+    public static String getDataColumn(Context context, Uri uri, String selection, String[]
+            selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";

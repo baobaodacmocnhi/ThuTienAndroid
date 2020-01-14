@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal"
+        app:layout_constraintTop_toBottomOf="@+id/edtMayInDaChon"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
@@ -27,5 +28,70 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView55"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Đồng Bộ"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radGroupSync" />
+
+    <RadioGroup
+        android:id="@+id/radGroupSync"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/textView55"
+        app:layout_constraintTop_toBottomOf="@+id/lstView">
+
+        <RadioButton
+            android:id="@+id/radTrucTiep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Trực Tiếp" />
+
+        <RadioButton
+            android:id="@+id/radGianTiep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gián Tiếp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Máy In Đã Chọn"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edtMayInDaChon" />
+
+    <EditText
+        android:id="@+id/edtMayInDaChon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView60"
+        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal" />
 
 </android.support.constraint.ConstraintLayout>
