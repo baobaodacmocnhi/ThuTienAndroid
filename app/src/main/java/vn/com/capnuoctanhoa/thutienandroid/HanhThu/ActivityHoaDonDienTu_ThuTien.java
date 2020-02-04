@@ -672,6 +672,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
             if (aBoolean == true) {
                 CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG");
+                btnSau.performClick();
             } else
                 CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI");
         }

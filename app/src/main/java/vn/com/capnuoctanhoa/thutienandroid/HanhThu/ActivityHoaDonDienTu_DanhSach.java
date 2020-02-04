@@ -145,6 +145,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 listView.smoothScrollToPosition(0);
             }
         });
+
+        loadListView();
     }
 
     @Override
@@ -184,12 +186,6 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-    @Override
-    protected void onStart() {
-        loadListView();
-        super.onStart();
     }
 
     @Override
@@ -301,7 +297,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         try {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setModifyDate(enParent.getModifyDate());
-            enViewParent.setSTT(String.valueOf(listParent.size() + 1));
+            enViewParent.setSTT(String.valueOf(listParent.size()+1));
             enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
