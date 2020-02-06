@@ -27,6 +27,7 @@ import java.util.Date;
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CHoaDon;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
@@ -97,9 +98,9 @@ public class ActivityDongTien extends AppCompatActivity {
                     if (sp.valueAt(i) == true) {
                         CHoaDon hoadon = lstHoaDon.get(sp.keyAt(i));
                         if (selectedMaHDs.equals("") == true)
-                            selectedMaHDs = hoadon.MaHD;
+                            selectedMaHDs = hoadon.getMaHD();
                         else
-                            selectedMaHDs += "," + hoadon.MaHD;
+                            selectedMaHDs += "," + hoadon.getMaHD();
                     }
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -146,56 +147,56 @@ public class ActivityDongTien extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class CHoaDon {
-        private String MaHD;
-        private String Ky;
-        private String TongCong;
-        private boolean Selected;
-
-        public CHoaDon() {
-            MaHD = "";
-            Ky = "";
-            TongCong = "";
-            Selected = false;
-        }
-
-        public String getMaHD() {
-            return MaHD;
-        }
-
-        public void setMaHD(String maHD) {
-            MaHD = maHD;
-        }
-
-        public String getKy() {
-            return Ky;
-        }
-
-        public void setKy(String ky) {
-            Ky = ky;
-        }
-
-        public String getTongCong() {
-            return TongCong;
-        }
-
-        public void setTongCong(String tongCong) {
-            TongCong = tongCong;
-        }
-
-        public boolean isSelected() {
-            return Selected;
-        }
-
-        public void setSelected(boolean selected) {
-            Selected = selected;
-        }
-
-        @Override
-        public String toString() {
-            return Ky + " : " + CLocal.formatMoney(TongCong, "đ");
-        }
-    }
+//    public class CHoaDon {
+//        private String MaHD;
+//        private String Ky;
+//        private String TongCong;
+//        private boolean Selected;
+//
+//        public CHoaDon() {
+//            MaHD = "";
+//            Ky = "";
+//            TongCong = "";
+//            Selected = false;
+//        }
+//
+//        public String getMaHD() {
+//            return MaHD;
+//        }
+//
+//        public void setMaHD(String maHD) {
+//            MaHD = maHD;
+//        }
+//
+//        public String getKy() {
+//            return Ky;
+//        }
+//
+//        public void setKy(String ky) {
+//            Ky = ky;
+//        }
+//
+//        public String getTongCong() {
+//            return TongCong;
+//        }
+//
+//        public void setTongCong(String tongCong) {
+//            TongCong = tongCong;
+//        }
+//
+//        public boolean isSelected() {
+//            return Selected;
+//        }
+//
+//        public void setSelected(boolean selected) {
+//            Selected = selected;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return Ky + " : " + CLocal.formatMoney(TongCong, "đ");
+//        }
+//    }
 
     private void fillDongNuoc(String MaDN) {
         try {
