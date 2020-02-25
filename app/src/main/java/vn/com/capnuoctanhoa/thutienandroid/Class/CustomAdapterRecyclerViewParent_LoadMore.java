@@ -53,11 +53,11 @@ public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapt
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType==VIEW_TYPE_ITEM){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_parent, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_parent, parent, false);
             return new RecyclerViewHolder(view);
         }
         else if (viewType==VIEW_TYPE_LOADING){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_loading, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_loading, parent, false);
             return new RecyclerViewHolderLoading(view);
         }
         return null;

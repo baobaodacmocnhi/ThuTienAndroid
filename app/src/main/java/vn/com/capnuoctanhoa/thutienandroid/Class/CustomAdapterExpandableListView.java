@@ -80,7 +80,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         ViewHolder holder;
         LayoutInflater inflater = activity.getLayoutInflater();
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.recyclerview_parent, null);
+            convertView = inflater.inflate(R.layout.custom_listview_parent, null);
             holder = new ViewHolder();
             holder.STT = (TextView) convertView.findViewById(R.id.lvSTT);
             holder.ID = (TextView) convertView.findViewById(R.id.lvID);
@@ -160,7 +160,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         ViewHolderChild holder;
         LayoutInflater inflater = activity.getLayoutInflater();
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.recyclerview_child, null);
+            convertView = inflater.inflate(R.layout.custom_listview_child, null);
             holder = new ViewHolderChild();
             holder.ID = (TextView) convertView.findViewById(R.id.lvID);
             holder.Row1a = (TextView) convertView.findViewById(R.id.lvRow1a);

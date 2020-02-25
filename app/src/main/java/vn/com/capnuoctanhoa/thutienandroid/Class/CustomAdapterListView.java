@@ -59,7 +59,7 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
         ViewHolder holder;
         LayoutInflater inflater = activity.getLayoutInflater();
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.recyclerview_parent, null);
+            convertView = inflater.inflate(R.layout.custom_listview_parent, null);
             holder = new ViewHolder();
             holder.STT = (TextView) convertView.findViewById(R.id.lvSTT);
             holder.ID = (TextView) convertView.findViewById(R.id.lvID);

@@ -34,7 +34,7 @@ public class CustomAdapterRecyclerViewParent extends RecyclerView.Adapter<Custom
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_parent, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_parent, parent, false);
         return new RecyclerViewHolder(view);
 
     }

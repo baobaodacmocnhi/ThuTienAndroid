@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentUris;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,7 +24,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -43,6 +48,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 
 public class CLocal {
     //Android 1.5 	Cupcake 	27/4/2009
@@ -530,6 +537,23 @@ public class CLocal {
                 cursor.close();
         }
         return null;
+    }
+
+    public static void showImgThumb(Activity activity, Bitmap bitmap) {
+        Dialog builder = new Dialog(activity);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(activity);
+        imageView.setImageBitmap(bitmap);
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
+        builder.show();
     }
 
     /**

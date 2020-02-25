@@ -397,7 +397,8 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
                     }
                     break;
             }
-            txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(lstDisplayed.size()), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
+//            txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(lstDisplayed.size()), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
+            txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(CLocal.listHanhThu.size()), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
             customAdapterListView = new CustomAdapterListView(this, lstDisplayed);

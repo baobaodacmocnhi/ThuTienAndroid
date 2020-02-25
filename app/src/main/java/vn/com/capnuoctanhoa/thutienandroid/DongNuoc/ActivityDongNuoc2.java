@@ -1,14 +1,11 @@
 package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,15 +15,14 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +31,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
@@ -42,17 +39,21 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewImage;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc2 extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
-    private ImageView imgThumb;
+//    private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
     private Button btnDongNuoc, btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
     private Bitmap imgCapture;
+    public ArrayList<Bitmap> lstCapture;
+    private RecyclerView recyclerView;
+    private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc2.this);
     private int STT = -1;
     private ThermalPrinter thermalPrinter;
@@ -81,8 +82,11 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
         spnViTri = (Spinner) findViewById(R.id.spnViTri);
 
-        imgThumb = (ImageView) findViewById(R.id.imgThumb);
+//        imgThumb = (ImageView) findViewById(R.id.imgThumb);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
+        lstCapture = new ArrayList<Bitmap>();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
         btnIn = (Button) findViewById(R.id.btnIn);
@@ -140,12 +144,12 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             }
         });
 
-        imgThumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showImgThumb();
-            }
-        });
+//        imgThumb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showImgThumb();
+//            }
+//        });
 
         btnDongNuoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,14 +207,24 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
-            imgThumb.setImageBitmap(bitmap);
+            imgCapture = bitmap;
+//            imgThumb.setImageBitmap(bitmap);
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
             String strPath = CLocal.getPathFromUri(this, uri);
             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
             imgCapture = bitmap;
-            imgThumb.setImageBitmap(bitmap);
+//            imgThumb.setImageBitmap(bitmap);
+        }
+        if (imgCapture != null) {
+            lstCapture.add(imgCapture);
+            customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(ActivityDongNuoc2.this, lstCapture);
+            recyclerView.setHasFixedSize(true);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(customAdapterRecyclerViewImage);
         }
     }
 
@@ -313,22 +327,22 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         }
     }
 
-    private void showImgThumb() {
-        Dialog builder = new Dialog(ActivityDongNuoc2.this);
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
-        });
-
-        ImageView imageView = new ImageView(ActivityDongNuoc2.this);
-        imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
-        builder.show();
-    }
+//    private void showImgThumb() {
+//        Dialog builder = new Dialog(ActivityDongNuoc2.this);
+//        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        builder.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialogInterface) {
+//                //nothing;
+//            }
+//        });
+//
+//        ImageView imageView = new ImageView(ActivityDongNuoc2.this);
+//        imageView.setImageBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap());
+//        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
+//        builder.show();
+//    }
 
     @Override
     protected void onDestroy() {
@@ -373,10 +387,19 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                     if (Boolean.parseBoolean(ws.checkExist_DongNuoc2(edtMaDN.getText().toString())) == true)
                         return "ĐÃ NHẬP RỒI";
 
-                    String imgString = "NULL";
-                    if (imgCapture != null) {
-                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        imgString = CLocal.convertBitmapToString(reizeImage);
+                    String imgString = "";
+                    if (lstCapture.size() >0) {
+//                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
+                        for (int i=0;i<lstCapture.size();i++)
+                        {
+                            Bitmap reizeImage = Bitmap.createScaledBitmap(lstCapture.get(i), 1024, 1024, false);
+                            if (imgString.equals("") == true)
+                                imgString +=  CLocal.convertBitmapToString(reizeImage);
+                            else
+                                imgString += ";" +  CLocal.convertBitmapToString(reizeImage);
+                        }
+//                        Bitmap reizeImage = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
+//                        imgString = CLocal.convertBitmapToString(reizeImage);
                     }
                     String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
                             String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(), CLocal.MaNV);

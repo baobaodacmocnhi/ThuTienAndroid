@@ -43,9 +43,8 @@
                 android:id="@+id/chkButChi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:text="Bứt Chì"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
@@ -74,9 +73,8 @@
                 android:id="@+id/edtNiemChi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:ems="5"
                 android:inputType="number"
                 android:textSize="14sp"
@@ -87,11 +85,10 @@
                 android:id="@+id/edtKhoaKhac_GhiChu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:ems="5"
                 android:inputType="number"
                 android:textSize="14sp"
@@ -114,9 +111,8 @@
                 android:id="@+id/spnChiKhoaGoc"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:entries="@array/dongnuoc_array"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -137,9 +133,8 @@
                 android:id="@+id/edtNgayDN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:ems="6"
                 android:inputType="date"
                 android:textSize="14sp"
@@ -173,9 +168,8 @@
                 android:id="@+id/edtDanhBo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginLeft="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
@@ -188,7 +182,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
@@ -236,15 +229,12 @@
                 android:id="@+id/edtMLT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
                 android:visibility="invisible"
-                app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/edtMaDN" />
+                app:layout_constraintStart_toEndOf="@+id/edtDanhBo"
+                app:layout_constraintTop_toTopOf="@+id/edtDanhBo" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -281,27 +271,19 @@
                 app:layout_constraintStart_toEndOf="@+id/edtCo"
                 app:layout_constraintTop_toTopOf="@+id/edtSoThan" />
 
-            <ImageView
-                android:id="@+id/imgThumb"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@android:drawable/ic_menu_gallery"
-                app:layout_constraintStart_toEndOf="@+id/spnChiMatSo"
-                app:layout_constraintTop_toTopOf="@+id/spnChiMatSo" />
-
             <EditText
                 android:id="@+id/edtLyDo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
-                app:layout_constraintTop_toBottomOf="@+id/spnViTri" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -340,18 +322,16 @@
                 android:id="@+id/ibtnChupHinh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:src="@android:drawable/ic_menu_camera"
-                app:layout_constraintBottom_toBottomOf="@+id/imgThumb"
-                app:layout_constraintStart_toEndOf="@+id/imgThumb" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recyclerView" />
 
             <EditText
                 android:id="@+id/edtHieu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:ems="5"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
@@ -387,7 +367,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
@@ -423,7 +402,6 @@
                 android:id="@+id/spnChiMatSo"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
                 android:entries="@array/dongnuoc_array"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
@@ -445,20 +423,30 @@
                 android:id="@+id/textView50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Vị Trí"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/spnChiMatSo"
                 app:layout_constraintTop_toTopOf="@+id/spnViTri" />
 
             <Spinner
                 android:id="@+id/spnViTri"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:entries="@array/vitri_array"
-                app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
+                app:layout_constraintStart_toEndOf="@+id/textView50"
+                app:layout_constraintTop_toTopOf="@+id/spnChiMatSo" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@+id/ibtnChupHinh"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spnChiKhoaGoc" />
 
         </android.support.constraint.ConstraintLayout>

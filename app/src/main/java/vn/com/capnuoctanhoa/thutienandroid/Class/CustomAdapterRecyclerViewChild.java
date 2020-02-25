@@ -25,7 +25,7 @@ public class CustomAdapterRecyclerViewChild extends RecyclerView.Adapter<CustomA
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_child, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_child, parent, false);
         return new RecyclerViewHolder(itemView);
     }
 
