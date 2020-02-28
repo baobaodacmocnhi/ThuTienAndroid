@@ -44,7 +44,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private CWebservice ws;
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong = 0;
-private  String selectedMaHDs="";
+    private String selectedMaHDs = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -519,8 +519,9 @@ private  String selectedMaHDs="";
                     edtInTBDongNuoc_Ngay.setText(item.getLstHoaDon().get(0).getTBDongNuoc_Ngay());
                     edtInTBDongNuoc_NgayHen.setText(item.getLstHoaDon().get(0).getTBDongNuoc_NgayHen());
                     int PhiMoNuoc = 0;
-                    lstHoaDon=new ArrayList<>();
-                    selectedMaHDs="";
+                    lstHoaDon = new ArrayList<>();
+                    TongCong=0;
+                    selectedMaHDs = "";
                     for (int j = 0; j < item.getLstHoaDon().size(); j++) {
                         CHoaDon entity = new CHoaDon();
                         entity.setMaHD(item.getLstHoaDon().get(j).getMaHD());
@@ -532,7 +533,7 @@ private  String selectedMaHDs="";
                         if (selectedMaHDs.equals("") == true)
                             selectedMaHDs = item.getLstHoaDon().get(j).getMaHD();
                         else
-                            selectedMaHDs += "," +item.getLstHoaDon().get(j).getMaHD();
+                            selectedMaHDs += "," + item.getLstHoaDon().get(j).getMaHD();
 
                         TongCong += Long.parseLong(item.getLstHoaDon().get(j).getTongCong());
                         arrayList.add(item.getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(item.getLstHoaDon().get(j).getTongCong(), "đ"));
@@ -558,7 +559,7 @@ private  String selectedMaHDs="";
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 listView.setAdapter(arrayAdapter);
 
-                for (int j = 0; j < arrayAdapter.getCount(); j++){
+                for (int j = 0; j < arrayAdapter.getCount(); j++) {
                     listView.setItemChecked(j, true);
                 }
             }
@@ -624,7 +625,7 @@ private  String selectedMaHDs="";
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), ""));
                                 if (result == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
@@ -641,7 +642,7 @@ private  String selectedMaHDs="";
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == true
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), ""));
                                 if (result == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
@@ -658,7 +659,7 @@ private  String selectedMaHDs="";
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -684,7 +685,7 @@ private  String selectedMaHDs="";
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == true
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -708,7 +709,7 @@ private  String selectedMaHDs="";
                             if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 result = Boolean.parseBoolean(ws.XuLy_HoaDonDienTu("XoaDangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), ""));
                                 if (result == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
@@ -754,7 +755,7 @@ private  String selectedMaHDs="";
                     case "DangNgan":
                         for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -765,7 +766,7 @@ private  String selectedMaHDs="";
                     case "PhieuBao":
                         for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -776,7 +777,7 @@ private  String selectedMaHDs="";
                     case "PhieuBao2":
                         for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -787,7 +788,7 @@ private  String selectedMaHDs="";
                     case "TBDongNuoc":
                         for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD();
                                 else
@@ -798,7 +799,7 @@ private  String selectedMaHDs="";
                     case "XoaDangNgan":
                         for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getXoaDangNgan_Ngay_DienThoai().equals("") == false
-                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())==true) {
+                                    && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 if (MaHDs.equals("") == true)
                                     MaHDs += CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD();
                                 else

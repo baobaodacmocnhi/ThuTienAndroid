@@ -89,8 +89,8 @@ public class ThermalPrinter {
                 arrayList.add("Chưa có kết nối nào");
             } else if (bluetoothAdapter.isEnabled() == false) {
                 CLocal.setOnBluetooth(activity);
+            } else {
                 Set<BluetoothDevice> pairedDevice = bluetoothAdapter.getBondedDevices();
-
                 if (pairedDevice.size() > 0) {
                     for (BluetoothDevice pairedDev : pairedDevice) {
                         // My Bluetoth printer name is BTP_F09F1A
@@ -253,7 +253,7 @@ public class ThermalPrinter {
 
     public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (entityParent!=null&&entityChild != null) {
+            if (entityParent != null && entityChild != null) {
                 printTop();
 //                    outputStream.write("BIÊN NHẬN THU TIỀN\n".getBytes());
 //                    printNewLine(1);
@@ -374,9 +374,9 @@ public class ThermalPrinter {
 
     public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (entityParent != null&&entityChild!=null) {
-                    if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
-                        printTop();
+            if (entityParent != null && entityChild != null) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
+                    printTop();
 //                    outputStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
 //                    printNewLine(1);
 //                    outputStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "\n").getBytes());
@@ -403,33 +403,33 @@ public class ThermalPrinter {
 //                    outputStream.write("Trang website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
 //                    outputStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
 //                    printNewLine(3);
-                        printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 30, 2, 1);
-                        printEZ("Kỳ: " + entityChild.getKy(), 1, toadoY, 100, 2, 1);
-                        printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
-                        printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
-                        printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
-                        printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
-                        printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
-                        printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
-                        printEZHangNgang();
-                        printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
-                        printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
-                        printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
-                        printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityChild.getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
-                        printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
-                        String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
-                        printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
-                        printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
-                        printEZHangNgang();
-                        printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
-                        printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                        printEZ("Ngày gửi: " + entityChild.getInPhieuBao_Ngay(), 1, toadoY, 0, 1, 1);
-                        printEZHangNgang();
-                        printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                        printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
-                        printEZTheEnd();
-                        outputStream.flush();
-                    }
+                    printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 30, 2, 1);
+                    printEZ("Kỳ: " + entityChild.getKy(), 1, toadoY, 100, 2, 1);
+                    printEZ("Khách hàng: " + entityParent.getHoTen(), 1, toadoY, 0, 1, 1);
+                    printEZ("Địa chỉ: " + entityParent.getDiaChi(), 1, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
+                    printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
+                    printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
+                    printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
+                    printEZHangNgang();
+                    printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(entityChild.getTongCong()), "đ"), 3, toadoY, 0, 1, 1);
+                    printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
+                    String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
+                    printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
+                    printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
+                    printEZHangNgang();
+                    printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                    printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Ngày gửi: " + entityChild.getInPhieuBao_Ngay(), 1, toadoY, 0, 1, 1);
+                    printEZHangNgang();
+                    printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
+                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 0, 1, 1);
+                    printEZTheEnd();
+                    outputStream.flush();
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

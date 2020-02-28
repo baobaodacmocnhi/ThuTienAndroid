@@ -127,7 +127,7 @@ public class ActivitySettings extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        thermalPrinter.disconnectBluetoothDevice();
+//        thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
     }
 
