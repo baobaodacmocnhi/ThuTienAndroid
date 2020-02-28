@@ -216,13 +216,15 @@ public class MainActivity extends AppCompatActivity {
                     txtLenhHuy.setVisibility(View.VISIBLE);
                     imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
                     txtHoaDonDienTu.setVisibility(View.VISIBLE);
-                }
-                if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
+                } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
                     CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
+                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
+                } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
                     imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
                     txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 }
@@ -288,9 +290,8 @@ public class MainActivity extends AppCompatActivity {
                         if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
                             MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                             myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
-                        }
-                        else
-                            CLocal.showPopupMessage(MainActivity.this,"Bạn chưa cấp quyền cho App");
+                        } else
+                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App");
                     }
                 });
                 AlertDialog alertDialog = builder.create();
@@ -328,8 +329,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s.contains("Connection refused")==false)
-            updateApp(s);
+            if (s.contains("Connection refused") == false)
+                updateApp(s);
         }
     }
 
