@@ -10,6 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/txtTongHD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="1 hđ"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/edtPhiMoNuoc"
+            app:layout_constraintTop_toTopOf="@+id/edtPhiMoNuoc" />
+
         <EditText
             android:id="@+id/edtInTBDongNuoc_Ngay"
             android:layout_width="wrap_content"
@@ -65,11 +79,11 @@
             android:id="@+id/edtPhiMoNuoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView48"
+            app:layout_constraintStart_toEndOf="@+id/textView43"
             app:layout_constraintTop_toBottomOf="@+id/listView" />
 
         <TextView
@@ -188,16 +202,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView42"
-            app:layout_constraintTop_toBottomOf="@+id/lbTinhTrang" />
+            app:layout_constraintTop_toBottomOf="@+id/txtTinhTrang" />
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="368dp"
-            android:layout_height="90dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="130dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
@@ -401,16 +415,16 @@
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_Ngay" />
 
         <TextView
-            android:id="@+id/lbTinhTrang"
+            android:id="@+id/txtTinhTrang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Tình Trạng"
             android:textColor="@android:color/holo_red_light"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -52,9 +52,10 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
-    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu;
+    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
+    PackageInfo packageInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
+//                CLocal.showPopupMessage(MainActivity.this,"abcadfasdf");
             }
         });
 
@@ -147,7 +149,13 @@ public class MainActivity extends AppCompatActivity {
         txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
         txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
         txtHoaDonDienTu = (TextView) findViewById(R.id.txtHoaDonDienTu);
-
+        txtVersion = (TextView) findViewById(R.id.txtVersion);
+        try {
+            packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        txtVersion.setText("V" + packageInfo.versionName);
         if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
             myAsyncTask.execute("Version");
@@ -264,8 +272,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateApp(String versionServer) {
         try {
-//            String versionServer=(String)myAsyncTask.execute("Version").get();
-            PackageInfo packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String versionDevice = packageInfo.versionName;
             if (versionServer.equals("") == false && versionServer.equals("False") == false && versionServer.equals("java.net.ConnectException: Connection refused") == false && versionDevice.equals(versionServer) == false) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

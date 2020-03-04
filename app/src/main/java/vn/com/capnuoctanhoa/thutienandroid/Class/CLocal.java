@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
@@ -28,6 +29,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -148,6 +150,11 @@ public class CLocal {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+//        alertDialog.getWindow().getAttributes();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        textView.setTextSize(20);
+        textView.setTypeface(null, Typeface.BOLD);
     }
 
     public static void showToastMessage(Activity activity, String message) {
