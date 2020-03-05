@@ -74,39 +74,33 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 int TongHD = 0, TongHDThuHo = 0, TongHDDaThu = 0, TongHDTon = 0;
                 long TongCong = 0, TongCongThuHo = 0, TongCongDaThu = 0, TongCongTon = 0;
                 if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
-                    //tổng
                     for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                         for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            //tổng
                             TongHD++;
                             TongCong += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
-                        }
-                        //thu hộ
-                        if ((CLocal.listHanhThu.get(i).isGiaiTrach() == true && CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false) || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true) {
-                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            //thu hộ
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true) {
                                 TongHDThuHo++;
                                 TongCongThuHo += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
-                        }
-                        //đã thu
-                        if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == true) {
-                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            //đã thu
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true) {
                                 TongHDDaThu++;
                                 TongCongDaThu += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
-                        }
-                        //tồn
-                        if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false) {
-                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            //tồn
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
                                 TongHDTon++;
                                 TongCongTon += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                         }
                     }
                 }
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tổng: "+CLocal.formatMoney(String.valueOf(TongHD), "hđ")+" === "+CLocal.formatMoney(String.valueOf(TongCong), "đ")
-                                                                                            +"\n\nThu Hộ: "+CLocal.formatMoney(String.valueOf(TongHDThuHo), "hđ")+" === "+CLocal.formatMoney(String.valueOf(TongCongThuHo), "đ")
-                                                                                            +"\n\nĐã Thu: "+CLocal.formatMoney(String.valueOf(TongHDDaThu), "hđ")+" === "+CLocal.formatMoney(String.valueOf(TongCongDaThu), "đ")
-                                                                                            +"\n\nTồn: "+CLocal.formatMoney(String.valueOf(TongHDTon), "hđ")+" === "+CLocal.formatMoney(String.valueOf(TongCongTon), "đ"));
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tổng: " + CLocal.formatMoney(String.valueOf(TongHD), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCong), "đ")
+                        + "\n\nThu Hộ: " + CLocal.formatMoney(String.valueOf(TongHDThuHo), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongThuHo), "đ")
+                        + "\n\nĐã Thu: " + CLocal.formatMoney(String.valueOf(TongHDDaThu), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongDaThu), "đ")
+                        + "\n\nTồn: " + CLocal.formatMoney(String.valueOf(TongHDTon), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongTon), "đ"),"right");
             }
         });
 

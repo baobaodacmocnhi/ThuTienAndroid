@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong = 0;
     private String selectedMaHDs = "";
+    private ImageView imgviewThongKe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,43 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         } catch (Exception ex) {
         }
+
+        imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
+        imgviewThongKe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int TongHD = 0, TongHDThuHo = 0, TongHDDaThu = 0, TongHDTon = 0;
+                long TongCong = 0, TongCongThuHo = 0, TongCongDaThu = 0, TongCongTon = 0;
+                if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                    for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                        for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                            //tổng
+                            TongHD++;
+                            TongCong += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
+                            //thu hộ
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true) {
+                                TongHDThuHo++;
+                                TongCongThuHo += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
+                            }
+                            //đã thu
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true) {
+                                TongHDDaThu++;
+                                TongCongDaThu += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
+                            }
+                            //tồn
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
+                                TongHDTon++;
+                                TongCongTon += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
+                            }
+                        }
+                    }
+                }
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Tổng: " + CLocal.formatMoney(String.valueOf(TongHD), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCong), "đ")
+                        + "\n\nThu Hộ: " + CLocal.formatMoney(String.valueOf(TongHDThuHo), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongThuHo), "đ")
+                        + "\n\nĐã Thu: " + CLocal.formatMoney(String.valueOf(TongHDDaThu), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongDaThu), "đ")
+                        + "\n\nTồn: " + CLocal.formatMoney(String.valueOf(TongHDTon), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongTon), "đ"),"right");
+            }
+        });
 
         btnTruoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +256,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 }
             }
         });
-
 
         btnPhieuBao.setOnClickListener(new View.OnClickListener() {
             @Override

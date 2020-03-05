@@ -65,7 +65,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spnSort"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_thong_kex128" />

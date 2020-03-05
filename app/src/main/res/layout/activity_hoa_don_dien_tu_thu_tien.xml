@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/imgviewThongKe"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edtMLT"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edtMLT"
+            app:srcCompat="@drawable/ic_thong_kex128" />
+
         <TextView
             android:id="@+id/txtTongHD"
             android:layout_width="wrap_content"
@@ -29,13 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edtInTBDongNuoc_NgayHen"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_NgayHen" />
 
         <TextView
@@ -53,15 +61,12 @@
             android:id="@+id/edtInPhieuBao_Ngay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edtInPhieuBao2_Ngay"
             app:layout_constraintTop_toBottomOf="@+id/btnTBDongNuoc" />
 
         <TextView
@@ -77,7 +82,7 @@
 
         <EditText
             android:id="@+id/edtPhiMoNuoc"
-            android:layout_width="wrap_content"
+            android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -193,14 +198,10 @@
             android:id="@+id/edtMLT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView42"
             app:layout_constraintTop_toBottomOf="@+id/txtTinhTrang" />
 
@@ -356,12 +357,11 @@
             android:id="@+id/edtInTBDongNuoc_NgayHen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView52"
             app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_Ngay" />
 
         <TextView
@@ -380,13 +380,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edtInPhieuBao2_NgayHen"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao_Ngay" />
 
         <TextView
@@ -405,13 +402,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edtInTBDongNuoc_Ngay"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_Ngay" />
 
         <TextView

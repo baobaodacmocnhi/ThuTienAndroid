@@ -21,9 +21,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -77,7 +79,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter;
-    public static boolean Doi, ToTruong, SyncTrucTiep,TestApp;
+    public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
 
     public static void initialCLocal() {
@@ -103,7 +105,7 @@ public class CLocal {
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
         MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = "";
-        Doi = ToTruong=TestApp = false;
+        Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
@@ -155,6 +157,37 @@ public class CLocal {
         TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
         textView.setTextSize(20);
         textView.setTypeface(null, Typeface.BOLD);
+    }
+
+    public static void showPopupMessage(Activity activity, String message,String align) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Thông Báo");
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+//        alertDialog.getWindow().getAttributes();
+
+        TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+        textView.setTextSize(20);
+        textView.setTypeface(null, Typeface.BOLD);
+        switch (align) {
+            case "center":
+                textView.setGravity(Gravity.CENTER);
+                break;
+            case "right":
+                textView.setGravity(Gravity.RIGHT);
+                break;
+            default:
+                textView.setGravity(Gravity.LEFT);
+                break;
+        }
     }
 
     public static void showToastMessage(Activity activity, String message) {
