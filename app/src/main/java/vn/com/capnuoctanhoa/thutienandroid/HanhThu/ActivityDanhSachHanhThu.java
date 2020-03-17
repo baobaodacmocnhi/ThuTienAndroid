@@ -34,7 +34,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDanhSachHanhThu extends AppCompatActivity {
     private Spinner spnFilter, spnSort;
-    private ListView listView;
+    private ListView lstView;
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtTongCong;
     private long TongHD, TongCong;
@@ -54,7 +54,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
 
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
-        listView = (ListView) findViewById(R.id.listView);
+        lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -97,7 +97,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -126,7 +126,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listView.smoothScrollToPosition(0);
+                lstView.smoothScrollToPosition(0);
             }
         });
 
@@ -402,7 +402,7 @@ public class ActivityDanhSachHanhThu extends AppCompatActivity {
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
             customAdapterListView = new CustomAdapterListView(this, lstDisplayed);
-            listView.setAdapter(customAdapterListView);
+            lstView.setAdapter(customAdapterListView);
 
         } catch (Exception e) {
         }

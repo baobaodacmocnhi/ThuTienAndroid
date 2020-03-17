@@ -26,8 +26,8 @@ public class ActivitySettings extends AppCompatActivity {
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
-    private RadioButton radTrucTiep, radGianTiep;
-    private RadioGroup radGroupSync;
+    private RadioButton radTrucTiep, radGianTiep,radEZ,radESC;
+    private RadioGroup radGroupSync,radGroupMethodPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,9 @@ public class ActivitySettings extends AppCompatActivity {
         radTrucTiep = (RadioButton) findViewById(R.id.radTrucTiep);
         radGianTiep = (RadioButton) findViewById(R.id.radGianTiep);
         radGroupSync = (RadioGroup) findViewById(R.id.radGroupSync);
+        radEZ = (RadioButton) findViewById(R.id.radEZ);
+        radESC = (RadioButton) findViewById(R.id.radESC);
+        radGroupMethodPrinter = (RadioGroup) findViewById(R.id.radGroupMethodPrinter);
 
         MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
         myAsyncTask_thermal.execute();
@@ -65,10 +68,10 @@ public class ActivitySettings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     thermalPrinter.setBluetoothDevice(thermalPrinter.getLstBluetoothDevice().get(position));
-                    CLocal.ThermalPrinter = thermalPrinter.getBluetoothDevice().getName();
+                    CLocal.ThermalPrinter = thermalPrinter.getBluetoothDevice().getAddress();
                     edtMayInDaChon.setText(CLocal.ThermalPrinter);
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                    editor.putString("ThermalPrinter", thermalPrinter.getBluetoothDevice().getName());
+                    editor.putString("ThermalPrinter", CLocal.ThermalPrinter);
                     editor.commit();
                 } catch (Exception ex) {
                 }
@@ -79,6 +82,16 @@ public class ActivitySettings extends AppCompatActivity {
             radTrucTiep.setChecked(true);
         else
             radGianTiep.setChecked(true);
+
+        switch (CLocal.MethodPrinter)
+        {
+            case "EZ":
+                radEZ.setChecked(true);
+                break;
+            case "ESC":
+                radESC.setChecked(true);
+                break;
+        }
 
         radGroupSync.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -94,6 +107,26 @@ public class ActivitySettings extends AppCompatActivity {
                     case 1: // secondbutton
                         CLocal.SyncTrucTiep = false;
                         editor.putBoolean("SyncTrucTiep", false);
+                        break;
+                }
+                editor.commit();
+            }
+        });
+
+        radGroupMethodPrinter.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View radioButton = radGroupMethodPrinter.findViewById(checkedId);
+                int index = radGroupMethodPrinter.indexOfChild(radioButton);
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                switch (index) {
+                    case 0: // first button
+                        CLocal.MethodPrinter = "EZ";
+                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        break;
+                    case 1: // secondbutton
+                        CLocal.MethodPrinter = "ESC";
+                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
                 }
                 editor.commit();

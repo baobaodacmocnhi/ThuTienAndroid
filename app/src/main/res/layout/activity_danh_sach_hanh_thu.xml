@@ -9,10 +9,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Lọc"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/spnFilter"
@@ -23,8 +23,8 @@
         android:id="@+id/spnFilter"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:entries="@array/filter_hanhthu_array"
         android:gravity="center"
@@ -36,10 +36,10 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Sắp Xếp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/spnSort"
@@ -50,8 +50,8 @@
         android:id="@+id/spnSort"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:entries="@array/sort_array"
         android:gravity="center"
@@ -69,14 +69,9 @@
         app:layout_constraintTop_toBottomOf="@+id/spnFilter">
 
         <ListView
-            android:id="@+id/listView"
+            android:id="@+id/lstView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <TextView
@@ -84,8 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_weight="1"
         android:text="Tổng HĐ"
         android:textColor="@color/colorSoTien"
@@ -110,16 +105,16 @@
         app:layout_constraintTop_toTopOf="@+id/txtTongHD" />
 
     <android.support.design.widget.FloatingActionButton
-    android:id="@+id/floatingActionButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="32dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginRight="8dp"
-    android:clickable="true"
-    app:backgroundTint="@android:color/holo_green_light"
-    app:layout_constraintBottom_toTopOf="@+id/txtTongCong"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:srcCompat="@android:drawable/stat_sys_upload" />
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@+id/txtTongCong"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/stat_sys_upload" />
 
 </android.support.constraint.ConstraintLayout>

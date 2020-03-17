@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="vn.com.capnuoctanhoa.thutienandroid">
 
-    <uses-permission android:name="android.permission.READ_LOGS"
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,6 +25,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TamThu.ActivityTamThu"
+            android:label="Danh Sách Tạm Thu"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,9 +51,7 @@
             android:name=".Service.ServiceAppKilled"
             android:enabled="true"
             android:exported="false"
-            android:stopWithTask="false" />
-
-        <!-- camera -->
+            android:stopWithTask="false" /> <!-- camera -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="thutien_file_provider"
@@ -159,7 +162,7 @@
         <activity
             android:name=".ActivitySettings"
             android:label="Cài đặt"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".HanhThu.ActivityHoaDonDienTu_Search"
             android:label="Tìm Kiếm"
@@ -168,7 +171,6 @@
             android:name=".HanhThu.ActivityHoaDonDienTu_GhiChu"
             android:label="Ghi Chú"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
-
     </application>
 
 </manifest>

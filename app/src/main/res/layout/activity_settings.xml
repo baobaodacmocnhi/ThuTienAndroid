@@ -43,14 +43,14 @@
 
     <RadioGroup
         android:id="@+id/radGroupSync"
-        android:layout_width="260dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/textView55"
-        app:layout_constraintTop_toBottomOf="@+id/lstView">
+        app:layout_constraintTop_toBottomOf="@+id/radGroupMethodPrinter">
 
         <RadioButton
             android:id="@+id/radTrucTiep"
@@ -93,5 +93,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView60"
         app:layout_constraintTop_toBottomOf="@+id/btnGetThermal" />
+
+    <TextView
+        android:id="@+id/textView62"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Ngôn Ngữ Máy In"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/radGroupMethodPrinter" />
+
+    <RadioGroup
+        android:id="@+id/radGroupMethodPrinter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/textView62"
+        app:layout_constraintTop_toBottomOf="@+id/lstView">
+
+        <RadioButton
+            android:id="@+id/radEZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EZ" />
+
+        <RadioButton
+            android:id="@+id/radESC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ESC" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

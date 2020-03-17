@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
@@ -49,9 +50,10 @@ import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
+import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu,imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
 //                CLocal.showPopupMessage(MainActivity.this,"abcadfasdf");
+
             }
         });
 
@@ -97,6 +100,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDanhSachHanhThu.class);
                 startActivity(intent);
+//                ThermalPrinter thermalPrinter = new ThermalPrinter(MainActivity.this);
+//                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+//                    thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(0), CLocal.listHanhThu.get(0).getLstHoaDon().get(0));
+            }
+        });
+
+        imgbtnTamThu = (ImageButton) findViewById(R.id.imgbtnTamThu);
+        imgbtnTamThu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityTamThu.class);
+                startActivity(intent);
+//                ThermalPrinter thermalPrinter = new ThermalPrinter(MainActivity.this);
+//                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+//                    thermalPrinter.printPhieuBao_ESC(CLocal.listHanhThu.get(0), CLocal.listHanhThu.get(0).getLstHoaDon().get(0));
             }
         });
 
@@ -199,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
+            if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false) {
+                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "");
+            }
 
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);
@@ -211,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                 CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
+                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);

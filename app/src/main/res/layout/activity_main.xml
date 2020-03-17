@@ -46,6 +46,19 @@
         app:srcCompat="@drawable/ic_hanh_thu" />
 
     <ImageButton
+        android:id="@+id/imgbtnTamThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="48dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtnTimKiem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu"
+        app:srcCompat="@drawable/ic_hanh_thu" />
+
+    <ImageButton
         android:id="@+id/imgbtnDongNuoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
-        app:layout_constraintTop_toTopOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnTamThu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnTamThu"
         app:srcCompat="@drawable/ic_checklistx256" />
 
     <ImageButton
@@ -126,6 +139,17 @@
         app:layout_constraintEnd_toEndOf="@+id/imgbtnHanhThu"
         app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu" />
+
+    <TextView
+        android:id="@+id/textView63"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tạm Thu"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnTamThu"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnTamThu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnTamThu" />
 
     <TextView
         android:id="@+id/textView21"

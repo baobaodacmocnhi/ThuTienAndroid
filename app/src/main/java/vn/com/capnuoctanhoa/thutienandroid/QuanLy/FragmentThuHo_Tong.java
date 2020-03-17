@@ -309,7 +309,7 @@ public class FragmentThuHo_Tong extends Fragment {
                         TongHD += Long.parseLong(jsonObject.getString("TongHD"));
                         TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
-                    CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
+//                    CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
                     customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(), list);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

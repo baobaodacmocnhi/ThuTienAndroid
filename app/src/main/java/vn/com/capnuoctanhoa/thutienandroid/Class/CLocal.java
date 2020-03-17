@@ -78,7 +78,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter,MethodPrinter;
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
 
@@ -104,7 +104,7 @@ public class CLocal {
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = "";
+        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter =MethodPrinter= "";
         Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;

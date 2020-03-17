@@ -206,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtTinhTrang" />
 
         <ListView
-            android:id="@+id/listView"
+            android:id="@+id/lstView"
             android:layout_width="368dp"
             android:layout_height="130dp"
             android:layout_marginStart="8dp"

@@ -70,7 +70,7 @@
         app:srcCompat="@drawable/ic_thong_kex128" />
 
     <FrameLayout
-        android:id="@+id/frameLayout2"
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spnFilter">
 
         <ExpandableListView
-            android:id="@+id/listView"
+            android:id="@+id/lstView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false">

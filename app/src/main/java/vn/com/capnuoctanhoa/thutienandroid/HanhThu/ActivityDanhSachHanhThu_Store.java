@@ -48,7 +48,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewParent_LoadMore;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
+public class ActivityDanhSachHanhThu_Store extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
     private Spinner spnFilter, spnSort, spnFromDot, spnToDot, spnNhanVien, spnNam, spnKy;
     private RecyclerView recyclerView;
@@ -72,7 +72,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
         setContentView(R.layout.activity_danh_sach_hanh_thu);
 
         ///clear notifications
-        NotificationManager notificationManager = (NotificationManager) ActivityDanhSachHanhThu2.this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) ActivityDanhSachHanhThu_Store.this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -108,7 +108,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
                         }
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu2.this, android.R.layout.simple_spinner_item, spnName_NhanVien);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu_Store.this, android.R.layout.simple_spinner_item, spnName_NhanVien);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnNhanVien.setAdapter(adapter);
             } catch (Exception e) {
@@ -120,8 +120,8 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.checkNetworkAvailable(ActivityDanhSachHanhThu2.this) == false) {
-                    Toast.makeText(ActivityDanhSachHanhThu2.this, "Không có Internet", Toast.LENGTH_LONG).show();
+                if (CLocal.checkNetworkAvailable(ActivityDanhSachHanhThu_Store.this) == false) {
+                    Toast.makeText(ActivityDanhSachHanhThu_Store.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -132,13 +132,13 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
         btnShowMess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDanhSachHanhThu2.this);
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(ActivityDanhSachHanhThu_Store.this);
                 builderSingle.setIcon(R.mipmap.ic_launcher);
                 builderSingle.setTitle("Tin nhắn đã nhận");
                 builderSingle.setCancelable(false);
 
-                ListView lstMessage = new ListView(ActivityDanhSachHanhThu2.this);
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu2.this, android.R.layout.select_dialog_singlechoice);
+                ListView lstMessage = new ListView(ActivityDanhSachHanhThu_Store.this);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ActivityDanhSachHanhThu_Store.this, android.R.layout.select_dialog_singlechoice);
 
                 try {
                     if (CLocal.jsonMessage != null && CLocal.jsonMessage.length() > 0) {
@@ -385,7 +385,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_search_khach_hang:
-                Intent intent = new Intent(ActivityDanhSachHanhThu2.this, ActivitySearchKhachHangWeb.class);
+                Intent intent = new Intent(ActivityDanhSachHanhThu_Store.this, ActivitySearchKhachHangWeb.class);
                 startActivity(intent);
                 return true;
             default:
@@ -561,7 +561,7 @@ public class ActivityDanhSachHanhThu2 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(ActivityDanhSachHanhThu2.this);
+            progressDialog = new ProgressDialog(ActivityDanhSachHanhThu_Store.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
             progressDialog.setCanceledOnTouchOutside(false);
