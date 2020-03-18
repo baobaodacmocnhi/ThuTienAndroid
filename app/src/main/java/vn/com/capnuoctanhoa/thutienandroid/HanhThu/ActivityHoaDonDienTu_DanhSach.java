@@ -15,11 +15,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,7 +37,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     private Spinner spnFilter, spnSort, spnNhanVien;
-    private ExpandableListView listView;
+    private ExpandableListView lstView;
     private CustomAdapterExpandableListView customAdapterExpandableListView;
     private TextView txtTongHD, txtTongCong;
     private long TongDC, TongCong, TongHD;
@@ -62,7 +60,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
-        listView = (ExpandableListView) findViewById(R.id.listView);
+        lstView = (ExpandableListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
@@ -141,7 +139,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        lstView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -167,7 +165,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             }
         });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 TextView STT = (TextView) view.findViewById(R.id.lvSTT);
@@ -183,7 +181,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listView.smoothScrollToPosition(0);
+                lstView.smoothScrollToPosition(0);
             }
         });
 
@@ -328,8 +326,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     break;
             }
             customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent);
-            listView.setAdapter(customAdapterExpandableListView);
-            txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), "") + "- HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), ""));
+            lstView.setAdapter(customAdapterExpandableListView);
+            txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "")+"- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
         } catch (Exception ex) {
