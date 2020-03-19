@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,8 +22,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CSort;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListView;
@@ -47,7 +50,7 @@ public class ActivityTamThu extends AppCompatActivity {
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         chkRutSot = (CheckBox) findViewById(R.id.chkRutSot);
         btnXem = (Button) findViewById(R.id.btnXem);
-        lstView= (ListView) findViewById(R.id.lstView);
+        lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
 
@@ -114,6 +117,18 @@ public class ActivityTamThu extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class MyAsyncTask extends AsyncTask<Void, String, Void> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
@@ -140,25 +155,37 @@ public class ActivityTamThu extends AppCompatActivity {
             if (values != null) {
                 try {
                     ArrayList<CViewParent> lstDisplayed = new ArrayList<CViewParent>();
+                    ArrayList<CViewParent> lstTG = new ArrayList<CViewParent>();
+                    ArrayList<CViewParent> lstCQ = new ArrayList<CViewParent>();
                     int TongHD = 0, TongCong = 0;
                     JSONArray jsonArray = new JSONArray(values[0]);
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CViewParent enViewParent = new CViewParent();
-                        enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
+//                        enViewParent.setSTT(String.valueOf(lstDisplayed.size() + 1));
                         enViewParent.setID(jsonObject.getString("ID"));
                         String strMLT = new StringBuffer(jsonObject.getString("MLT")).insert(4, " ").insert(2, " ").toString();
                         enViewParent.setRow1a(strMLT);
                         enViewParent.setRow1b(jsonObject.getString("Ky") + ": " + CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo")).insert(7, " ").insert(4, " ").toString();
                         enViewParent.setRow2a(strDanhBo);
-
-                        lstDisplayed.add(enViewParent);
+                        if (Integer.parseInt(jsonObject.getString("GiaBieu")) <= 20)
+                            lstTG.add(enViewParent);
+                        else
+                            lstCQ.add(enViewParent);
                         TongHD++;
                         TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
                     txtTongHD.setText(CLocal.formatMoney(String.valueOf(TongHD), ""));
                     txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+
+                    Collections.sort(lstTG, new CSort("", -1));
+                    Collections.sort(lstCQ, new CSort("", -1));
+                    lstDisplayed.addAll(lstCQ);
+                    lstDisplayed.addAll(lstTG);
+                    for (int i = 0; i < lstDisplayed.size(); i++) {
+                        lstDisplayed.get(i).setSTT(String.valueOf(i + 1));
+                    }
 
                     CustomAdapterListView customAdapterListView = new CustomAdapterListView(ActivityTamThu.this, lstDisplayed);
                     lstView.setAdapter(customAdapterListView);

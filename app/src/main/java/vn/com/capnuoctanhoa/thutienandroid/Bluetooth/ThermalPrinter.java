@@ -501,7 +501,7 @@ public class ThermalPrinter {
             printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 1, toadoY, 0, 1, 1);
             printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
             printEZHangNgang();
-            printEZ("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.", 1, toadoY, 0, 1, 1);
+            printEZ("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ.", 1, toadoY, 0, 1, 1);
             printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
             printEZHangNgang();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -540,7 +540,7 @@ public class ThermalPrinter {
             }
             printEZ("Lý do: nợ tiền nước kỳ " + Ky, 1, toadoY, 0, 1, 1);
             printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 1, toadoY, 0, 1, 1);
-            printEZ("Chi phí mở nước là: 168.000đ/lần", 1, toadoY, 0, 1, 1);
+            printEZ("Chi phí mở nước là: " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ/lần", 1, toadoY, 0, 1, 1);
             printEZHangNgang();
             printEZ("Hiệu: " + entityParent.getHieu() + " Cỡ: " + entityParent.getCo(), 1, toadoY, 0, 1, 1);
             printEZ("Số thân: " + entityParent.getSoThan(), 1, toadoY, 0, 1, 1);
@@ -593,7 +593,7 @@ public class ThermalPrinter {
             printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
             printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + entityParent.getDanhBo(), 1, toadoY, 0, 1, 1);
             printEZHangNgang();
-            printEZ("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.", 1, toadoY, 0, 1, 1);
+            printEZ("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ.", 1, toadoY, 0, 1, 1);
             printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
             printEZHangNgang();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -933,7 +933,7 @@ public class ThermalPrinter {
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
             byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n").getBytes());
             byteStream.write(printDotFeed());
-            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.\n").getBytes());
+            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ.\n").getBytes());
             byteStream.write(("Trân trọng kính chào.\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
@@ -977,7 +977,7 @@ public class ThermalPrinter {
             }
             byteStream.write(("Lý do: nợ tiền nước kỳ " + Ky + "\n").getBytes());
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
-            byteStream.write(("Chi phí mở nước là: 168.000đ/lần\n").getBytes());
+            byteStream.write(("Chi phí mở nước là: " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ/lần\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Hiệu: " + entityParent.getHieu() + " Cỡ: " + entityParent.getCo() + "\n").getBytes());
             byteStream.write(("Số thân: " + entityParent.getSoThan() + "\n").getBytes());
@@ -1035,7 +1035,7 @@ public class ThermalPrinter {
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(printDotFeed());
-            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là 168.000đ.\n").getBytes());
+            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ.\n").getBytes());
             byteStream.write(("Trân trọng kính chào.\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());

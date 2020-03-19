@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
-
+            CLocal.initialPhiMoNuoc();
             if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true) {
                 ServiceFirebaseInstanceID serviceFirebaseInstanceID = new ServiceFirebaseInstanceID();
                 serviceFirebaseInstanceID.onTokenRefresh();

@@ -47,11 +47,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 
@@ -78,9 +80,10 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter,MethodPrinter;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter;
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
+    public static Map<String, List<String>> phiMoNuoc;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -104,11 +107,28 @@ public class CLocal {
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter =MethodPrinter= "";
+        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = MethodPrinter = "";
         Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
+    }
+
+    public static void initialPhiMoNuoc() {
+        //add cứng phí mở nước
+        phiMoNuoc=new HashMap<>();
+        phiMoNuoc.put("214.000", Arrays.asList("15","25"));
+        phiMoNuoc.put("1.256.000", Arrays.asList("40","50","80","100"));
+    }
+
+    public static String getPhiMoNuoc(String Co)
+    {
+        for (Map.Entry<String, List<String>> entry : CLocal.phiMoNuoc.entrySet()) {
+            if (entry.getValue().contains(Co)) {
+               return entry.getKey();
+            }
+        }
+        return null;
     }
 
     public static boolean checkNetworkAvailable(Activity activity) {
@@ -159,7 +179,7 @@ public class CLocal {
         textView.setTypeface(null, Typeface.BOLD);
     }
 
-    public static void showPopupMessage(Activity activity, String message,String align) {
+    public static void showPopupMessage(Activity activity, String message, String align) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);
