@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "416927227192-8a01uvhccd4pq0h6e6m44jr7k8vendnu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.com.capnuoctanhoa.thutienandroid",
+            "certificate_hash": "0a470ca348749dbff271ddc84027516aa4aad00a"
+          }
+        },
+        {
           "client_id": "416927227192-tk6d50inirjkglkvct6oijbbon5dvvka.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "416927227192-37alalos5pq689j2mi0lb95ksacum81m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
