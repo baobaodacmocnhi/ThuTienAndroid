@@ -89,7 +89,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintStart_toEndOf="@+id/textView43"
-            app:layout_constraintTop_toBottomOf="@+id/listView" />
+            app:layout_constraintTop_toBottomOf="@+id/lstView" />
 
         <TextView
             android:id="@+id/textView48"

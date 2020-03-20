@@ -37,7 +37,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private TextView txtTinhTrang,txtTongHD;
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtInPhieuBao_Ngay, edtInPhieuBao2_Ngay, edtInPhieuBao2_NgayHen, edtInTBDongNuoc_Ngay, edtInTBDongNuoc_NgayHen, edtSoNgayHen, edtPhiMoNuoc, edtTongCong;
-    private ListView listView;
+    private ListView lstView;
     private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private Integer STT;
     private ThermalPrinter thermalPrinter = null;
@@ -68,7 +68,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         edtSoNgayHen = (EditText) findViewById(R.id.edtSoNgayHen);
         edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
         edtTongCong = (EditText) findViewById(R.id.edtTongCong);
-        listView = (ListView) findViewById(R.id.listView);
+        lstView = (ListView) findViewById(R.id.lstView);
         btnTruoc = (Button) findViewById(R.id.btnTruoc);
         btnSau = (Button) findViewById(R.id.btnSau);
         btnThuTien = (Button) findViewById(R.id.btnThuTien);
@@ -77,7 +77,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnTBDongNuoc = (Button) findViewById(R.id.btnTBDongNuoc);
         btnXoa = (Button) findViewById(R.id.btnXoa);
 
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
         myAsyncTask_thermal.execute();
@@ -155,7 +155,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         });
 
         //listview in scrollview not scroll, nên thêm code sau
-        listView.setOnTouchListener(new View.OnTouchListener() {
+        lstView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
@@ -177,7 +177,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckedTextView v = (CheckedTextView) view;
@@ -190,7 +190,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     TongCong -= Long.parseLong(hoadon.getTongCong());
                 edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
-                SparseBooleanArray sp = listView.getCheckedItemPositions();
+                SparseBooleanArray sp = lstView.getCheckedItemPositions();
                 selectedMaHDs = "";
                 for (int i = 0; i < sp.size(); i++) {
                     if (sp.valueAt(i) == true) {
@@ -597,10 +597,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     }
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
-                listView.setAdapter(arrayAdapter);
+                lstView.setAdapter(arrayAdapter);
 
                 for (int j = 0; j < arrayAdapter.getCount(); j++) {
-                    listView.setItemChecked(j, true);
+                    lstView.setItemChecked(j, true);
                 }
             }
         } catch (Exception ex) {
