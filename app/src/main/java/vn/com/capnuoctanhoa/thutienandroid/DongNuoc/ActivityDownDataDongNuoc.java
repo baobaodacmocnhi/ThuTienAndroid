@@ -392,7 +392,8 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setButChi(Boolean.parseBoolean(jsonObject.getString("ButChi")));
                         enParent.setKhoaTu(Boolean.parseBoolean(jsonObject.getString("KhoaTu")));
                         enParent.setKhoaKhac(Boolean.parseBoolean(jsonObject.getString("KhoaKhac")));
-                        enParent.setNgayDN(jsonObject.getString("NgayDN").replace("null", ""));
+                        if (jsonObject.getString("NgayDN").replace("null", "").equals("") == false)
+                            enParent.setNgayDN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoDN(jsonObject.getString("ChiSoDN").replace("null", ""));
                         enParent.setNiemChi(jsonObject.getString("NiemChi").replace("null", ""));
                         enParent.setKhoaKhac_GhiChu(jsonObject.getString("KhoaKhac_GhiChu").replace("null", ""));
@@ -403,10 +404,12 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setChiKhoaGoc(jsonObject.getString("ChiKhoaGoc").replace("null", ""));
                         enParent.setViTri(jsonObject.getString("ViTri").replace("null", ""));
                         enParent.setLyDo(jsonObject.getString("LyDo").replace("null", ""));
-                        enParent.setNgayDN1(jsonObject.getString("NgayDN1").replace("null", ""));
+                        if (jsonObject.getString("NgayDN1").replace("null", "").equals("") == false)
+                            enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(","").replace("/)",""))));
                         enParent.setChiSoDN1(jsonObject.getString("ChiSoDN1").replace("null", ""));
                         enParent.setNiemChi1(jsonObject.getString("NiemChi1").replace("null", ""));
-                        enParent.setNgayMN(jsonObject.getString("NgayMN").replace("null", ""));
+                        if (jsonObject.getString("NgayMN").replace("null", "").equals("") == false)
+                            enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(","").replace("/)",""))));
                         enParent.setChiSoMN(jsonObject.getString("ChiSoMN").replace("null", ""));
 
                         //khởi tạo ArrayList CEntityChild

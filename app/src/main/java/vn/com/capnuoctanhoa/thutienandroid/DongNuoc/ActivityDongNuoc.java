@@ -450,6 +450,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         CLocal.listDongNuocView.get(STT).setViTri(spnViTri.getSelectedItem().toString());
                         CLocal.listDongNuocView.get(STT).setLyDo(edtLyDo.getText().toString());
 
+                        CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
                         return "THÀNH CÔNG";
                     } else
                         return "THẤT BẠI";

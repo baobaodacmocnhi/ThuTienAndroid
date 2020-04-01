@@ -383,6 +383,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
                                         enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
                                         enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
+                                        enChild.setCo(jsonObjectChild.getString("CoDH"));
                                         enChild.setCSC(jsonObjectChild.getString("CSC"));
                                         enChild.setCSM(jsonObjectChild.getString("CSM"));
                                         enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
@@ -396,24 +397,29 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         if (jsonObjectChild.has("DangNgan_DienThoai") == true)
                                             enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
                                         if (jsonObjectChild.has("NgayGiaiTrach") == true)
-                                            enChild.setNgayGiaiTrach(jsonObjectChild.getString("NgayGiaiTrach").replace("null", ""));
+                                            if (jsonObject.getString("NgayGiaiTrach").replace("null", "").equals("") == false)
+                                                enChild.setNgayGiaiTrach(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayGiaiTrach").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("XoaDangNgan_Ngay_DienThoai") == true)
-                                            enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
+                                            if (jsonObject.getString("XoaDangNgan_Ngay_DienThoai").replace("null", "").equals("") == false)
+                                                enChild.setXoaDangNgan_Ngay_DienThoai(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("XoaDangNgan_Ngay_DienThoai").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("InPhieuBao_Ngay") == true)
-                                            enChild.setInPhieuBao_Ngay(jsonObjectChild.getString("InPhieuBao_Ngay").replace("null", ""));
+                                            if (jsonObject.getString("InPhieuBao_Ngay").replace("null", "").equals("") == false)
+                                                enChild.setInPhieuBao_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("InPhieuBao_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("InPhieuBao2_Ngay") == true)
-                                            enChild.setInPhieuBao2_Ngay(jsonObjectChild.getString("InPhieuBao2_Ngay").replace("null", ""));
+                                            if (jsonObject.getString("InPhieuBao2_Ngay").replace("null", "").equals("") == false)
+                                                enChild.setInPhieuBao2_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("InPhieuBao2_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("InPhieuBao2_NgayHen") == true)
-                                            enChild.setInPhieuBao2_NgayHen(jsonObjectChild.getString("InPhieuBao2_NgayHen").replace("null", ""));
-                                        if (jsonObjectChild.has("TBDongNuoc_Ngay") == true) {
-                                            enChild.setTBDongNuoc_Ngay(jsonObjectChild.getString("TBDongNuoc_Ngay").replace("null", ""));
-                                            if (enChild.getTBDongNuoc_Ngay().equals("") == true)
-                                                enChild.setTBDongNuoc(false);
-                                            else
+                                            if (jsonObject.getString("InPhieuBao2_NgayHen").replace("null", "").equals("") == false)
+                                                enChild.setInPhieuBao2_NgayHen(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("InPhieuBao2_NgayHen").replace("null", "").replace("/Date(", "").replace(")/", ""))));
+                                        if (jsonObjectChild.has("TBDongNuoc_Ngay") == true)
+                                            if (jsonObject.getString("TBDongNuoc_Ngay").replace("null", "").equals("") == false) {
+                                                enChild.setTBDongNuoc_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("TBDongNuoc_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                                 enChild.setTBDongNuoc(true);
-                                        }
+                                            } else
+                                                enChild.setTBDongNuoc(false);
                                         if (jsonObjectChild.has("TBDongNuoc_NgayHen") == true)
-                                            enChild.setTBDongNuoc_NgayHen(jsonObjectChild.getString("TBDongNuoc_NgayHen").replace("null", ""));
+                                            if (jsonObject.getString("TBDongNuoc_NgayHen").replace("null", "").equals("") == false)
+                                                enChild.setTBDongNuoc_NgayHen(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("TBDongNuoc_NgayHen").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("PhiMoNuoc") == true)
                                             enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                         listChild.add(enChild);

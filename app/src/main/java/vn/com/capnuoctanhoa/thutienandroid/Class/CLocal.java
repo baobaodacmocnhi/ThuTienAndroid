@@ -48,12 +48,14 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 
@@ -895,4 +897,12 @@ public class CLocal {
 
     //endregion
 
+    public static String convertTimestampToDate(long time) {
+        Calendar cal = Calendar.getInstance();
+        TimeZone tz = cal.getTimeZone();//get your local time zone.
+        DateFormat.setTimeZone(tz);
+//        DateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        Date date = new Date(time); // *1000 is to convert seconds to milliseconds
+        return DateFormat.format(date);
+    }
 }

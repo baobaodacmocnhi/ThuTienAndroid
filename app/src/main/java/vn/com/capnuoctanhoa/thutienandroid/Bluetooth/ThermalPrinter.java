@@ -933,7 +933,7 @@ public class ThermalPrinter {
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
             byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n").getBytes());
             byteStream.write(printDotFeed());
-            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getCo()) + "đ.\n").getBytes());
+            byteStream.write(("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.\n").getBytes());
             byteStream.write(("Trân trọng kính chào.\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
@@ -992,7 +992,7 @@ public class ThermalPrinter {
             else
                 str = "Khóa Chì";
             byteStream.write(("Khóa nước: " + str + "\n").getBytes());
-            byteStream.write(("Vị trí: " + entityParent.getViTri()).getBytes());
+            byteStream.write(("Vị trí: " + entityParent.getViTri()+"\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Công ty chỉ mở nước khi khách hàng thanh toán hết nợ và chi phí mở nước.\n").getBytes());
             byteStream.write(printDotFeed());
