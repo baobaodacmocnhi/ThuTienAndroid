@@ -19,13 +19,13 @@
 
     <ImageButton
         android:id="@+id/imgbtnDangNhap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,10 +34,10 @@
 
     <ImageButton
         android:id="@+id/imgbtnHanhThu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toStartOf="@+id/imgbtnDongNuoc"
@@ -47,8 +47,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnTamThu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="48dp"
@@ -60,8 +60,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnDongNuoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:scaleType="fitXY"
@@ -72,8 +72,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnQuanLy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnTamThu"
@@ -82,8 +82,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnLenhHuy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
@@ -92,8 +92,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnTimKiem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnDongNuoc"
@@ -102,8 +102,8 @@
 
     <ImageButton
         android:id="@+id/imgbtnHoaDonDienTu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnTimKiem"

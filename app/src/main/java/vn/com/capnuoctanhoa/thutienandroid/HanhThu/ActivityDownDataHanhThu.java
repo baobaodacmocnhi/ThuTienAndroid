@@ -383,6 +383,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
                                         enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
                                         enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
+                                        if (jsonObjectChild.has("CoDH") == true)
                                         enChild.setCo(jsonObjectChild.getString("CoDH"));
                                         enChild.setCSC(jsonObjectChild.getString("CSC"));
                                         enChild.setCSM(jsonObjectChild.getString("CSM"));
