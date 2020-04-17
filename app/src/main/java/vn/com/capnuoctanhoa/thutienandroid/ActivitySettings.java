@@ -21,13 +21,13 @@ import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
 public class ActivitySettings extends AppCompatActivity {
-    private EditText edtMayInDaChon;
-    private Button btnGetThermal;
+    private EditText edtMayInDaChon, edtIDMobile;
+    private Button btnGetThermal, btnGetIDMobile;
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
-    private RadioButton radTrucTiep, radGianTiep,radEZ,radESC;
-    private RadioGroup radGroupSync,radGroupMethodPrinter;
+    private RadioButton radTrucTiep, radGianTiep, radEZ, radESC;
+    private RadioGroup radGroupSync, radGroupMethodPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,9 @@ public class ActivitySettings extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         edtMayInDaChon = (EditText) findViewById(R.id.edtMayInDaChon);
+        edtIDMobile = (EditText) findViewById(R.id.edtIDMobile);
         btnGetThermal = (Button) findViewById(R.id.btnGetThermal);
+        btnGetIDMobile = (Button) findViewById(R.id.btnGetIDMobile);
         lstView = (ListView) findViewById(R.id.lstView);
         radTrucTiep = (RadioButton) findViewById(R.id.radTrucTiep);
         radGianTiep = (RadioButton) findViewById(R.id.radGianTiep);
@@ -62,6 +64,13 @@ public class ActivitySettings extends AppCompatActivity {
             }
         });
 
+        btnGetIDMobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
+            }
+        });
+
         lstView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,8 +92,7 @@ public class ActivitySettings extends AppCompatActivity {
         else
             radGianTiep.setChecked(true);
 
-        switch (CLocal.MethodPrinter)
-        {
+        switch (CLocal.MethodPrinter) {
             case "EZ":
                 radEZ.setChecked(true);
                 break;

@@ -17,12 +17,15 @@ public class CMarshMallowPermission {
     private String[] appPermissions = {Manifest.permission.CAMERA
             , Manifest.permission.ACCESS_FINE_LOCATION
             , Manifest.permission.READ_EXTERNAL_STORAGE
-            , Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.READ_PHONE_STATE};
     public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
     public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 2;
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 3;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 4;
     public static final int REQUEST_INSTALL_PACKAGES_REQUEST_CODE = 5;
+    public static final int REQUEST_READ_PHONE_STATE = 6;
+    public static final int REQUEST_ACCESS_WIFI_STATE = 7;
     public static final int GRANTED = 0;
     public static final int DENIED = 1;
     public static final int NEVER = 2;
@@ -36,6 +39,20 @@ public class CMarshMallowPermission {
 
     public boolean checkVersionMarshmallow() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean checkVersionQ() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean checkVersionO() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             return true;
         else
             return false;
@@ -91,9 +108,21 @@ public class CMarshMallowPermission {
             return false;
     }
 
-    public boolean checkLocationPermission() {
+    public boolean checkPermissionForLocation() {
         if (checkVersionMarshmallow()) {
             int result = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                return false;
+            }
+        } else
+            return false;
+    }
+
+    public boolean checkPermissionForPhoneState() {
+        if (checkVersionMarshmallow()) {
+            int result = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_PHONE_STATE);
             if (result == PackageManager.PERMISSION_GRANTED) {
                 return true;
             } else {
@@ -145,6 +174,16 @@ public class CMarshMallowPermission {
                 Toast.makeText(mContext.getApplicationContext(), "Location permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
             } else {
                 ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    public void requestPermissionForPhoneState() {
+        if (checkVersionMarshmallow()) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE)) {
+                Toast.makeText(mContext.getApplicationContext(), "Phone permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_READ_PHONE_STATE);
             }
         }
     }

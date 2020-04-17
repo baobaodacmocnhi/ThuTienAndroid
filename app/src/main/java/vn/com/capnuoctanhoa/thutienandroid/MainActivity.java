@@ -53,7 +53,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu,imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
-//                CLocal.showPopupMessage(MainActivity.this,"abcadfasdf");
-
             }
         });
 
@@ -188,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
             CLocal.initialPhiMoNuoc();
+            CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
+
             if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true) {
                 ServiceFirebaseInstanceID serviceFirebaseInstanceID = new ServiceFirebaseInstanceID();
                 serviceFirebaseInstanceID.onTokenRefresh();

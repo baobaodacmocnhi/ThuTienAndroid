@@ -717,8 +717,11 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt));
                         results = result.split(",");
                         if (Boolean.parseBoolean(results[0]) == true) {
-                            CLocal.listHanhThuView.get(STT).getLstHoaDon().get(CLocal.listHanhThuView.get(STT).getLstHoaDon().size() - 1).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
-                            CLocal.listHanhThuView.get(STT).getLstHoaDon().get(CLocal.listHanhThuView.get(STT).getLstHoaDon().size() - 1).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                                if (selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                                }
                             if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
                                 thermalPrinter.printPhieuBao2(CLocal.listHanhThuView.get(STT));
                         }
@@ -744,8 +747,11 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt2));
                         results = result.split(",");
                         if (Boolean.parseBoolean(results[0]) == true) {
-                            CLocal.listHanhThuView.get(STT).getLstHoaDon().get(CLocal.listHanhThuView.get(STT).getLstHoaDon().size() - 1).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
-                            CLocal.listHanhThuView.get(STT).getLstHoaDon().get(CLocal.listHanhThuView.get(STT).getLstHoaDon().size() - 1).setTBDongNuoc_NgayHen(currentDate.format(dt2));
+                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                                if (selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt2));
+                                }
                             if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
                                 thermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
                         }

@@ -1,13 +1,16 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -17,12 +20,15 @@ import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Gravity;
@@ -57,7 +63,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 
 public class CLocal {
     //Android 1.5 	Cupcake 	27/4/2009
@@ -82,7 +87,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter="ESC", IDMobile;
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
@@ -104,12 +109,13 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.putString("ThermalPrinter", "");
+        editor.putString("MethodPrinter", "");
         editor.putBoolean("SyncTrucTiep", true);
         editor.putBoolean("TestApp", false);
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = MethodPrinter = "";
+        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = IDMobile = "";
         Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
@@ -118,16 +124,15 @@ public class CLocal {
 
     public static void initialPhiMoNuoc() {
         //add cứng phí mở nước
-        phiMoNuoc=new HashMap<>();
-        phiMoNuoc.put("214.000", Arrays.asList("15","25"));
-        phiMoNuoc.put("1.256.000", Arrays.asList("40","50","80","100"));
+        phiMoNuoc = new HashMap<>();
+        phiMoNuoc.put("214.000", Arrays.asList("15", "25"));
+        phiMoNuoc.put("1.256.000", Arrays.asList("40", "50", "80", "100"));
     }
 
-    public static String getPhiMoNuoc(String Co)
-    {
+    public static String getPhiMoNuoc(String Co) {
         for (Map.Entry<String, List<String>> entry : CLocal.phiMoNuoc.entrySet()) {
             if (entry.getValue().contains(Co)) {
-               return entry.getKey();
+                return entry.getKey();
             }
         }
         return null;
@@ -225,6 +230,79 @@ public class CLocal {
             view = new View(activity);
         }
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static String getIMEI(Activity activity) {
+        try {
+            CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(activity);
+            String imei = null;
+
+            if (cMarshMallowPermission.checkPermissionForPhoneState() == false) {
+                cMarshMallowPermission.requestPermissionForPhoneState();
+            }
+            if (cMarshMallowPermission.checkPermissionForPhoneState() == false)
+                return imei;
+
+            TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+            if (cMarshMallowPermission.checkVersionQ()) {
+                imei = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    if (telephonyManager != null) {
+                        try {
+                            imei = telephonyManager.getImei();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            imei = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+                        }
+                    }
+                } else {
+                    cMarshMallowPermission.requestPermissionForPhoneState();
+                }
+            } else {
+                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    if (telephonyManager != null) {
+                        imei = telephonyManager.getDeviceId();
+                    }
+                } else {
+                    cMarshMallowPermission.requestPermissionForPhoneState();
+                }
+            }
+            return imei;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    //Android ID thay đổi trên các điện thoại được root và khi điện thoại factory reset
+    public static String getAndroidID(Activity activity) {
+        try {
+            return Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getWifiMac(Activity activity) {
+        try {
+            WifiManager wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            return wifiManager.getConnectionInfo().getMacAddress();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getBluetoothMac(Activity activity) {
+        try {
+            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            return bluetoothAdapter.getAddress();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     //update list to Json

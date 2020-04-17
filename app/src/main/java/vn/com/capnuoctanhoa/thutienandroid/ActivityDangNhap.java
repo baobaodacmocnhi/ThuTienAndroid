@@ -124,7 +124,7 @@ public class ActivityDangNhap extends AppCompatActivity {
             switch (strings[0]) {
                 case "DangNhap":
                     try {
-                    result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.sharedPreferencesre.getString("UID", ""));
+                    result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(),CLocal.IDMobile, CLocal.sharedPreferencesre.getString("UID", ""));
                     if (result.isEmpty() == false&&result.equals("[]")==false&&result.contains("Connection refused")==false) {
                         CLocal.initialCLocal();
                         JSONArray jsonArray = new JSONArray(result);
