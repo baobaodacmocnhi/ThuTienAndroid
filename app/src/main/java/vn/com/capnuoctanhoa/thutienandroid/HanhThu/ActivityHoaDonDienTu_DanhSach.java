@@ -7,10 +7,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -173,7 +173,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityHoaDonDienTu_ThuTien.class);
                 intent.putExtra("STT", String.valueOf(i));
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return false;
             }
         });

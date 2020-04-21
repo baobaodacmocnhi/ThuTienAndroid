@@ -2,7 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;

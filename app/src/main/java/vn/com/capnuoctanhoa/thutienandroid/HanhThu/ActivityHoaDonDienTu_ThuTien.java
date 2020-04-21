@@ -5,8 +5,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -507,6 +507,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+
                 return true;
             case R.id.action_search_khach_hang:
                 intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_Search.class);
@@ -619,9 +620,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-//            thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {

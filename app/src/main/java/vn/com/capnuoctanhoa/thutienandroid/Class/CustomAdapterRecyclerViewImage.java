@@ -1,9 +1,8 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CustomAdapterRecyclerViewImage extends RecyclerView.Adapter<CustomAdapterRecyclerViewImage.RecyclerViewHolder> {

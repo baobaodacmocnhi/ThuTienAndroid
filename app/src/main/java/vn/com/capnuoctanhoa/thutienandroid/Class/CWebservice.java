@@ -1,6 +1,6 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;

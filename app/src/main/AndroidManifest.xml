@@ -54,7 +54,7 @@
             android:exported="false"
             android:stopWithTask="false" /> <!-- camera -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="thutien_file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
