@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -218,7 +220,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"DangNgan"});
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    reInBienNhan("DangNgan", CLocal.listHanhThuView.get(STT));
                             } else {
                                 boolean flag = false;
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -272,7 +274,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"PhieuBao"});
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    reInBienNhan("PhieuBao", CLocal.listHanhThuView.get(STT));
                             } else {
                                 boolean flag = false;
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -325,7 +327,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"PhieuBao2", edtSoNgayHen.getText().toString()});
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    reInBienNhan("PhieuBao2", CLocal.listHanhThuView.get(STT));
                             } else {
                                 boolean flag = false;
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -384,7 +386,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"TBDongNuoc", edtSoNgayHen.getText().toString()});
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    reInBienNhan("TBDongNuoc", CLocal.listHanhThuView.get(STT));
                             } else {
                                 boolean flag = false;
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -583,19 +585,19 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     TongCong += PhiMoNuoc;
                     edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
-                    if (item.isThuHo() == true || item.isTamThu() == true || item.isGiaiTrach() == true) {
-                        btnThuTien.setEnabled(false);
-                        btnPhieuBao.setEnabled(false);
-                        btnPhieuBao2.setEnabled(false);
-                        btnTBDongNuoc.setEnabled(false);
-                        btnXoa.setEnabled(false);
-                    } else {
-                        btnThuTien.setEnabled(true);
-                        btnPhieuBao.setEnabled(true);
-                        btnPhieuBao2.setEnabled(true);
-                        btnTBDongNuoc.setEnabled(true);
-                        btnXoa.setEnabled(true);
-                    }
+//                    if (item.isThuHo() == true || item.isTamThu() == true || item.isGiaiTrach() == true) {
+//                        btnThuTien.setEnabled(false);
+//                        btnPhieuBao.setEnabled(false);
+//                        btnPhieuBao2.setEnabled(false);
+//                        btnTBDongNuoc.setEnabled(false);
+//                        btnXoa.setEnabled(false);
+//                    } else {
+//                        btnThuTien.setEnabled(true);
+//                        btnPhieuBao.setEnabled(true);
+//                        btnPhieuBao2.setEnabled(true);
+//                        btnTBDongNuoc.setEnabled(true);
+//                        btnXoa.setEnabled(true);
+//                    }
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 lstView.setAdapter(arrayAdapter);
@@ -621,9 +623,48 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (thermalPrinter != null&& thermalPrinter.getBluetoothDevice() != null)
+            thermalPrinter.disconnectBluetoothDevice();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    private void reInBienNhan(final String Loai, final CEntityParent entityParent) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityHoaDonDienTu_ThuTien.this);
+        builder.setMessage("Đã Xử Lý Rồi")
+                .setCancelable(false)
+                .setNegativeButton("In Lại", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        switch (Loai) {
+                            case "DangNgan":
+                                for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
+                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                                        thermalPrinter.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
+                                break;
+                            case "PhieuBao":
+                                for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
+                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                                        thermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                                break;
+                            case "PhieuBao2":
+                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                                    thermalPrinter.printPhieuBao2(entityParent);
+                                break;
+                            case "TBDongNuoc":
+                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                                    thermalPrinter.printTBDongNuoc(entityParent);
+                                break;
+                        }
+                    }
+                })
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
@@ -631,7 +672,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                if (thermalPrinter == null)
+                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
                     thermalPrinter = new ThermalPrinter(ActivityHoaDonDienTu_ThuTien.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, ex.getMessage());

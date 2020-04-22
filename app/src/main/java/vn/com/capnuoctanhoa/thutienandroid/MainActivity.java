@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String deviceToken = instanceIdResult.getToken();
-                        ServiceFirebaseInstanceID serviceFirebaseInstanceID=new ServiceFirebaseInstanceID();
+                        ServiceFirebaseInstanceID serviceFirebaseInstanceID = new ServiceFirebaseInstanceID();
                         serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
                     }
                 });
@@ -226,8 +228,9 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
             if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false) {
-                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "");
+                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
             }
+            CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
 
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);
@@ -239,8 +242,6 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
-                CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
-                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
@@ -272,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 imgbtnDangNhap.setImageResource(R.drawable.ic_logout);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
