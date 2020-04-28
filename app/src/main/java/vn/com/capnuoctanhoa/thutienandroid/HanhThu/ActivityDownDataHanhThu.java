@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -383,7 +385,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
                                         enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
                                         if (jsonObjectChild.has("CoDH") == true)
-                                        enChild.setCo(jsonObjectChild.getString("CoDH"));
+                                            enChild.setCo(jsonObjectChild.getString("CoDH"));
                                         enChild.setCSC(jsonObjectChild.getString("CSC"));
                                         enChild.setCSM(jsonObjectChild.getString("CSM"));
                                         enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
@@ -422,6 +424,13 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                                 enChild.setTBDongNuoc_NgayHen(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("TBDongNuoc_NgayHen").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                         if (jsonObjectChild.has("PhiMoNuoc") == true)
                                             enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
+                                        if (jsonObjectChild.has("PhiMoNuocThuHo") == true)
+                                            enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo"));
+                                        //update parent
+                                        if (jsonObjectChild.has("MaKQDN") == true)
+                                            enParent.setMaKQDN(jsonObjectChild.getString("MaKQDN"));
+                                        if (jsonObjectChild.has("DongPhi") == true)
+                                            enParent.setDongPhi(Boolean.parseBoolean(jsonObjectChild.getString("DongPhi")));
                                         listChild.add(enChild);
                                     }
                                 }

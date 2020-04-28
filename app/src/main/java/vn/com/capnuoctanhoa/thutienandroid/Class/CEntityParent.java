@@ -17,12 +17,10 @@ public class CEntityParent {
     private String TinhTrang;
     private boolean DangNgan_DienThoai;
     private boolean InPhieuBao;
-
-
-
     private boolean InPhieuBao2;
     private boolean DongNuoc;
     private boolean DongNuoc2;
+    private String MaKQDN;
     private boolean DongPhi;
     private boolean MoNuoc;
     private String NgayDN;
@@ -66,6 +64,7 @@ public class CEntityParent {
         TBDongNuoc = false;
         DongNuoc = false;
         DongNuoc2 = false;
+        MaKQDN="";
         DongPhi = false;
         MoNuoc = false;
         NgayDN = "";
@@ -218,6 +217,14 @@ public class CEntityParent {
 
     public void setDongNuoc2(boolean dongNuoc2) {
         DongNuoc2 = dongNuoc2;
+    }
+
+    public String getMaKQDN() {
+        return MaKQDN;
+    }
+
+    public void setMaKQDN(String maKQDN) {
+        MaKQDN = maKQDN;
     }
 
     public boolean isDongPhi() {

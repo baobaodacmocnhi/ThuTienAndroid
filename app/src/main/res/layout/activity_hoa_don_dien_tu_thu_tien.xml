@@ -42,6 +42,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_NgayHen" />
@@ -65,17 +66,17 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnTBDongNuoc" />
 
-        <TextView
-            android:id="@+id/textView43"
+        <CheckBox
+            android:id="@+id/chkPhiMoNuoc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:checked="false"
             android:text="Phí Mở Nước"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edtPhiMoNuoc" />
@@ -87,8 +88,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:ems="10"
+            android:enabled="false"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView43"
+            app:layout_constraintStart_toEndOf="@+id/chkPhiMoNuoc"
             app:layout_constraintTop_toBottomOf="@+id/lstView" />
 
         <TextView
@@ -122,6 +125,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             android:textColor="@color/colorMLT"
             android:textSize="20sp"
@@ -150,6 +154,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             android:textColor="@color/colorMLT"
             android:textSize="20sp"
@@ -178,6 +183,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             android:textColor="@color/colorDanhBo"
             android:textSize="20sp"
@@ -203,7 +209,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:editable="true"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             android:textColor="@color/colorDanhBo"
             android:textSize="20sp"
@@ -243,6 +251,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             android:textColor="@color/colorDanhBo"
             android:textSize="20sp"
@@ -373,6 +382,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtInTBDongNuoc_Ngay" />
@@ -395,6 +405,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao_Ngay" />
@@ -417,6 +428,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:ems="10"
+            android:focusableInTouchMode="false"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtInPhieuBao2_Ngay" />

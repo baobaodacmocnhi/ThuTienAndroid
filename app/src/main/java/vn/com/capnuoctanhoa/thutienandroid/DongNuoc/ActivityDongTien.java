@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,13 +36,14 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongTien extends AppCompatActivity {
     private TextView txtTongCong;
-    private EditText edtMaDN;
+    private EditText edtMaDN,edtPhiMoNuoc;
     private Button btnDongTien, btnIn;
     private ListView lstView;
+    private CheckBox chkPhiMoNuoc;
     private ArrayList<CHoaDon> lstHoaDon;
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
-    private long TongCong = 0;
+    private long TongCong = 0,PhiMoNuoc = 0;
     private String selectedMaHDs = "";
     private String lstMaHD = "";
     private String danhBo = "";
@@ -60,6 +63,8 @@ public class ActivityDongTien extends AppCompatActivity {
         btnDongTien = (Button) findViewById(R.id.btnDongTien);
         btnIn = (Button) findViewById(R.id.btnIn);
         lstView = (ListView) findViewById(R.id.lstView);
+        edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
+        chkPhiMoNuoc = (CheckBox) findViewById(R.id.chkPhiMoNuoc);
 
 //        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
 //        myAsyncTask_thermal.execute();
@@ -83,6 +88,21 @@ public class ActivityDongTien extends AppCompatActivity {
                 else
                     TongCong -= Long.parseLong(hoadon.getTongCong());
                 txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+            }
+        });
+
+        chkPhiMoNuoc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (chkPhiMoNuoc.isChecked() == true) {
+                    edtPhiMoNuoc.setEnabled(true);
+                    TongCong += PhiMoNuoc;
+                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+                } else {
+                    edtPhiMoNuoc.setEnabled(false);
+                    TongCong -= PhiMoNuoc;
+                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+                }
             }
         });
 
@@ -260,12 +280,25 @@ public class ActivityDongTien extends AppCompatActivity {
                     else
                         lstMaHD += "," + entity.getMaHD();
 
+                    TongCong += Long.parseLong(entity.getTongCong());
                     arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ"));
+                    PhiMoNuoc = Integer.parseInt(en.getLstHoaDon().get(i).getPhiMoNuoc());
                 }
+                if (PhiMoNuoc > 0) {
+                    chkPhiMoNuoc.setChecked(true);
+                }
+                else{
+                    chkPhiMoNuoc.setChecked(false);
+                }
+                edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
+                txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
                 arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 lstView.setAdapter(arrayAdapter);
-                txtTongCong.setText(CLocal.formatMoney("0", "đ"));
+
+                for (int j = 0; j < arrayAdapter.getCount(); j++) {
+                    lstView.setItemChecked(j, true);
+                }
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDongTien.this, ex.getMessage());

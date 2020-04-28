@@ -458,6 +458,11 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                         enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
                                     if (jsonObjectChild.has("PhiMoNuoc") == true)
                                         enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
+                                    //update parent
+                                    if (jsonObjectChild.has("MaKQDN") == true)
+                                        enParent.setMaKQDN(jsonObjectChild.getString("MaKQDN"));
+                                    if (jsonObjectChild.has("DongPhi") == true)
+                                        enParent.setDongPhi(Boolean.parseBoolean(jsonObjectChild.getString("DongPhi")));
                                     listChild.add(enChild);
                                 }
                             }

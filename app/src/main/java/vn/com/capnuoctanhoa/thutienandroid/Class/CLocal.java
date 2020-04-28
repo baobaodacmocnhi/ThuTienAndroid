@@ -25,8 +25,10 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
+
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -86,7 +88,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter="ESC", IDMobile;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter = "ESC", IDMobile;
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
@@ -384,9 +386,9 @@ public class CLocal {
                 LenhHuy++;
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
-            else if (item.getInPhieuBao2_Ngay().equals("") == false)
+            if (item.getInPhieuBao2_Ngay().equals("") == false)
                 InPhieuBao2++;
-            else if (item.getInPhieuBao_Ngay().equals("") == false)
+            if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
             if (item.isDangNgan_DienThoai() == true)
@@ -418,11 +420,16 @@ public class CLocal {
         } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setTBDongNuoc(true);
         } else if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setInPhieuBao2(true);
             lst.get(i).setTinhTrang("Phiếu Báo 2");
         } else if (InPhieuBao == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setInPhieuBao(true);
             lst.get(i).setTinhTrang("Phiếu Báo");
+        }
+        //update không nối tiếp
+        if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setInPhieuBao2(true);
+        }
+        if (InPhieuBao == lst.get(i).getLstHoaDon().size()) {
+            lst.get(i).setInPhieuBao(true);
         }
 
         if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
@@ -461,9 +468,9 @@ public class CLocal {
                 LenhHuy++;
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
-            else if (item.getInPhieuBao2_Ngay().equals("") == false)
+            if (item.getInPhieuBao2_Ngay().equals("") == false)
                 InPhieuBao2++;
-            else if (item.getInPhieuBao_Ngay().equals("") == false)
+            if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
             if (item.isDangNgan_DienThoai() == true)
@@ -495,12 +502,17 @@ public class CLocal {
         } else if (TBDongNuoc == en.getLstHoaDon().size()) {
             en.setTBDongNuoc(true);
         } else if (InPhieuBao2 == en.getLstHoaDon().size()) {
-            en.setInPhieuBao2(true);
             en.setTinhTrang("Phiếu Báo 2");
         } else if (InPhieuBao == en.getLstHoaDon().size()) {
-            en.setInPhieuBao(true);
             en.setTinhTrang("Phiếu Báo");
         }
+        //update không nối tiếp
+        if (InPhieuBao2 == en.getLstHoaDon().size()) {
+            en.setInPhieuBao2(true);
+        } else if (InPhieuBao == en.getLstHoaDon().size()) {
+            en.setInPhieuBao(true);
+        }
+
         if (DangNgan_DienThoai == en.getLstHoaDon().size()) {
             en.setDangNgan_DienThoai(true);
             en.setTinhTrang("Đã Thu");

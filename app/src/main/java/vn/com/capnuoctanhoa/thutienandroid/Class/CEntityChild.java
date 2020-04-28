@@ -315,5 +315,4 @@ public class CEntityChild {
         this.TBDongNuoc_NgayHen = TBDongNuoc_NgayHen;
     }
 
-
 }
