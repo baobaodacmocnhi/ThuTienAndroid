@@ -887,6 +887,7 @@ public class ThermalPrinter {
             byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed());
             byteStream.write("Website Công ty: https://www.cskhtanhoa.com.vn\n".getBytes());
+            byteStream.write("Chú ý: biên nhận này không có giá trị thanh toán\n".getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
             byteStream.write(printLineFeed(3));
@@ -953,6 +954,7 @@ public class ThermalPrinter {
             byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
+            byteStream.write(("Chú ý: biên nhận này không có giá trị thanh toán\n").getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
             byteStream.write(printLineFeed(3));
@@ -1021,6 +1023,7 @@ public class ThermalPrinter {
             byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
+            byteStream.write(("Chú ý: biên nhận này không có giá trị thanh toán\n").getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
             byteStream.write(printLineFeed(3));
@@ -1096,6 +1099,7 @@ public class ThermalPrinter {
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
+            byteStream.write(("Chú ý: biên nhận này không có giá trị thanh toán\n").getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
             byteStream.write(printLineFeed(3));
@@ -1172,6 +1176,7 @@ public class ThermalPrinter {
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
+            byteStream.write(("Chú ý: biên nhận này không có giá trị thanh toán\n").getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
             byteStream.write(printLineFeed(3));
@@ -1234,6 +1239,7 @@ public class ThermalPrinter {
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
             byteStream.write(printDotFeed());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
+            byteStream.write(("Chú ý: biên nhận này không có giá trị thanh toán\n").getBytes());
             byteStream.write(setTextAlign(1));
             byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
             byteStream.write(printLineFeed(3));

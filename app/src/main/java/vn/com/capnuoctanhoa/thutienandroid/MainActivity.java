@@ -352,9 +352,8 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Version":
+                    ws.updateLogin(CLocal.MaNV,CLocal.sharedPreferencesre.getString("UID", ""));
                     return ws.getVersion();
-                case "Download":
-                    break;
             }
             return null;
         }
