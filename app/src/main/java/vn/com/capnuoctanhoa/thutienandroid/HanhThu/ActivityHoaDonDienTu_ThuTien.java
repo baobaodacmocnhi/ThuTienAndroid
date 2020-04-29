@@ -611,19 +611,19 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     }
                     edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
-//                    if (item.isThuHo() == true || item.isTamThu() == true || item.isGiaiTrach() == true) {
-//                        btnThuTien.setEnabled(false);
-//                        btnPhieuBao.setEnabled(false);
-//                        btnPhieuBao2.setEnabled(false);
-//                        btnTBDongNuoc.setEnabled(false);
-//                        btnXoa.setEnabled(false);
-//                    } else {
-//                        btnThuTien.setEnabled(true);
-//                        btnPhieuBao.setEnabled(true);
-//                        btnPhieuBao2.setEnabled(true);
-//                        btnTBDongNuoc.setEnabled(true);
-//                        btnXoa.setEnabled(true);
-//                    }
+                    if (item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {
+                        btnThuTien.setEnabled(false);
+                        btnPhieuBao.setEnabled(false);
+                        btnPhieuBao2.setEnabled(false);
+                        btnTBDongNuoc.setEnabled(false);
+                        btnXoa.setEnabled(false);
+                    } else {
+                        btnThuTien.setEnabled(true);
+                        btnPhieuBao.setEnabled(true);
+                        btnPhieuBao2.setEnabled(true);
+                        btnTBDongNuoc.setEnabled(true);
+                        btnXoa.setEnabled(true);
+                    }
                 }
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
                 lstView.setAdapter(arrayAdapter);
