@@ -5,10 +5,15 @@
         android:id="@+id/action_search_khach_hang"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Tìm Kiếm Khách Hàng"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_ghichu"
         android:icon="@drawable/ic_notex128"
         android:title="Cấu Hình"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_print"
+        android:icon="@drawable/ic_printerx128"
+        android:title="In"
         app:showAsAction="always" />
 </menu>

@@ -543,6 +543,11 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 intent.putExtra("DanhBo", edtDanhBo.getText().toString().replace(" ", ""));
                 startActivity(intent);
                 return true;
+            case R.id.action_print:
+                intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_In.class);
+                intent.putExtra("STT", STT);
+                startActivity(intent);
+                return true;
             default:
                 break;
         }
