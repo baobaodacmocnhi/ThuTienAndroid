@@ -464,7 +464,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
                                         if (STT >= 0 && STT < CLocal.listHanhThuView.size()) {
                                             if (CLocal.SyncTrucTiep == true) {
-                                                if (CLocal.listHanhThuView.get(STT).isGiaiTrach() == false
+                                                if (CLocal.listHanhThuView.get(STT).isGiaiTrach() == true
                                                         && CLocal.listHanhThuView.get(STT).isThuHo() == false
                                                         && CLocal.listHanhThuView.get(STT).isTamThu() == false
                                                         && CLocal.listHanhThuView.get(STT).isDangNgan_DienThoai() == true) {
@@ -763,6 +763,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 results = result.split(",");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
                                     if (chkPhiMoNuoc.isChecked() == true)
@@ -855,7 +856,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         break;
                     case "XoaDangNgan":
                         for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
-                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == true
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
@@ -863,6 +864,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 results = result.split(",");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setGiaiTrach(false);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
                                     if (chkPhiMoNuoc.isChecked() == true)
@@ -872,8 +874,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         break;
                 }
                 if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
-                    CLocal.updateValueChild(CLocal.listHanhThu, results[1], results[2], results[3]);
-                    CLocal.updateValueChild(CLocal.listHanhThuView, results[1], results[2], results[3]);
+                    CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
+                    CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
                 }
                 CLocal.updateTinhTrangParent(CLocal.listHanhThuView, STT);
                 CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(STT));
@@ -895,7 +897,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG");
                 btnSau.performClick();
             } else
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[4]);
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[1]);
         }
     }
 
@@ -972,8 +974,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     CLocal.listHanhThuView.get(i).setXuLy("");
                     CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
                 } else if (results.length == 5) {
-                    CLocal.updateValueChild(CLocal.listHanhThu, results[1], results[2], results[3]);
-                    CLocal.updateValueChild(CLocal.listHanhThuView, results[1], results[2], results[3]);
+                    CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
+                    CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
                 }
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, ex.getMessage());
