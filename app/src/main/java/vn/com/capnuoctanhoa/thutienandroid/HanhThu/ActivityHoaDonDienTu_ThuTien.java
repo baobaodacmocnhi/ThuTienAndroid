@@ -45,7 +45,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private ListView lstView;
     private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private CheckBox chkPhiMoNuoc;
-    private Integer STT;
+    private Integer STT=-1;
     private ThermalPrinter thermalPrinter = null;
     private CWebservice ws;
     private ArrayList<CHoaDon> lstHoaDon;
@@ -85,7 +85,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         chkPhiMoNuoc = (CheckBox) findViewById(R.id.chkPhiMoNuoc);
 
         lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
         final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
         myAsyncTask_thermal.execute();
         ws = new CWebservice();
@@ -100,6 +99,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 fillLayout(STT);
             }
         } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this,ex.getMessage());
         }
 
         imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
@@ -532,7 +532,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-
                 return true;
             case R.id.action_search_khach_hang:
                 intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_Search.class);
@@ -545,7 +544,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 return true;
             case R.id.action_print:
                 intent = new Intent(ActivityHoaDonDienTu_ThuTien.this, ActivityHoaDonDienTu_In.class);
-                intent.putExtra("STT", STT);
+                intent.putExtra("STT", String.valueOf(STT));
                 startActivity(intent);
                 return true;
             default:

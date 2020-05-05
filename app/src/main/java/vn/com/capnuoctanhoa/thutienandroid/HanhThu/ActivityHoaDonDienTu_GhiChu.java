@@ -41,13 +41,18 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
             myAsyncTask.execute("get");
         } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityHoaDonDienTu_GhiChu.this,ex.getMessage());
         }
 
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("update");
+                if(DanhBo!="") {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("update");
+                }
+                else
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this,"Lỗi Danh Bộ");
             }
         });
     }
