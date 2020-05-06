@@ -2,7 +2,9 @@ package vn.com.capnuoctanhoa.thutienandroid.DongNuoc;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
@@ -36,14 +38,14 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongTien extends AppCompatActivity {
     private TextView txtTongCong;
-    private EditText edtMaDN,edtPhiMoNuoc;
+    private EditText edtMaDN, edtPhiMoNuoc;
     private Button btnDongTien, btnIn;
     private ListView lstView;
     private CheckBox chkPhiMoNuoc;
     private ArrayList<CHoaDon> lstHoaDon;
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
-    private long TongCong = 0,PhiMoNuoc = 0;
+    private long TongCong = 0, PhiMoNuoc = 0;
     private String selectedMaHDs = "";
     private String lstMaHD = "";
     private String danhBo = "";
@@ -131,9 +133,10 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                if (thermalPrinter != null&&thermalPrinter.getBluetoothDevice()!=null)
-                    thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
+                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+                thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
+
             }
         });
 
@@ -286,8 +289,7 @@ public class ActivityDongTien extends AppCompatActivity {
                 }
                 if (PhiMoNuoc > 0) {
                     chkPhiMoNuoc.setChecked(true);
-                }
-                else{
+                } else {
                     chkPhiMoNuoc.setChecked(false);
                 }
                 edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
@@ -433,7 +435,7 @@ public class ActivityDongTien extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTask extends AsyncTask<String, String, String> {
+    public class MyAsyncTask extends AsyncTask<String, String, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -448,34 +450,80 @@ public class ActivityDongTien extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String[] doInBackground(String... strings) {
             String result = "";
+            String[] results = new String[]{};
             switch (strings[0]) {
                 case "DongTien":
-                    if (selectedMaHDs.equals("") == true)
-                        return "CHƯA CHỌN HÓA ĐƠN";
-                    result = ws.dangNganDongNuoc(CLocal.MaNV, selectedMaHDs);
-                    if (Boolean.parseBoolean(result) == true) {
+//                    if (selectedMaHDs.equals("") == true)
+//                        return "CHƯA CHỌN HÓA ĐƠN";
+//                    result = ws.dangNganDongNuoc(CLocal.MaNV, selectedMaHDs);
+//                    if (Boolean.parseBoolean(result) == true) {
+//                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                        Date dateCapNhat = new Date();
+//                        for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++) {
+//                            if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+//                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
+//                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+//                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
+//                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+//                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
+//                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+//                            }
+//                        }
+//                        CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+//                        return "THÀNH CÔNG";
+//                    } else
+//                        return "THẤT BẠI";
+                    try {
                         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         Date dateCapNhat = new Date();
-                        for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++) {
+                        for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
                             if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
-                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
-                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
-                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
-                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                    && selectedMaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
+                                result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN());
+                                results = result.split(",");
+                                if (Boolean.parseBoolean(results[0]) == true) {
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
+//                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null) {
+//                                        thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT), CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j));
+//                                    }
+
+                                    CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                } else {
+                                    if (results.length == 5) {
+                                        CLocal.updateValueChild(CLocal.listDongNuoc, results[2], results[3], results[4]);
+                                        CLocal.updateValueChild(CLocal.listDongNuocView, results[2], results[3], results[4]);
+                                        CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                    }
+                                }
+
+                            }
+                        if (chkPhiMoNuoc.isChecked() == true) {
+                            result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN());
+                            results = result.split(",");
+                            if (Boolean.parseBoolean(results[0]) == true) {
+                                CLocal.listDongNuocView.get(STT).setDongPhi(true);
+//                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null) {
+//                                    thermalPrinter.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+//                                }
                             }
                         }
-                        CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
-                        return "THÀNH CÔNG";
-                    } else
-                        return "THẤT BẠI";
+                        return results;
+                    } catch (Exception ex) {
+                        return new String[]{"false", ex.getMessage()};
+                    }
+
                 case "GetHoaDonTon":
                     result = ws.getDSHoaDonTon_DongNuoc(danhBo, lstMaHD);
                     publishProgress(new String[]{"GetHoaDonTon", result});
-                    return "false";
+                    return new String[]{"", "tải hóa đơn tồn"};
             }
             return null;
         }
@@ -498,13 +546,16 @@ public class ActivityDongTien extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (s.equals("false") == false)
-                CLocal.showPopupMessage(ActivityDongTien.this, s);
+            if (strings[0].equals("") == false)
+                if (Boolean.parseBoolean(strings[0]) == true) {
+                    CLocal.showPopupMessage(ActivityDongTien.this, "THÀNH CÔNG");
+                } else if (Boolean.parseBoolean(strings[0]) == false)
+                    CLocal.showPopupMessage(ActivityDongTien.this, "THẤT BẠI\n" + strings[1]);
         }
 
     }

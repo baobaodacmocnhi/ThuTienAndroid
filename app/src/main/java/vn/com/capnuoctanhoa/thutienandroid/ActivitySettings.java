@@ -126,11 +126,11 @@ public class ActivitySettings extends AppCompatActivity {
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 switch (index) {
                     case 0: // first button
-                        CLocal.MethodPrinter = "EZ";
+                        CLocal.MethodPrinter = "ESC";
                         editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
                     case 1: // secondbutton
-                        CLocal.MethodPrinter = "ESC";
+                        CLocal.MethodPrinter = "EZ";
                         editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
                 }
