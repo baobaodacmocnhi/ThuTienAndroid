@@ -45,7 +45,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private ListView lstView;
     private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private CheckBox chkPhiMoNuoc;
-    private Integer STT=-1;
+    private Integer STT = -1;
     private ThermalPrinter thermalPrinter = null;
     private CWebservice ws;
     private ArrayList<CHoaDon> lstHoaDon;
@@ -99,7 +99,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 fillLayout(STT);
             }
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this,ex.getMessage());
+            CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, ex.getMessage());
         }
 
         imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);

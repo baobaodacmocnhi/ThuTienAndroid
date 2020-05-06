@@ -28,25 +28,25 @@ public class ThermalPrinter {
     private Activity activity;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket bluetoothSocket;
-    private BluetoothDevice bluetoothDevice = null;
+    private static BluetoothDevice bluetoothDevice = null;
     private ArrayList<BluetoothDevice> lstBluetoothDevice;
     private ArrayList<String> arrayList;
-    private OutputStream outputStream;
+    private static OutputStream outputStream;
     private InputStream inputStream;
     private Thread thread;
     private byte[] readBuffer;
     private int readBufferPosition;
     private volatile boolean stopWorker;
-    private final byte[] ESC = {0x1B};
-    private StringBuilder stringBuilder;
+    private static final byte[] ESC = {0x1B};
+    private static StringBuilder stringBuilder;
     //    private CEntityParent entityParent;
     private int toadoX = 10;
-    private int toadoY = 20;
+    private static int toadoY = 20;
     private int widthFont = 1;
     private int heightFont = 1;
     private int lengthPaper = 33;
 
-    public BluetoothDevice getBluetoothDevice() {
+    public static BluetoothDevice getBluetoothDevice() {
         return bluetoothDevice;
     }
 
@@ -243,7 +243,7 @@ public class ThermalPrinter {
         }
     }
 
-    public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
+    public static void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -405,7 +405,7 @@ public class ThermalPrinter {
         }
     }
 
-    public void printPhieuBao_EZ(CEntityParent entityParent, CEntityChild entityChild) {
+    public static void printPhieuBao_EZ(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
@@ -686,9 +686,9 @@ public class ThermalPrinter {
         }
     }
 
-    private void printTop_EZ() {
+    private static void printTop_EZ() {
         try {
-            this.toadoY = 0;
+            toadoY = 0;
             resetPrinter();
             setLineSpacing();
             printEZ("CTY CP CẤP NƯỚC TÂN HÒA", 3, toadoY, 25, 1, 1);
@@ -699,11 +699,11 @@ public class ThermalPrinter {
         }
     }
 
-    private void printEZHangNgang() {
+    private static void printEZHangNgang() {
         printEZ("=================================================", 1, toadoY, 0, 1, 1);
     }
 
-    private void printEZTheEnd() {
+    private static void printEZTheEnd() {
         printEZ("  ", 1, toadoY + 60, 0, 1, 1);
     }
 
@@ -718,7 +718,7 @@ public class ThermalPrinter {
     }
 
     //print custom
-    private void printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
+    private static void printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
         try {
             ArrayList<String> valuesOutput = new ArrayList();
             String valueOutput = "";
@@ -761,7 +761,7 @@ public class ThermalPrinter {
     //endregion
 
     //region ESC/P Command
-    ByteArrayOutputStream byteStream;
+    static ByteArrayOutputStream byteStream;
 
     public void printThuTien_ESC(CEntityParent entityParent) {
         try {
@@ -839,7 +839,7 @@ public class ThermalPrinter {
         }
     }
 
-    public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) {
+    public static void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             printTop_ESC();
             byteStream.write(printLineFeed(1));
@@ -1302,7 +1302,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void printTop_ESC() {
+    private static void printTop_ESC() {
         try {
             resetPrinter();
             byteStream = new ByteArrayOutputStream();
@@ -1373,7 +1373,7 @@ public class ThermalPrinter {
     }
 
     //reset printer
-    private void resetPrinter() {
+    private static void resetPrinter() {
         try {
             outputStream.write(new byte[]{0x1B, 0x40});
         } catch (IOException e) {
@@ -1391,7 +1391,7 @@ public class ThermalPrinter {
     }
 
     //set line spacing
-    private void setLineSpacing() {
+    private static void setLineSpacing() {
         try {
             //set line spacing using minimun units
             outputStream.write(new byte[]{0x1B, '2'});

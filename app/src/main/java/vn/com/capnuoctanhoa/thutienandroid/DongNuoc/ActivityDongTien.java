@@ -464,6 +464,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
                                 CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
                                 CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
                             }
                         }

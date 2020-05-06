@@ -20,7 +20,7 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
     private EditText edtTuSTT, edtDenSTT;
     private Button btnIn;
     private Integer STT = -1;
-    private ThermalPrinter thermalPrinter = null;
+//    private ThermalPrinter thermalPrinter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,6 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
         edtTuSTT = (EditText) findViewById(R.id.edtTuSTT);
         edtDenSTT = (EditText) findViewById(R.id.edtDenSTT);
         btnIn = (Button) findViewById(R.id.btnIn);
-
-        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
-        myAsyncTask_thermal.execute();
 
         try {
             if (CLocal.checkNetworkAvailable(ActivityHoaDonDienTu_In.this) == false) {
@@ -59,8 +56,8 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
                     if (tustt != -1 && denstt != -1 && tustt <= denstt && denstt < CLocal.listHanhThuView.size())
                         for (int i = tustt; i <= denstt; i++)
                             for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
-                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-                                thermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
+                                if (ThermalPrinter.getBluetoothDevice() != null)
+                                    ThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
                 } else
                     CLocal.showPopupMessage(ActivityHoaDonDienTu_In.this, "Lỗi STT");
             }
@@ -70,24 +67,6 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-            thermalPrinter.disconnectBluetoothDevice();
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
-    public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-                    thermalPrinter = new ThermalPrinter(ActivityHoaDonDienTu_In.this);
-            } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityHoaDonDienTu_In.this, ex.getMessage());
-            }
-            return null;
-        }
-    }
 }
