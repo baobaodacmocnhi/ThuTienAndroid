@@ -227,9 +227,8 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
-            if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false) {
-                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
-            }
+
+            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
 
             imgbtnQuanLy.setVisibility(View.GONE);

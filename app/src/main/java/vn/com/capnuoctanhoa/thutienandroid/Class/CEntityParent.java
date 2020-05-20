@@ -45,6 +45,8 @@ public class CEntityParent {
     private boolean Sync;
     private String XuLy;
     private ArrayList<CEntityChild> lstHoaDon;
+    private boolean DCHD;
+    private boolean XoaDCHD;
 
     public CEntityParent() {
         ID = "";
@@ -59,12 +61,12 @@ public class CEntityParent {
         LenhHuy = false;
         TinhTrang = "";
         DangNgan_DienThoai = false;
-        InPhieuBao=false;
-        InPhieuBao2=false;
+        InPhieuBao = false;
+        InPhieuBao2 = false;
         TBDongNuoc = false;
         DongNuoc = false;
         DongNuoc2 = false;
-        MaKQDN="";
+        MaKQDN = "";
         DongPhi = false;
         MoNuoc = false;
         NgayDN = "";
@@ -79,16 +81,18 @@ public class CEntityParent {
         SoThan = "";
         ChiMatSo = "";
         ChiKhoaGoc = "";
-        ViTri="";
+        ViTri = "";
         LyDo = "";
         NgayDN1 = "";
         ChiSoDN1 = "";
         NiemChi1 = "";
-        NgayMN="";
-        ChiSoMN="";
-        Sync=false;
-        XuLy="";
+        NgayMN = "";
+        ChiSoMN = "";
+        Sync = false;
+        XuLy = "";
         lstHoaDon = new ArrayList<CEntityChild>();
+        DCHD = false;
+        XoaDCHD = false;
     }
 
     public String getID() {
@@ -427,8 +431,23 @@ public class CEntityParent {
         this.lstHoaDon = lstHoaDon;
     }
 
-    public  void setCEntityParent(CEntityParent entityParent)
-    {
+    public boolean isDCHD() {
+        return DCHD;
+    }
+
+    public void setDCHD(boolean DCHD) {
+        this.DCHD = DCHD;
+    }
+
+    public boolean isXoaDCHD() {
+        return XoaDCHD;
+    }
+
+    public void setXoaDCHD(boolean checkTienDu) {
+        this.XoaDCHD = checkTienDu;
+    }
+
+    public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
         DanhBo = entityParent.getDanhBo();
@@ -458,15 +477,18 @@ public class CEntityParent {
         SoThan = entityParent.getSoThan();
         ChiMatSo = entityParent.getChiMatSo();
         ChiKhoaGoc = entityParent.getChiKhoaGoc();
-        ViTri=entityParent.getViTri();
+        ViTri = entityParent.getViTri();
         LyDo = entityParent.getLyDo();
         NgayDN1 = entityParent.getNgayDN1();
         ChiSoDN1 = entityParent.getChiSoDN1();
         NiemChi1 = entityParent.getNiemChi1();
-        NgayMN=entityParent.getNgayMN();
-        ChiSoMN=entityParent.getChiSoMN();
-        Sync=entityParent.isSync();
-        XuLy=entityParent.getXuLy();
+        NgayMN = entityParent.getNgayMN();
+        ChiSoMN = entityParent.getChiSoMN();
+        Sync = entityParent.isSync();
+        XuLy = entityParent.getXuLy();
         lstHoaDon = entityParent.getLstHoaDon();
+        DCHD = entityParent.isDCHD();
+        XoaDCHD = entityParent.isXoaDCHD();
     }
+
 }

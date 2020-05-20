@@ -7,6 +7,28 @@
     tools:context=".DongNuoc.ActivityDongTien">
 
     <CheckBox
+        android:id="@+id/chkTienDu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Tiền Dư"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edtTienDu" />
+
+    <EditText
+        android:id="@+id/edtTienDu"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:enabled="false"
+        android:focusableInTouchMode="false"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/edtPhiMoNuoc"
+        app:layout_constraintTop_toBottomOf="@+id/edtPhiMoNuoc" />
+
+    <CheckBox
         android:id="@+id/chkPhiMoNuoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,15 +44,15 @@
         android:id="@+id/edtPhiMoNuoc"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:enabled="false"
         android:focusableInTouchMode="false"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
-        app:layout_constraintStart_toEndOf="@+id/chkPhiMoNuoc" />
+        app:layout_constraintStart_toEndOf="@+id/chkPhiMoNuoc"
+        app:layout_constraintTop_toBottomOf="@+id/lstView" />
 
     <Button
         android:id="@+id/btnDongTien"
@@ -84,14 +106,12 @@
     <ListView
         android:id="@+id/lstView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/edtPhiMoNuoc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtMaDN"
@@ -101,15 +121,15 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
         android:text="Tổng Cộng:"
         android:textColor="@color/colorSoTien"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/lstView" />
+        app:layout_constraintStart_toStartOf="@+id/lstView"
+        app:layout_constraintTop_toBottomOf="@+id/edtTienDu" />
 
     <TextView
         android:id="@+id/txtTongCong"

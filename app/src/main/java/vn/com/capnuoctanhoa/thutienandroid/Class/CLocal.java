@@ -88,7 +88,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter = "ESC", IDMobile;
+    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
@@ -110,13 +110,14 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.putString("ThermalPrinter", "");
-        editor.putString("MethodPrinter", "");
+        editor.putString("MethodPrinter", "ESC");
         editor.putBoolean("SyncTrucTiep", true);
         editor.putBoolean("TestApp", false);
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        MaNV = HoTen = MaTo = DienThoai = ThermalPrinter = IDMobile = "";
+        ThermalPrinter = "ESC";
+        MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
         Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
@@ -267,6 +268,30 @@ public class CLocal {
                     }
                 } else {
                     cMarshMallowPermission.requestPermissionForPhoneState();
+                }
+            }
+            return imei;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getPhoneNumber(Activity activity) {
+        try {
+            CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(activity);
+            String imei = null;
+
+            if (cMarshMallowPermission.checkPermissionForPhoneState() == false) {
+                cMarshMallowPermission.requestPermissionForPhoneState();
+            }
+            if (cMarshMallowPermission.checkPermissionForPhoneState() == false)
+                return imei;
+
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                TelephonyManager telephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
+                if (telephonyManager != null) {
+                    imei = telephonyManager.getLine1Number();
                 }
             }
             return imei;

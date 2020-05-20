@@ -32,6 +32,8 @@ public class CEntityChild {
     private String InPhieuBao2_NgayHen;
     private String TBDongNuoc_Ngay;
     private String TBDongNuoc_NgayHen;
+    private boolean DCHD;
+    private int TienDuTruocDCHD;
 
     public CEntityChild() {
         MaHD = "";
@@ -65,6 +67,8 @@ public class CEntityChild {
         TBDongNuoc = false;
         TBDongNuoc_Ngay = "";
         TBDongNuoc_NgayHen = "";
+        DCHD=false;
+        TienDuTruocDCHD=0;
     }
 
     public String getMaHD() {
@@ -315,4 +319,19 @@ public class CEntityChild {
         this.TBDongNuoc_NgayHen = TBDongNuoc_NgayHen;
     }
 
+    public boolean isDCHD() {
+        return DCHD;
+    }
+
+    public void setDCHD(boolean DCHD) {
+        this.DCHD = DCHD;
+    }
+
+    public int getTienDuTruocDCHD() {
+        return TienDuTruocDCHD;
+    }
+
+    public void setTienDuTruocDCHD(int tienDuTruocDCHD) {
+        TienDuTruocDCHD = tienDuTruocDCHD;
+    }
 }

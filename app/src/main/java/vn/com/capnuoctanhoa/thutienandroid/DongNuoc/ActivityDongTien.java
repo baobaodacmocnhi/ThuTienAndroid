@@ -38,14 +38,14 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongTien extends AppCompatActivity {
     private TextView txtTongCong;
-    private EditText edtMaDN, edtPhiMoNuoc;
+    private EditText edtMaDN, edtPhiMoNuoc, edtTienDu;
     private Button btnDongTien, btnIn;
     private ListView lstView;
-    private CheckBox chkPhiMoNuoc;
+    private CheckBox chkPhiMoNuoc, chkTienDu;
     private ArrayList<CHoaDon> lstHoaDon;
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
-    private long TongCong = 0, PhiMoNuoc = 0;
+    private long TongCong = 0, PhiMoNuoc = 0, TienDu = 0;
     private String selectedMaHDs = "";
     private String lstMaHD = "";
     private String danhBo = "";
@@ -66,7 +66,9 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn = (Button) findViewById(R.id.btnIn);
         lstView = (ListView) findViewById(R.id.lstView);
         edtPhiMoNuoc = (EditText) findViewById(R.id.edtPhiMoNuoc);
+        edtTienDu = (EditText) findViewById(R.id.edtTienDu);
         chkPhiMoNuoc = (CheckBox) findViewById(R.id.chkPhiMoNuoc);
+        chkTienDu = (CheckBox) findViewById(R.id.chkTienDu);
 
 //        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
 //        myAsyncTask_thermal.execute();
@@ -103,6 +105,21 @@ public class ActivityDongTien extends AppCompatActivity {
                 } else {
                     edtPhiMoNuoc.setEnabled(false);
                     TongCong -= PhiMoNuoc;
+                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+                }
+            }
+        });
+
+        chkTienDu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (chkTienDu.isChecked() == true) {
+                    edtTienDu.setEnabled(true);
+                    TongCong -= TienDu;
+                    txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+                } else {
+                    edtTienDu.setEnabled(false);
+                    TongCong += TienDu;
                     txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
                 }
             }
@@ -289,10 +306,20 @@ public class ActivityDongTien extends AppCompatActivity {
                 }
                 if (PhiMoNuoc > 0) {
                     chkPhiMoNuoc.setChecked(true);
+                    edtPhiMoNuoc.setEnabled(true);
                 } else {
                     chkPhiMoNuoc.setChecked(false);
+                    edtPhiMoNuoc.setEnabled(false);
+                }
+                if (TienDu > 0) {
+                    chkTienDu.setChecked(true);
+                    edtTienDu.setEnabled(true);
+                } else {
+                    chkTienDu.setChecked(false);
+                    edtTienDu.setEnabled(false);
                 }
                 edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
+                edtTienDu.setText(CLocal.formatMoney(String.valueOf(TienDu), "đ"));
                 txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
 
                 arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
@@ -453,6 +480,7 @@ public class ActivityDongTien extends AppCompatActivity {
         protected String[] doInBackground(String... strings) {
             String result = "";
             String[] results = new String[]{};
+            Boolean XoaDCHD=false;
             switch (strings[0]) {
                 case "DongTien":
 //                    if (selectedMaHDs.equals("") == true)
@@ -484,7 +512,10 @@ public class ActivityDongTien extends AppCompatActivity {
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && selectedMaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
-                                result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN());
+                                XoaDCHD = false;
+                                if (CLocal.listHanhThuView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
+                                    XoaDCHD = true;
+                                result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(),XoaDCHD.toString());
                                 results = result.split(",");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
@@ -506,7 +537,7 @@ public class ActivityDongTien extends AppCompatActivity {
 
                             }
                         if (chkPhiMoNuoc.isChecked() == true) {
-                            result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN());
+                            result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(),XoaDCHD.toString());
                             results = result.split(",");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 CLocal.listDongNuocView.get(STT).setDongPhi(true);

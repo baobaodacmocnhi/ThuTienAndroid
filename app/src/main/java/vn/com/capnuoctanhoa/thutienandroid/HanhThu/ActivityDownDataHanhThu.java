@@ -291,7 +291,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, Void, Boolean> {
+    public class MyAsyncTask extends AsyncTask<Void, Void, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -306,7 +306,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
+        protected String[] doInBackground(Void... voids) {
             try {
                 if (LoaiDownData.equals("HoaDonDienTu") == false) {
                     if (CLocal.Doi == false && CLocal.ToTruong == false)
@@ -426,6 +426,13 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                         if (jsonObjectChild.has("PhiMoNuocThuHo") == true)
                                             enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo"));
+                                        if (jsonObjectChild.has("DCHD") == true) {
+                                            enChild.setDCHD(Boolean.parseBoolean(jsonObjectChild.getString("DCHD")));
+                                            if(enChild.isDCHD()==true) {
+                                             enParent.setDCHD(enChild.isDCHD());
+                                                enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectChild.getString("TienDuTruoc_DCHD")));
+                                            }
+                                        }
                                         //update parent
                                         if (jsonObjectChild.has("MaKQDN") == true)
                                             enParent.setMaKQDN(jsonObjectChild.getString("MaKQDN"));
@@ -481,25 +488,25 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.commit();
                 }
-                return true;
+                return new String[]{"true",""};
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDownDataHanhThu.this, ex.getMessage());
-                return false;
+
+                return new String[]{"false",ex.getMessage()};
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (aBoolean == true) {
+            if (Boolean.parseBoolean(strings[0]) == true) {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-
+                CLocal.showToastMessage(ActivityDownDataHanhThu.this,strings[1]);
             }
         }
     }
