@@ -490,7 +490,6 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 }
                 return new String[]{"true",""};
             } catch (Exception ex) {
-
                 return new String[]{"false",ex.getMessage()};
             }
         }
@@ -506,7 +505,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-                CLocal.showToastMessage(ActivityDownDataHanhThu.this,strings[1]);
+                CLocal.showPopupMessage(ActivityDownDataHanhThu.this,strings[1]);
             }
         }
     }

@@ -326,7 +326,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
 
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, String, Boolean> {
+    public class MyAsyncTask extends AsyncTask<Void, String, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -341,7 +341,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
         }
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
+        protected String[] doInBackground(Void... voids) {
             try {
                 if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.MaNV;
@@ -405,11 +405,11 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setViTri(jsonObject.getString("ViTri").replace("null", ""));
                         enParent.setLyDo(jsonObject.getString("LyDo").replace("null", ""));
                         if (jsonObject.getString("NgayDN1").replace("null", "").equals("") == false)
-                            enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(","").replace("/)",""))));
+                            enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(","").replace(")/",""))));
                         enParent.setChiSoDN1(jsonObject.getString("ChiSoDN1").replace("null", ""));
                         enParent.setNiemChi1(jsonObject.getString("NiemChi1").replace("null", ""));
                         if (jsonObject.getString("NgayMN").replace("null", "").equals("") == false)
-                            enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(","").replace("/)",""))));
+                            enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(","").replace(")/",""))));
                         enParent.setChiSoMN(jsonObject.getString("ChiSoMN").replace("null", ""));
 
                         //khởi tạo ArrayList CEntityChild
@@ -514,25 +514,24 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
                     editor.commit();
                 }
-                return true;
+                return new String[]{"true",""};
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDownDataDongNuoc.this, ex.getMessage());
-                return false;
+                return new String[]{"false",ex.getMessage()};
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (aBoolean == true) {
+            if (Boolean.parseBoolean(strings[0]) == true) {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-
+                CLocal.showPopupMessage(ActivityDownDataDongNuoc.this,strings[1]);
             }
         }
     }

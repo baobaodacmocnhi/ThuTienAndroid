@@ -393,6 +393,13 @@ public class ActivityDongTien extends AppCompatActivity {
                             CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setXoaDangNgan_Ngay_DienThoai(jsonObjectHoaDonTon.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
                         if (jsonObjectHoaDonTon.has("PhiMoNuoc") == true)
                             CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setPhiMoNuoc(jsonObjectHoaDonTon.getString("PhiMoNuoc"));
+                        if (jsonObjectHoaDonTon.has("DCHD") == true) {
+                            CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setDCHD(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("DCHD")));
+                            if(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).isDCHD()==true) {
+                                CLocal.listDongNuocView.get(STT).setDCHD(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).isDCHD());
+                                CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setTienDuTruocDCHD(Integer.parseInt(jsonObjectHoaDonTon.getString("TienDuTruoc_DCHD")));
+                            }
+                        }
                     } else {
                         CEntityChild enChild = new CEntityChild();
                         enChild.setMaHD(jsonObjectHoaDonTon.getString("MaHD"));
@@ -433,6 +440,13 @@ public class ActivityDongTien extends AppCompatActivity {
                             enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectHoaDonTon.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
                         if (jsonObjectHoaDonTon.has("PhiMoNuoc") == true)
                             enChild.setPhiMoNuoc(jsonObjectHoaDonTon.getString("PhiMoNuoc"));
+                        if (jsonObjectHoaDonTon.has("DCHD") == true) {
+                            enChild.setDCHD(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("DCHD")));
+                            if(enChild.isDCHD()==true) {
+                                CLocal.listDongNuocView.get(STT).setDCHD(enChild.isDCHD());
+                                enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectHoaDonTon.getString("TienDuTruoc_DCHD")));
+                            }
+                        }
                         CLocal.listDongNuocView.get(STT).getLstHoaDon().add(enChild);
                     }
                 }
@@ -513,7 +527,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && selectedMaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 XoaDCHD = false;
-                                if (CLocal.listHanhThuView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
+                                if (CLocal.listDongNuocView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
                                     XoaDCHD = true;
                                 result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(),XoaDCHD.toString());
                                 results = result.split(",");
