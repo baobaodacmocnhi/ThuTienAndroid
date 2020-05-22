@@ -36,78 +36,94 @@
         android:id="@+id/imgbtnHanhThu"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/imgbtnLenhHuy"
+        app:layout_constraintTop_toTopOf="@+id/imgbtnLenhHuy"
+        app:srcCompat="@drawable/ic_hanh_thu" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="48dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toStartOf="@+id/imgbtnDongNuoc"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtnDangNhap"
-        app:srcCompat="@drawable/ic_hanh_thu" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Hành Thu"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnHanhThu"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu" />
 
     <ImageButton
         android:id="@+id/imgbtnTamThu"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toStartOf="@+id/imgbtnTimKiem"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnHoaDonDienTu"
+        app:layout_constraintTop_toBottomOf="@+id/txtHoaDonDienTu"
         app:srcCompat="@drawable/ic_hanh_thu" />
 
     <ImageButton
         android:id="@+id/imgbtnDongNuoc"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgbtnHanhThu"
-        app:layout_constraintTop_toTopOf="@+id/imgbtnHanhThu"
+        app:layout_constraintStart_toEndOf="@+id/imgbtnHoaDonDienTu"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
         app:srcCompat="@drawable/ic_dong_nuoc" />
 
     <ImageButton
         android:id="@+id/imgbtnQuanLy"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnTamThu"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtnTamThu"
+        app:layout_constraintTop_toBottomOf="@+id/textView63"
         app:srcCompat="@drawable/ic_checklistx256" />
 
     <ImageButton
         android:id="@+id/imgbtnLenhHuy"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
-        app:layout_constraintTop_toTopOf="@+id/txtQuanLy"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnQuanLy"
+        app:layout_constraintTop_toBottomOf="@+id/txtQuanLy"
         app:srcCompat="@drawable/ic_lenhhuyx256" />
 
     <ImageButton
         android:id="@+id/imgbtnTimKiem"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="48dp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@+id/imgbtnDongNuoc"
-        app:layout_constraintTop_toTopOf="@+id/textView21"
+        app:layout_constraintTop_toTopOf="@+id/imgbtnTamThu"
         app:srcCompat="@drawable/ic_user_searchx256" />
 
     <ImageButton
         android:id="@+id/imgbtnHoaDonDienTu"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/imgbtnTimKiem"
-        app:layout_constraintTop_toTopOf="@+id/textView39"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtnDongNuoc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
         app:srcCompat="@drawable/ic_hanh_thu" />
 
     <TextView
@@ -124,21 +140,6 @@
         app:layout_constraintEnd_toEndOf="@+id/imgbtnDangNhap"
         app:layout_constraintStart_toStartOf="@+id/imgbtnDangNhap"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnDangNhap" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Hành Thu"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imgbtnHanhThu"
-        app:layout_constraintStart_toStartOf="@+id/imgbtnHanhThu"
-        app:layout_constraintTop_toBottomOf="@+id/imgbtnHanhThu" />
 
     <TextView
         android:id="@+id/textView63"
@@ -200,11 +201,11 @@
         android:id="@+id/txtHoaDonDienTu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Hóa Đơn Điện Tử"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Hóa Đơn\nĐiện Tử"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imgbtnHoaDonDienTu"

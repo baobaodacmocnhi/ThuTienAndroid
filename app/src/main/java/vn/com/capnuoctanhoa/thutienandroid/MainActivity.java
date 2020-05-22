@@ -235,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
             txtQuanLy.setVisibility(View.GONE);
             imgbtnLenhHuy.setVisibility(View.GONE);
             txtLenhHuy.setVisibility(View.GONE);
-            imgbtnHoaDonDienTu.setVisibility(View.GONE);
-            txtHoaDonDienTu.setVisibility(View.GONE);
+//            imgbtnHoaDonDienTu.setVisibility(View.GONE);
+//            txtHoaDonDienTu.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
@@ -252,19 +252,19 @@ public class MainActivity extends AppCompatActivity {
                     txtQuanLy.setVisibility(View.VISIBLE);
                     imgbtnLenhHuy.setVisibility(View.VISIBLE);
                     txtLenhHuy.setVisibility(View.VISIBLE);
-                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
                     CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
-                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
-                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
+//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
