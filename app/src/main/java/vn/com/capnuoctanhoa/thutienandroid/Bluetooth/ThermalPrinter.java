@@ -617,9 +617,9 @@ public class ThermalPrinter {
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1));
             }
             String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
-            stringBuilder.append(printEZAppend("Để được cung cấp nước liên tục đề nghị Quý khách vui lòng thanh toán trước ngày " + str[0], 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Để được cung cấp nước liên tục đề nghị Quý khách vui lòng thanh toán trước ngày " + str[0], 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Nếu quá thời hạn trên khách hàng chưa thanh toán, Công ty sẽ tạm ngưng cung cấp nước theo quy định.", 1, toadoY, 0, 1, 1));
-            stringBuilder.append(printEZAppend("Mọi thắc mắc đề nghị Quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước", 1, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Mọi thắc mắc đề nghị Quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày ngưng cung cấp nước", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Trân trọng kính chào.", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
@@ -707,7 +707,7 @@ public class ThermalPrinter {
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1));
             }
             stringBuilder.append(printDotFeed_EZAppend());
-            stringBuilder.append(printEZAppend("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.", 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Công ty tiến hành mở nước khi Quý khách hàng đã thanh toán hết khoản nợ trên và chi phí mở nước là " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Trân trọng kính chào.", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
@@ -1418,7 +1418,7 @@ public class ThermalPrinter {
             byteStream.write((str[0] + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(("Nếu quá thời hạn trên khách hàng chưa thanh toán, Công ty sẽ tạm ngưng cung cấp nước theo quy định.\n").getBytes());
-            byteStream.write(("Mọi thắc mắc đề nghị Quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày cung cấp nước\n").getBytes());
+            byteStream.write(("Mọi thắc mắc đề nghị Quý khách hàng liên hệ tại Công ty hoặc Tổng đài trước ngày ngưng cung cấp nước\n").getBytes());
             byteStream.write(("Trân trọng kính chào.\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
