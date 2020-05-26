@@ -766,6 +766,17 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     }
 
     public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityHoaDonDienTu_ThuTien.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang kết nối máy in");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -777,6 +788,15 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+        }
+
     }
 
     public class MyAsyncTask_XuLyTrucTiep extends AsyncTask<String, Void, String[]> {

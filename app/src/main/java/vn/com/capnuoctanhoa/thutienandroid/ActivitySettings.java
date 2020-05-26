@@ -1,8 +1,11 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,16 +47,14 @@ public class ActivitySettings extends AppCompatActivity {
         radEZ = (RadioButton) findViewById(R.id.radEZ);
         radESC = (RadioButton) findViewById(R.id.radESC);
         radGroupMethodPrinter = (RadioGroup) findViewById(R.id.radGroupMethodPrinter);
-
-        MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
-        myAsyncTask_thermal.execute();
-//        thermalPrinter=new ThermalPrinter(ActivitySettings.this);
-
         edtMayInDaChon.setText(CLocal.ThermalPrinter);
+
         btnGetThermal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadListView();
+                MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+                myAsyncTask_thermal.execute();
+
 
 //                String str="Bằng chữ: một trăm năm mươi hai ng";
 //                CLocal.showPopupMessage(ActivitySettings.this,String.valueOf(str.length()));
@@ -170,11 +171,33 @@ public class ActivitySettings extends AppCompatActivity {
     }
 
     public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivitySettings.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang kết nối máy in");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            thermalPrinter = new ThermalPrinter(ActivitySettings.this);
+            if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+                thermalPrinter = new ThermalPrinter(ActivitySettings.this);
             return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            loadListView();
         }
     }
 }
