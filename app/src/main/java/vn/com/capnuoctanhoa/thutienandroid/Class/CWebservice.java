@@ -86,7 +86,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String dangNhaps(String Username, String Password,String IMEI, String UID) {
+    public String dangNhaps(String Username, String Password,String IDMobile, String UID) {
         String SOAP_ACTION = "http://tempuri.org/DangNhaps";
         String OPERATION_NAME = "DangNhaps";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -104,8 +104,8 @@ public class CWebservice {
         request.addProperty(pi);
 
         pi = new PropertyInfo();
-        pi.setName("IMEI");
-        pi.setValue(IMEI);
+        pi.setName("IDMobile");
+        pi.setValue(IDMobile);
         pi.setType(String.class);
         request.addProperty(pi);
 

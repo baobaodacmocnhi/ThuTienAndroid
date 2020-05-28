@@ -383,7 +383,7 @@
             android:layout_marginRight="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="3"
+            android:text="2"
             android:textColor="@color/colorDanhBo"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnPhieuBao2"
