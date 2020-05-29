@@ -505,7 +505,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-                CLocal.showPopupMessage(ActivityDownDataHanhThu.this,strings[1]);
+                CLocal.showPopupMessage(ActivityDownDataHanhThu.this,strings[1],"center");
             }
         }
     }

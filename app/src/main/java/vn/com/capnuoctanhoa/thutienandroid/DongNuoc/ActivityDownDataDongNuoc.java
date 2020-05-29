@@ -531,7 +531,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-                CLocal.showPopupMessage(ActivityDownDataDongNuoc.this,strings[1]);
+                CLocal.showPopupMessage(ActivityDownDataDongNuoc.this,strings[1],"center");
             }
         }
     }

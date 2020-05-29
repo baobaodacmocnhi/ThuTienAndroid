@@ -598,9 +598,9 @@ public class ActivityDongTien extends AppCompatActivity {
             }
             if (strings[0].equals("") == false)
                 if (Boolean.parseBoolean(strings[0]) == true) {
-                    CLocal.showPopupMessage(ActivityDongTien.this, "THÀNH CÔNG");
+                    CLocal.showPopupMessage(ActivityDongTien.this, "THÀNH CÔNG","center");
                 } else if (Boolean.parseBoolean(strings[0]) == false)
-                    CLocal.showPopupMessage(ActivityDongTien.this, "THẤT BẠI\n" + strings[1]);
+                    CLocal.showPopupMessage(ActivityDongTien.this, "THẤT BẠI\n" + strings[1],"center");
         }
 
     }

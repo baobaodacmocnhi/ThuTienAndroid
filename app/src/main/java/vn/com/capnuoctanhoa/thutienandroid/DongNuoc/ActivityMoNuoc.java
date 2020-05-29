@@ -419,7 +419,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            CLocal.showPopupMessage(ActivityMoNuoc.this, s);
+            CLocal.showPopupMessage(ActivityMoNuoc.this, s,"center");
         }
 
     }

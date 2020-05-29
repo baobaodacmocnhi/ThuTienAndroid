@@ -248,7 +248,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 if (CLocal.SyncTrucTiep == false) {
                     MyAsyncTask_XuLyTon myAsyncTask_xuLyTon = new MyAsyncTask_XuLyTon();
                 } else
-                    CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tính Năng này không hoạt động khi Đồng Bộ Trực Tiếp");
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tính Năng này không hoạt động khi Đồng Bộ Trực Tiếp","center");
                 return true;
             default:
                 break;

@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                             MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                             myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
                         } else
-                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App");
+                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App","center");
                     }
                 });
                 AlertDialog alertDialog = builder.create();

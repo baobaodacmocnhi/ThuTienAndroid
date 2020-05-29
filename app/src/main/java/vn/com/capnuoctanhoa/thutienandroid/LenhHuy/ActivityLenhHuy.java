@@ -365,7 +365,7 @@ public class ActivityLenhHuy extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (s.equals("false") == false)
-                CLocal.showPopupMessage(ActivityLenhHuy.this, s);
+                CLocal.showPopupMessage(ActivityLenhHuy.this, s,"center");
         }
     }
 

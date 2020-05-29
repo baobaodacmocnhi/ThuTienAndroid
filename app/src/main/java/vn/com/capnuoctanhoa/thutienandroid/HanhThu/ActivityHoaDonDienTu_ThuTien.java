@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 
 import androidx.appcompat.app.AlertDialog;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,6 +26,7 @@ import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -295,7 +298,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                                     btnSau.performClick();
                                                 } else
-                                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi", "center");
                                             }
                                         }
                                     }
@@ -308,7 +311,13 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-
+                    Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+                    Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+                    layoutParams.weight = 10;
+                    layoutParams.gravity = Gravity.CENTER;
+                    btnPositive.setLayoutParams(layoutParams);
+                    btnNegative.setLayoutParams(layoutParams);
                 } catch (Exception ex) {
                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, ex.getMessage());
                 }
@@ -358,7 +367,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi", "center");
                             }
                         }
                     }
@@ -417,7 +426,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi", "center");
                             }
                         }
                     }
@@ -476,7 +485,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
-                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi", "center");
                             }
                         }
                     }
@@ -531,7 +540,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                     flag = false;
                                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                                 } else
-                                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi");
+                                                    CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "Đã Xử Lý Rồi", "center");
                                             }
                                         }
                                     }
@@ -980,10 +989,38 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (Boolean.parseBoolean(strings[0]) == true) {
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG");
-                btnSau.performClick();
+//                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG","center");
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityHoaDonDienTu_ThuTien.this);
+                builder.setTitle("Thông Báo");
+                builder.setMessage("THÀNH CÔNG")
+                        .setCancelable(false)
+                        .setNegativeButton("TRƯỚC", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                btnTruoc.performClick();
+                            }
+                        })
+                        .setPositiveButton("SAU", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                btnSau.performClick();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                TextView textView = (TextView) alert.findViewById(android.R.id.message);
+                textView.setTextSize(20);
+                textView.setTypeface(null, Typeface.BOLD);
+                textView.setGravity(Gravity.CENTER);
+
+                Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+                layoutParams.weight = 10;
+                layoutParams.gravity = Gravity.CENTER;
+                btnPositive.setLayoutParams(layoutParams);
+                btnNegative.setLayoutParams(layoutParams);
             } else
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[1]);
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[1], "center");
         }
     }
 

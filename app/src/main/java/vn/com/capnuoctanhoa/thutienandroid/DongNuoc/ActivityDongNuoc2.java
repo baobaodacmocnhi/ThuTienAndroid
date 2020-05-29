@@ -430,7 +430,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            CLocal.showPopupMessage(ActivityDongNuoc2.this, s);
+            CLocal.showPopupMessage(ActivityDongNuoc2.this, s,"center");
         }
 
     }

@@ -52,7 +52,7 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
                     myAsyncTask.execute("update");
                 }
                 else
-                    CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this,"Lỗi Danh Bộ");
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this,"Lỗi Danh Bộ","center");
             }
         });
     }
@@ -123,7 +123,7 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (strings[0].equals("update") == true) {
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this, strings[1]);
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this, strings[1],"center");
             }
         }
     }

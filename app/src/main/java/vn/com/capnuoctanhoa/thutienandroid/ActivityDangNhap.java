@@ -204,7 +204,7 @@ public class ActivityDangNhap extends AppCompatActivity {
 //                CLocal.showPopupMessage(ActivityDangNhap.this, "THÀNH CÔNG");
                 finish();
             } else
-                CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI");
+                CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI","center");
         }
     }
 }

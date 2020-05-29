@@ -59,7 +59,7 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
                                 if (ThermalPrinter.getBluetoothDevice() != null)
                                     ThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
                 } else
-                    CLocal.showPopupMessage(ActivityHoaDonDienTu_In.this, "Lỗi STT");
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_In.this, "Lỗi STT","center");
             }
         });
     }

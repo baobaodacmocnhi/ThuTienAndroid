@@ -36,7 +36,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -217,6 +219,12 @@ public class CLocal {
                 textView.setGravity(Gravity.LEFT);
                 break;
         }
+
+        Button btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        LinearLayout parent = (LinearLayout) btnPositive.getParent();
+        parent.setGravity(Gravity.CENTER_HORIZONTAL);
+        View leftSpacer = parent.getChildAt(1);
+        leftSpacer.setVisibility(View.GONE);
     }
 
     public static void showToastMessage(Activity activity, String message) {
