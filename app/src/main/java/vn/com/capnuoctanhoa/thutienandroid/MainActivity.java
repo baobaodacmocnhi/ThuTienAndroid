@@ -17,10 +17,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -331,8 +334,15 @@ public class MainActivity extends AppCompatActivity {
                             CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App","center");
                     }
                 });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                AlertDialog alert = builder.create();
+                alert.show();
+                Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+                layoutParams.weight = 10;
+                layoutParams.gravity = Gravity.CENTER;
+                btnPositive.setLayoutParams(layoutParams);
+                btnNegative.setLayoutParams(layoutParams);
             }
         } catch (Exception e) {
             e.printStackTrace();

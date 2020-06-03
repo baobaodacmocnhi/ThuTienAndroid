@@ -9,6 +9,7 @@ public class CEntityChild {
     private String TongCong;
     private String GiaBieu;
     private String DinhMuc;
+    private String Code;
     private String Co;
     private String CSC;
     private String CSM;
@@ -44,6 +45,7 @@ public class CEntityChild {
         TongCong = "";
         GiaBieu = "";
         DinhMuc = "";
+        Code="";
         Co="";
         CSC = "";
         CSM = "";
@@ -133,6 +135,14 @@ public class CEntityChild {
 
     public void setDinhMuc(String dinhMuc) {
         DinhMuc = dinhMuc;
+    }
+
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
     }
 
     public String getCo() {

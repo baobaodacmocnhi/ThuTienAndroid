@@ -8,6 +8,7 @@ public class CEntityParent {
     private String DanhBo;
     private String HoTen;
     private String DiaChi;
+    private String DiaChiDHN;
     private String ModifyDate;
     private boolean ThuHo;
     private boolean TamThu;
@@ -53,6 +54,7 @@ public class CEntityParent {
         MLT = "";
         DanhBo = "";
         HoTen = "";
+        DiaChiDHN="";
         DiaChi = "";
         ModifyDate = "";
         ThuHo = false;
@@ -133,6 +135,14 @@ public class CEntityParent {
 
     public void setDiaChi(String diaChi) {
         DiaChi = diaChi;
+    }
+
+    public String getDiaChiDHN() {
+        return DiaChiDHN;
+    }
+
+    public void setDiaChiDHN(String diaChiDHN) {
+        DiaChiDHN = diaChiDHN;
     }
 
     public String getModifyDate() {
@@ -453,6 +463,7 @@ public class CEntityParent {
         DanhBo = entityParent.getDanhBo();
         HoTen = entityParent.getHoTen();
         DiaChi = entityParent.getDiaChi();
+        DiaChiDHN = entityParent.getDiaChiDHN();
         ModifyDate = entityParent.getModifyDate();
         ThuHo = entityParent.isThuHo();
         TamThu = entityParent.isTamThu();

@@ -437,6 +437,8 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                         enChild.setCSC(jsonObjectChild.getString("CSC"));
                                     if (jsonObjectChild.has("CSM") == true)
                                         enChild.setCSM(jsonObjectChild.getString("CSM"));
+                                    if (jsonObjectChild.has("Code") == true)
+                                        enChild.setCode(jsonObjectChild.getString("Code"));
                                     if (jsonObjectChild.has("TieuThu") == true)
                                         enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
                                     if (jsonObjectChild.has("TuNgay") == true)

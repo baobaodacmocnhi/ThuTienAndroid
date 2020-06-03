@@ -46,7 +46,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     //    private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
-    private Button btnDongNuoc, btnIn;
+    private Button btnDongNuoc, btnIn,btnPhieuBao2;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
     private Bitmap imgCapture;
@@ -89,6 +89,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
         btnDongNuoc = (Button) findViewById(R.id.btnDongNuoc);
         btnIn = (Button) findViewById(R.id.btnIn);
+        btnPhieuBao2 = (Button) findViewById(R.id.btnPhieuBao2);
         chkButChi = (CheckBox) findViewById(R.id.chkButChi);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkKhoaKhac = (CheckBox) findViewById(R.id.chkKhoaKhac);
@@ -189,6 +190,16 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
                     if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
                         thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+            }
+        });
+
+        btnPhieuBao2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
+                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
+                        thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
             }
         });
 
