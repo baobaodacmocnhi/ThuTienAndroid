@@ -168,8 +168,8 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thermalPrinter = new ThermalPrinter(ActivityDongNuoc2.this);
-                    if (thermalPrinter != null&&thermalPrinter.getBluetoothDevice()!=null)
+                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+                    thermalPrinter = new ThermalPrinter(ActivityDongNuoc2.this);
                         if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
                         thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }

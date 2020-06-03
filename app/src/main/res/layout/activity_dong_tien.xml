@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".DongNuoc.ActivityDongTien">
 
+    <Button
+        android:id="@+id/btnPhieuBao2"
+        style="@style/ButtonThuTien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nợ Tiền Nước"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnIn" />
+
     <CheckBox
         android:id="@+id/chkTienDu"
         android:layout_width="wrap_content"
