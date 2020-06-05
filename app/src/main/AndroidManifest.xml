@@ -29,6 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <service
+            android:name=".Bluetooth.ThermalPrinterService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -176,7 +180,8 @@
             android:name=".HanhThu.ActivityHoaDonDienTu_GhiChu"
             android:label="Ghi Chú"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
-        <activity android:name=".HanhThu.ActivityHoaDonDienTu_In"
+        <activity
+            android:name=".HanhThu.ActivityHoaDonDienTu_In"
             android:label="In Hàng Loạt"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
     </application>

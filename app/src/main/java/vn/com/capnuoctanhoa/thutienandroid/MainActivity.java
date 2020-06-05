@@ -1,13 +1,20 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
@@ -46,6 +53,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.BluetoothPrintService;
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinterService;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
@@ -192,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
+
             CLocal.initialPhiMoNuoc();
             CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
 
@@ -274,6 +284,17 @@ public class MainActivity extends AppCompatActivity {
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_logout);
             }
+            if(CLocal.ThermalPrinter!=null&&CLocal.ThermalPrinter!="")
+            if (CLocal.checkBluetoothAvaible() == false) {
+                CLocal.setOnBluetooth(MainActivity.this);
+                finish();
+            } else if (CLocal.checkServiceRunning(getApplicationContext(), ThermalPrinterService.class) == false) {
+                Intent intent2 = new Intent(this, ThermalPrinterService.class);
+                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                startService(intent2);
+                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -331,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
                             MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                             myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
                         } else
-                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App","center");
+                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
                     }
                 });
                 AlertDialog alert = builder.create();
@@ -361,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Version":
-                    ws.updateLogin(CLocal.MaNV,CLocal.sharedPreferencesre.getString("UID", ""));
+                    ws.updateLogin(CLocal.MaNV, CLocal.sharedPreferencesre.getString("UID", ""));
                     return ws.getVersion();
             }
             return null;
@@ -609,4 +630,23 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(startApp);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            ThermalPrinterService.LocalBinder binder = (ThermalPrinterService.LocalBinder) service;
+            CLocal.thermalPrinterService = binder.getService();
+//            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+//            mBound = false;
+        }
+    };
 }

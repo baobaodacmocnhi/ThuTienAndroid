@@ -2,6 +2,7 @@ package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentUris;
@@ -28,6 +29,7 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinterService;
 
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -94,6 +96,7 @@ public class CLocal {
     public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
+    public static ThermalPrinterService thermalPrinterService;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -118,7 +121,7 @@ public class CLocal {
         editor.commit();
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
-        ThermalPrinter = "ESC";
+        ThermalPrinter = "";
         MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
         Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
@@ -159,6 +162,17 @@ public class CLocal {
             return false;
     }
 
+    public  static  boolean checkServiceRunning(Context context,Class<?> serviceClass)
+    {
+        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void openBluetoothSettings(Activity activity) {
         Intent intent = new Intent();
         intent.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
@@ -170,7 +184,7 @@ public class CLocal {
         activity.startActivityForResult(intent, 1);
     }
 
-    public static void showPopupMessage(Activity activity, String message) {
+    public static void showPopupMessage1(Activity activity, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);

@@ -5,9 +5,6 @@ import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,8 +53,9 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
                     if (tustt != -1 && denstt != -1 && tustt <= denstt && denstt < CLocal.listHanhThuView.size())
                         for (int i = tustt; i <= denstt; i++)
                             for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
-                                if (ThermalPrinter.getBluetoothDevice() != null)
-                                    ThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
+//                                if (ThermalPrinter.getBluetoothDevice() != null)
+//                                    ThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
+                                CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
                 } else
                     CLocal.showPopupMessage(ActivityHoaDonDienTu_In.this, "Lỗi STT","center");
             }

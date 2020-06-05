@@ -54,7 +54,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityMoNuoc.this);
     private int STT = -1;
-    private ThermalPrinter thermalPrinter;
+//    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +161,11 @@ public class ActivityMoNuoc extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-                    thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
+//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+//                    thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
                     if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
-                        thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
+//                        thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
+                        CLocal.thermalPrinterService.printMoNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -339,8 +340,8 @@ public class ActivityMoNuoc extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (thermalPrinter != null)
-            thermalPrinter.disconnectBluetoothDevice();
+//        if (thermalPrinter != null)
+//            thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
     }
 
@@ -349,7 +350,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
+//                thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityMoNuoc.this, ex.getMessage());
             }

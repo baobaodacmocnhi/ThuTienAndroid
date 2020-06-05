@@ -55,7 +55,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
     private int STT = -1;
-    private ThermalPrinter thermalPrinter;
+//    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,10 +185,11 @@ public class ActivityDongNuoc extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
-                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
-                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+//                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
+//                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
+//                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
+//                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+              CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -381,8 +382,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (thermalPrinter != null)
-            thermalPrinter.disconnectBluetoothDevice();
+//        if (thermalPrinter != null)
+//            thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
     }
 
@@ -391,7 +392,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
+//                thermalPrinter = new ThermalPrinter(ActivityDongNuoc.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDongNuoc.this, ex.getMessage());
             }

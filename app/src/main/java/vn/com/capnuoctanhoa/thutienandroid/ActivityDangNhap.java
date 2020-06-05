@@ -3,7 +3,9 @@ package vn.com.capnuoctanhoa.thutienandroid;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -72,13 +76,13 @@ public class ActivityDangNhap extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
 
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -103,7 +107,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTask extends AsyncTask<String, String, String> {
+    public class MyAsyncTask extends AsyncTask<String, String, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -118,60 +122,69 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String[] doInBackground(String... strings) {
             String result = "";
+            String[] results = new String[]{};
             switch (strings[0]) {
                 case "DangNhap":
                     try {
-                    result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(),CLocal.IDMobile, CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (result.isEmpty() == false&&result.equals("[]")==false&&result.contains("Connection refused")==false) {
-                        CLocal.initialCLocal();
-                        JSONArray jsonArray = new JSONArray(result);
-                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.putString("Username", jsonObject.getString("TaiKhoan"));
-                        editor.putString("Password", jsonObject.getString("MatKhau"));
-                        editor.putString("MaNV", jsonObject.getString("MaND"));
-                        editor.putString("HoTen", jsonObject.getString("HoTen"));
-                        editor.putString("MaTo", jsonObject.getString("MaTo"));
-                        editor.putString("DienThoai", jsonObject.getString("DienThoai"));
-                        editor.putString("jsonHanhThu", "");
-                        editor.putString("jsonDongNuoc", "");
-                        editor.putString("jsonMessage", "");
-                        if(Boolean.parseBoolean(jsonObject.getString("Doi"))==true)
+                        result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.IDMobile, CLocal.sharedPreferencesre.getString("UID", ""));
+                        results = result.split(";");
+//                        if (result.isEmpty() == false && result.equals("[]") == false && result.contains("Connection refused") == false)
+                        if (Boolean.parseBoolean(results[0]) == true)
                         {
-                            editor.putString("jsonTo", ws.getDSTo());
-                            editor.putString("jsonNhanVien", ws.getDSNhanVienDoi());
-                            editor.putBoolean("Doi",Boolean.parseBoolean(jsonObject.getString("Doi")));
-                        }
-                        if(Boolean.parseBoolean(jsonObject.getString("ToTruong"))==true)
-                        {
-                            editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
-                            editor.putBoolean("ToTruong",Boolean.parseBoolean(jsonObject.getString("ToTruong")));
-                        }
-                        editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
-                        editor.putBoolean("Login", true);
-                        editor.commit();
+                            CLocal.initialCLocal();
+                            JSONArray jsonArray = new JSONArray(results[1]);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                            editor.putString("Username", jsonObject.getString("TaiKhoan"));
+                            editor.putString("Password", jsonObject.getString("MatKhau"));
+                            editor.putString("MaNV", jsonObject.getString("MaND"));
+                            editor.putString("HoTen", jsonObject.getString("HoTen"));
+                            editor.putString("MaTo", jsonObject.getString("MaTo"));
+                            editor.putString("DienThoai", jsonObject.getString("DienThoai"));
+                            editor.putString("jsonHanhThu", "");
+                            editor.putString("jsonDongNuoc", "");
+                            editor.putString("jsonMessage", "");
+                            if (Boolean.parseBoolean(jsonObject.getString("Doi")) == true) {
+                                editor.putString("jsonTo", ws.getDSTo());
+                                editor.putString("jsonNhanVien", ws.getDSNhanVienDoi());
+                                editor.putBoolean("Doi", Boolean.parseBoolean(jsonObject.getString("Doi")));
+                            }
+                            if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true) {
+                                editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
+                                editor.putBoolean("ToTruong", Boolean.parseBoolean(jsonObject.getString("ToTruong")));
+                            }
+                            editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
+                            editor.putBoolean("Login", true);
+                            editor.commit();
 
-                        publishProgress("DangNhap");
-                        return "true";
-                    } else {
-                        return "false";
-                    }
+                            publishProgress("DangNhap");
+//                            return "true";
+                        }
+//                        else {
+//                            return "false";
+//                        }
+                        return results;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 case "DangXuat":
                     try {
-                    result=ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""),CLocal.sharedPreferencesre.getString("UID", ""));
-                    if (result.isEmpty() == false&&result.contains("Connection refused")==false) {
-                        CLocal.initialCLocal();
+                        result = ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+                        results = result.split(";");
+//                        if (result.isEmpty() == false && result.contains("Connection refused") == false)
+                        if (Boolean.parseBoolean(results[0]) == true)
+                        {
+                            CLocal.initialCLocal();
 
-                        publishProgress("DangXuat");
-                        return "true";
-                    } else {
-                        return "false";
-                    }
+                            publishProgress("DangXuat");
+//                            return "true";
+                        }
+//                        else {
+//                            return "false";
+//                        }
+                        return results;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -185,7 +198,7 @@ public class ActivityDangNhap extends AppCompatActivity {
             if (values != null) {
                 switch (values[0]) {
                     case "DangNhap":
-                            Reload();
+                        Reload();
                         break;
                     case "DangXuat":
                         CLocal.initialCLocal();
@@ -195,16 +208,16 @@ public class ActivityDangNhap extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String[] s) {
             super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (Boolean.parseBoolean(s) == true) {
+            if (Boolean.parseBoolean(s[0]) == true) {
 //                CLocal.showPopupMessage(ActivityDangNhap.this, "THÀNH CÔNG");
                 finish();
             } else
-                CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI","center");
+                CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI\n" + s[1], "center");
         }
     }
 }

@@ -51,7 +51,7 @@ public class ActivityDongTien extends AppCompatActivity {
     private String danhBo = "";
     private JSONArray jsonArrayHoaDonTon = null;
     private int STT = -1;
-    private ThermalPrinter thermalPrinter;
+//    private ThermalPrinter thermalPrinter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,18 +152,19 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
+//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+//                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+                CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
             }
         });
 
         btnPhieuBao2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+//                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+//                thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -490,8 +491,8 @@ public class ActivityDongTien extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (thermalPrinter != null)
-            thermalPrinter.disconnectBluetoothDevice();
+//        if (thermalPrinter != null)
+//            thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
     }
 
@@ -500,7 +501,7 @@ public class ActivityDongTien extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
+//                thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDongTien.this, ex.getMessage());
             }

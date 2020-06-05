@@ -367,7 +367,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 
                             enParent.setHoTen(jsonObject.getString("HoTen"));
                             enParent.setDiaChi(jsonObject.getString("DiaChi"));
-                            enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN"));
+                            if (jsonObject.has("DiaChiDHN") == true)
+                                enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN"));
 
                             //khởi tạo ArrayList CEntityChild
                             ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
@@ -431,8 +432,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             enChild.setPhiMoNuocThuHo(jsonObjectChild.getString("PhiMoNuocThuHo"));
                                         if (jsonObjectChild.has("DCHD") == true) {
                                             enChild.setDCHD(Boolean.parseBoolean(jsonObjectChild.getString("DCHD")));
-                                            if(enChild.isDCHD()==true) {
-                                             enParent.setDCHD(enChild.isDCHD());
+                                            if (enChild.isDCHD() == true) {
+                                                enParent.setDCHD(enChild.isDCHD());
                                                 enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectChild.getString("TienDuTruoc_DCHD")));
                                             }
                                         }
@@ -491,9 +492,9 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                     editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
                     editor.commit();
                 }
-                return new String[]{"true",""};
+                return new String[]{"true", ""};
             } catch (Exception ex) {
-                return new String[]{"false",ex.getMessage()};
+                return new String[]{"false", ex.getMessage()};
             }
         }
 
@@ -508,7 +509,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-                CLocal.showPopupMessage(ActivityDownDataHanhThu.this,strings[1],"center");
+                CLocal.showPopupMessage(ActivityDownDataHanhThu.this, strings[1], "center");
             }
         }
     }
