@@ -84,6 +84,8 @@
         <item>In TB Đóng Nước</item>
         <item>Xóa Đăng Ngân</item>
         <item>>= 2 HĐ</item>
+        <item>HĐ = 0</item>
+        <item>HĐ Giấy</item>
     </string-array>
     <string-array name="filter_dongnuoc_array">
         <item>Tất Cả</item>

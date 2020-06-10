@@ -22,6 +22,7 @@ public class CEntityChild {
     private boolean GiaiTrach;
     private boolean TBDongNuoc;
     private boolean LenhHuy;
+    private boolean LenhHuyCat;
     private String TinhTrang;
     private String PhiMoNuoc;
     private String PhiMoNuocThuHo;
@@ -57,6 +58,7 @@ public class CEntityChild {
         TamThu = false;
         GiaiTrach = false;
         LenhHuy = false;
+        LenhHuyCat = false;
         TinhTrang = "";
         PhiMoNuoc = "0";
         PhiMoNuocThuHo = "0";
@@ -239,6 +241,14 @@ public class CEntityChild {
 
     public void setLenhHuy(boolean lenhHuy) {
         LenhHuy = lenhHuy;
+    }
+
+    public boolean isLenhHuyCat() {
+        return LenhHuyCat;
+    }
+
+    public void setLenhHuyCat(boolean lenhHuyCat) {
+        LenhHuyCat = lenhHuyCat;
     }
 
     public boolean isDangNgan_DienThoai() {

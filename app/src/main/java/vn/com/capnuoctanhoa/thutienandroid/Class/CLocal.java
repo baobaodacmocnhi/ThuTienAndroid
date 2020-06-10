@@ -419,7 +419,7 @@ public class CLocal {
     //update tình trạng parent
     public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, int i) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, LenhHuyCat = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : lst.get(i).getLstHoaDon()) {
             if (item.isGiaiTrach() == true)
                 GiaiTrach++;
@@ -429,8 +429,11 @@ public class CLocal {
                 ThuHo++;
                 if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
                     PhiMoNuocThuHo++;
-            } else if (item.isLenhHuy() == true)
+            } else if (item.isLenhHuy() == true) {
                 LenhHuy++;
+                if (item.isLenhHuyCat() == true)
+                    LenhHuyCat++;
+            }
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
             if (item.getInPhieuBao2_Ngay().equals("") == false)
@@ -446,6 +449,7 @@ public class CLocal {
         lst.get(i).setTamThu(false);
         lst.get(i).setThuHo(false);
         lst.get(i).setLenhHuy(false);
+        lst.get(i).setLenhHuyCat(false);
         lst.get(i).setTBDongNuoc(false);
         lst.get(i).setDangNgan_DienThoai(false);
         lst.get(i).setTinhTrang("");
@@ -464,6 +468,8 @@ public class CLocal {
             lst.get(i).setTinhTrang(str);
         } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setLenhHuy(true);
+            if (LenhHuyCat == lst.get(i).getLstHoaDon().size())
+                lst.get(i).setLenhHuyCat(true);
         } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setTBDongNuoc(true);
         } else if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
@@ -501,7 +507,7 @@ public class CLocal {
     //update tình trạng parent
     public static CEntityParent updateTinhTrangParent(CEntityParent en) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, PhiMoNuocThuHo = 0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0,LenhHuyCat = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : en.getLstHoaDon()) {
             if (item.isGiaiTrach() == true)
                 GiaiTrach++;
@@ -511,8 +517,11 @@ public class CLocal {
                 ThuHo++;
                 if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
                     PhiMoNuocThuHo++;
-            } else if (item.isLenhHuy() == true)
+            } else if (item.isLenhHuy() == true) {
                 LenhHuy++;
+                if(item.isLenhHuyCat()==true)
+                    LenhHuyCat++;
+            }
             else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
             if (item.getInPhieuBao2_Ngay().equals("") == false)
@@ -528,6 +537,7 @@ public class CLocal {
         en.setTamThu(false);
         en.setThuHo(false);
         en.setLenhHuy(false);
+        en.setLenhHuyCat(false);
         en.setTBDongNuoc(false);
         en.setDangNgan_DienThoai(false);
         en.setTinhTrang("");
@@ -546,6 +556,8 @@ public class CLocal {
             en.setTinhTrang(str);
         } else if (LenhHuy == en.getLstHoaDon().size()) {
             en.setLenhHuy(true);
+            if (LenhHuyCat == en.getLstHoaDon().size())
+                en.setLenhHuyCat(true);
         } else if (TBDongNuoc == en.getLstHoaDon().size()) {
             en.setTBDongNuoc(true);
         } else if (InPhieuBao2 == en.getLstHoaDon().size()) {

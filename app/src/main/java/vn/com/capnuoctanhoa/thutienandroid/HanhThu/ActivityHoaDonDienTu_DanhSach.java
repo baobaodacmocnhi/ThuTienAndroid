@@ -248,7 +248,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 if (CLocal.SyncTrucTiep == false) {
                     MyAsyncTask_XuLyTon myAsyncTask_xuLyTon = new MyAsyncTask_XuLyTon();
                 } else
-                    CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tính Năng này không hoạt động khi Đồng Bộ Trực Tiếp","center");
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "Tính Năng này không hoạt động khi Đồng Bộ Trực Tiếp", "center");
                 return true;
             default:
                 break;
@@ -326,6 +326,40 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             if (CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false && CLocal.listHanhThu.get(i).getLstHoaDon().size() >= 2) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "HĐ = 0":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            boolean flag=false;
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                                if (Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
+                                    flag=true;
+                                }
+                            if(flag==true)
+                            {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "HĐ Giấy":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            boolean flag=false;
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
+                            {
+                                String[]Kys=CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy().split("/");
+                                if(Integer.parseInt(Kys[1])<2020  || (Integer.parseInt(Kys[1])==2020 && Integer.parseInt(Kys[0])<=6))
+                                    flag=true;
+                            }
+                            if(flag==true)
+                            {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }

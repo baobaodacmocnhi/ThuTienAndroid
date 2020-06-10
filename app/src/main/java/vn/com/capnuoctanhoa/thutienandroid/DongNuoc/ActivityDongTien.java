@@ -325,7 +325,7 @@ public class ActivityDongTien extends AppCompatActivity {
                     CHoaDon entity = new CHoaDon();
                     entity.setMaHD(en.getLstHoaDon().get(i).getMaHD());
                     entity.setKy(en.getLstHoaDon().get(i).getKy());
-                    entity.setTongCong(en.getLstHoaDon().get(i).getTongCong());
+                    entity.setTongCong(String.valueOf(Integer.parseInt(en.getLstHoaDon().get(i).getTongCong()) + en.getLstHoaDon().get(i).getTienDuTruocDCHD()));
                     lstHoaDon.add(entity);
 
                     if (lstMaHD.isEmpty() == true)
@@ -336,6 +336,7 @@ public class ActivityDongTien extends AppCompatActivity {
                     TongCong += Long.parseLong(entity.getTongCong());
                     arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ"));
                     PhiMoNuoc = Integer.parseInt(en.getLstHoaDon().get(i).getPhiMoNuoc());
+                    TienDu = en.getLstHoaDon().get(i).getTienDuTruocDCHD();
                 }
                 if (PhiMoNuoc > 0) {
                     chkPhiMoNuoc.setChecked(true);

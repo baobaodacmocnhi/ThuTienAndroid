@@ -42,13 +42,13 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
-    private TextView txtTinhTrang, txtTongHD;
+    private TextView txtTinhTrang, txtLenhHuy, txtTongHD;
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtInPhieuBao_Ngay, edtInPhieuBao2_Ngay, edtInPhieuBao2_NgayHen, edtInTBDongNuoc_Ngay, edtInTBDongNuoc_NgayHen, edtSoNgayHen, edtPhiMoNuoc, edtTienDu, edtTongCong;
     private ListView lstView;
     private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private CheckBox chkPhiMoNuoc, chkTienDu;
     private Integer STT = -1;
-//    private ThermalPrinter thermalPrinter = null;
+    //    private ThermalPrinter thermalPrinter = null;
     private CWebservice ws;
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong = 0, PhiMoNuoc = 0, TienDu = 0;
@@ -63,6 +63,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtTinhTrang = (TextView) findViewById(R.id.txtTinhTrang);
+        txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         edtMLT = (EditText) findViewById(R.id.edtMLT);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
@@ -657,6 +658,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 if (STT >= 0 && STT < CLocal.listHanhThuView.size()) {
                     CEntityParent item = CLocal.listHanhThuView.get(STT);
                     txtTinhTrang.setText(item.getTinhTrang());
+                    if (item.isLenhHuy() == true) {
+                        if (item.isLenhHuyCat() == true)
+                            txtLenhHuy.setText("Lệnh Hủy có Cắt");
+                        else
+                            txtLenhHuy.setText("Lệnh Hủy");
+                    }
+                    else
+                        txtLenhHuy.setText("");
                     txtTongHD.setText(String.valueOf(item.getLstHoaDon().size()) + " hđ");
                     edtMLT.setText(item.getMLT());
                     edtDanhBo.setText(item.getDanhBo());
@@ -675,7 +684,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         CHoaDon entity = new CHoaDon();
                         entity.setMaHD(item.getLstHoaDon().get(j).getMaHD());
                         entity.setKy(item.getLstHoaDon().get(j).getKy());
-                        entity.setTongCong(item.getLstHoaDon().get(j).getTongCong());
+                        entity.setTongCong(String.valueOf(Integer.parseInt(item.getLstHoaDon().get(j).getTongCong()) + item.getLstHoaDon().get(j).getTienDuTruocDCHD()));
                         entity.setSelected(true);
                         lstHoaDon.add(entity);
 
@@ -684,8 +693,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         else
                             selectedMaHDs += "," + item.getLstHoaDon().get(j).getMaHD();
 
-                        TongCong += Long.parseLong(item.getLstHoaDon().get(j).getTongCong());
-                        arrayList.add(item.getLstHoaDon().get(j).getKy() + " : " + CLocal.formatMoney(item.getLstHoaDon().get(j).getTongCong(), "đ"));
+                        TongCong += Long.parseLong(entity.getTongCong());
+                        arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ"));
                         PhiMoNuoc = Integer.parseInt(item.getLstHoaDon().get(j).getPhiMoNuoc());
                         TienDu = item.getLstHoaDon().get(j).getTienDuTruocDCHD();
                     }
@@ -704,7 +713,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         edtTienDu.setEnabled(false);
                     }
                     edtPhiMoNuoc.setText(CLocal.formatMoney(String.valueOf(PhiMoNuoc), "đ"));
-                    TongCong += TienDu;
+//                    TongCong += TienDu;
                     edtTienDu.setText(CLocal.formatMoney(String.valueOf(TienDu), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
                     if (item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {

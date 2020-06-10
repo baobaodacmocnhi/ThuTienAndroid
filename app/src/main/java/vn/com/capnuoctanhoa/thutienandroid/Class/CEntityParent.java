@@ -15,6 +15,7 @@ public class CEntityParent {
     private boolean GiaiTrach;
     private boolean TBDongNuoc;
     private boolean LenhHuy;
+    private boolean LenhHuyCat;
     private String TinhTrang;
     private boolean DangNgan_DienThoai;
     private boolean InPhieuBao;
@@ -61,6 +62,7 @@ public class CEntityParent {
         TamThu = false;
         GiaiTrach = false;
         LenhHuy = false;
+        LenhHuyCat = false;
         TinhTrang = "";
         DangNgan_DienThoai = false;
         InPhieuBao = false;
@@ -191,6 +193,14 @@ public class CEntityParent {
 
     public void setLenhHuy(boolean lenhHuy) {
         LenhHuy = lenhHuy;
+    }
+
+    public boolean isLenhHuyCat() {
+        return LenhHuyCat;
+    }
+
+    public void setLenhHuyCat(boolean lenhHuyCat) {
+        LenhHuyCat = lenhHuyCat;
     }
 
     public boolean isDangNgan_DienThoai() {
@@ -469,6 +479,7 @@ public class CEntityParent {
         TamThu = entityParent.isTamThu();
         GiaiTrach = entityParent.isGiaiTrach();
         LenhHuy = entityParent.isLenhHuy();
+        LenhHuyCat = entityParent.isLenhHuyCat();
         TinhTrang = entityParent.getTinhTrang();
         DangNgan_DienThoai = entityParent.isDangNgan_DienThoai();
         TBDongNuoc = entityParent.isTBDongNuoc();

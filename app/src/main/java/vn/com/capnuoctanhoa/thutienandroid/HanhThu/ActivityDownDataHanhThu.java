@@ -368,7 +368,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                             enParent.setHoTen(jsonObject.getString("HoTen"));
                             enParent.setDiaChi(jsonObject.getString("DiaChi"));
                             if (jsonObject.has("DiaChiDHN") == true)
-                                enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN"));
+                                enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN").replace("null", ""));
 
                             //khởi tạo ArrayList CEntityChild
                             ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
@@ -400,6 +400,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setThuHo(Boolean.parseBoolean(jsonObjectChild.getString("ThuHo")));
                                         if (jsonObjectChild.has("LenhHuy") == true)
                                             enChild.setLenhHuy(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuy")));
+                                        if (jsonObjectChild.has("LenhHuyCat") == true)
+                                            enChild.setLenhHuyCat(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuyCat")));
                                         if (jsonObjectChild.has("DangNgan_DienThoai") == true)
                                             enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
                                         if (jsonObjectChild.has("NgayGiaiTrach") == true)
