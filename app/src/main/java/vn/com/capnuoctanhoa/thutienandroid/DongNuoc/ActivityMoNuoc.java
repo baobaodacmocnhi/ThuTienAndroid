@@ -165,6 +165,7 @@ public class ActivityMoNuoc extends AppCompatActivity {
 //                    thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
                     if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
 //                        thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
+                        if(CLocal.thermalPrinterService!=null)
                         CLocal.thermalPrinterService.printMoNuoc(CLocal.listDongNuocView.get(STT));
             }
         });

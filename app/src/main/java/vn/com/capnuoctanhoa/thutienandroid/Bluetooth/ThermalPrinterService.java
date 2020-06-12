@@ -314,7 +314,7 @@ public class ThermalPrinterService extends Service {
 
     public void printThuTien(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connected(mSocket);
                 switch (CLocal.MethodPrinter) {
                     case "EZ":
@@ -331,7 +331,7 @@ public class ThermalPrinterService extends Service {
 
     public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connected(mSocket);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -348,7 +348,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -365,7 +365,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -382,7 +382,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao2(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -399,7 +399,7 @@ public class ThermalPrinterService extends Service {
 
     public void printTBDongNuoc(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -416,7 +416,7 @@ public class ThermalPrinterService extends Service {
 
     public void printDongNuoc(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -433,7 +433,7 @@ public class ThermalPrinterService extends Service {
 
     public void printDongNuoc2(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -450,7 +450,7 @@ public class ThermalPrinterService extends Service {
 
     public void printMoNuoc(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -467,7 +467,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhiMoNuoc(CEntityParent entityParent) {
         try {
-            if (mState != STATE_CONNECTED)
+            if (mConnectedThread==null|| mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":

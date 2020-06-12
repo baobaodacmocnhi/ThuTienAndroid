@@ -172,6 +172,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
 //                    thermalPrinter = new ThermalPrinter(ActivityDongNuoc2.this);
                         if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
 //                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                            if(CLocal.thermalPrinterService!=null)
                             CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });

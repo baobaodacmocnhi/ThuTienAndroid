@@ -189,6 +189,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
 //                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                if(CLocal.thermalPrinterService!=null)
               CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });

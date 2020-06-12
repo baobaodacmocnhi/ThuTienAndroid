@@ -154,9 +154,11 @@ public class ActivityDongTien extends AppCompatActivity {
             public void onClick(View v) {
 //                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
 //                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
-                if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
-                    CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+                if(CLocal.thermalPrinterService!=null) {
+                    CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
+                    if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
+                        CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+                }
             }
         });
 
@@ -166,6 +168,7 @@ public class ActivityDongTien extends AppCompatActivity {
 //                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
 //                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
 //                thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                if(CLocal.thermalPrinterService!=null)
                 CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
             }
         });
