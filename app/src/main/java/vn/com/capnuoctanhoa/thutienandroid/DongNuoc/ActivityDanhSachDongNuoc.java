@@ -355,6 +355,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
             listParent.add(enViewParent);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

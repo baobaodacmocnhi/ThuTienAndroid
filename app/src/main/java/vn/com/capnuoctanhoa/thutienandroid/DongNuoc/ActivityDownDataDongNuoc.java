@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -349,20 +351,24 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     CLocal.jsonDongNuoc = new JSONArray();
                     CLocal.jsonDongNuocChild = new JSONArray();
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        JSONArray jsonResult = new JSONArray(ws.getDSDongNuoc(String.valueOf(spnID_NhanVien.get(i)), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        JSONArray jsonResult = new JSONArray(ws.getDSDongNuoc(String.valueOf(spnID_NhanVien.get(i))));
+//                        JSONArray jsonResult = new JSONArray(ws.getDSDongNuoc(String.valueOf(spnID_NhanVien.get(i)), edtFromDate.getText().toString(), edtToDate.getText().toString()));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonDongNuoc.put(jsonObject);
                         }
-                        JSONArray jsonResult_Child = new JSONArray(ws.getDSCTDongNuoc(String.valueOf(spnID_NhanVien.get(i)), edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        JSONArray jsonResult_Child = new JSONArray(ws.getDSCTDongNuoc(String.valueOf(spnID_NhanVien.get(i))));
+//                        JSONArray jsonResult_Child = new JSONArray(ws.getDSCTDongNuoc(String.valueOf(spnID_NhanVien.get(i)), edtFromDate.getText().toString(), edtToDate.getText().toString()));
                         for (int j = 0; j < jsonResult_Child.length(); j++) {
                             JSONObject jsonObject = jsonResult_Child.getJSONObject(j);
                             CLocal.jsonDongNuocChild.put(jsonObject);
                         }
                     }
                 } else {
-                    CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
-                    CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                    CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV));
+                    CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV));
+//                    CLocal.jsonDongNuoc = new JSONArray(ws.getDSDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
+//                    CLocal.jsonDongNuocChild = new JSONArray(ws.getDSCTDongNuoc(selectedMaNV, edtFromDate.getText().toString(), edtToDate.getText().toString()));
                 }
                 if (CLocal.jsonDongNuoc != null) {
                     //khởi tạo ArrayList CEntityParent
@@ -405,12 +411,14 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         enParent.setViTri(jsonObject.getString("ViTri").replace("null", ""));
                         enParent.setLyDo(jsonObject.getString("LyDo").replace("null", ""));
                         if (jsonObject.getString("NgayDN1").replace("null", "").equals("") == false)
-                            enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(","").replace(")/",""))));
+                            enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoDN1(jsonObject.getString("ChiSoDN1").replace("null", ""));
                         enParent.setNiemChi1(jsonObject.getString("NiemChi1").replace("null", ""));
                         if (jsonObject.getString("NgayMN").replace("null", "").equals("") == false)
-                            enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(","").replace(")/",""))));
+                            enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoMN(jsonObject.getString("ChiSoMN").replace("null", ""));
+                        if (jsonObject.has("MaKQDN") == true)
+                            enParent.setMaKQDN(jsonObject.getString("MaKQDN"));
 
                         //khởi tạo ArrayList CEntityChild
                         ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
@@ -462,16 +470,13 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                         enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                     if (jsonObjectChild.has("DCHD") == true) {
                                         enChild.setDCHD(Boolean.parseBoolean(jsonObjectChild.getString("DCHD")));
-                                        if(enChild.isDCHD()==true) {
+                                        if (enChild.isDCHD() == true) {
                                             enParent.setDCHD(enChild.isDCHD());
                                             enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectChild.getString("TienDuTruoc_DCHD")));
                                         }
                                     }
                                     //update parent
-                                    if (jsonObjectChild.has("MaKQDN") == true)
-                                        enParent.setMaKQDN(jsonObjectChild.getString("MaKQDN"));
-                                    if (jsonObjectChild.has("DongPhi") == true)
-                                        enParent.setDongPhi(Boolean.parseBoolean(jsonObjectChild.getString("DongPhi")));
+
                                     listChild.add(enChild);
                                 }
                             }
@@ -516,9 +521,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
                     editor.commit();
                 }
-                return new String[]{"true",""};
+                return new String[]{"true", ""};
             } catch (Exception ex) {
-                return new String[]{"false",ex.getMessage()};
+                return new String[]{"false", ex.getMessage()};
             }
         }
 
@@ -533,7 +538,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             } else {
-                CLocal.showPopupMessage(ActivityDownDataDongNuoc.this,strings[1],"center");
+                CLocal.showPopupMessage(ActivityDownDataDongNuoc.this, strings[1], "center");
             }
         }
     }

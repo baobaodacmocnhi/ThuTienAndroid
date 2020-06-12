@@ -155,6 +155,8 @@ public class ActivityDongTien extends AppCompatActivity {
 //                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
 //                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
                 CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
+                if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
+                    CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -573,8 +575,8 @@ public class ActivityDongTien extends AppCompatActivity {
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null) {
 //                                        thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT), CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j));
 //                                    }
-
                                     CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                    CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
                                 } else {
                                     if (results.length == 5) {
                                         CLocal.updateValueChild(CLocal.listDongNuoc, results[2], results[3], results[4]);
@@ -589,6 +591,8 @@ public class ActivityDongTien extends AppCompatActivity {
                             results = result.split(",");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 CLocal.listDongNuocView.get(STT).setDongPhi(true);
+                                CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
 //                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null) {
 //                                    thermalPrinter.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
 //                                }
@@ -614,15 +618,21 @@ public class ActivityDongTien extends AppCompatActivity {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(false);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
+                                    CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                    CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
                                 }
                             }
+
                         if (chkPhiMoNuoc.isChecked() == true) {
                             result = ws.XuLy_HoaDonDienTu("XoaDongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
                             results = result.split(",");
                             if (Boolean.parseBoolean(results[0]) == true) {
-                                CLocal.listHanhThuView.get(STT).setDongPhi(false);
+                                CLocal.listDongNuocView.get(STT).setDongPhi(false);
+                                CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
+                                CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
                             }
                         }
+                        return results;
                     } catch (Exception ex) {
                         return new String[]{"false", ex.getMessage()};
                     }

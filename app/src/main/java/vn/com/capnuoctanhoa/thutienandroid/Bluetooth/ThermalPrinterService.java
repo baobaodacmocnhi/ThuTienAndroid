@@ -512,7 +512,7 @@ public class ThermalPrinterService extends Service {
         try {
             printTop_EZ();
             printEZ("BIÊN NHẬN", 4, toadoY, 130, 2, 1);
-            printEZ("THU TIỀN NƯỚC", 4, toadoY, 120, 2, 1);
+            printEZ("THU TIỀN NƯỚC", 4, toadoY, 100, 2, 1);
 //            printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
             printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
             printEZ("Ngày thu: " + entityChild.getNgayGiaiTrach(), 3, toadoY, 0, 1, 1);
@@ -552,7 +552,7 @@ public class ThermalPrinterService extends Service {
         try {
             printTop_EZAppend();
             stringBuilder.append(printEZAppend("BIÊN NHẬN", 4, toadoY, 130, 2, 1));
-            stringBuilder.append(printEZAppend("THU TIỀN NƯỚC", 4, toadoY, 120, 2, 1));
+            stringBuilder.append(printEZAppend("THU TIỀN NƯỚC", 4, toadoY, 100, 2, 1));
 //            stringBuilder.append(printEZAppend("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1));
             stringBuilder.append(printEZAppend("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1));
             stringBuilder.append(printEZAppend("Ngày thu: " + entityChild.getNgayGiaiTrach(), 3, toadoY, 0, 1, 1));
@@ -1183,7 +1183,7 @@ public class ThermalPrinterService extends Service {
     public void printPhiMoNuoc_EZ(CEntityParent entityParent) {
         try {
             printTop_EZ();
-            printEZ("BIÊN NHẬN", 4, toadoY, 100, 2, 1);
+            printEZ("BIÊN NHẬN", 4, toadoY, 130, 2, 1);
             printEZ("THU TIỀN PHÍ MỞ NƯỚC", 4, toadoY, 40, 2, 1);
             printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
             printEZ("Ngày thu: " + entityParent.getLstHoaDon().get(0).getNgayGiaiTrach(), 3, toadoY, 20, 1, 1);
@@ -1216,7 +1216,7 @@ public class ThermalPrinterService extends Service {
     public void printPhiMoNuoc_EZAppend(CEntityParent entityParent) {
         try {
             printTop_EZAppend();
-            stringBuilder.append(printEZAppend("BIÊN NHẬN", 4, toadoY, 100, 2, 1));
+            stringBuilder.append(printEZAppend("BIÊN NHẬN", 4, toadoY, 130, 2, 1));
             stringBuilder.append(printEZAppend("THU TIỀN PHÍ MỞ NƯỚC", 4, toadoY, 40, 2, 1));
             stringBuilder.append(printEZAppend("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1));
             stringBuilder.append(printEZAppend("Ngày thu: " + entityParent.getLstHoaDon().get(0).getNgayGiaiTrach(), 3, toadoY, 20, 1, 1));

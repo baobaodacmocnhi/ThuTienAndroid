@@ -663,8 +663,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                             txtLenhHuy.setText("Lệnh Hủy có Cắt");
                         else
                             txtLenhHuy.setText("Lệnh Hủy");
-                    }
-                    else
+                    } else
                         txtLenhHuy.setText("");
                     txtTongHD.setText(String.valueOf(item.getLstHoaDon().size()) + " hđ");
                     edtMLT.setText(item.getMLT());
@@ -756,9 +755,15 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         super.onDestroy();
 //        if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //            thermalPrinter.disconnectBluetoothDevice();
+
+    }
+
+    @Override
+    public void onBackPressed() {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+        super.onBackPressed();
     }
 
     private void reInBienNhan_Dialog(final String Loai, final CEntityParent entityParent) {
@@ -1050,7 +1055,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
 //                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG","center");
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityHoaDonDienTu_ThuTien.this);
                 builder.setTitle("Thông Báo");
-                builder.setMessage("THÀNH CÔNG")
+                builder.setMessage("THÀNH CÔNG\n" + strings[1])
                         .setCancelable(false)
                         .setNegativeButton("TRƯỚC", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
