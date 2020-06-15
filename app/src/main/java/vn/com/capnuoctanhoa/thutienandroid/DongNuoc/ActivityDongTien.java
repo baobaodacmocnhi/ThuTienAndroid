@@ -154,7 +154,7 @@ public class ActivityDongTien extends AppCompatActivity {
             public void onClick(View v) {
 //                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
 //                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-                if(CLocal.thermalPrinterService!=null) {
+                if (CLocal.thermalPrinterService != null) {
                     CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
                     if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
                         CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
@@ -168,8 +168,8 @@ public class ActivityDongTien extends AppCompatActivity {
 //                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
 //                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
 //                thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
-                if(CLocal.thermalPrinterService!=null)
-                CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                if (CLocal.thermalPrinterService != null)
+                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -569,7 +569,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                 if (CLocal.listDongNuocView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
                                     XoaDCHD = true;
                                 result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), XoaDCHD.toString());
-                                results = result.split(",");
+                                results = result.split(";");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
@@ -591,7 +591,7 @@ public class ActivityDongTien extends AppCompatActivity {
                             }
                         if (chkPhiMoNuoc.isChecked() == true) {
                             result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), XoaDCHD.toString());
-                            results = result.split(",");
+                            results = result.split(";");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 CLocal.listDongNuocView.get(STT).setDongPhi(true);
                                 CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
@@ -615,7 +615,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && selectedMaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 result = ws.XuLy_HoaDonDienTu("XoaDangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
-                                results = result.split(",");
+                                results = result.split(";");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(false);
@@ -628,7 +628,7 @@ public class ActivityDongTien extends AppCompatActivity {
 
                         if (chkPhiMoNuoc.isChecked() == true) {
                             result = ws.XuLy_HoaDonDienTu("XoaDongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
-                            results = result.split(",");
+                            results = result.split(";");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 CLocal.listDongNuocView.get(STT).setDongPhi(false);
                                 CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);

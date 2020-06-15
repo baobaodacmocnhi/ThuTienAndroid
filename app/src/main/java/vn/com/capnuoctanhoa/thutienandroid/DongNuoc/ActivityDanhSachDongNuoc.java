@@ -345,6 +345,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             for (int i = 0; i < enParent.getLstHoaDon().size(); i++) {
                 addEntityChild(enParent.getLstHoaDon().get(i));
                 ///cập nhật parent
+                if(enParent.getLstHoaDon().get(i).getTongCong().equals("null")==false)
                 TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
             }
 
