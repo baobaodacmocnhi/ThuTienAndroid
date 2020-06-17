@@ -454,6 +454,11 @@ public class CLocal {
         lst.get(i).setDangNgan_DienThoai(false);
         lst.get(i).setTinhTrang("");
 
+        if(lst.get(i).isDongA()==true)
+        {
+            lst.get(i).setTinhTrang("Đông Á");
+        }
+        else
         if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setGiaiTrach(true);
             lst.get(i).setTinhTrang("Giải Trách");
@@ -542,6 +547,11 @@ public class CLocal {
         en.setDangNgan_DienThoai(false);
         en.setTinhTrang("");
 
+        if(en.isDongA()==true)
+        {
+            en.setTinhTrang("Đông Á");
+        }
+        else
         if (GiaiTrach == en.getLstHoaDon().size()) {
             en.setGiaiTrach(true);
             en.setTinhTrang("Giải Trách");

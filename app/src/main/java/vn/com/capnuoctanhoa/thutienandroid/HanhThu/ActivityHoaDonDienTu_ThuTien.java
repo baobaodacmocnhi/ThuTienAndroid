@@ -305,8 +305,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                     flag = false;
 //                                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                                        thermalPrinter.printThuTien(CLocal.listHanhThuView.get(STT));
-                                                    if(CLocal.thermalPrinterService!=null)
-                                                    CLocal.thermalPrinterService.printThuTien(CLocal.listHanhThuView.get(STT));
+                                                    if (CLocal.thermalPrinterService != null)
+                                                        CLocal.thermalPrinterService.printThuTien(CLocal.listHanhThuView.get(STT));
                                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                                     btnSau.performClick();
                                                 } else
@@ -376,8 +376,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     flag = false;
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(STT));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(STT));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(STT));
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
@@ -437,8 +437,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     flag = false;
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printPhieuBao2(CLocal.listHanhThuView.get(STT));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listHanhThuView.get(STT));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printPhieuBao2(CLocal.listHanhThuView.get(STT));
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
@@ -498,8 +498,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     flag = false;
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                     btnSau.performClick();
                                 } else
@@ -719,7 +719,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
 //                    TongCong += TienDu;
                     edtTienDu.setText(CLocal.formatMoney(String.valueOf(TienDu), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
-                    if (item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {
+                    if (item.isDongA() == true ||item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {
                         btnThuTien.setEnabled(false);
                         btnPhieuBao.setEnabled(false);
                         btnPhieuBao2.setEnabled(false);
@@ -781,27 +781,27 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
                                 break;
                             case "PhieuBao":
                                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
                                 break;
                             case "PhieuBao2":
 //                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                    thermalPrinter.printPhieuBao2(entityParent);
-                                if(CLocal.thermalPrinterService!=null)
-                                CLocal.thermalPrinterService.printPhieuBao2(entityParent);
+                                if (CLocal.thermalPrinterService != null)
+                                    CLocal.thermalPrinterService.printPhieuBao2(entityParent);
                                 break;
                             case "TBDongNuoc":
 //                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                    thermalPrinter.printTBDongNuoc(entityParent);
-                                if(CLocal.thermalPrinterService!=null)
-                                CLocal.thermalPrinterService.printTBDongNuoc(entityParent);
+                                if (CLocal.thermalPrinterService != null)
+                                    CLocal.thermalPrinterService.printTBDongNuoc(entityParent);
                                 break;
                         }
                     }
@@ -821,27 +821,27 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
 //                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                        thermalPrinter.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
-                    if(CLocal.thermalPrinterService!=null)
-                    CLocal.thermalPrinterService.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
+                    if (CLocal.thermalPrinterService != null)
+                        CLocal.thermalPrinterService.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
                 break;
             case "PhieuBao":
                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
 //                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                        thermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
-                    if(CLocal.thermalPrinterService!=null)
-                    CLocal.thermalPrinterService.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                    if (CLocal.thermalPrinterService != null)
+                        CLocal.thermalPrinterService.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
                 break;
             case "PhieuBao2":
 //                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                    thermalPrinter.printPhieuBao2(entityParent);
-                if(CLocal.thermalPrinterService!=null)
-                CLocal.thermalPrinterService.printPhieuBao2(entityParent);
+                if (CLocal.thermalPrinterService != null)
+                    CLocal.thermalPrinterService.printPhieuBao2(entityParent);
                 break;
             case "TBDongNuoc":
 //                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                    thermalPrinter.printTBDongNuoc(entityParent);
-                if(CLocal.thermalPrinterService!=null)
-                CLocal.thermalPrinterService.printTBDongNuoc(entityParent);
+                if (CLocal.thermalPrinterService != null)
+                    CLocal.thermalPrinterService.printTBDongNuoc(entityParent);
                 break;
         }
     }
@@ -924,8 +924,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                         CLocal.listHanhThuView.get(STT).setXoaDCHD(true);
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printThuTien(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printThuTien(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printThuTien(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
                                 }
                             }
                         if (chkPhiMoNuoc.isChecked() == true) {
@@ -935,8 +935,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 CLocal.listHanhThuView.get(STT).setDongPhi(true);
 //                                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                    thermalPrinter.printPhiMoNuoc(CLocal.listHanhThuView.get(STT));
-                                if(CLocal.thermalPrinterService!=null)
-                                CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listHanhThuView.get(STT));
+                                if (CLocal.thermalPrinterService != null)
+                                    CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listHanhThuView.get(STT));
                             }
                         }
                         break;
@@ -954,8 +954,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                        thermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
-                                    if(CLocal.thermalPrinterService!=null)
-                                    CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
                                 }
                             }
                         break;
@@ -987,8 +987,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 }
 //                            if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                thermalPrinter.printPhieuBao2(CLocal.listHanhThuView.get(STT));
-                            if(CLocal.thermalPrinterService!=null)
-                            CLocal.thermalPrinterService.printPhieuBao2(CLocal.listHanhThuView.get(STT));
+                            if (CLocal.thermalPrinterService != null)
+                                CLocal.thermalPrinterService.printPhieuBao2(CLocal.listHanhThuView.get(STT));
                         }
                         break;
                     case "TBDongNuoc":
@@ -1019,8 +1019,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 }
 //                            if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                                thermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
-                            if(CLocal.thermalPrinterService!=null)
-                            CLocal.thermalPrinterService.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
+                            if (CLocal.thermalPrinterService != null)
+                                CLocal.thermalPrinterService.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
                         }
                         break;
                     case "XoaDangNgan":
@@ -1056,7 +1056,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 return results;
 
             } catch (Exception ex) {
-              return new String[]{"false;"+ex.getMessage()};
+                return new String[]{"false;" + ex.getMessage()};
             }
         }
 

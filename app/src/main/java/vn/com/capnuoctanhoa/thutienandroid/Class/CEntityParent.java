@@ -49,6 +49,11 @@ public class CEntityParent {
     private ArrayList<CEntityChild> lstHoaDon;
     private boolean DCHD;
     private boolean XoaDCHD;
+    private boolean DongA;
+
+
+
+    private boolean UpdatedHDDT;
 
     public CEntityParent() {
         ID = "";
@@ -97,6 +102,7 @@ public class CEntityParent {
         lstHoaDon = new ArrayList<CEntityChild>();
         DCHD = false;
         XoaDCHD = false;
+        DongA = false;
     }
 
     public String getID() {
@@ -467,6 +473,14 @@ public class CEntityParent {
         this.XoaDCHD = checkTienDu;
     }
 
+    public boolean isDongA() {
+        return DongA;
+    }
+
+    public void setDongA(boolean dongA) {
+        DongA = dongA;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
@@ -511,6 +525,7 @@ public class CEntityParent {
         lstHoaDon = entityParent.getLstHoaDon();
         DCHD = entityParent.isDCHD();
         XoaDCHD = entityParent.isXoaDCHD();
+        DongA = entityParent.isDongA();
     }
 
 }
