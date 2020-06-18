@@ -2,7 +2,9 @@ package vn.com.capnuoctanhoa.thutienandroid.HanhThu;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,18 +43,17 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
             MyAsyncTask myAsyncTask = new MyAsyncTask();
             myAsyncTask.execute("get");
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityHoaDonDienTu_GhiChu.this,ex.getMessage());
+            CLocal.showToastMessage(ActivityHoaDonDienTu_GhiChu.this, ex.getMessage());
         }
 
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DanhBo!="") {
+                if (DanhBo != "") {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute("update");
-                }
-                else
-                    CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this,"Lỗi Danh Bộ","center");
+                } else
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this, "Lỗi Danh Bộ", "center");
             }
         });
     }
@@ -87,10 +88,11 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
                     case "update":
                         if (DanhBo.equals("") == false) {
                             String result = ws.update_GhiChu(CLocal.MaNV, DanhBo, edtDienThoai.getText().toString(), edtGiaBieu.getText().toString(), edtNiemChi.getText().toString(), edtDiemBe.getText().toString());
-                            if (Boolean.parseBoolean(result) == true)
+                            String[] results = result.split(";");
+                            if (Boolean.parseBoolean(results[0]) == true)
                                 return new String[]{"update", "THÀNH CÔNG"};
                             else
-                                return new String[]{"update", "THẤT BẠI"};
+                                return new String[]{"update", "THẤT BẠI\n" + results[1]};
                         }
                         break;
                 }
@@ -123,7 +125,7 @@ public class ActivityHoaDonDienTu_GhiChu extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (strings[0].equals("update") == true) {
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this, strings[1],"center");
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_GhiChu.this, strings[1], "center");
             }
         }
     }

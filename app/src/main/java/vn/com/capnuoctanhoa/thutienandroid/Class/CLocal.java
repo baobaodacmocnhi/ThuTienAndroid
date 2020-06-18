@@ -97,6 +97,7 @@ public class CLocal {
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ThermalPrinterService thermalPrinterService;
+    public static int indexPosition = 0;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -162,9 +163,8 @@ public class CLocal {
             return false;
     }
 
-    public  static  boolean checkServiceRunning(Context context,Class<?> serviceClass)
-    {
-        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+    public static boolean checkServiceRunning(Context context, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
@@ -433,8 +433,7 @@ public class CLocal {
                 LenhHuy++;
                 if (item.isLenhHuyCat() == true)
                     LenhHuyCat++;
-            }
-            else if (item.isTBDongNuoc() == true)
+            } else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
             if (item.getInPhieuBao2_Ngay().equals("") == false)
                 InPhieuBao2++;
@@ -454,12 +453,9 @@ public class CLocal {
         lst.get(i).setDangNgan_DienThoai(false);
         lst.get(i).setTinhTrang("");
 
-        if(lst.get(i).isDongA()==true)
-        {
+        if (lst.get(i).isDongA() == true) {
             lst.get(i).setTinhTrang("Đông Á");
-        }
-        else
-        if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
+        } else if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setGiaiTrach(true);
             lst.get(i).setTinhTrang("Giải Trách");
         } else if (TamThu == lst.get(i).getLstHoaDon().size()) {
@@ -512,7 +508,7 @@ public class CLocal {
     //update tình trạng parent
     public static CEntityParent updateTinhTrangParent(CEntityParent en) {
         //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0,LenhHuyCat = 0, PhiMoNuocThuHo = 0;
+        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, LenhHuyCat = 0, PhiMoNuocThuHo = 0;
         for (CEntityChild item : en.getLstHoaDon()) {
             if (item.isGiaiTrach() == true)
                 GiaiTrach++;
@@ -524,10 +520,9 @@ public class CLocal {
                     PhiMoNuocThuHo++;
             } else if (item.isLenhHuy() == true) {
                 LenhHuy++;
-                if(item.isLenhHuyCat()==true)
+                if (item.isLenhHuyCat() == true)
                     LenhHuyCat++;
-            }
-            else if (item.isTBDongNuoc() == true)
+            } else if (item.isTBDongNuoc() == true)
                 TBDongNuoc++;
             if (item.getInPhieuBao2_Ngay().equals("") == false)
                 InPhieuBao2++;
@@ -547,12 +542,9 @@ public class CLocal {
         en.setDangNgan_DienThoai(false);
         en.setTinhTrang("");
 
-        if(en.isDongA()==true)
-        {
+        if (en.isDongA() == true) {
             en.setTinhTrang("Đông Á");
-        }
-        else
-        if (GiaiTrach == en.getLstHoaDon().size()) {
+        } else if (GiaiTrach == en.getLstHoaDon().size()) {
             en.setGiaiTrach(true);
             en.setTinhTrang("Giải Trách");
         } else if (TamThu == en.getLstHoaDon().size()) {

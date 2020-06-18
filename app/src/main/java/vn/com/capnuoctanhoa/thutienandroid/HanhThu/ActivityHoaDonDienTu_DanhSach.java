@@ -175,6 +175,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 TextView STT = (TextView) view.findViewById(R.id.lvSTT);
                 int i = Integer.parseInt(STT.getText().toString()) - 1;
+                CLocal.indexPosition=i;
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityHoaDonDienTu_ThuTien.class);
                 intent.putExtra("STT", String.valueOf(i));
@@ -379,7 +380,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             lstView.setAdapter(customAdapterExpandableListView);
             txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "") + "- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
-
+            lstView.setSelection(CLocal.indexPosition);
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityHoaDonDienTu_DanhSach.this, ex.getMessage());
         }

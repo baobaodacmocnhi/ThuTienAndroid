@@ -53,7 +53,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong = 0, PhiMoNuoc = 0, TienDu = 0;
     private String selectedMaHDs = "";
-    private ImageView imgviewThongKe;
+    private ImageView imgviewThongKe, imgviewUpdateDiaChiDHN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +89,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         btnXoa = (Button) findViewById(R.id.btnXoa);
         chkPhiMoNuoc = (CheckBox) findViewById(R.id.chkPhiMoNuoc);
         chkTienDu = (CheckBox) findViewById(R.id.chkTienDu);
+        imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
+        imgviewUpdateDiaChiDHN = (ImageView) findViewById(R.id.imgviewUpdateDiaChiDHN);
 
         lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 //        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
 //        myAsyncTask_thermal.execute();
         ws = new CWebservice();
 
-        imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
         imgviewThongKe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +130,14 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         + "\n\nThu Hộ: " + CLocal.formatMoney(String.valueOf(TongHDThuHo), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongThuHo), "đ")
                         + "\n\nĐã Thu: " + CLocal.formatMoney(String.valueOf(TongHDDaThu), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongDaThu), "đ")
                         + "\n\nTồn: " + CLocal.formatMoney(String.valueOf(TongHDTon), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongTon), "đ"), "right");
+            }
+        });
+
+        imgviewUpdateDiaChiDHN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTask_updateDiaChiDHN myAsyncTask_updateDiaChiDHN = new MyAsyncTask_updateDiaChiDHN();
+                myAsyncTask_updateDiaChiDHN.execute();
             }
         });
 
@@ -719,7 +728,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
 //                    TongCong += TienDu;
                     edtTienDu.setText(CLocal.formatMoney(String.valueOf(TienDu), "đ"));
                     edtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
-                    if (item.isDongA() == true ||item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {
+                    if (item.isThuHo() == true || item.isTamThu() == true || (item.isGiaiTrach() == true && item.isDangNgan_DienThoai() == false)) {
                         btnThuTien.setEnabled(false);
                         btnPhieuBao.setEnabled(false);
                         btnPhieuBao2.setEnabled(false);
@@ -1199,5 +1208,42 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         }
     }
 
+    public class MyAsyncTask_updateDiaChiDHN extends AsyncTask<String, Void, String[]> {
+        ProgressDialog progressDialog;
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityHoaDonDienTu_ThuTien.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                String result = "";
+                String[] results = new String[]{};
+                result = ws.update_DiaChiDHN(CLocal.MaNV, edtDanhBo.getText().toString().replace(" ", ""), edtDiaChiDHN.getText().toString());
+                results = result.split(";");
+                return results;
+            } catch (Exception ex) {
+                return new String[]{"false;" + ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG","center");
+            } else
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[1], "center");
+        }
+    }
 }
