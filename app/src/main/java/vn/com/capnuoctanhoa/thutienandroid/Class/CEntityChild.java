@@ -27,6 +27,7 @@ public class CEntityChild {
     private String PhiMoNuoc;
     private String PhiMoNuocThuHo;
     private boolean DangNgan_DienThoai;
+    private String MaNV_DangNgan;
     private String NgayGiaiTrach;
     private String XoaDangNgan_Ngay_DienThoai;
     private String InPhieuBao_Ngay;
@@ -63,6 +64,7 @@ public class CEntityChild {
         PhiMoNuoc = "0";
         PhiMoNuocThuHo = "0";
         DangNgan_DienThoai = false;
+        MaNV_DangNgan="";
         NgayGiaiTrach = "";
         XoaDangNgan_Ngay_DienThoai = "";
         InPhieuBao_Ngay = "";
@@ -257,6 +259,14 @@ public class CEntityChild {
 
     public void setDangNgan_DienThoai(boolean dangNgan_DienThoai) {
         DangNgan_DienThoai = dangNgan_DienThoai;
+    }
+
+    public String getMaNV_DangNgan() {
+        return MaNV_DangNgan;
+    }
+
+    public void setMaNV_DangNgan(String maNV_DangNgan) {
+        MaNV_DangNgan = maNV_DangNgan;
     }
 
     public String getTinhTrang() {

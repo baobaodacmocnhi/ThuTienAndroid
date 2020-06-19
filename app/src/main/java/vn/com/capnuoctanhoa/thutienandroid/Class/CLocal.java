@@ -93,7 +93,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean Doi, ToTruong, SyncTrucTiep, TestApp;
+    public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, TestApp;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ThermalPrinterService thermalPrinterService;
@@ -124,7 +124,7 @@ public class CLocal {
         editor.remove("jsonDongNuocChild").commit();
         ThermalPrinter = "";
         MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
-        Doi = ToTruong = TestApp = false;
+        HanhThu = DongNuoc = Doi = ToTruong = TestApp = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
@@ -440,7 +440,7 @@ public class CLocal {
             if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
-            if (item.isDangNgan_DienThoai() == true)
+            if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
                 DangNgan_DienThoai++;
         }
 
@@ -529,7 +529,7 @@ public class CLocal {
             if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
-            if (item.isDangNgan_DienThoai() == true)
+            if (item.isDangNgan_DienThoai() == true&& item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
                 DangNgan_DienThoai++;
         }
 

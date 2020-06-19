@@ -102,7 +102,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
             }
         } else {
             layoutTo.setVisibility(View.GONE);
-            if (CLocal.ToTruong == true) {
+            if (CLocal.ToTruong == true || CLocal.DongNuoc == true) {
                 layoutNhanVien.setVisibility(View.VISIBLE);
                 try {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
@@ -309,7 +309,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
         protected String[] doInBackground(Void... voids) {
             try {
                 if (LoaiDownData.equals("HoaDonDienTu") == false) {
-                    if (CLocal.Doi == false && CLocal.ToTruong == false)
+                    if (CLocal.Doi == false && CLocal.ToTruong == false&& CLocal.DongNuoc == false)
                         selectedMaNV = CLocal.MaNV;
                     if (selectedMaNV.equals("0")) {
                         CLocal.jsonHanhThu = new JSONArray();
@@ -324,7 +324,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                         CLocal.jsonHanhThu = new JSONArray(ws.getDSHoaDonTon(selectedMaNV, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                     }
                 } else {
-                    if (CLocal.Doi == false && CLocal.ToTruong == false)
+                    if (CLocal.Doi == false && CLocal.ToTruong == false&& CLocal.DongNuoc == false)
                         selectedMaNV = CLocal.MaNV;
                     if (selectedMaNV.equals("0")) {
                         CLocal.jsonHanhThu = new JSONArray();
@@ -406,6 +406,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                             enChild.setLenhHuyCat(Boolean.parseBoolean(jsonObjectChild.getString("LenhHuyCat")));
                                         if (jsonObjectChild.has("DangNgan_DienThoai") == true)
                                             enChild.setDangNgan_DienThoai(Boolean.parseBoolean(jsonObjectChild.getString("DangNgan_DienThoai")));
+                                        if (jsonObjectChild.has("MaNV_DangNgan") == true)
+                                            enChild.setMaNV_DangNgan(jsonObjectChild.getString("MaNV_DangNgan"));
                                         if (jsonObjectChild.has("NgayGiaiTrach") == true)
                                             if (jsonObject.getString("NgayGiaiTrach").replace("null", "").equals("") == false)
                                                 enChild.setNgayGiaiTrach(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayGiaiTrach").replace("null", "").replace("/Date(", "").replace(")/", ""))));

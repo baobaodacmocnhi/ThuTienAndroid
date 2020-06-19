@@ -254,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
+                CLocal.HanhThu = CLocal.sharedPreferencesre.getBoolean("HanhThu", false);
+                CLocal.DongNuoc = CLocal.sharedPreferencesre.getBoolean("DongNuoc", false);
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
@@ -265,35 +267,32 @@ public class MainActivity extends AppCompatActivity {
                     txtQuanLy.setVisibility(View.VISIBLE);
                     imgbtnLenhHuy.setVisibility(View.VISIBLE);
                     txtLenhHuy.setVisibility(View.VISIBLE);
-//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
                     CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
-//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
                 } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
-//                    imgbtnHoaDonDienTu.setVisibility(View.VISIBLE);
-//                    txtHoaDonDienTu.setVisibility(View.VISIBLE);
+
                 }
+                if(CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
+                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_logout);
             }
-            if(CLocal.ThermalPrinter!=null&&CLocal.ThermalPrinter!="")
-            if (CLocal.checkBluetoothAvaible() == false) {
-                CLocal.setOnBluetooth(MainActivity.this);
-                finish();
-            } else if (CLocal.checkServiceRunning(getApplicationContext(), ThermalPrinterService.class) == false) {
-                Intent intent2 = new Intent(this, ThermalPrinterService.class);
-                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-                startService(intent2);
-                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-            }
+            if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+                if (CLocal.checkBluetoothAvaible() == false) {
+                    CLocal.setOnBluetooth(MainActivity.this);
+                    finish();
+                } else if (CLocal.checkServiceRunning(getApplicationContext(), ThermalPrinterService.class) == false) {
+                    Intent intent2 = new Intent(this, ThermalPrinterService.class);
+                    intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                    startService(intent2);
+                    bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+                }
 
         } catch (Exception ex) {
             ex.printStackTrace();
