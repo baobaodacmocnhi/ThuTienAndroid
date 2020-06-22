@@ -3,7 +3,7 @@
     <item
         android:id="@+id/action_DongNuoc1"
         android:enabled="true"
-        android:title="Đóng Nước Lần 1"/>
+        android:title="Đóng Nước Lần 1" />
     <item
         android:id="@+id/action_DongNuoc2"
         android:enabled="true"
@@ -16,4 +16,8 @@
         android:id="@+id/action_DongTien"
         android:enabled="true"
         android:title="Đóng Tiền" />
+    <item
+        android:id="@+id/action_PhieuBao2"
+        android:enabled="true"
+        android:title="In Nợ Tiền Nước" />
 </menu>

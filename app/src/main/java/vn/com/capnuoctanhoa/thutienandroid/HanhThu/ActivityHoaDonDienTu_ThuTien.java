@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -296,6 +299,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false) {
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                                        CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
                                                         if (CLocal.listHanhThuView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
                                                             CLocal.listHanhThuView.get(STT).setXoaDCHD(true);
@@ -553,6 +557,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
+                                                        CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan("");
                                                         if (chkPhiMoNuoc.isChecked() == true)
                                                             CLocal.listHanhThuView.get(STT).setDongPhi(false);
                                                         flag = true;
@@ -664,7 +669,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         }
     }
 
-    private void fillLayout(Integer STT) {
+    private void fillLayout(final Integer STT) {
         try {
             if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
                 ArrayList<String> arrayList = new ArrayList<String>();
@@ -742,7 +747,17 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         btnXoa.setEnabled(true);
                     }
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, arrayList) {
+                    @NonNull
+                    @Override
+                    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                        // Get the current item from ListView
+                        View view = super.getView(position, convertView, parent);
+                        if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(position).isGiaiTrach() == true)
+                            view.setBackgroundColor(getResources().getColor(R.color.colorGiaiTrach));
+                        return view;
+                    }
+                };
                 lstView.setAdapter(arrayAdapter);
 
                 for (int j = 0; j < arrayAdapter.getCount(); j++) {
@@ -928,6 +943,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
                                     if (CLocal.listHanhThuView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
                                         CLocal.listHanhThuView.get(STT).setXoaDCHD(true);
@@ -1044,6 +1060,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setGiaiTrach(false);
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan("");
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
                                 }
                             }
@@ -1241,7 +1258,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (Boolean.parseBoolean(strings[0]) == true) {
-                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG","center");
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THÀNH CÔNG", "center");
             } else
                 CLocal.showPopupMessage(ActivityHoaDonDienTu_ThuTien.this, "THẤT BẠI\n" + strings[1], "center");
         }

@@ -5,30 +5,39 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -49,7 +58,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
     private ArrayList<CViewParent> listParent;
     private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
-    private ImageView imgviewThongKe;
+    private ImageView imgviewThuTienHD0, imgviewThongKe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +79,44 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
+        imgviewThuTienHD0 = (ImageView) findViewById(R.id.imgviewThuTienHD0);
         imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
+
+        imgviewThuTienHD0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityHoaDonDienTu_DanhSach.this);
+                    builder.setMessage("Bạn có chắc chắn Thu Tiền HĐ=0?")
+                            .setCancelable(false)
+                            .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
+                                        MyAsyncTask_XuLyTrucTiep_HD0 myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_HD0();
+                                        myAsyncTask_xuLyTrucTiep_hd0.execute();
+                                    }
+                                }
+                            })
+                            .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+                    Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+                    layoutParams.weight = 10;
+                    layoutParams.gravity = Gravity.CENTER;
+                    btnPositive.setLayoutParams(layoutParams);
+                    btnNegative.setLayoutParams(layoutParams);
+                } catch (Exception ex) {
+                    CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, ex.getMessage(), "left");
+                }
+            }
+        });
+
         imgviewThongKe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,7 +221,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 TextView STT = (TextView) view.findViewById(R.id.lvSTT);
                 int i = Integer.parseInt(STT.getText().toString()) - 1;
-                CLocal.indexPosition=i;
+                CLocal.indexPosition = i;
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityHoaDonDienTu_ThuTien.class);
                 intent.putExtra("STT", String.valueOf(i));
@@ -266,7 +312,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Chưa Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false&& CLocal.listHanhThu.get(i).isDongA() == false) {
+                            if (CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).isGiaiTrach() == false && CLocal.listHanhThu.get(i).isTamThu() == false && CLocal.listHanhThu.get(i).isThuHo() == false && CLocal.listHanhThu.get(i).isDongA() == false) {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
@@ -286,7 +332,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "Tạm Thu-Thu Hộ":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            if ((CLocal.listHanhThu.get(i).isGiaiTrach() == true && CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false) || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true|| CLocal.listHanhThu.get(i).isDongA() == true) {
+                            if ((CLocal.listHanhThu.get(i).isGiaiTrach() == true && CLocal.listHanhThu.get(i).isDangNgan_DienThoai() == false) || CLocal.listHanhThu.get(i).isTamThu() == true || CLocal.listHanhThu.get(i).isThuHo() == true || CLocal.listHanhThu.get(i).isDongA() == true) {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
@@ -336,13 +382,12 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "HĐ = 0":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            boolean flag=false;
+                            boolean flag = false;
                             for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
                                 if (Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
-                                    flag=true;
+                                    flag = true;
                                 }
-                            if(flag==true)
-                            {
+                            if (flag == true) {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
@@ -352,15 +397,13 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 case "HĐ Giấy":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
-                            boolean flag=false;
-                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++)
-                            {
-                                String[]Kys=CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy().split("/");
-                                if(Integer.parseInt(Kys[1])<2020  || (Integer.parseInt(Kys[1])==2020 && Integer.parseInt(Kys[0])<=6))
-                                    flag=true;
+                            boolean flag = false;
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                                String[] Kys = CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy().split("/");
+                                if (Integer.parseInt(Kys[1]) < 2020 || (Integer.parseInt(Kys[1]) == 2020 && Integer.parseInt(Kys[0]) <= 6))
+                                    flag = true;
                             }
-                            if(flag==true)
-                            {
+                            if (flag == true) {
                                 CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
                                 addViewParent(CLocal.listHanhThu.get(i));
                             }
@@ -451,6 +494,71 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK)
                 loadListView();
+        }
+    }
+
+    public class MyAsyncTask_XuLyTrucTiep_HD0 extends AsyncTask<String, Void, String[]> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityHoaDonDienTu_DanhSach.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                String result = "";
+                String[] results = new String[]{};
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date dateCapNhat = new Date();
+                for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
+                    for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
+                        if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isGiaiTrach() == false
+                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isThuHo() == false
+                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
+                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
+                            result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThu.get(i).getMaKQDN(), "false");
+                            results = result.split(";");
+                            if (Boolean.parseBoolean(results[0]) == true) {
+                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setGiaiTrach(true);
+                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
+                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
+                            }
+                        }
+
+                    if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
+                        CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
+                        CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
+                    }
+                    CLocal.updateTinhTrangParent(CLocal.listHanhThuView, i);
+                    CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
+                }
+                return results;
+            } catch (Exception ex) {
+                return new String[]{"false;" + ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "THÀNH CÔNG", "center");
+            } else
+                CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "THẤT BẠI\n" + strings[1], "center");
         }
     }
 

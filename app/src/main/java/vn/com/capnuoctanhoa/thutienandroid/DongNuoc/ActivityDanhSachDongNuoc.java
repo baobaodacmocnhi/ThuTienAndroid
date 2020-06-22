@@ -157,6 +157,10 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                                 intent.putExtra("STT",String.valueOf(i));
                                 startActivity(intent);
                                 break;
+                            case R.id.action_PhieuBao2:
+                                if (CLocal.thermalPrinterService != null)
+                                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(i));
+                                break;
                         }
                         return true;
                     }
@@ -276,6 +280,16 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
                             if (CLocal.listDongNuoc.get(i).isMoNuoc() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
+                                addEntityParent(CLocal.listDongNuoc.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "Chưa Thu":
+                    if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
+                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                            if (CLocal.listDongNuoc.get(i).isGiaiTrach() == false) {
                                 CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
