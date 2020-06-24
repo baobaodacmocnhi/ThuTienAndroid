@@ -135,6 +135,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         int id = menuItem.getItemId();
                         TextView STT = (TextView) view.findViewById(R.id.lvSTT);
                         int i=Integer.parseInt(STT.getText().toString()) - 1;
+                        CLocal.indexPosition = i;
                         Intent intent;
                         switch (id) {
                             case R.id.action_DongNuoc1:
@@ -296,6 +297,16 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         }
                     }
                     break;
+                case "Đã Thu":
+                    if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
+                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                            if (CLocal.listDongNuoc.get(i).isDangNgan_DienThoai() == true) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
+                                addEntityParent(CLocal.listDongNuoc.get(i));
+                            }
+                        }
+                    }
+                    break;
                 case "Giải Trách":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
@@ -329,6 +340,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             lstView.setAdapter(customAdapterExpandableListView);
             txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "")+"- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
+            lstView.setSelection(CLocal.indexPosition);
         } catch (Exception e) {
 
         }

@@ -44,7 +44,7 @@ public class ThermalPrinterService extends Service {
     private static Handler mHandler = null;
     public static int mState = STATE_NONE;
     public static String deviceName;
-    public static BluetoothSocket mSocket=null;
+    public static BluetoothSocket mSocket = null;
     public static BluetoothDevice mDevice = null;
     public Vector<Byte> packData = new Vector<>(2048);
     private final IBinder mBinder = new LocalBinder();
@@ -113,8 +113,7 @@ public class ThermalPrinterService extends Service {
         }
     }
 
-    public int getState()
-    {
+    public int getState() {
         return mState;
     }
 
@@ -314,16 +313,16 @@ public class ThermalPrinterService extends Service {
 
     public void printThuTien(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connected(mSocket);
-                switch (CLocal.MethodPrinter) {
-                    case "EZ":
-                        printThuTien_EZ(entityParent);
-                        break;
-                    case "ESC":
-                        printThuTien_ESC(entityParent);
-                        break;
-                }
+            switch (CLocal.MethodPrinter) {
+                case "EZ":
+                    printThuTien_EZ(entityParent);
+                    break;
+                case "ESC":
+                    printThuTien_ESC(entityParent);
+                    break;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -331,7 +330,7 @@ public class ThermalPrinterService extends Service {
 
     public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connected(mSocket);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -348,7 +347,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -365,7 +364,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -382,7 +381,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhieuBao2(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -399,7 +398,7 @@ public class ThermalPrinterService extends Service {
 
     public void printTBDongNuoc(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -416,7 +415,7 @@ public class ThermalPrinterService extends Service {
 
     public void printDongNuoc(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -433,7 +432,7 @@ public class ThermalPrinterService extends Service {
 
     public void printDongNuoc2(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -450,7 +449,7 @@ public class ThermalPrinterService extends Service {
 
     public void printMoNuoc(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -467,7 +466,7 @@ public class ThermalPrinterService extends Service {
 
     public void printPhiMoNuoc(CEntityParent entityParent) {
         try {
-            if (mConnectedThread==null|| mState != STATE_CONNECTED)
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
@@ -527,10 +526,10 @@ public class ThermalPrinterService extends Service {
             printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
             printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
             printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
-            printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
+            printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
             if (entityChild.getTienDuTruocDCHD() > 0 && entityParent.isXoaDCHD() == false) {
-                printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
-                printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 1, 1);
+                printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
+                printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 2, 1);
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
             } else {
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD())), 1, toadoY, 0, 1, 1);
@@ -567,10 +566,10 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printEZAppend("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1));
-            stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1));
             if (entityChild.getTienDuTruocDCHD() > 0 && entityParent.isXoaDCHD() == false) {
-                stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1));
-                stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 1, 1));
+                stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1));
+                stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 2, 1));
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1));
             } else {
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD())), 1, toadoY, 0, 1, 1));
@@ -631,10 +630,10 @@ public class ThermalPrinterService extends Service {
                     printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
-                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
+                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
                     if (entityChild.getTienDuTruocDCHD() > 0) {
-                        printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
-                        printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 1, 1);
+                        printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
+                        printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 2, 1);
                     }
                     printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
                     String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
@@ -675,10 +674,10 @@ public class ThermalPrinterService extends Service {
                     stringBuilder.append(printEZAppend("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1));
-                    stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1));
                     if (entityChild.getTienDuTruocDCHD() > 0) {
-                        stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1));
-                        stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 1, 1));
+                        stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1));
+                        stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 2, 1));
                     }
                     stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1));
                     String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
@@ -722,10 +721,10 @@ public class ThermalPrinterService extends Service {
                 TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                 TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
             }
-            printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 3, toadoY, 0, 1, 1);
+            printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 3, toadoY, 0, 2, 1);
             if (TienDu > 0) {
-                printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(TienDu), "đ"), 3, toadoY, 0, 1, 1);
-                printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ"), 3, toadoY, 0, 1, 1);
+                printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(TienDu), "đ"), 3, toadoY, 0, 2, 1);
+                printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ"), 3, toadoY, 0, 2, 1);
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong - TienDu)), 1, toadoY, 0, 1, 1);
             } else {
                 printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
@@ -769,10 +768,10 @@ public class ThermalPrinterService extends Service {
                 TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                 TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
             }
-            stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ"), 3, toadoY, 0, 2, 1));
             if (TienDu > 0) {
-                stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(TienDu), "đ"), 3, toadoY, 0, 1, 1));
-                stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ"), 3, toadoY, 0, 1, 1));
+                stringBuilder.append(printEZAppend("Tiền dư: " + CLocal.formatMoney(String.valueOf(TienDu), "đ"), 3, toadoY, 0, 2, 1));
+                stringBuilder.append(printEZAppend("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ"), 3, toadoY, 0, 2, 1));
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong - TienDu)), 1, toadoY, 0, 1, 1));
             } else {
                 stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1));
@@ -1444,8 +1443,9 @@ public class ThermalPrinterService extends Service {
             byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
             byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
             byteStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ") + "\n").getBytes());
-            byteStream.write(setTextStyle(true, 1, 1));
+            byteStream.write(setTextStyle(true, 1, 2));
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             if (entityChild.getTienDuTruocDCHD() > 0 && entityParent.isXoaDCHD() == false) {
                 byteStream.write(("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
                 byteStream.write(("Tộng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(entityChild.getTongCong()), "đ") + "\n").getBytes());
@@ -1519,8 +1519,9 @@ public class ThermalPrinterService extends Service {
             byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
             byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
             byteStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ") + "\n").getBytes());
-            byteStream.write(setTextStyle(true, 1, 1));
+            byteStream.write(setTextStyle(true, 1, 2));
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             if (entityChild.getTienDuTruocDCHD() > 0) {
                 byteStream.write(("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
                 byteStream.write(("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ") + "\n").getBytes());
@@ -1583,7 +1584,7 @@ public class ThermalPrinterService extends Service {
             byteStream.write(("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Hóa đơn:\n").getBytes());
-            byteStream.write(setTextStyle(true, 1, 1));
+            byteStream.write(setTextStyle(true, 1, 2));
             int TongCong = 0, TienDu = 0;
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                 byteStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
@@ -1591,6 +1592,7 @@ public class ThermalPrinterService extends Service {
                 TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
             }
             byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             if (TienDu > 0) {
                 byteStream.write(("Tiền dư: " + CLocal.formatMoney(String.valueOf(TienDu), "đ") + "\n").getBytes());
                 byteStream.write(("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ") + "\n").getBytes());

@@ -574,6 +574,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(true);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
 //                                    if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null) {
 //                                        thermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT), CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j));
@@ -620,6 +621,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(false);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setGiaiTrach(false);
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setNgayGiaiTrach("");
+                                    CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setMaNV_DangNgan("");
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai(currentDate.format(dateCapNhat));
                                     CLocal.updateTinhTrangParent(CLocal.listDongNuocView, STT);
                                     CLocal.updateTinhTrangParent(CLocal.listDongNuoc, CLocal.listDongNuocView.get(STT));
