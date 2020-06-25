@@ -117,12 +117,12 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 TongCongThuHo += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //đã thu
-                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan() == CLocal.MaNV) {
                                 TongHDDaThu++;
                                 TongCongDaThu += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //tồn
-                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan() != CLocal.MaNV) && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
                                 TongHDTon++;
                                 TongCongTon += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
