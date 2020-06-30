@@ -17,6 +17,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 
@@ -156,6 +158,7 @@ public class ActivityDangNhap extends AppCompatActivity {
 
                             editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
                             editor.putBoolean("Login", true);
+                            editor.putLong("LoginDate", new Date().getTime());
                             editor.commit();
 
                             publishProgress("DangNhap");

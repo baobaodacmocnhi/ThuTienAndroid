@@ -50,9 +50,6 @@ public class CEntityParent {
     private boolean DCHD;
     private boolean XoaDCHD;
     private boolean DongA;
-
-
-
     private boolean UpdatedHDDT;
 
     public CEntityParent() {

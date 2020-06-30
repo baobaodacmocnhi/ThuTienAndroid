@@ -50,6 +50,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -251,6 +253,19 @@ public class MainActivity extends AppCompatActivity {
 //            imgbtnHoaDonDienTu.setVisibility(View.GONE);
 //            txtHoaDonDienTu.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
+                //so sánh logout sau 7 ngày
+                long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
+                Date dateLogin = new Date(millis);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dateLogin);
+                calendar.add(Calendar.DATE, 6);
+                Date dateLogin7 = calendar.getTime();
+                Date currentDate = new Date();
+                if (currentDate.compareTo(dateLogin7) > 1) {
+                    MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
+                    myAsyncTask_dangXuat.execute("DangXuat");
+                }
+
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
@@ -276,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
 
                 }
-                if(CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
+                if (CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
@@ -490,6 +505,69 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             installapk();
+        }
+    }
+
+    public class MyAsyncTask_DangXuat extends AsyncTask<String, String, String[]> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            String result = "";
+            String[] results = new String[]{};
+            switch (strings[0]) {
+                case "DangXuat":
+                    try {
+                        result = ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+                        results = result.split(";");
+                        if (Boolean.parseBoolean(results[0]) == true) {
+                            CLocal.initialCLocal();
+
+                            publishProgress("DangXuat");
+                        }
+                        return results;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "DangXuat":
+                        CLocal.initialCLocal();
+                        onStart();
+                        break;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(s[0]) == true) {
+                CLocal.showPopupMessage(MainActivity.this, "THÀNH CÔNG\nBạn đã hết 7 ngày đăng nhập\nVui lòng đăng nhập lại", "center");
+                finish();
+            } else
+                CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n" + s[1], "center");
         }
     }
 

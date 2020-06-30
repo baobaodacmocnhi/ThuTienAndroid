@@ -115,6 +115,7 @@ public class CLocal {
         editor.putBoolean("Doi", false);
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
+        editor.putLong("LoginDate", 0L);
         editor.putString("ThermalPrinter", "");
         editor.putString("MethodPrinter", "ESC");
         editor.putBoolean("SyncTrucTiep", true);
@@ -529,7 +530,7 @@ public class CLocal {
             if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
-            if (item.isDangNgan_DienThoai() == true&& item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
+            if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
                 DangNgan_DienThoai++;
         }
 
