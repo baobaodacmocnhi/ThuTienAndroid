@@ -126,6 +126,27 @@
         app:layout_constraintTop_toBottomOf="@+id/textView19"
         app:srcCompat="@drawable/ic_hanh_thu" />
 
+    <ImageButton
+        android:id="@+id/imgbtnNopTien"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnTimKiem"
+        app:layout_constraintTop_toBottomOf="@+id/textView39"
+        app:srcCompat="@drawable/ic_send_money" />
+
+    <TextView
+        android:id="@+id/txtNopTien"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nộp Tiền"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtnNopTien"
+        app:layout_constraintStart_toStartOf="@+id/imgbtnNopTien"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtnNopTien" />
+
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
@@ -242,10 +263,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
 
 
     <LinearLayout

@@ -47,8 +47,8 @@ public class CEntityChild {
         TongCong = "";
         GiaBieu = "";
         DinhMuc = "";
-        Code="";
-        Co="";
+        Code = "";
+        Co = "";
         CSC = "";
         CSM = "";
         TieuThu = "";
@@ -64,7 +64,7 @@ public class CEntityChild {
         PhiMoNuoc = "0";
         PhiMoNuocThuHo = "0";
         DangNgan_DienThoai = false;
-        MaNV_DangNgan="";
+        MaNV_DangNgan = "";
         NgayGiaiTrach = "";
         XoaDangNgan_Ngay_DienThoai = "";
         InPhieuBao_Ngay = "";
@@ -73,8 +73,8 @@ public class CEntityChild {
         TBDongNuoc = false;
         TBDongNuoc_Ngay = "";
         TBDongNuoc_NgayHen = "";
-        DCHD=false;
-        TienDuTruocDCHD=0;
+        DCHD = false;
+        TienDuTruocDCHD = 0;
     }
 
     public String getMaHD() {

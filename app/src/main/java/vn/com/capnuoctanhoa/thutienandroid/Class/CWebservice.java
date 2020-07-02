@@ -89,6 +89,8 @@ public class CWebservice {
     public String dangNhaps(String Username, String Password,String IDMobile, String UID) {
         String SOAP_ACTION = "http://tempuri.org/DangNhaps";
         String OPERATION_NAME = "DangNhaps";
+//        String SOAP_ACTION = "http://tempuri.org/DangNhaps_Admin";
+//        String OPERATION_NAME = "DangNhaps_Admin";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -135,6 +137,8 @@ public class CWebservice {
     public String dangXuats(String Username, String UID) {
         String SOAP_ACTION = "http://tempuri.org/DangXuats";
         String OPERATION_NAME = "DangXuats";
+//        String SOAP_ACTION = "http://tempuri.org/DangXuats_Admin";
+//        String OPERATION_NAME = "DangXuats_Admin";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();

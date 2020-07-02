@@ -61,6 +61,7 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Doi.ActivityNopTien;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
@@ -71,8 +72,8 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu;
-    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtVersion;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu,imgbtnNopTien;
+    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu,txtNopTien, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
     PackageInfo packageInfo;
@@ -179,10 +180,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imgbtnNopTien = (ImageButton) findViewById(R.id.imgbtnNopTien);
+        imgbtnNopTien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityNopTien.class);
+                startActivity(intent);
+            }
+        });
+
         txtUser = (TextView) findViewById(R.id.txtUser);
         txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
         txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
         txtHoaDonDienTu = (TextView) findViewById(R.id.txtHoaDonDienTu);
+        txtNopTien = (TextView) findViewById(R.id.txtNopTien);
         txtVersion = (TextView) findViewById(R.id.txtVersion);
         try {
             packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -250,8 +261,8 @@ public class MainActivity extends AppCompatActivity {
             txtQuanLy.setVisibility(View.GONE);
             imgbtnLenhHuy.setVisibility(View.GONE);
             txtLenhHuy.setVisibility(View.GONE);
-//            imgbtnHoaDonDienTu.setVisibility(View.GONE);
-//            txtHoaDonDienTu.setVisibility(View.GONE);
+            imgbtnNopTien.setVisibility(View.GONE);
+            txtNopTien.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 //so sánh logout sau 7 ngày
                 long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
@@ -293,11 +304,18 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                //nộp tiền
+//                if(Integer.parseInt(CLocal.MaNV)==0||Integer.parseInt(CLocal.MaNV)==1)
+//                {
+//                    imgbtnNopTien.setVisibility(View.VISIBLE);
+//                    txtNopTien.setVisibility(View.VISIBLE);
+//                }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_logout);
             }
+
             if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
                 if (CLocal.checkBluetoothAvaible() == false) {
                     CLocal.setOnBluetooth(MainActivity.this);
