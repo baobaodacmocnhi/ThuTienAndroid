@@ -57,7 +57,7 @@ public class CEntityParent {
         MLT = "";
         DanhBo = "";
         HoTen = "";
-        DiaChiDHN="";
+        DiaChiDHN = "";
         DiaChi = "";
         ModifyDate = "";
         ThuHo = false;
@@ -524,5 +524,7 @@ public class CEntityParent {
         XoaDCHD = entityParent.isXoaDCHD();
         DongA = entityParent.isDongA();
     }
+
+
 
 }

@@ -24,6 +24,12 @@ public class CViewParent {
     private Boolean DCHD;
     private String ModifyDate;
     private ArrayList<CViewChild> listChild;
+    //nộp tiền
+    private boolean Chot;
+    private String NgayChot;
+    private String Loai;
+    private String SoLuong;
+    private String TongCong;
 
     public CViewParent() {
         this.STT = "";
@@ -45,8 +51,13 @@ public class CViewParent {
         DongNuoc2 = false;
         ToTrinh = false;
         DCHD = false;
-
         listChild = new ArrayList<CViewChild>();
+        //nộp tiền
+        Chot = false;
+        NgayChot = "";
+        Loai = "";
+        SoLuong = "";
+        TongCong = "";
     }
 
     public String getSTT() {
@@ -219,5 +230,46 @@ public class CViewParent {
 
     public int getItemChildCount() {
         return listChild.size();
+    }
+
+    //nộp tiền
+    public boolean isChot() {
+        return Chot;
+    }
+
+    public void setChot(boolean chot) {
+        Chot = chot;
+    }
+
+    public String getNgayChot() {
+        return NgayChot;
+    }
+
+    public void setNgayChot(String ngayChot) {
+        NgayChot = ngayChot;
+    }
+
+    public String getLoai() {
+        return Loai;
+    }
+
+    public void setLoai(String loai) {
+        Loai = loai;
+    }
+
+    public String getSoLuong() {
+        return SoLuong;
+    }
+
+    public void setSoLuong(String soLuong) {
+        SoLuong = soLuong;
+    }
+
+    public String getTongCong() {
+        return TongCong;
+    }
+
+    public void setTongCong(String tongCong) {
+        TongCong = tongCong;
     }
 }

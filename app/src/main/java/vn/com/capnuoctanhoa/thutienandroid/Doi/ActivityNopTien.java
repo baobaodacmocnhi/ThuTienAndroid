@@ -1,11 +1,18 @@
 package vn.com.capnuoctanhoa.thutienandroid.Doi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterListViewNopTien;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDownDataDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +20,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ActivityNopTien extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
-    private Button btnXem,btnThem, btnNopTien;
+    private Button btnXem, btnThem, btnNopTien;
+    private ListView lstView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +41,7 @@ public class ActivityNopTien extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        lstView = (ListView) findViewById(R.id.lstView);
         edtFromDate = (EditText) findViewById(R.id.edtFromDate);
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnXem = (Button) findViewById(R.id.btnXem);
@@ -87,7 +101,8 @@ public class ActivityNopTien extends AppCompatActivity {
         btnXem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                MyAsyncTask myAsyncTask=new MyAsyncTask();
+                myAsyncTask.execute("get");
             }
         });
 
@@ -116,4 +131,86 @@ public class ActivityNopTien extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }}
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String[]> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityNopTien.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                switch (strings[0]) {
+                    case "get":
+                        publishProgress(ws.getDS_ChotDangNgan(edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        break;
+                    case "noptien":
+
+                        break;
+                }
+                return new String[]{"true", ""};
+            } catch (Exception ex) {
+                return new String[]{"false", ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                try {
+                    JSONArray jsonArray = new JSONArray(values[0]);
+                    ArrayList<CViewParent> lst = new ArrayList<CViewParent>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        CViewParent cViewParent = new CViewParent();
+                        cViewParent.setID(jsonObject.getString("ID"));
+                        cViewParent.setChot(Boolean.parseBoolean(jsonObject.getString("Chot")));
+                        cViewParent.setNgayChot(jsonObject.getString("NgayChot"));
+                        String Loai = "", SoLuong = "", TongCong = "";
+                        Loai = "Đăng Ngân\nGiấy\nHĐĐT\nNộp Tiền";
+                        SoLuong = CLocal.formatMoney(jsonObject.getString("SLDangNgan"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLGiay"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLHDDT"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLNopTien"), "");
+                        TongCong = CLocal.formatMoney(jsonObject.getString("TCDangNgan"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCGiay"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCHDDT"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCNopTien"), "");
+                        cViewParent.setLoai(Loai);
+                        cViewParent.setSoLuong(SoLuong);
+                        cViewParent.setTongCong(TongCong);
+                        lst.add(cViewParent);
+                    }
+                    CustomAdapterListViewNopTien customAdapterListViewNopTien = new CustomAdapterListViewNopTien(ActivityNopTien.this, lst);
+                    lstView.setAdapter(customAdapterListViewNopTien);
+                } catch (Exception ex) {
+                   CLocal.showToastMessage(ActivityNopTien.this,ex.getMessage());
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(ActivityNopTien.this, "THÀNH CÔNG", "center");
+            } else {
+                CLocal.showPopupMessage(ActivityNopTien.this, "THẤT BẠI\n" + strings[1], "center");
+            }
+        }
+    }
+}

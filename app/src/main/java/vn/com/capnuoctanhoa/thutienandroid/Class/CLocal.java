@@ -441,7 +441,10 @@ public class CLocal {
             if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
-            if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
+            if (Doi == true || ToTruong == true) {
+                if (item.isDangNgan_DienThoai() == true)
+                    DangNgan_DienThoai++;
+            } else if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
                 DangNgan_DienThoai++;
         }
 
@@ -530,7 +533,10 @@ public class CLocal {
             if (item.getInPhieuBao_Ngay().equals("") == false)
                 InPhieuBao++;
 
-            if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
+            if (Doi == true || ToTruong == true) {
+                if (item.isDangNgan_DienThoai() == true)
+                    DangNgan_DienThoai++;
+            } else if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
                 DangNgan_DienThoai++;
         }
 

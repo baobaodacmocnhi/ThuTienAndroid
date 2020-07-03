@@ -305,11 +305,11 @@ public class MainActivity extends AppCompatActivity {
                 if (CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                 //nộp tiền
-//                if(Integer.parseInt(CLocal.MaNV)==0||Integer.parseInt(CLocal.MaNV)==1)
-//                {
-//                    imgbtnNopTien.setVisibility(View.VISIBLE);
-//                    txtNopTien.setVisibility(View.VISIBLE);
-//                }
+                if(Integer.parseInt(CLocal.MaNV)==0||Integer.parseInt(CLocal.MaNV)==1)
+                {
+                    imgbtnNopTien.setVisibility(View.VISIBLE);
+                    txtNopTien.setVisibility(View.VISIBLE);
+                }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
