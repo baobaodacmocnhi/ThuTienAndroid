@@ -31,8 +31,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CViewParent;
@@ -77,6 +79,11 @@ public class FragmentDangNgan extends Fragment {
         nestedScrollView = (NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
         layoutAutoHide = (CardView) rootView.findViewById(R.id.layoutAutoHide);
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateCapNhat = new Date();
+        edtFromDate.setText(currentDate.format(dateCapNhat));
+        edtToDate.setText(currentDate.format(dateCapNhat));
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);

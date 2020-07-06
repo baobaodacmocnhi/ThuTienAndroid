@@ -25,13 +25,15 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ActivityNopTien extends AppCompatActivity {
     private EditText edtFromDate, edtToDate;
     private DatePickerDialog datePickerDialog;
-    private Button btnXem, btnThem, btnNopTien;
+    private Button btnXem, btnThem;
     private ListView lstView;
 
     @Override
@@ -46,7 +48,11 @@ public class ActivityNopTien extends AppCompatActivity {
         edtToDate = (EditText) findViewById(R.id.edtToDate);
         btnXem = (Button) findViewById(R.id.btnXem);
         btnThem = (Button) findViewById(R.id.btnThem);
-        btnNopTien = (Button) findViewById(R.id.btnNopTien);
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateCapNhat = new Date();
+        edtFromDate.setText(currentDate.format(dateCapNhat));
+        edtToDate.setText(currentDate.format(dateCapNhat));
 
         edtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,24 +107,23 @@ public class ActivityNopTien extends AppCompatActivity {
         btnXem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyAsyncTask myAsyncTask=new MyAsyncTask();
-                myAsyncTask.execute("get");
+                if (edtFromDate.getText().equals("") == false && edtToDate.getText().equals("") == false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("get");
+                }
             }
         });
 
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (edtFromDate.getText().equals("") == false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("them");
+                }
             }
         });
 
-        btnNopTien.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     @Override
@@ -154,8 +159,13 @@ public class ActivityNopTien extends AppCompatActivity {
                     case "get":
                         publishProgress(ws.getDS_ChotDangNgan(edtFromDate.getText().toString(), edtToDate.getText().toString()));
                         break;
-                    case "noptien":
-
+                    case "them":
+                        String result = ws.them_ChotDangNgan(edtFromDate.getText().toString(), CLocal.MaNV);
+                        String[] results = result.split(";");
+                        if (Boolean.parseBoolean(results[0]) == true)
+                            publishProgress(ws.getDS_ChotDangNgan(edtFromDate.getText().toString(), edtToDate.getText().toString()));
+                        else
+                            return results;
                         break;
                 }
                 return new String[]{"true", ""};
@@ -178,15 +188,17 @@ public class ActivityNopTien extends AppCompatActivity {
                         cViewParent.setChot(Boolean.parseBoolean(jsonObject.getString("Chot")));
                         cViewParent.setNgayChot(jsonObject.getString("NgayChot"));
                         String Loai = "", SoLuong = "", TongCong = "";
-                        Loai = "Đăng Ngân\nGiấy\nHĐĐT\nNộp Tiền";
-                        SoLuong = CLocal.formatMoney(jsonObject.getString("SLDangNgan"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("SLGiay"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("SLHDDT"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("SLNopTien"), "");
-                        TongCong = CLocal.formatMoney(jsonObject.getString("TCDangNgan"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("TCGiay"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("TCHDDT"), "") + "\n"
-                                + CLocal.formatMoney(jsonObject.getString("TCNopTien"), "");
+                        Loai = "Đăng Ngân\nCNKĐ\nGiấy\nHĐĐT\nNộp Tiền";
+                        SoLuong = CLocal.formatMoney(jsonObject.getString("SLDangNgan").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLCNKD").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLGiay").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLHDDT").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLNopTien").replace("null", "0"), "");
+                        TongCong = CLocal.formatMoney(jsonObject.getString("TCDangNgan").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCCNKD").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCGiay").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCHDDT").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCNopTien").replace("null", "0"), "");
                         cViewParent.setLoai(Loai);
                         cViewParent.setSoLuong(SoLuong);
                         cViewParent.setTongCong(TongCong);
@@ -195,7 +207,7 @@ public class ActivityNopTien extends AppCompatActivity {
                     CustomAdapterListViewNopTien customAdapterListViewNopTien = new CustomAdapterListViewNopTien(ActivityNopTien.this, lst);
                     lstView.setAdapter(customAdapterListViewNopTien);
                 } catch (Exception ex) {
-                   CLocal.showToastMessage(ActivityNopTien.this,ex.getMessage());
+                    CLocal.showToastMessage(ActivityNopTien.this, ex.getMessage());
                 }
             }
         }
@@ -207,7 +219,7 @@ public class ActivityNopTien extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             if (Boolean.parseBoolean(strings[0]) == true) {
-                CLocal.showPopupMessage(ActivityNopTien.this, "THÀNH CÔNG", "center");
+//                CLocal.showPopupMessage(ActivityNopTien.this, "THÀNH CÔNG", "center");
             } else {
                 CLocal.showPopupMessage(ActivityNopTien.this, "THẤT BẠI\n" + strings[1], "center");
             }

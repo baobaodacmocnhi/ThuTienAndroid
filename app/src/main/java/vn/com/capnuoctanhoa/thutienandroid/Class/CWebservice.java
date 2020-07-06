@@ -1327,4 +1327,18 @@ public class CWebservice {
 
         return excute(request, SOAP_ACTION);
     }
+
+    public String nopTien(String NgayChot) {
+        String SOAP_ACTION = "http://tempuri.org/syncNopTienLo";
+        String OPERATION_NAME = "syncNopTienLo";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("NgayChot");
+        pi.setValue(NgayChot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
 }
