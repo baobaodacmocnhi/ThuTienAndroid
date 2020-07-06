@@ -1334,7 +1334,7 @@ public class CWebservice {
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
-        pi.setName("NgayChot");
+        pi.setName("NgayGiaiTrach");
         pi.setValue(NgayChot);
         pi.setType(String.class);
         request.addProperty(pi);
