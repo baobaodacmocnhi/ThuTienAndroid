@@ -155,8 +155,8 @@ public class ActivityDangNhap extends AppCompatActivity {
                             } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true || Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
                                 editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
                             }
-
                             editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
+                            editor.putBoolean("SyncNopTien", Boolean.parseBoolean(jsonObject.getString("SyncNopTien")));
                             editor.putBoolean("Login", true);
                             editor.putLong("LoginDate", new Date().getTime());
                             editor.commit();
@@ -177,7 +177,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                         results = result.split(";");
 //                        if (result.isEmpty() == false && result.contains("Connection refused") == false)
                         if (Boolean.parseBoolean(results[0]) == true) {
-                            CLocal.initialCLocal();
+//                            CLocal.initialCLocal();
 
                             publishProgress("DangXuat");
 //                            return "true";

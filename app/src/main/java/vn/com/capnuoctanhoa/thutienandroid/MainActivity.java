@@ -72,8 +72,8 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu,imgbtnNopTien;
-    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu,txtNopTien, txtVersion;
+    private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu, imgbtnNopTien;
+    private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtNopTien, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
     PackageInfo packageInfo;
@@ -300,13 +300,13 @@ public class MainActivity extends AppCompatActivity {
                     imgbtnQuanLy.setVisibility(View.VISIBLE);
                     txtQuanLy.setVisibility(View.VISIBLE);
                 } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
-
+                    CLocal.TestApp = CLocal.sharedPreferencesre.getBoolean("TestApp", false);
                 }
                 if (CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                 //nộp tiền
-                if(Integer.parseInt(CLocal.MaNV)==0||Integer.parseInt(CLocal.MaNV)==1)
-                {
+                CLocal.SyncNopTien = CLocal.sharedPreferencesre.getBoolean("SyncNopTien", false);
+                if (CLocal.SyncNopTien == true) {
                     imgbtnNopTien.setVisibility(View.VISIBLE);
                     txtNopTien.setVisibility(View.VISIBLE);
                 }
@@ -550,7 +550,7 @@ public class MainActivity extends AppCompatActivity {
                         result = ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
                         results = result.split(";");
                         if (Boolean.parseBoolean(results[0]) == true) {
-                            CLocal.initialCLocal();
+//                            CLocal.initialCLocal();
 
                             publishProgress("DangXuat");
                         }

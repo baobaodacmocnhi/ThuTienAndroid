@@ -53,13 +53,9 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView ID;
+        TextView ID, NgayChot, Loai, SoLuong, TongCong;
         CheckBox Chot;
-        TextView NgayChot;
-        Button NopTien;
-        TextView Loai;
-        TextView SoLuong;
-        TextView TongCong;
+        Button NopTien, ShowError;
     }
 
     @Override
@@ -73,6 +69,7 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
             holder.Chot = (CheckBox) convertView.findViewById(R.id.chkChot);
             holder.NgayChot = (TextView) convertView.findViewById(R.id.txtNgayChot);
             holder.NopTien = (Button) convertView.findViewById(R.id.btnNopTien);
+            holder.ShowError = (Button) convertView.findViewById(R.id.btnShowError);
             holder.Loai = (TextView) convertView.findViewById(R.id.txtLoai);
             holder.SoLuong = (TextView) convertView.findViewById(R.id.txtSoLuong);
             holder.TongCong = (TextView) convertView.findViewById(R.id.txtTongCong);
@@ -125,6 +122,14 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
             }
         });
 
+        holder.ShowError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTask_Error myAsyncTask = new MyAsyncTask_Error();
+                myAsyncTask.execute(new String[]{ map.getNgayChot()});
+            }
+        });
+
         return convertView;
     }
 
@@ -152,6 +157,9 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
                         break;
                     case "noptien":
                         result = ws.nopTien(strings[1]);
+                        break;
+                    case "showerror":
+                        result = ws.showError_NopTien(strings[1]);
                         break;
                 }
                 return result.split(";");
@@ -182,6 +190,44 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
                 CLocal.showPopupMessage(activity, "THÀNH CÔNG", "center");
             } else {
                 CLocal.showPopupMessage(activity, "THẤT BẠI\n" + strings[1], "center");
+            }
+        }
+    }
+
+    public class MyAsyncTask_Error extends AsyncTask<String, Void, String[]> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                String result = ws.showError_NopTien(strings[0]);
+                return result.split(";");
+            } catch (Exception ex) {
+                return new String[]{"false", ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(activity, strings[1], "center");
+            } else {
+                CLocal.showPopupMessage(activity,  strings[1], "center");
             }
         }
     }
