@@ -127,7 +127,7 @@ public class CustomAdapterRecyclerViewParent_LoadMore extends RecyclerView.Adapt
                     @Override
                     public boolean onLongClick(View v) {
                         PopupMenu popup = new PopupMenu(activity, v);
-                        popup.getMenuInflater().inflate(R.menu.menu_dong_nuoc, popup.getMenu());
+                        popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem menuItem) {

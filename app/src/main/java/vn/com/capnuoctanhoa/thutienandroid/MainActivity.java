@@ -1,6 +1,5 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,9 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
@@ -55,7 +52,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.BluetoothPrintService;
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinterService;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -335,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu, this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menubar_main, menu);
         return true;
     }
 

@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CHoaDon;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -623,7 +622,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu, this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_thutien, menu);
+        getMenuInflater().inflate(R.menu.menubar_thutien, menu);
         return true;
     }
 

@@ -29,13 +29,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <Button
+                    android:id="@+id/btnMenu"
+                    style="@style/Widget.AppCompat.Light.ActionButton.Overflow"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/ic_baseline_more_vert_24"
+                    android:focusable="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/lvSTT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="STT"
                     android:textColor="@color/colorText"
                     android:textSize="20sp"
@@ -71,14 +83,14 @@
                     android:id="@+id/lvRow1b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:gravity="right"
                     android:text="Row1b"
                     android:textColor="@color/colorSoTien"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMenu"
                     app:layout_constraintStart_toEndOf="@+id/lvRow1a"
                     app:layout_constraintTop_toTopOf="@+id/lvRow1a" />
 

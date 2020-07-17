@@ -1,27 +1,46 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
 import android.app.Activity;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc2;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongTien;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityMoNuoc;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class CustomAdapterExpandableListView extends BaseExpandableListAdapter implements Filterable {
     private Activity activity;
     private ArrayList<CViewParent> mOriginalValues;
     private ArrayList<CViewParent> mDisplayedValues;
+    private String action;
 
-    public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues) {
+    public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues,String action) {
         this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
+        this.action = action;
     }
 
     @Override
@@ -73,6 +92,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         TextView Row4a;
         TextView Row4b;
         ConstraintLayout layoutParent;
+        Button btnMenu;
     }
 
     @Override
@@ -93,12 +113,13 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.Row4a = (TextView) convertView.findViewById(R.id.lvRow4a);
             holder.Row4b = (TextView) convertView.findViewById(R.id.lvRow4b);
             holder.layoutParent = (ConstraintLayout) convertView.findViewById(R.id.layoutParent);
+            holder.btnMenu = (Button) convertView.findViewById(R.id.btnMenu);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        CViewParent map = (CViewParent) getGroup(groupPosition);
+        final CViewParent map = (CViewParent) getGroup(groupPosition);
         holder.STT.setText(map.getSTT());
         holder.ID.setText(map.getID());
         if (map.getRow1a().isEmpty() == true && map.getRow1b().isEmpty() == true) {
@@ -138,6 +159,79 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
         else
             holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorChuaThu));
+
+        holder.btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                PopupMenu popup = new PopupMenu(activity, v);
+                if(action.contains("HanhThu")==true)
+                {
+                    popup.getMenuInflater().inflate(R.menu.menu_thutien, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            int id = menuItem.getItemId();
+                            int i = Integer.parseInt(map.getSTT()) - 1;
+                            CLocal.indexPosition = i;
+                            Intent intent;
+                            switch (id) {
+                                case R.id.action_ThuTien:
+                                    intent = new Intent(activity, ActivityHoaDonDienTu_ThuTien.class);
+                                    intent.putExtra("STT", String.valueOf(i));
+                                    activity.startActivity(intent);
+                                    break;
+                                case R.id.action_TBDongNuoc:
+                                   MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
+                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"TBDongNuoc",String.valueOf(i)});
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                    popup.show();
+                }
+                else if(action.contains("DongNuoc")==true) {
+                    popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            int id = menuItem.getItemId();
+                            int i = Integer.parseInt(map.getSTT()) - 1;
+                            CLocal.indexPosition = i;
+                            Intent intent;
+                            switch (id) {
+                                case R.id.action_DongNuoc1:
+                                    intent = new Intent(activity, ActivityDongNuoc.class);
+                                    intent.putExtra("STT", String.valueOf(i));
+                                    activity.startActivity(intent);
+                                    break;
+                                case R.id.action_DongNuoc2:
+                                    intent = new Intent(activity, ActivityDongNuoc2.class);
+                                    intent.putExtra("STT", String.valueOf(i));
+                                    activity.startActivity(intent);
+                                    break;
+                                case R.id.action_MoNuoc:
+                                    intent = new Intent(activity, ActivityMoNuoc.class);
+                                    intent.putExtra("STT", String.valueOf(i));
+                                    activity.startActivity(intent);
+                                    break;
+                                case R.id.action_DongTien:
+                                    intent = new Intent(activity, ActivityDongTien.class);
+                                    intent.putExtra("STT", String.valueOf(i));
+                                    activity.startActivity(intent);
+                                    break;
+                                case R.id.action_PhieuBao2:
+                                    if (CLocal.thermalPrinterService != null)
+                                        CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(i));
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                    popup.show();
+                }
+            }
+        });
 
         return convertView;
     }
@@ -296,5 +390,105 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             }
         };
         return filter;
+    }
+
+    public  class MyAsyncTask_XuLyTrucTiep_Extra extends AsyncTask<String, Void, String[]> {
+        ProgressDialog progressDialog;
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                String result = "";
+                String[] results = new String[]{};
+                String MaHDs = "";
+                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                Date dateCapNhat = new Date();
+                switch (strings[0])
+                {
+                    case "HD0":
+                        for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
+                            for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
+                                if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isGiaiTrach() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isThuHo() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                        && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
+                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false");
+                                    results = result.split(";");
+                                    if (Boolean.parseBoolean(results[0]) == true) {
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setGiaiTrach(true);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
+                                    }
+                                }
+
+                            if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
+                                CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
+                                CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
+                            }
+                            CLocal.updateTinhTrangParent(CLocal.listHanhThuView, i);
+                            CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
+                        }
+                        break;
+                    case "TBDongNuoc":
+                        int STT=Integer.parseInt(strings[1]);
+                        for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == true) {
+                                if (MaHDs.equals("") == true)
+                                    MaHDs += CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                                else
+                                    MaHDs += "," + CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                            }
+                        Date dt2 = dateCapNhat;
+                        Calendar c2 = Calendar.getInstance();
+                        c2.setTime(dt2);
+                        c2.add(Calendar.DATE, 3);
+                        dt2 = c2.getTime();
+                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false");
+                        results = result.split(";");
+                        if (Boolean.parseBoolean(results[0]) == true) {
+                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                                if (MaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt2));
+                                }
+                        }
+                        break;
+                }
+
+                return results;
+            } catch (Exception ex) {
+                return new String[]{"false;" + ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(activity, "THÀNH CÔNG", "center");
+            } else
+                CLocal.showPopupMessage(activity, "THẤT BẠI\n" + strings[1], "center");
+        }
     }
 }

@@ -128,7 +128,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
                 PopupMenu popup = new PopupMenu(getApplicationContext(), view);
-                popup.getMenuInflater().inflate(R.menu.menu_dong_nuoc, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -336,7 +336,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent);
+            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent,"DongNuoc");
             lstView.setAdapter(customAdapterExpandableListView);
             txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "")+"- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));

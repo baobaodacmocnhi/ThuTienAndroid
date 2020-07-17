@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search_khach_hang"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Tìm Kiếm Khách Hàng"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_ghichu"
+        android:icon="@drawable/ic_notex128"
+        android:title="Cấu Hình"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_print"
+        android:icon="@drawable/ic_printerx128"
+        android:title="In"
+        app:showAsAction="always" />
+</menu>

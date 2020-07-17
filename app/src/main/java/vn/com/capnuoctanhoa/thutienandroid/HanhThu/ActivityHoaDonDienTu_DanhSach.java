@@ -92,8 +92,8 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                             .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
-                                        MyAsyncTask_XuLyTrucTiep_HD0 myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_HD0();
-                                        myAsyncTask_xuLyTrucTiep_hd0.execute();
+                                        MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
+                                        myAsyncTask_xuLyTrucTiep_hd0.execute("HD0");
                                     }
                                 }
                             })
@@ -129,19 +129,19 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                             TongHD++;
                             TongCong += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             //thu hộ
-                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV)==false)
-                                    ||(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == false)
+                                    || (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
                                     || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true) {
                                 TongHDThuHo++;
                                 TongCongThuHo += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //đã thu
-                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV)==true) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == true) {
                                 TongHDDaThu++;
                                 TongCongDaThu += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //tồn
-                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false )
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
                                     && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
                                 TongHDTon++;
                                 TongCongTon += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
@@ -422,7 +422,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent);
+            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent,"HanhThu");
             lstView.setAdapter(customAdapterExpandableListView);
             txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "") + "- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
@@ -500,7 +500,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTask_XuLyTrucTiep_HD0 extends AsyncTask<String, Void, String[]> {
+    public  class MyAsyncTask_XuLyTrucTiep_Extra extends AsyncTask<String, Void, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -519,33 +519,68 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             try {
                 String result = "";
                 String[] results = new String[]{};
+                String MaHDs = "";
                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Date dateCapNhat = new Date();
-                for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
-                    for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
-                        if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isGiaiTrach() == false
-                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isThuHo() == false
-                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
-                                && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
-                                && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
-                            result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThu.get(i).getMaKQDN(), "false");
-                            results = result.split(";");
-                            if (Boolean.parseBoolean(results[0]) == true) {
-                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
-                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setGiaiTrach(true);
-                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
-                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
-                                CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
-                            }
-                        }
+                switch (strings[0])
+                {
+                    case "HD0":
+                        for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
+                            for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
+                                if (CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isGiaiTrach() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isThuHo() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
+                                        && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                        && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
+                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false");
+                                    results = result.split(";");
+                                    if (Boolean.parseBoolean(results[0]) == true) {
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setGiaiTrach(true);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
+                                    }
+                                }
 
-                    if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
-                        CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
-                        CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
-                    }
-                    CLocal.updateTinhTrangParent(CLocal.listHanhThuView, i);
-                    CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
+                            if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
+                                CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
+                                CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);
+                            }
+                            CLocal.updateTinhTrangParent(CLocal.listHanhThuView, i);
+                            CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(i));
+                        }
+                        break;
+                    case "TBDongNuoc":
+                        int STT=Integer.parseInt(strings[1]);
+                        for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getTBDongNuoc_Ngay().equals("") == true) {
+                                if (MaHDs.equals("") == true)
+                                    MaHDs += CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                                else
+                                    MaHDs += "," + CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                            }
+                        Date dt2 = dateCapNhat;
+                        Calendar c2 = Calendar.getInstance();
+                        c2.setTime(dt2);
+                        c2.add(Calendar.DATE, 3);
+                        dt2 = c2.getTime();
+                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false");
+                        results = result.split(";");
+                        if (Boolean.parseBoolean(results[0]) == true) {
+                            for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                                if (MaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt2));
+                                }
+                        }
+                        break;
                 }
+
                 return results;
             } catch (Exception ex) {
                 return new String[]{"false;" + ex.getMessage()};
@@ -564,6 +599,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 CLocal.showPopupMessage(ActivityHoaDonDienTu_DanhSach.this, "THẤT BẠI\n" + strings[1], "center");
         }
     }
+
 
     public class MyAsyncTask_XuLyTon extends AsyncTask<Void, Void, Void> {
         ProgressDialog progressDialog;
