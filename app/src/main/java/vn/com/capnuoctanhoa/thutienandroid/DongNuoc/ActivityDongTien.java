@@ -51,7 +51,7 @@ public class ActivityDongTien extends AppCompatActivity {
     private String danhBo = "";
     private JSONArray jsonArrayHoaDonTon = null;
     private int STT = -1;
-//    private ThermalPrinter thermalPrinter;
+    private CWebservice ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,8 @@ public class ActivityDongTien extends AppCompatActivity {
         setContentView(R.layout.activity_dong_tien);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ws = new CWebservice();
 
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
@@ -517,7 +519,6 @@ public class ActivityDongTien extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String[]> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {

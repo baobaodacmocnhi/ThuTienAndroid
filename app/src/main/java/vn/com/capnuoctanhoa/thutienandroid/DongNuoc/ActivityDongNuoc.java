@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import org.json.JSONObject;
@@ -33,18 +34,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewImage;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
-    //    private ImageView imgThumb;
-    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
+    private ImageView imgviewUpdateDiaChiDHN;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi,edtDiaChiDHN, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
     private Button btnDongNuoc, btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
@@ -55,7 +56,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc.this);
     private int STT = -1;
-//    private ThermalPrinter thermalPrinter;
+    private CWebservice ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +65,14 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ws = new CWebservice();
+
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
         edtMLT = (EditText) findViewById(R.id.edtMLT);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
+        edtDiaChiDHN = (EditText) findViewById(R.id.edtDiaChiDHN);
         edtHieu = (EditText) findViewById(R.id.edtHieu);
         edtCo = (EditText) findViewById(R.id.edtCo);
         edtSoThan = (EditText) findViewById(R.id.edtSoThan);
@@ -92,9 +96,18 @@ public class ActivityDongNuoc extends AppCompatActivity {
         chkButChi = (CheckBox) findViewById(R.id.chkButChi);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkKhoaKhac = (CheckBox) findViewById(R.id.chkKhoaKhac);
+        imgviewUpdateDiaChiDHN = (ImageView) findViewById(R.id.imgviewUpdateDiaChiDHN);
 
 //        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
 //        myAsyncTask_thermal.execute();
+
+        imgviewUpdateDiaChiDHN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTask_updateDiaChiDHN myAsyncTask_updateDiaChiDHN = new MyAsyncTask_updateDiaChiDHN();
+                myAsyncTask_updateDiaChiDHN.execute();
+            }
+        });
 
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,8 +206,6 @@ public class ActivityDongNuoc extends AppCompatActivity {
               CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
-
-
 
         try {
 //            String MaDN = getIntent().getStringExtra("MaDN");
@@ -327,6 +338,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                 edtMLT.setText(en.getMLT());
                 edtHoTen.setText(en.getHoTen());
                 edtDiaChi.setText(en.getDiaChi());
+                edtDiaChiDHN.setText(en.getDiaChiDHN());
                 edtHieu.setText(en.getHieu());
                 edtCo.setText(en.getCo());
                 edtSoThan.setText(en.getSoThan());
@@ -403,7 +415,6 @@ public class ActivityDongNuoc extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
@@ -476,5 +487,44 @@ public class ActivityDongNuoc extends AppCompatActivity {
             CLocal.showPopupMessage(ActivityDongNuoc.this, s,"center");
         }
 
+    }
+
+    public class MyAsyncTask_updateDiaChiDHN extends AsyncTask<String, Void, String[]> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDongNuoc.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+            try {
+                String result = "";
+                String[] results = new String[]{};
+                result = ws.update_DiaChiDHN(CLocal.MaNV, edtDanhBo.getText().toString().replace(" ", ""), edtDiaChiDHN.getText().toString());
+                results = result.split(";");
+                return results;
+            } catch (Exception ex) {
+                return new String[]{"false;" + ex.getMessage()};
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (Boolean.parseBoolean(strings[0]) == true) {
+                CLocal.showPopupMessage(ActivityDongNuoc.this, "THÀNH CÔNG", "center");
+            } else
+                CLocal.showPopupMessage(ActivityDongNuoc.this, "THẤT BẠI\n" + strings[1], "center");
+        }
     }
 }

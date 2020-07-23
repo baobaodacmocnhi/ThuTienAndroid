@@ -50,7 +50,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
     private Button btnTruoc, btnSau, btnThuTien, btnPhieuBao, btnPhieuBao2, btnTBDongNuoc, btnXoa;
     private CheckBox chkPhiMoNuoc, chkTienDu;
     private Integer STT = -1;
-    //    private ThermalPrinter thermalPrinter = null;
     private CWebservice ws;
     private ArrayList<CHoaDon> lstHoaDon;
     private long TongCong = 0, PhiMoNuoc = 0, TienDu = 0;
@@ -63,6 +62,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         setContentView(R.layout.activity_hoa_don_dien_tu_thu_tien);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ws = new CWebservice();
 
         txtTinhTrang = (TextView) findViewById(R.id.txtTinhTrang);
         txtLenhHuy = (TextView) findViewById(R.id.txtLenhHuy);
@@ -97,7 +98,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         lstView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 //        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
 //        myAsyncTask_thermal.execute();
-        ws = new CWebservice();
 
         imgviewThongKe.setOnClickListener(new View.OnClickListener() {
             @Override

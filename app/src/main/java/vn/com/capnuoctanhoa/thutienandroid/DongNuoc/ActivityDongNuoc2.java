@@ -56,7 +56,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission CMarshMallowPermission = new CMarshMallowPermission(ActivityDongNuoc2.this);
     private int STT = -1;
-//    private ThermalPrinter thermalPrinter;
+    private CWebservice ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,8 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         setContentView(R.layout.activity_dong_nuoc2);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ws = new CWebservice();
 
         edtMaDN = (EditText) findViewById(R.id.edtMaDN);
         edtDanhBo = (EditText) findViewById(R.id.edtDanhBo);
@@ -368,7 +370,6 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {

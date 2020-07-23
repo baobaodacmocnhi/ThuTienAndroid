@@ -11,8 +11,8 @@
         style="@style/ButtonThuTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="Đóng Nước Lần 1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +39,42 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView72"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Địa Chỉ ĐHN"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+
+            <EditText
+                android:id="@+id/edtDiaChiDHN"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/imgviewUpdateDiaChiDHN"
+                app:layout_constraintStart_toEndOf="@+id/textView72"
+                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+
+            <ImageView
+                android:id="@+id/imgviewUpdateDiaChiDHN"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi"
+                app:srcCompat="@drawable/ic_save256x256" />
 
             <CheckBox
                 android:id="@+id/chkButChi"
@@ -78,7 +114,7 @@
                 android:layout_marginLeft="8dp"
                 android:ems="5"
                 android:inputType="number"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView37"
                 app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
 
@@ -92,7 +128,7 @@
                 android:layout_marginRight="8dp"
                 android:ems="5"
                 android:inputType="number"
-                android:textSize="14sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/chkKhoaKhac"
                 app:layout_constraintTop_toBottomOf="@+id/edtNiemChi" />
@@ -115,7 +151,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:entries="@array/dongnuoc_array"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/spnChiMatSo" />
 
@@ -138,7 +174,7 @@
                 android:layout_marginLeft="8dp"
                 android:ems="6"
                 android:inputType="date"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView10"
                 app:layout_constraintTop_toBottomOf="@+id/edtSoThan" />
 
@@ -150,7 +186,7 @@
                 android:layout_marginLeft="8dp"
                 android:ems="5"
                 android:inputType="number"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toTopOf="@+id/edtNgayDN" />
 
@@ -173,7 +209,7 @@
                 android:layout_marginLeft="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView16"
                 app:layout_constraintTop_toBottomOf="@+id/edtMaDN" />
 
@@ -185,7 +221,7 @@
                 android:layout_marginRight="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/edtDanhBo"
                 app:layout_constraintTop_toBottomOf="@+id/edtDanhBo" />
@@ -198,7 +234,7 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
@@ -232,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/edtDanhBo"
                 app:layout_constraintTop_toTopOf="@+id/edtDanhBo" />
@@ -280,7 +316,7 @@
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
@@ -335,9 +371,9 @@
                 android:layout_marginLeft="8dp"
                 android:ems="5"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView17"
-                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+                app:layout_constraintTop_toBottomOf="@+id/edtDiaChiDHN" />
 
             <EditText
                 android:id="@+id/edtCo"
@@ -347,7 +383,7 @@
                 android:layout_marginLeft="8dp"
                 android:ems="2"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toEndOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu" />
 
@@ -370,7 +406,6 @@
                 android:layout_marginRight="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/edtHoTen"
                 app:layout_constraintTop_toBottomOf="@+id/edtHoTen" />
@@ -404,19 +439,20 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:entries="@array/dongnuoc_array"
-                android:textSize="14sp"
+
                 app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
                 app:layout_constraintTop_toBottomOf="@+id/edtKhoaKhac_GhiChu" />
 
             <EditText
                 android:id="@+id/edtSoThan"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:ems="6"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu" />
 
