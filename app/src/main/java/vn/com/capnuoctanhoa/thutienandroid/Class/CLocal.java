@@ -456,7 +456,7 @@ public class CLocal {
         lst.get(i).setLenhHuyCat(false);
         lst.get(i).setTBDongNuoc(false);
         lst.get(i).setDangNgan_DienThoai(false);
-        lst.get(i).setDongA(false);
+//        lst.get(i).setDongA(false);
         lst.get(i).setTinhTrang("");
 
         if (lst.get(i).isDongA() == true)  {
@@ -549,7 +549,7 @@ public class CLocal {
         en.setLenhHuyCat(false);
         en.setTBDongNuoc(false);
         en.setDangNgan_DienThoai(false);
-        en.setDongA(false);
+//        en.setDongA(false);
         en.setTinhTrang("");
 
         if (en.isDongA() == true) {
