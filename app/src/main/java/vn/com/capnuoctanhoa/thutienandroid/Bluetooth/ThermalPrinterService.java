@@ -712,7 +712,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao2_EZ(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().trim().equals("") == false) {
                     printTop_EZ();
                     printEZ("THÔNG BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("CHƯA THANH TOÁN", 4, toadoY, 80, 2, 1);
@@ -1578,7 +1578,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao2_ESC(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().trim().equals("") == false) {
                     printTop_ESC();
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextStyle(true, 1, 2));
