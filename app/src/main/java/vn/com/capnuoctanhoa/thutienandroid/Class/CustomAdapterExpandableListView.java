@@ -37,7 +37,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
     private ArrayList<CViewParent> mDisplayedValues;
     private String action;
 
-    public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues,String action) {
+    public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues, String action) {
         this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
         this.action = action;
@@ -164,8 +164,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
             @Override
             public void onClick(final View v) {
                 PopupMenu popup = new PopupMenu(activity, v);
-                if(action.contains("HanhThu")==true)
-                {
+                if (action.contains("HanhThu") == true) {
                     popup.getMenuInflater().inflate(R.menu.menu_thutien, popup.getMenu());
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -181,16 +180,15 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     activity.startActivity(intent);
                                     break;
                                 case R.id.action_TBDongNuoc:
-                                   MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
-                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"TBDongNuoc",String.valueOf(i)});
+                                    MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
+                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"TBDongNuoc", String.valueOf(i)});
                                     break;
                             }
                             return true;
                         }
                     });
                     popup.show();
-                }
-                else if(action.contains("DongNuoc")==true) {
+                } else if (action.contains("DongNuoc") == true) {
                     popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -221,8 +219,8 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     activity.startActivity(intent);
                                     break;
                                 case R.id.action_PhieuBao2:
-                                    if (CLocal.thermalPrinterService != null)
-                                        CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(i));
+                                    MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
+                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"InPhieuBao2", String.valueOf(i),"2"});
                                     break;
                             }
                             return true;
@@ -392,7 +390,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
         return filter;
     }
 
-    public  class MyAsyncTask_XuLyTrucTiep_Extra extends AsyncTask<String, Void, String[]> {
+    public class MyAsyncTask_XuLyTrucTiep_Extra extends AsyncTask<String, Void, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
 
@@ -414,8 +412,8 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                 String MaHDs = "";
                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Date dateCapNhat = new Date();
-                switch (strings[0])
-                {
+                int STT=-1;
+                switch (strings[0]) {
                     case "HD0":
                         for (int i = 0; i < CLocal.listHanhThuView.size(); i++) {
                             for (int j = 0; j < CLocal.listHanhThuView.get(i).getLstHoaDon().size(); j++)
@@ -444,7 +442,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                         }
                         break;
                     case "TBDongNuoc":
-                        int STT=Integer.parseInt(strings[1]);
+                         STT = Integer.parseInt(strings[1]);
                         for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
                             if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
@@ -471,6 +469,40 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 }
                         }
                         break;
+                    case "InPhieuBao2":
+                         STT = Integer.parseInt(strings[1]);
+                        for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
+                            if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
+                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                    && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true) {
+                                if (MaHDs.equals("") == true)
+                                    MaHDs += CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD();
+                                else
+                                    MaHDs += "," + CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD();
+                            }
+                        Date dt = dateCapNhat;
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(dt);
+                        c.add(Calendar.DATE, Integer.parseInt(strings[2]));
+                        dt = c.getTime();
+                        if(MaHDs.equals("")==false) {
+                            result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false");
+                            results = result.split(";");
+                            if (Boolean.parseBoolean(results[0]) == true) {
+                                for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
+                                    if (MaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
+                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                                    }
+                                if (CLocal.thermalPrinterService != null)
+                                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                            }
+                        }
+                        else
+                        if (CLocal.thermalPrinterService != null)
+                            CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
                 }
 
                 return results;

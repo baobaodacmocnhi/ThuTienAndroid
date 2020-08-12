@@ -470,6 +470,24 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                         enChild.setNgayGiaiTrach(jsonObjectChild.getString("NgayGiaiTrach").replace("null", ""));
                                     if (jsonObjectChild.has("XoaDangNgan_Ngay_DienThoai") == true)
                                         enChild.setXoaDangNgan_Ngay_DienThoai(jsonObjectChild.getString("XoaDangNgan_Ngay_DienThoai").replace("null", ""));
+                                    if (jsonObjectChild.has("InPhieuBao_Ngay") == true)
+                                        if (jsonObjectChild.getString("InPhieuBao_Ngay").replace("null", "").equals("") == false)
+                                            enChild.setInPhieuBao_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObjectChild.getString("InPhieuBao_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
+                                    if (jsonObjectChild.has("InPhieuBao2_Ngay") == true)
+                                        if (jsonObjectChild.getString("InPhieuBao2_Ngay").replace("null", "").equals("") == false)
+                                            enChild.setInPhieuBao2_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObjectChild.getString("InPhieuBao2_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
+                                    if (jsonObjectChild.has("InPhieuBao2_NgayHen") == true)
+                                        if (jsonObjectChild.getString("InPhieuBao2_NgayHen").replace("null", "").equals("") == false)
+                                            enChild.setInPhieuBao2_NgayHen(CLocal.convertTimestampToDate(Long.parseLong(jsonObjectChild.getString("InPhieuBao2_NgayHen").replace("null", "").replace("/Date(", "").replace(")/", ""))));
+                                    if (jsonObjectChild.has("TBDongNuoc_Ngay") == true)
+                                        if (jsonObjectChild.getString("TBDongNuoc_Ngay").replace("null", "").equals("") == false) {
+                                            enChild.setTBDongNuoc_Ngay(CLocal.convertTimestampToDate(Long.parseLong(jsonObjectChild.getString("TBDongNuoc_Ngay").replace("null", "").replace("/Date(", "").replace(")/", ""))));
+                                            enChild.setTBDongNuoc(true);
+                                        } else
+                                            enChild.setTBDongNuoc(false);
+                                    if (jsonObjectChild.has("TBDongNuoc_NgayHen") == true)
+                                        if (jsonObjectChild.getString("TBDongNuoc_NgayHen").replace("null", "").equals("") == false)
+                                            enChild.setTBDongNuoc_NgayHen(CLocal.convertTimestampToDate(Long.parseLong(jsonObjectChild.getString("TBDongNuoc_NgayHen").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                                     if (jsonObjectChild.has("PhiMoNuoc") == true)
                                         enChild.setPhiMoNuoc(jsonObjectChild.getString("PhiMoNuoc"));
                                     if (jsonObjectChild.has("DCHD") == true) {
