@@ -600,7 +600,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_EZ(CEntityParent entityParent) {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
-                if ( entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().trim().equals("") == false) {
+                if ( entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_EZ(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
@@ -611,7 +611,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_EZAppend(CEntityParent entityParent) {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
-                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_EZAppend(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
@@ -622,7 +622,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_EZ(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (entityParent != null && entityChild != null) {
-                if (entityChild.getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
@@ -666,7 +666,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_EZAppend(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (entityParent != null && entityChild != null) {
-                if (entityChild.getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
                     printTop_EZAppend();
                     stringBuilder.append(printEZAppend("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1));
                     stringBuilder.append(printEZAppend("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1));
@@ -712,7 +712,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao2_EZ(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
                     printTop_EZ();
                     printEZ("THÔNG BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("CHƯA THANH TOÁN", 4, toadoY, 80, 2, 1);
@@ -812,7 +812,7 @@ public class ThermalPrinterService extends Service {
     public void printTBDongNuoc_EZ(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().equals("") == false) {
                     printTop_EZ();
                     printEZ("THÔNG BÁO", 4, toadoY, 120, 2, 1);
                     printEZ("TẠM NGƯNG CUNG CẤP NƯỚC", 4, toadoY, 30, 2, 1);
@@ -1495,7 +1495,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_ESC(CEntityParent entityParent) {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
-                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_ESC(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
@@ -1506,7 +1506,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (entityParent != null && entityChild != null) {
-                if (entityChild.getInPhieuBao_Ngay().trim().equals("") == false) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false) {
                     printTop_ESC();
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextStyle(true, 1, 2));
@@ -1578,7 +1578,7 @@ public class ThermalPrinterService extends Service {
     public void printPhieuBao2_ESC(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
                     printTop_ESC();
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextStyle(true, 1, 2));
@@ -1661,7 +1661,7 @@ public class ThermalPrinterService extends Service {
     public void printTBDongNuoc_ESC(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().trim().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay().equals("") == false) {
                     printTop_ESC();
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextStyle(true, 1, 2));

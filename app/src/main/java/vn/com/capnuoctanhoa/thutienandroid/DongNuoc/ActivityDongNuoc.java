@@ -11,12 +11,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +49,7 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgviewUpdateDiaChiDHN;
-    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi,edtDiaChiDHN, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
+    private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtDiaChiDHN, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
     private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
     private Button btnDongNuoc, btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
@@ -202,8 +206,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
 //                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
-                if(CLocal.thermalPrinterService!=null)
-              CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                if (CLocal.thermalPrinterService != null)
+                    CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 
@@ -434,15 +438,14 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         return "ĐÃ NHẬP RỒI";
 
                     String imgString = "";
-                    if (lstCapture.size() >0) {
+                    if (lstCapture.size() > 0) {
 //                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        for (int i=0;i<lstCapture.size();i++)
-                        {
+                        for (int i = 0; i < lstCapture.size(); i++) {
                             Bitmap reizeImage = Bitmap.createScaledBitmap(lstCapture.get(i), 1024, 1024, false);
                             if (imgString.equals("") == true)
-                                imgString +=  CLocal.convertBitmapToString(reizeImage);
+                                imgString += CLocal.convertBitmapToString(reizeImage);
                             else
-                                imgString += ";" +  CLocal.convertBitmapToString(reizeImage);
+                                imgString += ";" + CLocal.convertBitmapToString(reizeImage);
                         }
 //                        Bitmap reizeImage = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
 //                        imgString = CLocal.convertBitmapToString(reizeImage);
@@ -484,7 +487,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            CLocal.showPopupMessage(ActivityDongNuoc.this, s,"center");
+            CLocal.showPopupMessage(ActivityDongNuoc.this, s, "center");
         }
 
     }

@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDanhSachHanhThu.class);
                 startActivity(intent);
-//                ThermalPrinter thermalPrinter = new ThermalPrinter(MainActivity.this);
-//                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-//                    thermalPrinter.printPhieuBao(CLocal.listHanhThu.get(0), CLocal.listHanhThu.get(0).getLstHoaDon().get(0));
             }
         });
 
@@ -125,9 +122,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityTamThu.class);
                 startActivity(intent);
-//                ThermalPrinter thermalPrinter = new ThermalPrinter(MainActivity.this);
-//                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
-//                    thermalPrinter.printPhieuBao_ESC(CLocal.listHanhThu.get(0), CLocal.listHanhThu.get(0).getLstHoaDon().get(0));
             }
         });
 
@@ -268,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 calendar.add(Calendar.DATE, 6);
                 Date dateLogin7 = calendar.getTime();
                 Date currentDate = new Date();
-                if (currentDate.compareTo(dateLogin7) > 1) {
+                if (currentDate.compareTo(dateLogin7) > 0) {
                     MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
                     myAsyncTask_dangXuat.execute("DangXuat");
                 }

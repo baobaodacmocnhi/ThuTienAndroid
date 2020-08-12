@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
@@ -154,8 +155,6 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-//                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
                 if (CLocal.thermalPrinterService != null) {
                     CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
                     if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
@@ -167,9 +166,17 @@ public class ActivityDongTien extends AppCompatActivity {
         btnPhieuBao2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-//                    thermalPrinter = new ThermalPrinter(ActivityDongTien.this);
-//                thermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                selectedMaHDs = "";
+                for (int i = 0; i < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); i++)
+                    if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(i).getInPhieuBao2_Ngay().equals("") == true)
+                        if (selectedMaHDs.equals("") == true)
+                            selectedMaHDs = CLocal.listDongNuocView.get(STT).getLstHoaDon().get(i).getMaHD();
+                        else
+                            selectedMaHDs += "," + CLocal.listDongNuocView.get(STT).getLstHoaDon().get(i).getMaHD();
+                if (selectedMaHDs.equals("") == false) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("PhieuBao2");
+                }
                 if (CLocal.thermalPrinterService != null)
                     CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
             }
@@ -534,7 +541,10 @@ public class ActivityDongTien extends AppCompatActivity {
         protected String[] doInBackground(String... strings) {
             String result = "";
             String[] results = new String[]{};
-            Boolean XoaDCHD = false;
+            String MaHDs = "";
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date dateCapNhat = new Date();
+            boolean XoaDCHD = false;
             switch (strings[0]) {
                 case "DongTien":
 //                    if (selectedMaHDs.equals("") == true)
@@ -558,8 +568,8 @@ public class ActivityDongTien extends AppCompatActivity {
 //                    } else
 //                        return "THẤT BẠI";
                     try {
-                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date dateCapNhat = new Date();
+//                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                        Date dateCapNhat = new Date();
                         for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
                             if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
@@ -569,7 +579,7 @@ public class ActivityDongTien extends AppCompatActivity {
                                 XoaDCHD = false;
                                 if (CLocal.listDongNuocView.get(STT).isDCHD() == true && chkTienDu.isChecked() == false)
                                     XoaDCHD = true;
-                                result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), XoaDCHD.toString());
+                                result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
                                 results = result.split(";");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
@@ -592,7 +602,7 @@ public class ActivityDongTien extends AppCompatActivity {
 
                             }
                         if (chkPhiMoNuoc.isChecked() == true) {
-                            result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), XoaDCHD.toString());
+                            result = ws.XuLy_HoaDonDienTu("DongPhi", CLocal.MaNV, "", currentDate.format(dateCapNhat), "", CLocal.listDongNuocView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
                             results = result.split(";");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 CLocal.listDongNuocView.get(STT).setDongPhi(true);
@@ -607,10 +617,40 @@ public class ActivityDongTien extends AppCompatActivity {
                     } catch (Exception ex) {
                         return new String[]{"false", ex.getMessage()};
                     }
+                case "PhieuBao2":
+                    for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                        if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
+                                && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true
+                                && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
+                            if (MaHDs.equals("") == true)
+                                MaHDs += CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                            else
+                                MaHDs += "," + CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
+                        }
+                    Date dt = dateCapNhat;
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dt);
+                    c.add(Calendar.DATE, Integer.parseInt(strings[1]));
+                    dt = c.getTime();
+                    result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt), CLocal.listHanhThuView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
+                    results = result.split(";");
+                    if (Boolean.parseBoolean(results[0]) == true) {
+                        for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
+                            if (selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
+                                CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
+                                CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                            }
+//                        if (CLocal.thermalPrinterService != null)
+//                            CLocal.thermalPrinterService.printPhieuBao2(CLocal.listHanhThuView.get(STT));
+                    }
+                    break;
                 case "XoaDongTien":
                     try {
-                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date dateCapNhat = new Date();
+//                        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                        Date dateCapNhat = new Date();
                         for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
                             if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == true
                                     && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
