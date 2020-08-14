@@ -351,41 +351,46 @@ public class MainActivity extends AppCompatActivity {
         try {
             String versionDevice = packageInfo.versionName;
             if (versionServer.equals("") == false && versionServer.equals("False") == false && versionServer.equals("java.net.ConnectException: Connection refused") == false && versionDevice.equals(versionServer) == false) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Cập nhật");
-                builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cập Nhật", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://113.161.88.180:1989/app/thutien.apk"));
-//                        startActivity(browserIntent);
-//                        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
-//                            MyAsyncTask myAsyncTask = new MyAsyncTask();
-//                            myAsyncTask.execute("Version");
-//                        }
-                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
-                            MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                            myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
-                        } else
-                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
-                Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
-                layoutParams.weight = 10;
-                layoutParams.gravity = Gravity.CENTER;
-                btnPositive.setLayoutParams(layoutParams);
-                btnNegative.setLayoutParams(layoutParams);
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setTitle("Cập nhật");
+//                builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");
+//                builder.setCancelable(false);
+//                builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                builder.setNegativeButton("Cập Nhật", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+////                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://113.161.88.180:1989/app/thutien.apk"));
+////                        startActivity(browserIntent);
+////                        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+////                            MyAsyncTask myAsyncTask = new MyAsyncTask();
+////                            myAsyncTask.execute("Version");
+////                        }
+//                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
+//                            MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+//                            myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+//                        } else
+//                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
+//                    }
+//                });
+//                AlertDialog alert = builder.create();
+//                alert.show();
+//                Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+//                Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+//                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+//                layoutParams.weight = 10;
+//                layoutParams.gravity = Gravity.CENTER;
+//                btnPositive.setLayoutParams(layoutParams);
+//                btnNegative.setLayoutParams(layoutParams);
+                if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
+                    MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                } else
+                    CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -420,12 +425,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             if (s.contains("Connection refused") == false)
             {
-//                updateApp(s);
-                if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
-                    MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
-                } else
-                    CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
+                updateApp(s);
             }
         }
     }
