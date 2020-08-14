@@ -188,16 +188,20 @@ public class ActivityNopTien extends AppCompatActivity {
                         cViewParent.setChot(Boolean.parseBoolean(jsonObject.getString("Chot")));
                         cViewParent.setNgayChot(jsonObject.getString("NgayChot"));
                         String Loai = "", SoLuong = "", TongCong = "";
-                        Loai = "Đăng Ngân\nCNKĐ\nGiấy\nHĐĐT\nNộp Tiền";
+                        Loai = "Đăng Ngân\nCNKĐ\nGiấy\nHĐĐT\nĐC\nSạch\nNộp Tiền";
                         SoLuong = CLocal.formatMoney(jsonObject.getString("SLDangNgan").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("SLCNKD").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("SLGiay").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("SLHDDT").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLHDDTDC").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("SLHDDTSach").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("SLNopTien").replace("null", "0"), "");
                         TongCong = CLocal.formatMoney(jsonObject.getString("TCDangNgan").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("TCCNKD").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("TCGiay").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("TCHDDT").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCHDDTDC").replace("null", "0"), "") + "\n"
+                                + CLocal.formatMoney(jsonObject.getString("TCHDDTSach").replace("null", "0"), "") + "\n"
                                 + CLocal.formatMoney(jsonObject.getString("TCNopTien").replace("null", "0"), "");
                         cViewParent.setLoai(Loai);
                         cViewParent.setSoLuong(SoLuong);

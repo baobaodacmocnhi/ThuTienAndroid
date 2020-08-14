@@ -419,7 +419,14 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s.contains("Connection refused") == false)
-                updateApp(s);
+            {
+//                updateApp(s);
+                if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
+                    MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                } else
+                    CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
+            }
         }
     }
 
@@ -432,7 +439,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setTitle("Thông Báo");
-            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setMessage("Đang Update App...");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setIndeterminate(false);
             progressDialog.setMax(100);
