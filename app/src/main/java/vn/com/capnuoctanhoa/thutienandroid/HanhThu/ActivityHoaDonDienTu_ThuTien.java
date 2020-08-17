@@ -111,19 +111,19 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                             TongHD++;
                             TongCong += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             //thu hộ
-                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV)==false)
-                                    ||(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == false)
+                                    || (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
                                     || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == true) {
                                 TongHDThuHo++;
                                 TongCongThuHo += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //đã thu
-                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV)==true) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == true) {
                                 TongHDDaThu++;
                                 TongCongDaThu += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
                             }
                             //tồn
-                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false )
+                            if ((CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
                                     && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listHanhThu.get(i).getLstHoaDon().get(j).isThuHo() == false) {
                                 TongHDTon++;
                                 TongCongTon += Long.parseLong(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong());
@@ -356,10 +356,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
                         if (STT >= 0 && STT < CLocal.listHanhThuView.size()) {
                             if (CLocal.SyncTrucTiep == true) {
-                                if (CLocal.listHanhThuView.get(STT).isGiaiTrach() == false
+                                if ((CLocal.InPhieuBao == true ||(CLocal.listHanhThuView.get(STT).isGiaiTrach() == false
                                         && CLocal.listHanhThuView.get(STT).isThuHo() == false
                                         && CLocal.listHanhThuView.get(STT).isTamThu() == false
-                                        && CLocal.listHanhThuView.get(STT).isDangNgan_DienThoai() == false
+                                        && CLocal.listHanhThuView.get(STT).isDangNgan_DienThoai() == false))
                                         && CLocal.listHanhThuView.get(STT).isInPhieuBao() == false) {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"PhieuBao"});
@@ -370,10 +370,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 Date dateCapNhat = new Date();
                                 for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++) {
-                                    if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    if ((CLocal.InPhieuBao == true ||(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
-                                            && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                            && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false))
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == true) {
                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
                                         flag = true;
@@ -409,10 +409,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                     if (CLocal.listHanhThuView != null && CLocal.listHanhThuView.size() > 0) {
                         if (STT >= 0 && STT < CLocal.listHanhThuView.size()) {
                             if (CLocal.SyncTrucTiep == true) {
-                                if (CLocal.listHanhThuView.get(STT).isGiaiTrach() == false
+                                if ((CLocal.InPhieuBao == true ||(CLocal.listHanhThuView.get(STT).isGiaiTrach() == false
                                         && CLocal.listHanhThuView.get(STT).isThuHo() == false
                                         && CLocal.listHanhThuView.get(STT).isTamThu() == false
-                                        && CLocal.listHanhThuView.get(STT).isDangNgan_DienThoai() == false
+                                        && CLocal.listHanhThuView.get(STT).isDangNgan_DienThoai() == false))
                                         && CLocal.listHanhThuView.get(STT).isInPhieuBao2() == false) {
                                     MyAsyncTask_XuLyTrucTiep myAsyncTask_xuLyTrucTiep = new MyAsyncTask_XuLyTrucTiep();
                                     myAsyncTask_xuLyTrucTiep.execute(new String[]{"PhieuBao2", edtSoNgayHen.getText().toString()});
@@ -423,10 +423,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 Date dateCapNhat = new Date();
                                 for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++) {
-                                    if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                                    if ((CLocal.InPhieuBao == true ||(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
-                                            && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                            && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false))
                                             && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true) {
                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
                                         Date dt = dateCapNhat;
@@ -729,8 +729,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         btnPhieuBao2.setEnabled(false);
                         btnTBDongNuoc.setEnabled(false);
                         btnXoa.setEnabled(false);
-                        if(CLocal.InPhieuBao==true)
-                        {
+                        if (CLocal.InPhieuBao == true) {
                             btnPhieuBao.setEnabled(true);
                             btnPhieuBao2.setEnabled(true);
                         }
@@ -906,10 +905,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         break;
                     case "PhieuBao":
                         for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
-                            if ( CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                            if ((CLocal.InPhieuBao == true || (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
-                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false))
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == true
                                     && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
                                 result = ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD));
@@ -923,9 +922,9 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         break;
                     case "PhieuBao2":
                         for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
-                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                            if ((CLocal.InPhieuBao == true || (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
-                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
+                                    && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false))
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao2_Ngay().equals("") == true
                                     && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
