@@ -729,6 +729,11 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         btnPhieuBao2.setEnabled(false);
                         btnTBDongNuoc.setEnabled(false);
                         btnXoa.setEnabled(false);
+                        if(CLocal.InPhieuBao==true)
+                        {
+                            btnPhieuBao.setEnabled(true);
+                            btnPhieuBao2.setEnabled(true);
+                        }
                     } else {
                         btnThuTien.setEnabled(true);
                         btnPhieuBao.setEnabled(true);
@@ -901,7 +906,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         break;
                     case "PhieuBao":
                         for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
-                            if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
+                            if ( CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isThuHo() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isTamThu() == false
                                     && CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).isDangNgan_DienThoai() == false

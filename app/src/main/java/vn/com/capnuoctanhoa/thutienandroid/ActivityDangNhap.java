@@ -155,6 +155,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                             } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true || Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
                                 editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
                             }
+                            editor.putBoolean("InPhieuBao", Boolean.parseBoolean(jsonObject.getString("InPhieuBao")));
                             editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
                             editor.putBoolean("SyncNopTien", Boolean.parseBoolean(jsonObject.getString("SyncNopTien")));
                             editor.putBoolean("Login", true);

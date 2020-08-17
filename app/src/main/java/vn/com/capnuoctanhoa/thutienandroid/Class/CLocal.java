@@ -93,7 +93,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, TestApp,SyncNopTien;
+    public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ThermalPrinterService thermalPrinterService;
@@ -119,6 +119,7 @@ public class CLocal {
         editor.putString("ThermalPrinter", "");
         editor.putString("MethodPrinter", "ESC");
         editor.putBoolean("SyncTrucTiep", true);
+        editor.putBoolean("InPhieuBao", false);
         editor.putBoolean("TestApp", false);
         editor.putBoolean("SyncNopTien", false);
         editor.commit();
@@ -126,7 +127,7 @@ public class CLocal {
         editor.remove("jsonDongNuocChild").commit();
         ThermalPrinter = "";
         MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
-        HanhThu = DongNuoc = Doi = ToTruong = TestApp=SyncNopTien = false;
+        HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
@@ -459,7 +460,7 @@ public class CLocal {
 //        lst.get(i).setDongA(false);
         lst.get(i).setTinhTrang("");
 
-        if (lst.get(i).isDongA() == true)  {
+        if (lst.get(i).isDongA() == true) {
             lst.get(i).setTinhTrang("Đông Á");
         } else if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
             lst.get(i).setGiaiTrach(true);
