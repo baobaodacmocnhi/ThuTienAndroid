@@ -251,6 +251,7 @@ public class FragmentTon extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CViewParent entity = new CViewParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
+                        entity.setRow1b(jsonObject.getString("TyLe").replace(".",",")+" %");
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         list.add(entity);
