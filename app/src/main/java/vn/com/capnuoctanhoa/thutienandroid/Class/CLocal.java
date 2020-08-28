@@ -149,6 +149,12 @@ public class CLocal {
         return null;
     }
 
+    public static String getTime()
+    {
+        Date dateCapNhat = new Date();
+        return CLocal.DateFormat.format(dateCapNhat);
+    }
+
     public static boolean checkNetworkAvailable(Activity activity) {
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

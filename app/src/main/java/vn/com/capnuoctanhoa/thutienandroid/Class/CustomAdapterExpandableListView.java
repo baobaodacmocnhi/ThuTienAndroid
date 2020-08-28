@@ -410,7 +410,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                 String result = "";
                 String[] results = new String[]{};
                 String MaHDs = "";
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Date dateCapNhat = new Date();
                 int STT=-1;
                 switch (strings[0]) {
@@ -422,12 +422,12 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                         && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
                                         && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                         && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
-                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false");
+                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), CLocal.DateFormat.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false");
                                     results = result.split(";");
                                     if (Boolean.parseBoolean(results[0]) == true) {
                                         CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
                                         CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setGiaiTrach(true);
-                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(currentDate.format(dateCapNhat));
+                                        CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setNgayGiaiTrach(CLocal.DateFormat.format(dateCapNhat));
                                         CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setMaNV_DangNgan(CLocal.MaNV);
                                         CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setXoaDangNgan_Ngay_DienThoai("");
                                     }
@@ -459,13 +459,13 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                         c2.setTime(dt2);
                         c2.add(Calendar.DATE, 3);
                         dt2 = c2.getTime();
-                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false");
+                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false");
                         results = result.split(";");
                         if (Boolean.parseBoolean(results[0]) == true) {
                             for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
                                 if (MaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD())) {
-                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_Ngay(currentDate.format(dateCapNhat));
-                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(currentDate.format(dt2));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_Ngay(CLocal.DateFormat.format(dateCapNhat));
+                                    CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(CLocal.DateFormat.format(dt2));
                                 }
                         }
                         break;
@@ -488,13 +488,13 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                         c.add(Calendar.DATE, Integer.parseInt(strings[2]));
                         dt = c.getTime();
                         if(MaHDs.equals("")==false) {
-                            result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, currentDate.format(dateCapNhat), currentDate.format(dt), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false");
+                            result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false");
                             results = result.split(";");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
                                     if (MaHDs.contains(CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD())) {
-                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(currentDate.format(dateCapNhat));
-                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(currentDate.format(dt));
+                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(CLocal.DateFormat.format(dateCapNhat));
+                                        CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(CLocal.DateFormat.format(dt));
                                     }
                                 if (CLocal.thermalPrinterService != null)
                                     CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));

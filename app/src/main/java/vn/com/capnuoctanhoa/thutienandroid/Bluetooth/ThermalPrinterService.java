@@ -539,6 +539,7 @@ public class ThermalPrinterService extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("Quý khách muốn in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -583,6 +584,7 @@ public class ThermalPrinterService extends Service {
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Quý khách muốn in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -650,7 +652,8 @@ public class ThermalPrinterService extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày gửi: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày lập: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -694,7 +697,8 @@ public class ThermalPrinterService extends Service {
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
-                    stringBuilder.append(printEZAppend("Ngày gửi: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Ngày lập: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -747,7 +751,8 @@ public class ThermalPrinterService extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -796,7 +801,8 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
-            stringBuilder.append(printEZAppend("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -847,7 +853,8 @@ public class ThermalPrinterService extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -896,7 +903,8 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
-            stringBuilder.append(printEZAppend("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày lập: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -949,6 +957,7 @@ public class ThermalPrinterService extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -999,6 +1008,7 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -1051,6 +1061,7 @@ public class ThermalPrinterService extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1101,6 +1112,7 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -1143,6 +1155,7 @@ public class ThermalPrinterService extends Service {
             printEnd_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
             printEnd_EZ();
             printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1183,6 +1196,7 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -1218,6 +1232,7 @@ public class ThermalPrinterService extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1251,6 +1266,7 @@ public class ThermalPrinterService extends Service {
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1));
+            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
             stringBuilder.append(printDotFeed_EZAppend());
             stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
             stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
@@ -1478,6 +1494,7 @@ public class ThermalPrinterService extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("Quý khách muốn in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn/hddt\n".getBytes());
                     byteStream.write(setTextAlign(1));
@@ -1558,6 +1575,7 @@ public class ThermalPrinterService extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày gửi: " + entityChild.getInPhieuBao_Ngay() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1642,7 +1660,8 @@ public class ThermalPrinterService extends Service {
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
@@ -1727,7 +1746,8 @@ public class ThermalPrinterService extends Service {
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Ngày gửi: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
@@ -1806,6 +1826,7 @@ public class ThermalPrinterService extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -1881,6 +1902,7 @@ public class ThermalPrinterService extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -1939,6 +1961,7 @@ public class ThermalPrinterService extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -1992,6 +2015,7 @@ public class ThermalPrinterService extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Website Công ty: https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
