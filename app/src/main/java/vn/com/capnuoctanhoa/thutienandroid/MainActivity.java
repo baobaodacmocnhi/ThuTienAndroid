@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,13 +22,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +50,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinterService;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
+import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
@@ -72,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtNopTien, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
-    PackageInfo packageInfo;
+    private PackageInfo packageInfo;
+    private CLocation cLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.fileName_SharedPreferences, MODE_PRIVATE);
+        cLocation =new CLocation(MainActivity.this);
 
         imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
         imgbtnDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
+
             }
         });
 
@@ -147,8 +149,9 @@ public class MainActivity extends AppCompatActivity {
         imgbtnTimKiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHang.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHang.class);
+//                startActivity(intent);
+                CLocal.showToastMessage(MainActivity.this,"Lat:"+String.valueOf(cLocation.getLatitude())+" Long:"+String.valueOf(cLocation.getLongitude()));
             }
         });
 
@@ -310,8 +313,8 @@ public class MainActivity extends AppCompatActivity {
                 if (CLocal.checkBluetoothAvaible() == false) {
                     CLocal.setOnBluetooth(MainActivity.this);
                     finish();
-                } else if (CLocal.checkServiceRunning(getApplicationContext(), ThermalPrinterService.class) == false) {
-                    Intent intent2 = new Intent(this, ThermalPrinterService.class);
+                } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+                    Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
                     intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
                     startService(intent2);
                     bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
@@ -730,8 +733,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            ThermalPrinterService.LocalBinder binder = (ThermalPrinterService.LocalBinder) service;
-            CLocal.thermalPrinterService = binder.getService();
+            ServiceThermalPrinter.LocalBinder binder = (ServiceThermalPrinter.LocalBinder) service;
+            CLocal.serviceThermalPrinter = binder.getService();
 //            mBound = true;
         }
 

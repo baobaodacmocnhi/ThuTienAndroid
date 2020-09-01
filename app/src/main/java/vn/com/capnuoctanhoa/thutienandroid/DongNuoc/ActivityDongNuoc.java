@@ -43,7 +43,6 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CustomAdapterRecyclerViewImage;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc extends AppCompatActivity {
@@ -206,8 +205,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //                if (thermalPrinter != null && thermalPrinter.getBluetoothDevice() != null)
 //                    if (CLocal.listDongNuocView.get(STT).isDongNuoc() == true)
 //                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
-                if (CLocal.thermalPrinterService != null)
-                    CLocal.thermalPrinterService.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                if (CLocal.serviceThermalPrinter != null)
+                    CLocal.serviceThermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 

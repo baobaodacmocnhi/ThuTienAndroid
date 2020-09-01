@@ -29,7 +29,7 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinterService;
+import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -96,7 +96,7 @@ public class CLocal {
     public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
-    public static ThermalPrinterService thermalPrinterService;
+    public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
 
     public static void initialCLocal() {

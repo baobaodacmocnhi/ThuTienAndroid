@@ -33,7 +33,7 @@
 
 
         <service
-            android:name=".Bluetooth.ThermalPrinterService"
+            android:name=".Service.ServiceThermalPrinter"
             android:enabled="true"
             android:exported="true" />
 

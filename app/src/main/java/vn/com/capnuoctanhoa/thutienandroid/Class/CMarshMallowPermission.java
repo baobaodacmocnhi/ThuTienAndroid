@@ -9,6 +9,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,4 +206,22 @@ public class CMarshMallowPermission {
             return 0;
     }
 
+    // check if google play services is installed on the device
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(activity);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                Toast.makeText(activity,
+                        "This device is supported. Please download google play services", Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                Toast.makeText(activity,
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+            }
+            return false;
+        }
+        return true;
+    }
 }

@@ -80,8 +80,8 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
 
             case "PhieuBao":
                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
-                    if(CLocal.thermalPrinterService!=null)
-                    CLocal.thermalPrinterService.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                    if(CLocal.serviceThermalPrinter !=null)
+                    CLocal.serviceThermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
                 break;
         }
     }
@@ -127,8 +127,8 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
                                             results = result.split(",");
                                             if (Boolean.parseBoolean(results[0]) == true) {
                                                 CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
-                                                if(CLocal.thermalPrinterService!=null)
-                                                CLocal.thermalPrinterService.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
+                                                if(CLocal.serviceThermalPrinter !=null)
+                                                CLocal.serviceThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(i), CLocal.listHanhThuView.get(i).getLstHoaDon().get(j));
                                             } else if (Boolean.parseBoolean(results[0]) == false && results.length == 5) {
                                                 CLocal.updateValueChild(CLocal.listHanhThu, results[2], results[3], results[4]);
                                                 CLocal.updateValueChild(CLocal.listHanhThuView, results[2], results[3], results[4]);

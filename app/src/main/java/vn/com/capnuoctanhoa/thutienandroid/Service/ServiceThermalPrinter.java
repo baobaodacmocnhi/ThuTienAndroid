@@ -1,4 +1,4 @@
-package vn.com.capnuoctanhoa.thutienandroid.Bluetooth;
+package vn.com.capnuoctanhoa.thutienandroid.Service;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -9,7 +9,6 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -25,8 +24,8 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 
-public class ThermalPrinterService extends Service {
-    public ThermalPrinterService() {
+public class ServiceThermalPrinter extends Service {
+    public ServiceThermalPrinter() {
     }
 
     private BluetoothAdapter mBluetoothAdapter;
@@ -74,9 +73,9 @@ public class ThermalPrinterService extends Service {
     }
 
     public class LocalBinder extends Binder {
-        public ThermalPrinterService getService() {
+        public ServiceThermalPrinter getService() {
             // Return this instance of LocalService so clients can call public methods
-            return ThermalPrinterService.this;
+            return ServiceThermalPrinter.this;
         }
     }
 
@@ -139,7 +138,7 @@ public class ThermalPrinterService extends Service {
             mConnectedThread.write(message.getBytes());
             toast("sent data");
         } else {
-            Toast.makeText(ThermalPrinterService.this, "Failed to send data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ServiceThermalPrinter.this, "Failed to send data", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1369,10 +1368,10 @@ public class ThermalPrinterService extends Service {
         }
         switch (heightFont) {
             case 1:
-                ThermalPrinterService.toadoY = toadoY + 30;
+                ServiceThermalPrinter.toadoY = toadoY + 30;
                 break;
             case 2:
-                ThermalPrinterService.toadoY = toadoY + 60;
+                ServiceThermalPrinter.toadoY = toadoY + 60;
                 break;
         }
 

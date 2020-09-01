@@ -24,12 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CHoaDon;
@@ -155,10 +153,10 @@ public class ActivityDongTien extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CLocal.thermalPrinterService != null) {
-                    CLocal.thermalPrinterService.printThuTien(CLocal.listDongNuocView.get(STT));
+                if (CLocal.serviceThermalPrinter != null) {
+                    CLocal.serviceThermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
                     if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
-                        CLocal.thermalPrinterService.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+                        CLocal.serviceThermalPrinter.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
                 }
             }
         });
@@ -643,8 +641,8 @@ public class ActivityDongTien extends AppCompatActivity {
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(CLocal.DateFormat.format(dateCapNhat));
                                     CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(CLocal.DateFormat.format(dt));
                                 }
-                            if (CLocal.thermalPrinterService != null)
-                                CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                            if (CLocal.serviceThermalPrinter != null)
+                                CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
                         }
                         return results;
                     } catch (Exception ex) {

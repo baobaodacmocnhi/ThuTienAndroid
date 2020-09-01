@@ -33,7 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
@@ -167,8 +166,8 @@ public class ActivityMoNuoc extends AppCompatActivity {
 //                    thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
                     if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
 //                        thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
-                        if(CLocal.thermalPrinterService!=null)
-                        CLocal.thermalPrinterService.printMoNuoc(CLocal.listDongNuocView.get(STT));
+                        if(CLocal.serviceThermalPrinter !=null)
+                        CLocal.serviceThermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
             }
         });
 

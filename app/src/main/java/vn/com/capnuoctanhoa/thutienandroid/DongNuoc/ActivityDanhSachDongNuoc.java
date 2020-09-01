@@ -159,8 +159,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case R.id.action_PhieuBao2:
-                                if (CLocal.thermalPrinterService != null)
-                                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(i));
+                                if (CLocal.serviceThermalPrinter != null)
+                                    CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(i));
                                 break;
                         }
                         return true;

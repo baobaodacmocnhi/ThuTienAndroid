@@ -18,7 +18,6 @@ import android.widget.Filterable;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,7 +26,6 @@ import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc2;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongTien;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityMoNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
 import vn.com.capnuoctanhoa.thutienandroid.R;
 
@@ -496,13 +494,13 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                         CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_Ngay(CLocal.DateFormat.format(dateCapNhat));
                                         CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).setInPhieuBao2_NgayHen(CLocal.DateFormat.format(dt));
                                     }
-                                if (CLocal.thermalPrinterService != null)
-                                    CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                                if (CLocal.serviceThermalPrinter != null)
+                                    CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
                             }
                         }
                         else
-                        if (CLocal.thermalPrinterService != null)
-                            CLocal.thermalPrinterService.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                        if (CLocal.serviceThermalPrinter != null)
+                            CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
                 }
 
                 return results;
