@@ -46,7 +46,6 @@ public class CLocation implements LocationListener {
 
             if (!isGPSEnabled) {
                 CLocal.openGPSSettings(mActivity);
-                mActivity.finish();
             } else {
                 if (isGPSEnabled) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);

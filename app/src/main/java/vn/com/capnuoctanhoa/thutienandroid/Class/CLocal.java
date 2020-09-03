@@ -206,7 +206,8 @@ public class CLocal {
                 })
                 .setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+//                        dialog.cancel();
+                        activity.finish();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -239,7 +240,8 @@ public class CLocal {
                 })
                 .setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+//                        dialog.cancel();
+                        activity.finish();
                     }
                 });
         AlertDialog alert = builder.create();
