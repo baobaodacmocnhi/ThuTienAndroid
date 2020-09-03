@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,6 +30,7 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 
 import android.telephony.TelephonyManager;
@@ -149,8 +151,7 @@ public class CLocal {
         return null;
     }
 
-    public static String getTime()
-    {
+    public static String getTime() {
         Date dateCapNhat = new Date();
         return CLocal.DateFormat.format(dateCapNhat);
     }
@@ -172,6 +173,16 @@ public class CLocal {
             return false;
     }
 
+    public static boolean checkGPSAvaible(Activity activity) {
+        LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null) {
+            boolean flag = false;
+            flag = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            return flag;
+        } else
+            return false;
+    }
+
     public static boolean checkServiceRunning(Context context, Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -182,15 +193,70 @@ public class CLocal {
         return false;
     }
 
-    public static void openBluetoothSettings(Activity activity) {
-        Intent intent = new Intent();
-        intent.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-        activity.startActivity(intent);
+    public static void openBluetoothSettings(final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage("Yêu cầu bật Bluetooth")
+                .setCancelable(false)
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent();
+                        intent.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                        activity.startActivity(intent);
+                    }
+                })
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+        layoutParams.weight = 10;
+        layoutParams.gravity = Gravity.CENTER;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
+
     }
 
     public static void setOnBluetooth(Activity activity) {
         Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         activity.startActivityForResult(intent, 1);
+    }
+
+    public static void openGPSSettings(final Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage("Yêu cầu bật định vị GPS")
+                .setCancelable(false)
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent();
+                        intent.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        activity.startActivity(intent);
+                    }
+                })
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
+        layoutParams.weight = 10;
+        layoutParams.gravity = Gravity.CENTER;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
+    }
+
+    public static void setOnGPS(Activity activity) {
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", true);
+        activity.sendBroadcast(intent);
     }
 
     public static void showPopupMessage1(Activity activity, String message) {

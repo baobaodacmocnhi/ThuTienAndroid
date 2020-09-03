@@ -44,6 +44,12 @@ public class ServiceAppKilled extends Service {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        //stop ServiceThermalPrinter
+        stopService(new Intent(this, ServiceThermalPrinter.class));
+
+
+        //stop ServiceAppKilled
         this.stopSelf();
+
     }
 }

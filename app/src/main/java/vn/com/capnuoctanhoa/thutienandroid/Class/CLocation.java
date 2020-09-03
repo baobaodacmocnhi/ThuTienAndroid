@@ -8,28 +8,24 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.SettingsClient;
 
 import androidx.core.app.ActivityCompat;
 
 public class CLocation implements LocationListener {
-    Activity mActivity;
-    CMarshMallowPermission cMarshMallowPermission;
-    Location gps_loc;
-    Location network_loc;
-    Location final_loc;
-    double longitude;
-    double latitude;
+    private Activity mActivity;
+    private CMarshMallowPermission cMarshMallowPermission;
+    private boolean isGPSEnabled = false;
+    private boolean isNetworkEnabled = false;
+    private Location location;
+
+
+    private LocationManager locationManager;
+
+    private double longitude;
+    private double latitude;
+    private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 0;
+    private static final long MIN_DISTANCE_FOR_UPDATE = 5;
+
 
     public CLocation(Activity activity) {
         mActivity = activity;
@@ -37,62 +33,97 @@ public class CLocation implements LocationListener {
         getLocation();
     }
 
-    public void getLocation() {
+    public String getLocation() {
         try {
             if (cMarshMallowPermission.checkPermissionForLocation() == false)
                 cMarshMallowPermission.requestPermissionForLocation();
             if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 cMarshMallowPermission.requestPermissionForLocation();
             }
-            LocationManager locationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
-            gps_loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            final_loc = null;
-            if (gps_loc != null) {
-                final_loc = gps_loc;
-                latitude = final_loc.getLatitude();
-                longitude = final_loc.getLongitude();
-            } else if (network_loc != null) {
-                final_loc = network_loc;
-                latitude = final_loc.getLatitude();
-                longitude = final_loc.getLongitude();
+            locationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
+            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+//            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled) {
+                CLocal.openGPSSettings(mActivity);
+                mActivity.finish();
             } else {
-                latitude = 0.0;
-                longitude = 0.0;
+                if (isGPSEnabled) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
+                    if (locationManager != null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        if (location != null)
+                            return location.getLatitude() + "," + location.getLongitude();
+                        else
+                            return "";
+                    }
+                }
+//                else if (isNetworkEnabled) {
+//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
+//                    if (locationManager != null) {
+//                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                    }
+//                }
             }
         } catch (Exception ex) {
         }
+        return "";
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
+    LocationListener locationListenerGps = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            setLocation(location);
+            locationManager.removeUpdates(this);
+            locationManager.removeUpdates(locationListenerNetwork);
+        }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            setLocation(location);
+            locationManager.removeUpdates(this);
+            locationManager.removeUpdates(locationListenerGps);
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public double getLatitude() {
+        if (this.location != null) {
+            latitude = this.location.getLatitude();
+        }
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Location getFinal_loc() {
-        return final_loc;
-    }
-
-    public void setFinal_loc(Location final_loc) {
-        this.final_loc = final_loc;
+    public double getLongitude() {
+        if (this.location != null) {
+            longitude = this.location.getLongitude();
+        }
+        return longitude;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        final_loc = location;
-        latitude = final_loc.getLatitude();
-        longitude = final_loc.getLongitude();
     }
 
     @Override

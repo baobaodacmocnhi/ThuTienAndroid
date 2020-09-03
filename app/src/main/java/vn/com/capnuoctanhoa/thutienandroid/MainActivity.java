@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.fileName_SharedPreferences, MODE_PRIVATE);
-        cLocation =new CLocation(MainActivity.this);
+        if (CLocal.checkGPSAvaible(MainActivity.this) == false)
+            CLocal.openGPSSettings(MainActivity.this);
 
         imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
         imgbtnDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -149,9 +150,8 @@ public class MainActivity extends AppCompatActivity {
         imgbtnTimKiem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHang.class);
-//                startActivity(intent);
-                CLocal.showToastMessage(MainActivity.this,"Lat:"+String.valueOf(cLocation.getLatitude())+" Long:"+String.valueOf(cLocation.getLongitude()));
+                Intent intent = new Intent(MainActivity.this, ActivitySearchKhachHang.class);
+                startActivity(intent);
             }
         });
 
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
                 if (CLocal.checkBluetoothAvaible() == false) {
-                    CLocal.setOnBluetooth(MainActivity.this);
+                    CLocal.openBluetoothSettings(MainActivity.this);
                     finish();
                 } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
                     Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
@@ -426,8 +426,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s.contains("Connection refused") == false)
-            {
+            if (s.contains("Connection refused") == false) {
                 updateApp(s);
             }
         }
