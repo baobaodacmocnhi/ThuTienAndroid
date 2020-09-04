@@ -81,7 +81,7 @@ public class FragmentTon extends Fragment {
 
         //cast to an ArrayAdapter
         ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
-        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)));
+        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1));
         //set the default according to value
         spnKy.setSelection(spnKyPosition);
 

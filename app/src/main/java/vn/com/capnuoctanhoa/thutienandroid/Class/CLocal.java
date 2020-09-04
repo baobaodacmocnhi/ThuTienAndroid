@@ -667,6 +667,14 @@ public class CLocal {
         return en;
     }
 
+    public static boolean checkDangNganChild(CEntityParent entityParent) {
+        boolean flag = false;
+        for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+            if (entityParent.getLstHoaDon().get(i).isDangNgan_DienThoai() == true)
+                flag = true;
+        return flag;
+    }
+
     //convert tiền thành chữ
     public static String formatMoney(String price, String symbol) {
 

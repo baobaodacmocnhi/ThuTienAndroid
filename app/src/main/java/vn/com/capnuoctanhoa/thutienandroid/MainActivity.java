@@ -312,7 +312,6 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
                 if (CLocal.checkBluetoothAvaible() == false) {
                     CLocal.openBluetoothSettings(MainActivity.this);
-                    finish();
                 } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
                     Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
                     intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
