@@ -521,8 +521,9 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
-                    printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
                     printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
+                    printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM(), 1, toadoY, 0, 1, 1);
+                    printEZ("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1);
                     printDotFeed_EZ();
                     printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
@@ -566,8 +567,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1));
-                    stringBuilder.append(printEZAppend("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM(), 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1));
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1));
@@ -601,7 +603,7 @@ public class ServiceThermalPrinter extends Service {
     public void printPhieuBao_EZ(CEntityParent entityParent) {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
-                if ( entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_EZ(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
@@ -633,8 +635,9 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
-                    printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1);
                     printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
+                    printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM(), 1, toadoY, 0, 1, 1);
+                    printEZ("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1);
                     printDotFeed_EZ();
                     printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
@@ -678,8 +681,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1));
-                    stringBuilder.append(printEZAppend("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3", 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM(), 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1));
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1));
@@ -1472,8 +1476,11 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write((entityChild.getCode() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc() + "\n").getBytes());
-                    byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3" + "\n").getBytes());
                     byteStream.write(("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay() + "\n").getBytes());
+                    byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(("Tiêu thụ: " + entityChild.getTieuThu() + "m3" + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
                     byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
@@ -1553,8 +1560,11 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write((entityChild.getCode() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc() + "\n").getBytes());
-                    byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "  Tiêu thụ: " + entityChild.getTieuThu() + "m3\n").getBytes());
                     byteStream.write(("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay() + "\n").getBytes());
+                    byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(("Tiêu thụ: " + entityChild.getTieuThu() + "m3\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
                     byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
