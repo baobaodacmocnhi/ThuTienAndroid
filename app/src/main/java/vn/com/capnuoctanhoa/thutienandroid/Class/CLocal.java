@@ -93,6 +93,7 @@ public class CLocal {
     public static String pathPicture = pathRoot + "/Picture/";
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;

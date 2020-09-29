@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.widget.NestedScrollView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,13 +43,13 @@ public class FragmentTon extends Fragment {
     private View rootView;
     private Spinner spnNam, spnKy, spnFromDot, spnToDot, spnTo;
     private Button btnXem;
+    private RadioButton radTrongKy, radDenKy;
     private RecyclerView recyclerView;
     private LinearLayout layoutTo;
     private CardView layoutAutoHide;
     private NestedScrollView nestedScrollView;
     private FloatingActionButton floatingActionButton;
     private TextView txtTongHD, txtTongCong;
-
     private int layoutAutoHide_Height;
     private ArrayList<String> spnID_To, spnName_To;
     private String selectedTo = "";
@@ -57,7 +61,7 @@ public class FragmentTon extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_ton, container, false);
+        rootView = inflater.inflate(R.layout.fragment_ton, container, false);
 
         layoutTo = (LinearLayout) rootView.findViewById(R.id.layoutTo);
         spnNam = (Spinner) rootView.findViewById(R.id.spnNam);
@@ -65,11 +69,13 @@ public class FragmentTon extends Fragment {
         spnFromDot = (Spinner) rootView.findViewById(R.id.spnFromDot);
         spnToDot = (Spinner) rootView.findViewById(R.id.spnToDot);
         spnTo = (Spinner) rootView.findViewById(R.id.spnTo);
+        radTrongKy = (RadioButton) rootView.findViewById(R.id.radTrongKy);
+        radDenKy = (RadioButton) rootView.findViewById(R.id.radDenKy);
         btnXem = (Button) rootView.findViewById(R.id.btnXem);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         txtTongHD = (TextView) rootView.findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) rootView.findViewById(R.id.txtTongCong);
-        nestedScrollView=(NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
+        nestedScrollView = (NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
         layoutAutoHide = (CardView) rootView.findViewById(R.id.layoutAutoHide);
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
 
@@ -81,7 +87,7 @@ public class FragmentTon extends Fragment {
 
         //cast to an ArrayAdapter
         ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
-        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1));
+        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1));
         //set the default according to value
         spnKy.setSelection(spnKyPosition);
 
@@ -135,13 +141,13 @@ public class FragmentTon extends Fragment {
             }
         });
 
-        layoutAutoHide_Height=layoutAutoHide.getHeight();
+        layoutAutoHide_Height = layoutAutoHide.getHeight();
         nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
                 int scrollY = nestedScrollView.getScrollY();
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) layoutAutoHide.getLayoutParams();
-                int height = Math.max(0,layoutAutoHide_Height-scrollY);
+                int height = Math.max(0, layoutAutoHide_Height - scrollY);
                 lp.height = height;
                 layoutAutoHide.setLayoutParams(lp);
             }
@@ -151,7 +157,7 @@ public class FragmentTon extends Fragment {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                nestedScrollView.scrollTo(0,0);
+                nestedScrollView.scrollTo(0, 0);
             }
         });
 
@@ -168,17 +174,16 @@ public class FragmentTon extends Fragment {
                         }
                         // measure your views here
                         layoutAutoHide_Height = layoutAutoHide.getHeight();
-                        nestedScrollView.scrollTo(0,0);
+                        nestedScrollView.scrollTo(0, 0);
                     }
                 });
 
         nestedScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                if(nestedScrollView.getScrollY()==0||nestedScrollView.getScrollY()<layoutAutoHide_Height) {
+                if (nestedScrollView.getScrollY() == 0 || nestedScrollView.getScrollY() < layoutAutoHide_Height) {
                     floatingActionButton.hide();
-                }
-                else {
+                } else {
                     floatingActionButton.show();
                 }
             }
@@ -228,16 +233,27 @@ public class FragmentTon extends Fragment {
 //            recyclerView.setAdapter(null);
             list = new ArrayList<CViewParent>();
             TongHD = TongCong = 0;
-            if (CLocal.Doi == true) {
-                if (Integer.parseInt(selectedTo) == 0) {
-                    for (int i = 0; i < spnID_To.size(); i++) {
-                        publishProgress(ws.getTongTon(spnID_To.get(i), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-                    }
+            if (radDenKy.isChecked() == true) {
+                if (CLocal.Doi == true) {
+                    if (Integer.parseInt(selectedTo) == 0) {
+                        for (int i = 0; i < spnID_To.size(); i++) {
+                            publishProgress(ws.getTongTon_DenKy(spnID_To.get(i), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                        }
+                    } else
+                        publishProgress(ws.getTongTon_DenKy(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
                 } else
-                    publishProgress(ws.getTongTon(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-            } else
-                publishProgress(ws.getTongTon(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
-
+                    publishProgress(ws.getTongTon_DenKy(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+            } else if (radTrongKy.isChecked() == true) {
+                if (CLocal.Doi == true) {
+                    if (Integer.parseInt(selectedTo) == 0) {
+                        for (int i = 0; i < spnID_To.size(); i++) {
+                            publishProgress(ws.getTongTon_TrongKy(spnID_To.get(i), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                        }
+                    } else
+                        publishProgress(ws.getTongTon_TrongKy(selectedTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+                } else
+                    publishProgress(ws.getTongTon_TrongKy(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString()));
+            }
             return null;
         }
 
@@ -251,7 +267,7 @@ public class FragmentTon extends Fragment {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         CViewParent entity = new CViewParent();
                         entity.setRow1a(jsonObject.getString("HoTen"));
-                        entity.setRow1b(jsonObject.getString("TyLe").replace(".",",")+" %");
+                        entity.setRow1b(jsonObject.getString("TyLe").replace(".", ",") + " %");
                         entity.setRow2a(jsonObject.getString("TongHD"));
                         entity.setRow2b(CLocal.formatMoney(jsonObject.getString("TongCong"), "đ"));
                         list.add(entity);
@@ -259,7 +275,7 @@ public class FragmentTon extends Fragment {
                         TongCong += Long.parseLong(jsonObject.getString("TongCong"));
                     }
 //                    CustomAdapterListView customAdapterListView = new CustomAdapterListView(getActivity(), list);
-                    customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(),list);
+                    customAdapterRecyclerViewParent = new CustomAdapterRecyclerViewParent(getActivity(), list);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(layoutManager);
