@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,10 +23,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -546,11 +550,6 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         result = ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
                         results = result.split(";");
-                        if (Boolean.parseBoolean(results[0]) == true) {
-//                            CLocal.initialCLocal();
-
-                            publishProgress("DangXuat");
-                        }
                         return results;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -560,27 +559,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            if (values != null) {
-                switch (values[0]) {
-                    case "DangXuat":
-                        CLocal.initialCLocal();
-                        onStart();
-                        break;
-                }
-            }
-        }
-
-        @Override
         protected void onPostExecute(String[] s) {
             super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
             if (Boolean.parseBoolean(s[0]) == true) {
-                CLocal.showPopupMessage(MainActivity.this, "THÀNH CÔNG\nBạn đã hết 7 ngày đăng nhập\nVui lòng đăng nhập lại", "center");
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Thông Báo");
+                builder.setMessage("Bạn đã hết 7 ngày đăng nhập\nVui lòng đăng nhập lại");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        CLocal.initialCLocal();
+                        onStart();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+//        alertDialog.getWindow().getAttributes();
+
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextSize(20);
+                textView.setTypeface(null, Typeface.BOLD);
+                        textView.setGravity(Gravity.LEFT);
+
+                Button btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                LinearLayout parent = (LinearLayout) btnPositive.getParent();
+                parent.setGravity(Gravity.CENTER_HORIZONTAL);
+                View leftSpacer = parent.getChildAt(1);
+                leftSpacer.setVisibility(View.GONE);
             } else
                 CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n" + s[1], "center");
         }

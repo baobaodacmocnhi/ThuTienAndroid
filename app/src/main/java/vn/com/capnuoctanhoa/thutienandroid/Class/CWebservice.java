@@ -1018,7 +1018,7 @@ public class CWebservice {
 
     public String getTongTon_DenKy(String MaTo, String Nam, String Ky, String FromDot, String ToDot) {
         String SOAP_ACTION = "http://tempuri.org/GetTongTon_DenKy";
-        String OPERATION_NAME = "GetTongTon";
+        String OPERATION_NAME = "GetTongTon_DenKy";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -1056,7 +1056,7 @@ public class CWebservice {
 
     public String getTongTon_TrongKy(String MaTo, String Nam, String Ky, String FromDot, String ToDot) {
         String SOAP_ACTION = "http://tempuri.org/GetTongTon_TrongKy";
-        String OPERATION_NAME = "GetTongTon";
+        String OPERATION_NAME = "GetTongTon_TrongKy";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();

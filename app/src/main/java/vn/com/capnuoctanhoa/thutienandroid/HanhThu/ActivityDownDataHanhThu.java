@@ -371,6 +371,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                 enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN").replace("null", ""));
                             if (jsonObject.has("DongA") == true)
                                 enParent.setDongA(Boolean.parseBoolean(jsonObject.getString("DongA")));
+                            if (jsonObject.has("CuaHangThuHo") == true)
+                                enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo"));
 
                             //khởi tạo ArrayList CEntityChild
                             ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
