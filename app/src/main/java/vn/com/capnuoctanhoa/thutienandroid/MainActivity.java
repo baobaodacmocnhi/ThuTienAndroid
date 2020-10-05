@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                 Date dateLogin = new Date(millis);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateLogin);
-                calendar.add(Calendar.DATE, 6);
+                calendar.add(Calendar.DATE, 2);
                 Date dateLogin7 = calendar.getTime();
                 Date currentDate = new Date();
                 if (currentDate.compareTo(dateLogin7) > 0) {
