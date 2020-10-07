@@ -422,7 +422,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                         if (jsonObject.has("DiaChiDHN") == true)
                             enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN").replace("null", ""));
                         if (jsonObject.has("CuaHangThuHo") == true)
-                            enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo"));
+                            enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
 
                         //khởi tạo ArrayList CEntityChild
                         ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();

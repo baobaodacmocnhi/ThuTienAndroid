@@ -567,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
             if (Boolean.parseBoolean(s[0]) == true) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Thông Báo");
-                builder.setMessage("Bạn đã hết 7 ngày đăng nhập\nVui lòng đăng nhập lại");
+                builder.setMessage("Bạn đã hết 3 ngày đăng nhập\nVui lòng đăng nhập lại");
                 builder.setCancelable(false);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -591,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
                 View leftSpacer = parent.getChildAt(1);
                 leftSpacer.setVisibility(View.GONE);
             } else
-                CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n" + s[1], "center");
+                CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n" , "center");
         }
     }
 
