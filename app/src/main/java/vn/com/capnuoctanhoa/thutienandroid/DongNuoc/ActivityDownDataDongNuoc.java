@@ -421,8 +421,6 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             enParent.setMaKQDN(jsonObject.getString("MaKQDN"));
                         if (jsonObject.has("DiaChiDHN") == true)
                             enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN").replace("null", ""));
-                        if (jsonObject.has("CuaHangThuHo") == true)
-                            enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
 
                         //khởi tạo ArrayList CEntityChild
                         ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
@@ -430,6 +428,10 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             for (int k = 0; k < CLocal.jsonDongNuocChild.length(); k++) {
                                 JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(k);
                                 if (jsonObjectChild.getString("MaDN").equals(enParent.getID()) == true) {
+
+                                    if (jsonObjectChild.has("CuaHangThuHo") == true)
+                                        enParent.setCuaHangThuHo(jsonObjectChild.getString("CuaHangThuHo").replace("null", ""));
+
                                     CEntityChild enChild = new CEntityChild();
                                     enChild.setModifyDate(enParent.getModifyDate());
                                     enChild.setMaHD(jsonObjectChild.getString("MaHD"));
