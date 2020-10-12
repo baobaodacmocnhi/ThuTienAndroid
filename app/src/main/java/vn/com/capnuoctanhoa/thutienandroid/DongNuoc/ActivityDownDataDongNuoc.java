@@ -429,8 +429,10 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                 JSONObject jsonObjectChild = CLocal.jsonDongNuocChild.getJSONObject(k);
                                 if (jsonObjectChild.getString("MaDN").equals(enParent.getID()) == true) {
 
-                                    if (jsonObjectChild.has("CuaHangThuHo") == true)
-                                        enParent.setCuaHangThuHo(jsonObjectChild.getString("CuaHangThuHo").replace("null", ""));
+                                    if (jsonObject.has("CuaHangThuHo1") == true)
+                                        enParent.setCuaHangThuHo1(jsonObject.getString("CuaHangThuHo1").replace("null", ""));
+                                    if (jsonObject.has("CuaHangThuHo2") == true)
+                                        enParent.setCuaHangThuHo2(jsonObject.getString("CuaHangThuHo2").replace("null", ""));
 
                                     CEntityChild enChild = new CEntityChild();
                                     enChild.setModifyDate(enParent.getModifyDate());

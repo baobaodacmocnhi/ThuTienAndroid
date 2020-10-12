@@ -659,9 +659,10 @@ public class ServiceThermalPrinter extends Service {
                     dateLap = c.getTime();
                     printEZ("Qúy Khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dateLap), 1, toadoY, 0, 1, 1);
                     //
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -760,9 +761,10 @@ public class ServiceThermalPrinter extends Service {
                     }
                     String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
                     printEZ("Quý khách vui lòng thanh toán tiền nước trước ngày " + str[0] + " để được cấp nước liên tục.", 1, toadoY, 0, 1, 1);
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -865,9 +867,10 @@ public class ServiceThermalPrinter extends Service {
                     }
                     printDotFeed_EZ();
                     printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.", 1, toadoY, 0, 1, 1);
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -1602,9 +1605,10 @@ public class ServiceThermalPrinter extends Service {
                     dateLap = c.getTime();
                     byteStream.write(("QK vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormat.format(dateLap) + "\n").getBytes());
                     //
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
-                        byteStream.write((entityParent.getCuaHangThuHo() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
@@ -1688,9 +1692,10 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write((str[0]).getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write((" để được cấp nước liên tục.\n").getBytes());
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
-                        byteStream.write((entityParent.getCuaHangThuHo() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
@@ -1777,9 +1782,10 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    if (entityParent.getCuaHangThuHo().equals("") == false) {
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
-                        byteStream.write((entityParent.getCuaHangThuHo() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
