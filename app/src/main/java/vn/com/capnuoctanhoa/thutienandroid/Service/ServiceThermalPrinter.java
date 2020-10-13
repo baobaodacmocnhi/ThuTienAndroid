@@ -541,7 +541,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("In hóa đơn https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -660,9 +660,9 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Qúy Khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dateLap), 1, toadoY, 0, 1, 1);
                     //
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
-                        printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
+                        printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 3, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -762,9 +762,9 @@ public class ServiceThermalPrinter extends Service {
                     String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
                     printEZ("Quý khách vui lòng thanh toán tiền nước trước ngày " + str[0] + " để được cấp nước liên tục.", 1, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
-                        printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
+                        printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 3, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -868,9 +868,9 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.", 1, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
-                        printEZ("Dịch vụ Thu Hộ:", 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo1(), 1, toadoY, 0, 1, 1);
-                        printEZ(entityParent.getCuaHangThuHo2(), 1, toadoY, 0, 1, 1);
+                        printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 3, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -979,7 +979,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1083,7 +1083,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1177,7 +1177,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printEnd_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1254,7 +1254,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
-            printEZ("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1);
+            printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
             printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
@@ -1519,7 +1519,9 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("In hóa đơn https://www.cskhtanhoa.com.vn/hddt\n".getBytes());
                     byteStream.write(setTextAlign(1));
@@ -1606,10 +1608,12 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(("QK vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormat.format(dateLap) + "\n").getBytes());
                     //
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
@@ -1693,10 +1697,12 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write((" để được cấp nước liên tục.\n").getBytes());
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
@@ -1783,10 +1789,12 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write((CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
                         byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
                     }
+                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
@@ -1871,7 +1879,9 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+            byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -1947,7 +1957,9 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+            byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -2006,7 +2018,9 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+            byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
@@ -2060,7 +2074,9 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+            byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
