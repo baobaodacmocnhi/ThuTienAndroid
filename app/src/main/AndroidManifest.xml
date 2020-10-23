@@ -25,12 +25,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true" >
-
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Admin.ActivityAdmin"></activity>
 
         <service
             android:name=".Service.ServiceThermalPrinter"
@@ -187,9 +187,9 @@
             android:name=".HanhThu.ActivityHoaDonDienTu_In"
             android:label="In Hàng Loạt"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
-
-        <activity android:name=".Doi.ActivityNopTien"
-            android:label="Nộp Tiền Tổng"/>
+        <activity
+            android:name=".Doi.ActivityNopTien"
+            android:label="Nộp Tiền Tổng" />
     </application>
 
 </manifest>

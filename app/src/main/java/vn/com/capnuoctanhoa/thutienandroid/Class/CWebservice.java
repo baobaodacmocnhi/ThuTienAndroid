@@ -1,5 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid.Class;
 
+import android.text.Editable;
+
 import androidx.annotation.Nullable;
 
 import org.ksoap2.SoapEnvelope;
@@ -24,7 +26,7 @@ public class CWebservice {
 
         envelope.setOutputSoapObject(request);
 
-        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 2);
+        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 3);
         Object response = null;
         try {
             httpTransport.call(SOAP_ACTION, envelope);
@@ -1246,6 +1248,35 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("Loai");
         pi.setValue(Loai);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    //admin
+    public String truyvan(String sql) {
+        String SOAP_ACTION = "http://tempuri.org/truyvan";
+        String OPERATION_NAME = "truyvan";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("sql");
+        pi.setValue(sql);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String capnhat(String sql) {
+        String SOAP_ACTION = "http://tempuri.org/capnhat";
+        String OPERATION_NAME = "capnhat";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("sql");
+        pi.setValue(sql);
         pi.setType(String.class);
         request.addProperty(pi);
 

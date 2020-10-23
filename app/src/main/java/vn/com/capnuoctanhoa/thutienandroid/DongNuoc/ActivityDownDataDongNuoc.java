@@ -458,9 +458,9 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                     if (jsonObjectChild.has("TieuThu") == true)
                                         enChild.setTieuThu(jsonObjectChild.getString("TieuThu"));
                                     if (jsonObjectChild.has("TuNgay") == true)
-                                        enChild.setTuNgay(jsonObjectChild.getString("TuNgay"));
+                                        enChild.setTuNgay(jsonObjectChild.getString("TuNgay").replace("null", ""));
                                     if (jsonObjectChild.has("DenNgay") == true)
-                                        enChild.setDenNgay(jsonObjectChild.getString("DenNgay"));
+                                        enChild.setDenNgay(jsonObjectChild.getString("DenNgay").replace("null", ""));
 
                                     enChild.setGiaiTrach(Boolean.parseBoolean(jsonObjectChild.getString("GiaiTrach")));
                                     enChild.setTamThu(Boolean.parseBoolean(jsonObjectChild.getString("TamThu")));

@@ -54,6 +54,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.com.capnuoctanhoa.thutienandroid.Admin.ActivityAdmin;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -71,12 +72,12 @@ import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
+    private Button btnAdmin;
     private ImageButton imgbtnDangNhap, imgbtnHanhThu, imgbtnTamThu, imgbtnDongNuoc, imgbtnQuanLy, imgbtnTimKiem, imgbtnLenhHuy, imgbtnHoaDonDienTu, imgbtnNopTien;
     private TextView txtUser, txtQuanLy, txtLenhHuy, txtHoaDonDienTu, txtNopTien, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
     private PackageInfo packageInfo;
-    private CLocation cLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,15 @@ public class MainActivity extends AppCompatActivity {
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.fileName_SharedPreferences, MODE_PRIVATE);
         if (CLocal.checkGPSAvaible(MainActivity.this) == false)
             CLocal.openGPSSettings(MainActivity.this);
+
+        btnAdmin = (Button) findViewById(R.id.btnAdmin);
+        btnAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityAdmin.class);
+                startActivity(intent);
+            }
+        });
 
         imgbtnDangNhap = (ImageButton) findViewById(R.id.imgbtnDangNhap);
         imgbtnDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
             CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
 
+            btnAdmin.setVisibility(View.GONE);
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);
             imgbtnLenhHuy.setVisibility(View.GONE);
@@ -282,6 +293,10 @@ public class MainActivity extends AppCompatActivity {
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
+                if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true ){
+                    CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
+                    btnAdmin.setVisibility(View.VISIBLE);
+                }
                 if (CLocal.sharedPreferencesre.getBoolean("Doi", false) == true && CLocal.sharedPreferencesre.getString("jsonTo", "").equals("") == false) {
                     CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
                     CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
@@ -583,7 +598,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextSize(20);
                 textView.setTypeface(null, Typeface.BOLD);
-                        textView.setGravity(Gravity.LEFT);
+                textView.setGravity(Gravity.LEFT);
 
                 Button btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 LinearLayout parent = (LinearLayout) btnPositive.getParent();
@@ -591,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
                 View leftSpacer = parent.getChildAt(1);
                 leftSpacer.setVisibility(View.GONE);
             } else
-                CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n" , "center");
+                CLocal.showPopupMessage(MainActivity.this, "THẤT BẠI\n", "center");
         }
     }
 

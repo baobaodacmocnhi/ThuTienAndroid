@@ -96,7 +96,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
     public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
+    public static boolean Admin,HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ServiceThermalPrinter serviceThermalPrinter;
@@ -115,6 +115,7 @@ public class CLocal {
         editor.putString("jsonMessage", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
+        editor.putBoolean("Admin", false);
         editor.putBoolean("Doi", false);
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
@@ -130,7 +131,7 @@ public class CLocal {
         editor.remove("jsonDongNuocChild").commit();
         ThermalPrinter = "";
         MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
-        HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
+        Admin=HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
