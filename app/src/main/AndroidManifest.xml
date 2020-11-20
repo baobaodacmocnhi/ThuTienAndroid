@@ -45,21 +45,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Service.ServiceFirebaseMessaging">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name=".Service.ServiceFirebaseInstanceID">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".Service.ServiceAppKilled"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" /> <!-- camera -->
+        <!-- camera -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="thutien_file_provider"
@@ -190,6 +176,18 @@
         <activity
             android:name=".Doi.ActivityNopTien"
             android:label="Nộp Tiền Tổng" />
+
+        <service android:name=".Service.ServiceFirebaseMessaging">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Service.ServiceAppKilled"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+
     </application>
 
 </manifest>

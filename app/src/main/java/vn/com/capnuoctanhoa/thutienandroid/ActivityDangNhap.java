@@ -175,7 +175,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     }
                 case "DangXuat":
                     try {
-                        result = ws.dangXuats(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+                        result = ws.dangXuats_Person(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
                         results = result.split(";");
 //                        if (result.isEmpty() == false && result.contains("Connection refused") == false)
                         if (Boolean.parseBoolean(results[0]) == true) {

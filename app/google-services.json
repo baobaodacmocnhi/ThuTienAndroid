@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "416927227192-u21gc2urp3j6k1lss39ts3j60klneus9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "vn.com.capnuoctanhoa.thutienandroid",
+            "certificate_hash": "73d2c6ce0396637ba62d07905b48756c88a64aab"
+          }
+        },
+        {
           "client_id": "416927227192-8a01uvhccd4pq0h6e6m44jr7k8vendnu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

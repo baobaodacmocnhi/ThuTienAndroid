@@ -9,7 +9,6 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,7 +54,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import vn.com.capnuoctanhoa.thutienandroid.Admin.ActivityAdmin;
-import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
+import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseMessaging;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -68,7 +67,6 @@ import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach
 import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceAppKilled;
-import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseInstanceID;
 import vn.com.capnuoctanhoa.thutienandroid.TamThu.ActivityTamThu;
 
 public class MainActivity extends AppCompatActivity {
@@ -78,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
     private PackageInfo packageInfo;
+    private CWebservice ws = new CWebservice();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +119,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
-
+//                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onSuccess(InstanceIdResult instanceIdResult) {
+//                        String deviceToken = instanceIdResult.getToken();
+//                        CLocal.showPopupMessage1(MainActivity.this,deviceToken);
+//                    }
+//                });
             }
         });
 
@@ -230,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String deviceToken = instanceIdResult.getToken();
-                        ServiceFirebaseInstanceID serviceFirebaseInstanceID = new ServiceFirebaseInstanceID();
+                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
                         serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
                     }
                 });
@@ -419,7 +424,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
@@ -430,7 +434,6 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             switch (strings[0]) {
                 case "Version":
-                    ws.updateLogin(CLocal.MaNV, CLocal.sharedPreferencesre.getString("UID", ""));
                     return ws.getVersion();
             }
             return null;
@@ -452,7 +455,6 @@ public class MainActivity extends AppCompatActivity {
 
     public class MyAsyncTaskDownload extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
@@ -544,7 +546,6 @@ public class MainActivity extends AppCompatActivity {
 
     public class MyAsyncTask_DangXuat extends AsyncTask<String, String, String[]> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
