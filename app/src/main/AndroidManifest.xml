@@ -177,7 +177,9 @@
             android:name=".Doi.ActivityNopTien"
             android:label="Nộp Tiền Tổng" />
 
-        <service android:name=".Service.ServiceFirebaseMessaging">
+        <service android:name=".Service.ServiceFirebaseMessaging"
+            android:exported="false"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

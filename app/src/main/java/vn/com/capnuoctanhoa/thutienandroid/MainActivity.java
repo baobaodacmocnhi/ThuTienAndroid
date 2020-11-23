@@ -32,9 +32,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -230,16 +233,18 @@ public class MainActivity extends AppCompatActivity {
             CLocal.initialPhiMoNuoc();
             CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
 
-            if (CLocal.sharedPreferencesre.getString("UID", "").equals("") == true) {
-                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String deviceToken = instanceIdResult.getToken();
-                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
-                        serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
-                    }
-                });
-            }
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                        @Override
+                        public void onComplete(@NonNull Task<String> task) {
+                            // Get new FCM registration token
+                            String deviceToken = task.getResult();
+                            if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
+                                ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
+                                serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
+                            }
+                        }
+                    });
+
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
 //                CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
 //                if (CLocal.jsonHanhThu.length() > 1000)
@@ -298,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
-                if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true ){
+                if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true) {
                     CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
                     btnAdmin.setVisibility(View.VISIBLE);
                 }
