@@ -51,8 +51,7 @@ public class CEntityParent {
     private boolean XoaDCHD;
     private boolean DongA;
     private boolean UpdatedHDDT;
-    private String CuaHangThuHo1;
-    private String CuaHangThuHo2;
+    private String CuaHangThuHo;
 
     public CEntityParent() {
         ID = "";
@@ -102,8 +101,7 @@ public class CEntityParent {
         DCHD = false;
         XoaDCHD = false;
         DongA = false;
-        CuaHangThuHo1="";
-        CuaHangThuHo2="";
+        CuaHangThuHo="";
     }
 
     public String getID() {
@@ -482,20 +480,12 @@ public class CEntityParent {
         DongA = dongA;
     }
 
-    public String getCuaHangThuHo1() {
-        return CuaHangThuHo1;
+    public String getCuaHangThuHo() {
+        return CuaHangThuHo;
     }
 
-    public void setCuaHangThuHo1(String cuaHangThuHo1) {
-        CuaHangThuHo1 = cuaHangThuHo1;
-    }
-
-    public String getCuaHangThuHo2() {
-        return CuaHangThuHo2;
-    }
-
-    public void setCuaHangThuHo2(String cuaHangThuHo2) {
-        CuaHangThuHo2 = cuaHangThuHo2;
+    public void setCuaHangThuHo(String cuaHangThuHo) {
+        CuaHangThuHo = cuaHangThuHo;
     }
 
     public void setCEntityParent(CEntityParent entityParent) {
@@ -543,8 +533,7 @@ public class CEntityParent {
         DCHD = entityParent.isDCHD();
         XoaDCHD = entityParent.isXoaDCHD();
         DongA = entityParent.isDongA();
-        CuaHangThuHo1=entityParent.getCuaHangThuHo1();
-        CuaHangThuHo2=entityParent.getCuaHangThuHo2();
+        CuaHangThuHo=entityParent.getCuaHangThuHo();
     }
 
 

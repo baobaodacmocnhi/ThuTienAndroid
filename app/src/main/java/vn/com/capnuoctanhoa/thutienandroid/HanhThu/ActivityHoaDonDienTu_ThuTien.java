@@ -704,7 +704,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                             selectedMaHDs += "," + item.getLstHoaDon().get(j).getMaHD();
 
                         TongCong += Long.parseLong(entity.getTongCong());
-                        arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ"));
+                        arrayList.add(entity.getKy() + " : " + CLocal.formatMoney(entity.getTongCong(), "đ") + " (Code: " + item.getLstHoaDon().get(j).getCode() + ")");
                         PhiMoNuoc = Integer.parseInt(item.getLstHoaDon().get(j).getPhiMoNuoc());
                         TienDu = item.getLstHoaDon().get(j).getTienDuTruocDCHD();
                     }
