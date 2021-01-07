@@ -236,9 +236,9 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSNhanVienDoi() {
-        String SOAP_ACTION = "http://tempuri.org/GetDSNhanVienDoi";
-        String OPERATION_NAME = "GetDSNhanVienDoi";
+    public String getDS_NhanVien_HanhThu() {
+        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien_HanhThu";
+        String OPERATION_NAME = "getDS_NhanVien_HanhThu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         return excute(request, SOAP_ACTION);
