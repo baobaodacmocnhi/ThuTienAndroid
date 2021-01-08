@@ -29,7 +29,7 @@ import vn.com.capnuoctanhoa.thutienandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
+import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
 import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.MainActivity;
 import vn.com.capnuoctanhoa.thutienandroid.R;
@@ -79,7 +79,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
                 CLocal.updateValueChild(CLocal.listHanhThu, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
                 CLocal.updateValueChild(CLocal.listHanhThuView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                intent = new Intent(this, ActivityDanhSachHanhThu.class);
+                intent = new Intent(this, ActivityHoaDonDienTu_DanhSach.class);
             } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                 //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
                 CLocal.updateValueChild(CLocal.listDongNuoc, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));

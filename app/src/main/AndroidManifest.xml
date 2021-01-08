@@ -60,23 +60,6 @@
             android:name=".ActivityDangNhap"
             android:label="@string/title_activity_dang_nhap" />
         <activity
-            android:name=".HanhThu.ActivityDanhSachHanhThu"
-            android:label="@string/title_activity_danh_sach_hanh_thu"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-
-            <!-- to identify this activity as "searchable" -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-        <activity
             android:name=".TamThu.ActivityTamThu"
             android:label="Danh Sách Tạm Thu"
             android:windowSoftInputMode="stateHidden|adjustResize" />

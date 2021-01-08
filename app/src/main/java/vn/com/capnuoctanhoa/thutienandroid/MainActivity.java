@@ -33,10 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -65,7 +62,6 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.thutienandroid.Doi.ActivityNopTien;
 import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDanhSachDongNuoc;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityDanhSachHanhThu;
 import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_DanhSach;
 import vn.com.capnuoctanhoa.thutienandroid.LenhHuy.ActivityLenhHuy;
 import vn.com.capnuoctanhoa.thutienandroid.QuanLy.ActivityQuanLy;
@@ -129,15 +125,6 @@ public class MainActivity extends AppCompatActivity {
 //                        CLocal.showPopupMessage1(MainActivity.this,deviceToken);
 //                    }
 //                });
-            }
-        });
-
-        imgbtnHanhThu = (ImageButton) findViewById(R.id.imgbtnHanhThu);
-        imgbtnHanhThu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActivityDanhSachHanhThu.class);
-                startActivity(intent);
             }
         });
 

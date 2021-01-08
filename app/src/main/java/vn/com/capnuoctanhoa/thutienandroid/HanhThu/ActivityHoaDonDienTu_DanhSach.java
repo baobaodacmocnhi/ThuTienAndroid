@@ -292,7 +292,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                 return true;
             case R.id.action_down_data:
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataHanhThu.class);
-                intent.putExtra("LoaiDownData", "HoaDonDienTu");
+//                intent.putExtra("LoaiDownData", "HoaDonDienTu");
                 startActivityForResult(intent, 1);
                 return true;
             case R.id.action_sync_data:
