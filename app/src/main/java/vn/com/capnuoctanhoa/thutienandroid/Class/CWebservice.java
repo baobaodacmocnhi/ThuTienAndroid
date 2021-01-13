@@ -218,6 +218,14 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String getDS_NhanVien() {
+        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien";
+        String OPERATION_NAME = "getDS_NhanVien";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     //hành thu
     public String getDSHoaDonTon_NhanVien(String MaNV, String Nam, String Ky, String FromDot, String ToDot) {
         String SOAP_ACTION = "http://tempuri.org/getDSHoaDonTon_NhanVien";

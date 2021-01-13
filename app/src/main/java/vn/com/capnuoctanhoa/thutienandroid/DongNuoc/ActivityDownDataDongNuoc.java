@@ -74,7 +74,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     spnName_To = new ArrayList<>();
                     for (int i = 0; i < CLocal.jsonTo.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
-                        if (Boolean.parseBoolean(jsonObject.getString("HanhThu")) == true) {
+                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
                             spnID_To.add(jsonObject.getString("MaTo"));
                             spnName_To.add(jsonObject.getString("TenTo"));
                         }
