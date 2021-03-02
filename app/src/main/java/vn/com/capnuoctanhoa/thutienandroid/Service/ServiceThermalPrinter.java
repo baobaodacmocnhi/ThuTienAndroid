@@ -520,7 +520,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày thu: " + entityChild.getNgayGiaiTrach(), 3, toadoY, 0, 1, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
                     printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
@@ -570,7 +570,7 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(printEZAppend("Ngày thu: " + entityChild.getNgayGiaiTrach(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
-//                    stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//                    stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1));
@@ -638,7 +638,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
                     printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
@@ -699,7 +699,7 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(printEZAppend("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1));
 //                    stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
-//                    stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//                    stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printEZAppend("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1));
@@ -747,7 +747,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
                     printEZ("Kính gửi: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityParent.getLstHoaDon().get(0).getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc(), 1, toadoY, 0, 1, 1);
                     if (entityParent.getLstHoaDon().get(0).getCode().equals("F") == false)
@@ -803,7 +803,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1));
 //            stringBuilder.append(printEZAppend("Kính gửi: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityParent.getLstHoaDon().get(0).getCode(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3", 1, toadoY, 0, 1, 1));
@@ -855,7 +855,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
                     printEZ("Kính gửi: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
-                    printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
                     printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityParent.getLstHoaDon().get(0).getCode(), 3, toadoY, 0, 1, 1);
                     printEZ("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc(), 1, toadoY, 0, 1, 1);
                     if (entityParent.getLstHoaDon().get(0).getCode().equals("F") == false)
@@ -913,7 +913,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1));
 //            stringBuilder.append(printEZAppend("Kính gửi: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT() + " Code: " + entityParent.getLstHoaDon().get(0).getCode(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3", 1, toadoY, 0, 1, 1));
@@ -964,7 +964,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Hôm nay: ngày " + entityParent.getNgayDN(), 3, toadoY, 0, 1, 1);
             printEZ("Tiến hành tạm ngưng cung cấp nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
             printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
-            printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+            printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
             printEZ("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("Lý do: nợ tiền nước kỳ", 1, toadoY, 0, 1, 1);
@@ -1015,7 +1015,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Hôm nay: ngày " + entityParent.getNgayDN(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Tiến hành tạm ngưng cung cấp nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Lý do: nợ tiền nước kỳ", 1, toadoY, 0, 1, 1));
@@ -1068,7 +1068,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Hôm nay: ngày " + entityParent.getNgayDN(), 3, toadoY, 0, 1, 1);
             printEZ("Tiến hành tạm ngưng cung cấp nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
             printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
-            printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+            printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
             printEZ("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("Lý do: nợ tiền nước kỳ", 1, toadoY, 0, 1, 1);
@@ -1119,7 +1119,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Hôm nay: ngày " + entityParent.getNgayDN(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Tiến hành tạm ngưng cung cấp nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Lý do: nợ tiền nước kỳ", 1, toadoY, 0, 1, 1));
@@ -1172,7 +1172,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Tiến hành mở nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
             printEZ("Hôm nay: ngày " + entityParent.getNgayMN(), 3, toadoY, 0, 1, 1);
             printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
-            printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+            printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
             printEZ("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1);
             printEnd_EZ();
             printEZ("Hiệu: " + entityParent.getHieu() + " Cỡ: " + entityParent.getCo(), 1, toadoY, 0, 1, 1);
@@ -1213,7 +1213,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Tiến hành mở nước tại địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Hôm nay: ngày " + entityParent.getNgayMN(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Hiệu: " + entityParent.getHieu() + " Cỡ: " + entityParent.getCo(), 1, toadoY, 0, 1, 1));
@@ -1256,7 +1256,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Ngày thu: " + entityParent.getLstHoaDon().get(0).getNgayGiaiTrach(), 3, toadoY, 20, 1, 1);
             printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
             printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
-            printEZ("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+            printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
             printEZ("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             if (entityParent.isDongNuoc2() == true) {
@@ -1290,7 +1290,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày thu: " + entityParent.getLstHoaDon().get(0).getNgayGiaiTrach(), 3, toadoY, 20, 1, 1));
 //            stringBuilder.append(printEZAppend("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("Danh bộ: " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("MLT: " + entityParent.getMLT(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            if (entityParent.isDongNuoc2() == true) {
@@ -1498,7 +1498,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Danh bộ: ").getBytes());
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1589,7 +1589,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Danh bộ: ").getBytes());
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1682,7 +1682,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Danh bộ: ").getBytes());
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1776,7 +1776,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Danh bộ: ").getBytes());
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1872,7 +1872,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getHoTen() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
-            byteStream.write(("Danh bộ: ").getBytes());
+            byteStream.write(("Danh bộ (Mã KH): ").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -1950,7 +1950,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getHoTen() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
-            byteStream.write(("Danh bộ: ").getBytes());
+            byteStream.write(("Danh bộ (Mã KH): ").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -2027,7 +2027,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getHoTen() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
-            byteStream.write(("Danh bộ: ").getBytes());
+            byteStream.write(("Danh bộ (Mã KH): ").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -2090,7 +2090,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
-            byteStream.write(("Danh bộ: ").getBytes());
+            byteStream.write(("Danh bộ (Mã KH): ").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
