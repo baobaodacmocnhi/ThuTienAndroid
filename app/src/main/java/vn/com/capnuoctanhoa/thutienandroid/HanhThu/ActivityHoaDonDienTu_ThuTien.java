@@ -980,7 +980,10 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setInPhieuBao_Ngay(CLocal.DateFormat.format(dateCapNhat));
                                     if (CLocal.serviceThermalPrinter != null)
-                                        CLocal.serviceThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
+                                        if (strings[0].equals("PhieuBao") == true)
+                                            CLocal.serviceThermalPrinter.printPhieuBao(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
+                                        else if (strings[0].equals("PhieuBaoCT") == true)
+                                            CLocal.serviceThermalPrinter.printPhieuBaoCT(CLocal.listHanhThuView.get(STT), CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j));
                                 }
                             } else if (CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == false
                                     && selectedMaHDs.contains(CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD()) == true) {
