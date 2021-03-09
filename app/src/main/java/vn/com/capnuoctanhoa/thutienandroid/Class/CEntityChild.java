@@ -7,6 +7,7 @@ public class CEntityChild {
     private String ThueGTGT;
     private String PhiBVMT;
     private String TongCong;
+    private String ChiTietTienNuoc;
     private String GiaBieu;
     private String DinhMuc;
     private String Code;
@@ -45,6 +46,7 @@ public class CEntityChild {
         ThueGTGT = "";
         PhiBVMT = "";
         TongCong = "";
+        ChiTietTienNuoc="";
         GiaBieu = "";
         DinhMuc = "";
         Code = "";
@@ -123,6 +125,14 @@ public class CEntityChild {
 
     public void setTongCong(String tongCong) {
         TongCong = tongCong;
+    }
+
+    public String getChiTietTienNuoc() {
+        return ChiTietTienNuoc;
+    }
+
+    public void setChiTietTienNuoc(String chiTietTienNuoc) {
+        ChiTietTienNuoc = chiTietTienNuoc;
     }
 
     public String getGiaBieu() {
@@ -364,4 +374,5 @@ public class CEntityChild {
     public void setTienDuTruocDCHD(int tienDuTruocDCHD) {
         TienDuTruocDCHD = tienDuTruocDCHD;
     }
+
 }

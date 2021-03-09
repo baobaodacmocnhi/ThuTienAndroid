@@ -363,6 +363,23 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    public void printPhieuBaoCT(CEntityParent entityParent) {
+        try {
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
+                connectToDevice(B_DEVICE);
+            switch (CLocal.MethodPrinter) {
+                case "EZ":
+                    printPhieuBaoCT_EZ(entityParent);
+                    break;
+                case "ESC":
+                    printPhieuBaoCT_ESC(entityParent);
+                    break;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
@@ -373,6 +390,23 @@ public class ServiceThermalPrinter extends Service {
                     break;
                 case "ESC":
                     printPhieuBao_ESC(entityParent, entityChild);
+                    break;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void printPhieuBaoCT(CEntityParent entityParent, CEntityChild entityChild) {
+        try {
+            if (mConnectedThread == null || mState != STATE_CONNECTED)
+                connectToDevice(B_DEVICE);
+            switch (CLocal.MethodPrinter) {
+                case "EZ":
+                    printPhieuBaoCT_EZ(entityParent, entityChild);
+                    break;
+                case "ESC":
+                    printPhieuBaoCT_ESC(entityParent, entityChild);
                     break;
             }
         } catch (Exception ex) {
@@ -617,6 +651,17 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    public void printPhieuBaoCT_EZ(CEntityParent entityParent) {
+        try {
+            for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
+                    printPhieuBaoCT_EZ(entityParent, entityParent.getLstHoaDon().get(i));
+                }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 //    public void printPhieuBao_EZAppend(CEntityParent entityParent) {
 //        try {
 //            for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
@@ -648,6 +693,72 @@ public class ServiceThermalPrinter extends Service {
                         printEZ("Code F Tạm Tính", 1, toadoY, 0, 1, 1);
                     printEZ("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1);
                     printDotFeed_EZ();
+                    printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
+                    printEZ("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
+                    if (entityChild.getTienDuTruocDCHD() > 0) {
+                        printEZ("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 2, 1);
+                        printEZ("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ"), 3, toadoY, 0, 2, 1);
+                    }
+                    printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
+                    //
+                    String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
+                    Date dateLap = CLocal.DateFormat.parse(entityChild.getInPhieuBao_Ngay());
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dateLap);
+                    c.add(Calendar.DATE, 7);
+                    dateLap = c.getTime();
+                    printEZ("Qúy Khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dateLap), 1, toadoY, 0, 1, 1);
+                    //
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
+                        printEZ(entityParent.getCuaHangThuHo2(), 3, toadoY, 0, 1, 1);
+                    }
+                    printDotFeed_EZ();
+                    printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
+                    printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Ngày lập: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
+                    printDotFeed_EZ();
+                    printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
+                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("Từ kỳ 01/2021 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+                    printEnd_EZ();
+                    outputStream.flush();
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void printPhieuBaoCT_EZ(CEntityParent entityParent, CEntityChild entityChild) {
+        try {
+            if (entityParent != null && entityChild != null) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
+                    printTop_EZ();
+                    printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
+                    printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
+                    printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
+                    printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
+                    printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
+                    printEZ("Danh bộ (Mã KH): " + entityParent.getDanhBo(), 3, toadoY, 0, 1, 1);
+                    printEZ("MLT: " + entityParent.getMLT() + " Code: " + entityChild.getCode(), 3, toadoY, 0, 1, 1);
+                    printEZ("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc(), 1, toadoY, 0, 1, 1);
+                    printEZ("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay(), 1, toadoY, 0, 1, 1);
+                    if (entityChild.getCode().equals("F") == false)
+                        printEZ("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM(), 1, toadoY, 0, 1, 1);
+                    else
+                        printEZ("Code F Tạm Tính", 1, toadoY, 0, 1, 1);
+                    printEZ("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1);
+                    printDotFeed_EZ();
+                    String[] ChiTiets = entityChild.getChiTietTienNuoc().split("\r\n");
+                    for(String chitiet:ChiTiets )
+                    {
+                        printEZ(chitiet, 1, toadoY, 0, 1, 1);
+                    }
                     printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ"), 1, toadoY, 0, 1, 1);
                     printEZ("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ"), 1, toadoY, 0, 1, 1);
@@ -1570,6 +1681,17 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    public void printPhieuBaoCT_ESC(CEntityParent entityParent) {
+        try {
+            for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
+                    printPhieuBaoCT_ESC(entityParent, entityParent.getLstHoaDon().get(i));
+                }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) {
         try {
             if (entityParent != null && entityChild != null) {
@@ -1613,6 +1735,104 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(("Tiêu thụ: " + entityChild.getTieuThu() + "m3\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
+                    byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
+                    byteStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ") + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(("Tổng cộng: " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    if (entityChild.getTienDuTruocDCHD() > 0) {
+                        byteStream.write(("Tiền dư: " + CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ") + "\n").getBytes());
+                        byteStream.write(("Tổng cộng tiền thanh toán:\n " + CLocal.formatMoney(entityChild.getTongCong(), "đ") + "\n").getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()) + "\n").getBytes());
+                    String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
+                    Date dateLap = CLocal.DateFormat.parse(entityChild.getInPhieuBao_Ngay());
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dateLap);
+                    c.add(Calendar.DATE, 7);
+                    dateLap = c.getTime();
+                    byteStream.write(("QK vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormat.format(dateLap) + "\n").getBytes());
+                    //
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
+                        byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo1() + "\n").getBytes());
+                        byteStream.write((entityParent.getCuaHangThuHo2() + "\n").getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(("Ngày gửi: " + entityChild.getInPhieuBao_Ngay() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write("https://www.cskhtanhoa.com.vn\n".getBytes());
+                    byteStream.write(setTextAlign(1));
+                    byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(("Từ kỳ 01/2021 không thu tiền nước tại nhà\n").getBytes());
+                    byteStream.write(printLineFeed(3));
+                    outputStream.write(byteStream.toByteArray());
+                    outputStream.flush();
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void printPhieuBaoCT_ESC(CEntityParent entityParent, CEntityChild entityChild) {
+        try {
+            if (entityParent != null && entityChild != null) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
+                    printTop_ESC();
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
+                    byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
+                    byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextAlign(0));
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Khách hàng: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getHoTen() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Địa chỉ: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getDanhBo() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("MLT: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getMLT()).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Code: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityChild.getCode() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc() + "\n").getBytes());
+                    byteStream.write(("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay() + "\n").getBytes());
+                    if (entityChild.getCode().equals("F") == false)
+                        byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "\n").getBytes());
+                    else
+                        byteStream.write(("Code F Tạm Tính\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(("Tiêu thụ: " + entityChild.getTieuThu() + "m3\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    String[] ChiTiets = entityChild.getChiTietTienNuoc().split("\r\n");
+                    for(String chitiet:ChiTiets )
+                    {
+                        byteStream.write((chitiet + "\n").getBytes());
+                    }
                     byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
                     byteStream.write(("Thuế GTGT: " + CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n").getBytes());
                     byteStream.write(("Phí BVMT: " + CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ") + "\n").getBytes());

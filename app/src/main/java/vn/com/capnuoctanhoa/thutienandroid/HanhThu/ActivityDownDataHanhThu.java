@@ -322,7 +322,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                 if (selectedMaNV.equals("0")) {
                     CLocal.jsonHanhThu = new JSONArray();
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon_May(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString(),edtTuMay.getText().toString(),edtDenMay.getText().toString()));
+                        JSONArray jsonResult = new JSONArray(ws.getDSHoaDonTon_May(String.valueOf(spnID_NhanVien.get(i)), spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnFromDot.getSelectedItem().toString(), spnToDot.getSelectedItem().toString(), edtTuMay.getText().toString(), edtDenMay.getText().toString()));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonHanhThu.put(jsonObject);
@@ -382,6 +382,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setThueGTGT(jsonObjectChild.getString("ThueGTGT"));
                                         enChild.setPhiBVMT(jsonObjectChild.getString("PhiBVMT"));
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
+                                        if (jsonObjectChild.has("ChiTietTienNuoc") == true)
+                                            enChild.setChiTietTienNuoc(jsonObjectChild.getString("ChiTietTienNuoc"));
                                         enChild.setGiaBieu(jsonObjectChild.getString("GiaBieu"));
                                         enChild.setDinhMuc(jsonObjectChild.getString("DinhMuc").replace("null", ""));
                                         if (jsonObjectChild.has("Code") == true)
