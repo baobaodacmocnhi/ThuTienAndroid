@@ -313,6 +313,18 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             CLocal.listHanhThuView = new ArrayList<CEntityParent>();
             TongDC = TongCong = TongHD = 0;
             switch (spnFilter.getSelectedItem().toString()) {
+                case "Chưa Đi":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            if (CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getInPhieuBao_Ngay().equals("") == true
+                                    && CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == true
+                                    && CLocal.listHanhThu.get(i).getLstHoaDon().get(0).getTBDongNuoc_Ngay().equals("") == true) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
                 case "Chưa Thu":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
