@@ -95,8 +95,8 @@ public class CLocal {
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
-    public static String MaNV, HoTen, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean Admin,HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
+    public static String MaNV, HoTen, MaTo, DienThoai, Zalo, ThermalPrinter, MethodPrinter, IDMobile;
+    public static boolean Admin, HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ServiceThermalPrinter serviceThermalPrinter;
@@ -110,6 +110,7 @@ public class CLocal {
         editor.putString("HoTen", "");
         editor.putString("MaTo", "");
         editor.putString("DienThoai", "");
+        editor.putString("Zalo", "");
         editor.putString("jsonHanhThu", "");
         editor.putString("jsonDongNuoc", "");
         editor.putString("jsonMessage", "");
@@ -130,8 +131,8 @@ public class CLocal {
         editor.remove("jsonHanhThu_HoaDonDienTu").commit();
         editor.remove("jsonDongNuocChild").commit();
         ThermalPrinter = "";
-        MaNV = HoTen = MaTo = DienThoai = IDMobile = "";
-        Admin=HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
+        MaNV = HoTen = MaTo = DienThoai = Zalo = IDMobile = "";
+        Admin = HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;

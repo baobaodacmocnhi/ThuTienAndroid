@@ -578,6 +578,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("In hóa đơn https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1);
@@ -719,6 +720,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
                     printEZ("Ngày lập: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
@@ -785,6 +787,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
                     printEZ("Ngày lập: " + entityChild.getInPhieuBao_Ngay(), 3, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
@@ -892,6 +895,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
                     printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay(), 3, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
@@ -1003,6 +1007,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+                    printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
                     printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
@@ -1108,6 +1113,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
@@ -1212,6 +1218,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
@@ -1306,6 +1313,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printEnd_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
@@ -1383,6 +1391,7 @@ public class ServiceThermalPrinter extends Service {
             printDotFeed_EZ();
             printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
             printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
+            printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
@@ -1651,6 +1660,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1765,6 +1775,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày gửi: " + entityChild.getInPhieuBao_Ngay() + "\n").getBytes());
@@ -1863,6 +1874,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày gửi: " + entityChild.getInPhieuBao_Ngay() + "\n").getBytes());
@@ -1958,6 +1970,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay() + "\n").getBytes());
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
@@ -2056,6 +2069,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(0).getTBDongNuoc_Ngay() + "\n").getBytes());
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
@@ -2139,6 +2153,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -2217,6 +2232,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -2278,6 +2294,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
@@ -2334,6 +2351,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
             byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
+            byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
             byteStream.write(setTextStyle(true, 1, 1));
             byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
             byteStream.write(setTextStyle(false, 1, 1));
