@@ -356,7 +356,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());
             enViewParent.setRow3a(enParent.getHoTen());
-            enViewParent.setRow4a(enParent.getDiaChi());
+            enViewParent.setRow4a(enParent.getDiaChi()+"\n\n"+enParent.getCreateDate());
 
             enViewParent.setGiaiTrach(enParent.isGiaiTrach());
             enViewParent.setTamThu(enParent.isTamThu());

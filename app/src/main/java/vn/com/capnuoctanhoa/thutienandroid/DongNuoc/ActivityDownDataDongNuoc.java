@@ -426,7 +426,8 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             enParent.setCuaHangThuHo1(jsonObject.getString("CuaHangThuHo1").replace("null", ""));
                         if (jsonObject.has("CuaHangThuHo2") == true)
                             enParent.setCuaHangThuHo2(jsonObject.getString("CuaHangThuHo2").replace("null", ""));
-
+                        if (jsonObject.getString("CreateDate").replace("null", "").equals("") == false)
+                            enParent.setCreateDate(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("CreateDate").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         //khởi tạo ArrayList CEntityChild
                         ArrayList<CEntityChild> listChild = new ArrayList<CEntityChild>();
                         if (CLocal.jsonDongNuocChild != null && CLocal.jsonDongNuocChild.length() > 0)

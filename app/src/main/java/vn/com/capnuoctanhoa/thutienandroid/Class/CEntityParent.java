@@ -53,6 +53,7 @@ public class CEntityParent {
     private boolean UpdatedHDDT;
     private String CuaHangThuHo1;
     private String CuaHangThuHo2;
+    private String CreateDate;
 
     public CEntityParent() {
         ID = "";
@@ -104,6 +105,7 @@ public class CEntityParent {
         DongA = false;
         CuaHangThuHo1="";
         CuaHangThuHo2="";
+        CreateDate="";
     }
 
     public String getID() {
@@ -498,6 +500,14 @@ public class CEntityParent {
         CuaHangThuHo2 = cuaHangThuHo2;
     }
 
+    public String getCreateDate() {
+        return CreateDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        CreateDate = createDate;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
@@ -545,6 +555,7 @@ public class CEntityParent {
         DongA = entityParent.isDongA();
         CuaHangThuHo1=entityParent.getCuaHangThuHo1();
         CuaHangThuHo2=entityParent.getCuaHangThuHo2();
+        CreateDate=entityParent.getCreateDate();
     }
 
 
