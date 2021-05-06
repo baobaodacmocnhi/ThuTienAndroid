@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.thutienandroid;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
@@ -49,6 +50,8 @@ public class ActivitySettings extends AppCompatActivity {
         radGroupMethodPrinter = (RadioGroup) findViewById(R.id.radGroupMethodPrinter);
         edtMayInDaChon.setText(CLocal.ThermalPrinter);
 
+        edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
+
         btnGetThermal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +68,9 @@ public class ActivitySettings extends AppCompatActivity {
         btnGetIDMobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
+//                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
+               setClipboard(ActivitySettings.this,edtIDMobile.getText().toString());
+               CLocal.showToastMessage(ActivitySettings.this,"Copied");
             }
         });
 
@@ -168,6 +173,17 @@ public class ActivitySettings extends AppCompatActivity {
     protected void onDestroy() {
 //        thermalPrinter.disconnectBluetoothDevice();
         super.onDestroy();
+    }
+
+    private void setClipboard(Context context, String text) {
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
     }
 
     public class MyAsyncTask_Thermal extends AsyncTask<Void, Void, Void> {

@@ -699,6 +699,8 @@ public class CLocal {
         return price;
     }
 
+
+
     public File createFile(Activity activity) {
         File filesDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = null;

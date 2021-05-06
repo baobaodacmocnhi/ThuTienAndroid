@@ -757,8 +757,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Tiêu thụ: " + entityChild.getTieuThu() + "m3", 3, toadoY, 0, 2, 1);
                     printDotFeed_EZ();
                     String[] ChiTiets = entityChild.getChiTietTienNuoc().split("\r\n");
-                    for(String chitiet:ChiTiets )
-                    {
+                    for (String chitiet : ChiTiets) {
                         printEZ(chitiet, 1, toadoY, 0, 1, 1);
                     }
                     printEZ("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ"), 1, toadoY, 0, 1, 1);
@@ -885,8 +884,13 @@ public class ServiceThermalPrinter extends Service {
                     } else {
                         printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
                     }
-                    String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
-                    printEZ("Quý khách vui lòng thanh toán tiền nước trước ngày " + str[0] + " để được cấp nước liên tục.", 1, toadoY, 0, 1, 1);
+//                    String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
+                    Date dt = new Date();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dt);
+                    c.add(Calendar.DATE, Integer.parseInt("3"));
+                    dt = c.getTime();
+                    printEZ("Quý khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dt) + " để được cấp nước liên tục.", 3, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
                         printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
@@ -1840,8 +1844,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     String[] ChiTiets = entityChild.getChiTietTienNuoc().split("\r\n");
-                    for(String chitiet:ChiTiets )
-                    {
+                    for (String chitiet : ChiTiets) {
                         byteStream.write((chitiet + "\n").getBytes());
                     }
                     byteStream.write(("Tiền nước: " + CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n").getBytes());
@@ -1954,10 +1957,15 @@ public class ServiceThermalPrinter extends Service {
                         byteStream.write(setTextStyle(false, 1, 1));
                         byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n").getBytes());
                     }
-                    String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
+//                    String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
+                    Date dt = new Date();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dt);
+                    c.add(Calendar.DATE, Integer.parseInt("3"));
+                    dt = c.getTime();
                     byteStream.write(("Quý khách vui lòng thanh toán tiền nước trước ngày ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write((str[0]).getBytes());
+                    byteStream.write((CLocal.DateFormatShort.format(dt)).getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write((" để được cấp nước liên tục.\n").getBytes());
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {

@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -240,6 +241,8 @@ public class ActivityDongNuoc extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Toast.makeText(this, "Image saved to:\n" +
+                    data.getData(), Toast.LENGTH_LONG).show();
             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
             bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
             imgCapture = bitmap;

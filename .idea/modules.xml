@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ThuTienAndroid.iml" filepath="$PROJECT_DIR$/ThuTienAndroid.iml" group="ThuTienAndroid" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ThuTienAndroid/app" />
+      <module fileurl="file://$PROJECT_DIR$/ThuTienAndroid.iml" filepath="$PROJECT_DIR$/ThuTienAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ThuTienAndroid.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ThuTienAndroid.app.iml" />
     </modules>
   </component>
 </project>
