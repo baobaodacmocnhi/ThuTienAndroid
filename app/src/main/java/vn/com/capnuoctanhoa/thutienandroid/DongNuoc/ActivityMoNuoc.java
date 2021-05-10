@@ -201,9 +201,11 @@ public class ActivityMoNuoc extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
-            imgCapture = bitmap;
+            if (imgPath != null && imgPath != "") {
+                Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+                imgCapture = bitmap;
+            }
 //            imgThumb.setImageBitmap(bitmap);
         } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();

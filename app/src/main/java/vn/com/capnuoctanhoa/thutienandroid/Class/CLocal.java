@@ -264,8 +264,8 @@ public class CLocal {
         activity.sendBroadcast(intent);
     }
 
-    public static void showPopupMessage1(Activity activity, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    public static void showPopupMessage1(Context context, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);
         builder.setCancelable(false);
@@ -284,8 +284,8 @@ public class CLocal {
         textView.setTypeface(null, Typeface.BOLD);
     }
 
-    public static void showPopupMessage(Activity activity, String message, String align) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    public static void showPopupMessage(Context context, String message, String align) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Thông Báo");
         builder.setMessage(message);
         builder.setCancelable(false);
@@ -321,8 +321,8 @@ public class CLocal {
         leftSpacer.setVisibility(View.GONE);
     }
 
-    public static void showToastMessage(Activity activity, String message) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+    public static void showToastMessage(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static void hideKeyboard(Activity activity) {

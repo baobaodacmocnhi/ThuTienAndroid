@@ -240,15 +240,17 @@ public class ActivityDongNuoc extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this, "Image saved to:\n" +
-                    data.getData(), Toast.LENGTH_LONG).show();
-            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
-            imgCapture = bitmap;
+        try {
+            if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+                if (imgPath != null && imgPath != "") {
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                    bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+                    imgCapture = bitmap;
+                }
 //            imgThumb.setImageBitmap(bitmap);
-        } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            Uri uri = data.getData();
+
+            } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+                Uri uri = data.getData();
 //            InputStream imageStream;
 //            imageStream = getContentResolver().openInputStream(imageUri);
 //            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
@@ -259,20 +261,23 @@ public class ActivityDongNuoc extends AppCompatActivity {
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-            String strPath = CLocal.getPathFromUri(this, uri);
-            Bitmap bitmap = BitmapFactory.decodeFile(strPath);
-            bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
-            imgCapture = bitmap;
+                String strPath = CLocal.getPathFromUri(this, uri);
+                Bitmap bitmap = BitmapFactory.decodeFile(strPath);
+                bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+                imgCapture = bitmap;
 //            imgThumb.setImageBitmap(bitmap);
-        }
-        if (imgCapture != null) {
-            lstCapture.add(imgCapture);
-            customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(ActivityDongNuoc.this, lstCapture);
-            recyclerView.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(customAdapterRecyclerViewImage);
+            }
+            if (imgCapture != null) {
+                lstCapture.add(imgCapture);
+                customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(ActivityDongNuoc.this, lstCapture);
+                recyclerView.setHasFixedSize(true);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(customAdapterRecyclerViewImage);
+            }
+        } catch (Exception ex) {
+            CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
         }
     }
 
