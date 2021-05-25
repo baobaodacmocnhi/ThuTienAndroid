@@ -547,7 +547,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                         Date dt = dateCapNhat;
                                         Calendar c = Calendar.getInstance();
                                         c.setTime(dt);
-                                        c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
+//                                        c.add(Calendar.DATE, Integer.parseInt(edtSoNgayHen.getText().toString()));
+                                        c = CLocal.GetToDate(c, 25);
                                         dt = c.getTime();
                                         CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).setTBDongNuoc_NgayHen(CLocal.DateFormat.format(dt));
                                         flag = true;
@@ -1040,7 +1041,8 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         Date dt2 = dateCapNhat;
                         Calendar c2 = Calendar.getInstance();
                         c2.setTime(dt2);
-                        c2.add(Calendar.DATE, Integer.parseInt(strings[1]));
+//                        c2.add(Calendar.DATE, Integer.parseInt(strings[1]));
+                        c2 = CLocal.GetToDate(c2, 25);
                         dt2 = c2.getTime();
                         result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), String.valueOf(XoaDCHD), cLocation.getLocation());
                         results = result.split(";");

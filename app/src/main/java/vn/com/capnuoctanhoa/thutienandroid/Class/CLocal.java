@@ -700,7 +700,6 @@ public class CLocal {
     }
 
 
-
     public File createFile(Activity activity) {
         File filesDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = null;
@@ -1153,4 +1152,18 @@ public class CLocal {
         Date date = new Date(time); // *1000 is to convert seconds to milliseconds
         return DateFormat.format(date);
     }
+
+    public static Calendar GetToDate(Calendar FromDate, int SoNgayCongThem) {
+        while (SoNgayCongThem > 0) {
+            if (FromDate.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY)
+                FromDate.add(Calendar.DATE, 3);
+            else if (FromDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+                FromDate.add(Calendar.DATE, 2);
+            else
+                FromDate.add(Calendar.DATE, 1);
+            SoNgayCongThem--;
+        }
+        return FromDate;
+    }
+
 }

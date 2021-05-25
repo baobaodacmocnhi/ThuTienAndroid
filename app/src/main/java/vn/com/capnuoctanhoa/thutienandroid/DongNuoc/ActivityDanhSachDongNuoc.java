@@ -5,10 +5,15 @@ import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.SearchView;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -134,7 +140,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         int id = menuItem.getItemId();
                         TextView STT = (TextView) view.findViewById(R.id.lvSTT);
-                        int i=Integer.parseInt(STT.getText().toString()) - 1;
+                        int i = Integer.parseInt(STT.getText().toString()) - 1;
                         CLocal.indexPosition = i;
                         Intent intent;
                         switch (id) {
@@ -155,12 +161,12 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                                 break;
                             case R.id.action_DongTien:
                                 intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-                                intent.putExtra("STT",String.valueOf(i));
+                                intent.putExtra("STT", String.valueOf(i));
                                 startActivity(intent);
                                 break;
-                            case R.id.action_PhieuBao2:
+                            case R.id.action_TBDongNuoc:
                                 if (CLocal.serviceThermalPrinter != null)
-                                    CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(i));
+                                    CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listDongNuocView.get(i));
                                 break;
                         }
                         return true;
@@ -327,6 +333,20 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                         }
                     }
                     break;
+                case "Sau 25 Ngày Lập TB":
+                    if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
+                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                            String[] str = CLocal.listDongNuoc.get(i).getLstHoaDon().get(CLocal.listDongNuoc.get(i).getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().split(" ");
+                            Date NgayHen = CLocal.DateFormatShort.parse(str[0]);
+                            if (CLocal.listDongNuoc.get(i).isDongNuoc() == false && CLocal.listDongNuoc.get(i).isGiaiTrach() == false
+                                    && CLocal.listDongNuoc.get(i).isThuHo() == false && CLocal.listDongNuoc.get(i).isTamThu() == false
+                                    && new Date().compareTo(NgayHen) >= 0) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
+                                addEntityParent(CLocal.listDongNuoc.get(i));
+                            }
+                        }
+                    }
+                    break;
                 default:
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
                         for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
@@ -336,9 +356,9 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent,"DongNuoc");
+            customAdapterExpandableListView = new CustomAdapterExpandableListView(this, listParent, "DongNuoc");
             lstView.setAdapter(customAdapterExpandableListView);
-            txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "")+"- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
+            txtTongHD.setText("HĐ:" + CLocal.formatMoney(String.valueOf(TongHD), "") + "- ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
             lstView.setSelection(CLocal.indexPosition);
         } catch (Exception e) {
@@ -356,7 +376,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());
             enViewParent.setRow3a(enParent.getHoTen());
-            enViewParent.setRow4a(enParent.getDiaChi()+"\n\n"+enParent.getCreateDate());
+            enViewParent.setRow4a(enParent.getDiaChi() + "\n\n" + enParent.getCreateDate());
 
             enViewParent.setGiaiTrach(enParent.isGiaiTrach());
             enViewParent.setTamThu(enParent.isTamThu());
@@ -371,8 +391,8 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             for (int i = 0; i < enParent.getLstHoaDon().size(); i++) {
                 addEntityChild(enParent.getLstHoaDon().get(i));
                 ///cập nhật parent
-                if(enParent.getLstHoaDon().get(i).getTongCong().equals("null")==false)
-                TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
+                if (enParent.getLstHoaDon().get(i).getTongCong().equals("null") == false)
+                    TongCongChild += Integer.parseInt(enParent.getLstHoaDon().get(i).getTongCong());
             }
 
             enViewParent.setListChild(listChild);

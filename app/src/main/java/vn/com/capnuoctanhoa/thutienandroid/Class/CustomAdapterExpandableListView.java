@@ -216,9 +216,9 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     intent.putExtra("STT", String.valueOf(i));
                                     activity.startActivity(intent);
                                     break;
-                                case R.id.action_PhieuBao2:
+                                case R.id.action_TBDongNuoc:
                                     MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
-                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"InPhieuBao2", String.valueOf(i), "2"});
+                                    myAsyncTask_xuLyTrucTiep_hd0.execute(new String[]{"TBDongNuoc", String.valueOf(i), "2"});
                                     break;
                             }
                             return true;
@@ -421,7 +421,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                         && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
                                         && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                         && Integer.parseInt(CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getTieuThu()) == 0) {
-                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), CLocal.DateFormat.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false",cLocation.getLocation());
+                                    result = ws.XuLy_HoaDonDienTu("DangNgan", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), CLocal.DateFormat.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), "false", cLocation.getLocation());
                                     results = result.split(";");
                                     if (Boolean.parseBoolean(results[0]) == true) {
                                         CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(true);
@@ -456,9 +456,10 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                         Date dt2 = dateCapNhat;
                         Calendar c2 = Calendar.getInstance();
                         c2.setTime(dt2);
-                        c2.add(Calendar.DATE, 3);
+//                        c2.add(Calendar.DATE, 3);
+                        c2 = CLocal.GetToDate(c2, 25);
                         dt2 = c2.getTime();
-                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false",cLocation.getLocation());
+                        result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
                         results = result.split(";");
                         if (Boolean.parseBoolean(results[0]) == true) {
                             for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
@@ -487,7 +488,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                         c.add(Calendar.DATE, Integer.parseInt(strings[2]));
                         dt = c.getTime();
                         if (MaHDs.equals("") == false) {
-                            result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false",cLocation.getLocation());
+                            result = ws.XuLy_HoaDonDienTu("PhieuBao2", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
                             results = result.split(";");
                             if (Boolean.parseBoolean(results[0]) == true) {
                                 for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)

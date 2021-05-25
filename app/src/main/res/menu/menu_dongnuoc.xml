@@ -17,7 +17,11 @@
         android:enabled="true"
         android:title="Đóng Tiền" />
     <item
-        android:id="@+id/action_PhieuBao2"
+        android:id="@+id/action_TBDongNuoc"
         android:enabled="true"
-        android:title="In Nợ Tiền Nước" />
+        android:title="In TB Đóng Nước" />
+<!--    <item-->
+<!--        android:id="@+id/action_PhieuBao2"-->
+<!--        android:enabled="true"-->
+<!--        android:title="In Nợ Tiền Nước" />-->
 </menu>
