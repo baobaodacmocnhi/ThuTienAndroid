@@ -335,12 +335,15 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                     break;
                 case "Sau 25 Ngày Lập TB":
                     if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
-                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++)
+                        if(CLocal.listDongNuoc.get(i).getLstHoaDon().get(CLocal.listDongNuoc.get(i).getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().equals("")==false)
+                        {
                             String[] str = CLocal.listDongNuoc.get(i).getLstHoaDon().get(CLocal.listDongNuoc.get(i).getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().split(" ");
                             Date NgayHen = CLocal.DateFormatShort.parse(str[0]);
+                            Date currentDate = new Date();
                             if (CLocal.listDongNuoc.get(i).isDongNuoc() == false && CLocal.listDongNuoc.get(i).isGiaiTrach() == false
                                     && CLocal.listDongNuoc.get(i).isThuHo() == false && CLocal.listDongNuoc.get(i).isTamThu() == false
-                                    && new Date().compareTo(NgayHen) >= 0) {
+                                    && currentDate.compareTo(NgayHen) >= 0) {
                                 CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }
@@ -362,7 +365,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             txtTongCong.setText(CLocal.formatMoney(String.valueOf(TongCong), "đ"));
             lstView.setSelection(CLocal.indexPosition);
         } catch (Exception e) {
-
+            CLocal.showToastMessage(getApplicationContext(), e.getMessage());
         }
     }
 
@@ -376,7 +379,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());
             enViewParent.setRow3a(enParent.getHoTen());
-            enViewParent.setRow4a(enParent.getDiaChi() + "\n\n" + enParent.getCreateDate());
+            enViewParent.setRow4a(enParent.getDiaChi() + "\n\nNgày Hẹn: " + enParent.getLstHoaDon().get(enParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen());
 
             enViewParent.setGiaiTrach(enParent.isGiaiTrach());
             enViewParent.setTamThu(enParent.isTamThu());

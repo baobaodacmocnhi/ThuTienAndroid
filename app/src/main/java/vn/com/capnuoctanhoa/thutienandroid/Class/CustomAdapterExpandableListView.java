@@ -34,6 +34,8 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
     private ArrayList<CViewParent> mOriginalValues;
     private ArrayList<CViewParent> mDisplayedValues;
     private String action;
+    private CLocation cLocation = new CLocation(activity);
+
 
     public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues, String action) {
         this.activity = activity;
@@ -391,7 +393,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
     public class MyAsyncTask_XuLyTrucTiep_Extra extends AsyncTask<String, Void, String[]> {
         ProgressDialog progressDialog;
         CWebservice ws = new CWebservice();
-        CLocation cLocation = new CLocation(activity);
+
 
         @Override
         protected void onPreExecute() {
