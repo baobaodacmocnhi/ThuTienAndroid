@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:maxLines="7"
+                android:maxLines="11"
                 android:text="Loại\n"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -64,7 +64,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
-                android:maxLines="7"
+                android:maxLines="11"
                 android:text="Số Lượng\n"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -78,7 +78,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
-                android:maxLines="7"
+                android:maxLines="11"
                 android:text="Tổng Cộng\n"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -101,10 +101,19 @@
                 android:layout_height="60dp"
                 android:text="Show Error"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/btnNopTien"
+                app:layout_constraintEnd_toEndOf="@+id/btnShowHDDCBaoCaoThue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnNopTien" />
+
+            <Button
+                android:id="@+id/btnShowHDDCBaoCaoThue"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:text="HĐĐC BCT"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnShowError" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

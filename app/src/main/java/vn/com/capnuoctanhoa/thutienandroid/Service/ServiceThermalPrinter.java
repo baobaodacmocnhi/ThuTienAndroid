@@ -983,8 +983,8 @@ public class ServiceThermalPrinter extends Service {
                     else
                         printEZ("Code F Tạm Tính", 1, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
-                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen().split(" ");
-                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " + str[0], 3, toadoY, 0, 1, 1);
+//                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen().split(" ");
+                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " , 3, toadoY, 0, 1, 1);
                     printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:", 1, toadoY, 0, 1, 1);
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
@@ -2038,11 +2038,11 @@ public class ServiceThermalPrinter extends Service {
                     else
                         byteStream.write(("Code F Tạm Tính\n").getBytes());
                     byteStream.write(printDotFeed_ESC());
-                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen().split(" ");
+//                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen().split(" ");
                     byteStream.write(("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: ").getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write((str[0] + "\n").getBytes());
-                    byteStream.write(setTextStyle(false, 1, 1));
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write((str[0] + "\n").getBytes());
+//                    byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     int TongCong = 0, TienDu = 0;

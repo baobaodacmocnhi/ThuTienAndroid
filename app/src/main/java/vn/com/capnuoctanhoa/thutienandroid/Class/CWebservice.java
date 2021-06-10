@@ -1412,4 +1412,18 @@ public class CWebservice {
 
         return excute(request, SOAP_ACTION);
     }
+
+    public String show_HDDCBaoCaoThue(String NgayGiaiTrach) {
+        String SOAP_ACTION = "http://tempuri.org/showHDDCBaoCaoThue";
+        String OPERATION_NAME = "showHDDCBaoCaoThue";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("NgayGiaiTrach");
+        pi.setValue(NgayGiaiTrach);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
 }

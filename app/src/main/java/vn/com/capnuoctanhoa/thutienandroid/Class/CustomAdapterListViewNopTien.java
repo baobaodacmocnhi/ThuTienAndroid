@@ -55,7 +55,7 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
     private class ViewHolder {
         TextView ID, NgayChot, Loai, SoLuong, TongCong;
         CheckBox Chot;
-        Button NopTien, ShowError;
+        Button NopTien, ShowError,ShowHDDCBaoCaoThue;
     }
 
     @Override
@@ -70,6 +70,7 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
             holder.NgayChot = (TextView) convertView.findViewById(R.id.txtNgayChot);
             holder.NopTien = (Button) convertView.findViewById(R.id.btnNopTien);
             holder.ShowError = (Button) convertView.findViewById(R.id.btnShowError);
+            holder.ShowHDDCBaoCaoThue = (Button) convertView.findViewById(R.id.btnShowHDDCBaoCaoThue);
             holder.Loai = (TextView) convertView.findViewById(R.id.txtLoai);
             holder.SoLuong = (TextView) convertView.findViewById(R.id.txtSoLuong);
             holder.TongCong = (TextView) convertView.findViewById(R.id.txtTongCong);
@@ -126,7 +127,15 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 MyAsyncTask_Error myAsyncTask = new MyAsyncTask_Error();
-                myAsyncTask.execute(new String[]{ map.getNgayChot()});
+                myAsyncTask.execute(new String[]{"showError", map.getNgayChot()});
+            }
+        });
+
+        holder.ShowHDDCBaoCaoThue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTask_Error myAsyncTask = new MyAsyncTask_Error();
+                myAsyncTask.execute(new String[]{ "showHDDCBaoCaoThue",map.getNgayChot()});
             }
         });
 
@@ -157,9 +166,6 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
                         break;
                     case "noptien":
                         result = ws.nopTien(strings[1]);
-                        break;
-                    case "showerror":
-                        result = ws.showError_NopTien(strings[1]);
                         break;
                 }
                 return result.split(";");
@@ -211,7 +217,15 @@ public class CustomAdapterListViewNopTien extends BaseAdapter {
         @Override
         protected String[] doInBackground(String... strings) {
             try {
-                String result = ws.showError_NopTien(strings[0]);
+                String result = "";
+                switch (strings[0]) {
+                    case "showError":
+                        result = ws.showError_NopTien(strings[1]);
+                        break;
+                    case "showHDDCBaoCaoThue":
+                        result = ws.show_HDDCBaoCaoThue(strings[1]);
+                        break;
+                }
                 return result.split(";");
             } catch (Exception ex) {
                 return new String[]{"false", ex.getMessage()};
