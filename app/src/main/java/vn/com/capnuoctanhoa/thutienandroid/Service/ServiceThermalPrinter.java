@@ -22,6 +22,7 @@ import java.util.UUID;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
+
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
@@ -681,6 +682,8 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
+                    if (entityChild.isChoDCHD() == true)
+                        printEZ("(KHÁCH HÀNG ĐANG KNCS)", 4, toadoY, 20, 2, 1);
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -743,6 +746,8 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
+                    if (entityChild.isChoDCHD() == true)
+                        printEZ("(KHÁCH HÀNG ĐANG KNCS)", 4, toadoY, 20, 2, 1);
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -968,7 +973,7 @@ public class ServiceThermalPrinter extends Service {
     public void printTBDongNuoc_EZ(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_Ngay().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay().equals("") == false) {
                     printTop_EZ();
                     printEZ("THÔNG BÁO", 4, toadoY, 120, 2, 1);
                     printEZ("TẠM NGƯNG CUNG CẤP NƯỚC", 4, toadoY, 30, 2, 1);
@@ -984,7 +989,7 @@ public class ServiceThermalPrinter extends Service {
                         printEZ("Code F Tạm Tính", 1, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
 //                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_NgayHen().split(" ");
-                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " , 3, toadoY, 0, 1, 1);
+                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: ", 3, toadoY, 0, 1, 1);
                     printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:", 1, toadoY, 0, 1, 1);
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
@@ -1012,7 +1017,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
                     printEZ("Điện thoại: " + CLocal.DienThoai, 1, toadoY, 0, 1, 1);
                     printEZ("Zalo: " + CLocal.Zalo, 1, toadoY, 0, 1, 1);
-                    printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1);
+                    printEZ("Ngày lập: " + entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay(), 3, toadoY, 0, 1, 1);
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
@@ -1715,6 +1720,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
+                    if (entityChild.isChoDCHD() == true)
+                        byteStream.write("(KHÁCH HÀNG ĐANG KNCS)\n".getBytes());
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
@@ -1809,6 +1816,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
+                    if (entityChild.isChoDCHD() == true)
+                        byteStream.write("(KHÁCH HÀNG ĐANG KNCS)\n".getBytes());
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
@@ -2002,7 +2011,7 @@ public class ServiceThermalPrinter extends Service {
     public void printTBDongNuoc_ESC(CEntityParent entityParent) {
         try {
             if (entityParent != null) {
-                if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_Ngay().equals("") == false) {
+                if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay().equals("") == false) {
                     printTop_ESC();
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextStyle(true, 1, 2));
@@ -2079,7 +2088,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(("Điện thoại: " + CLocal.DienThoai + "\n").getBytes());
                     byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size()-1).getTBDongNuoc_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay() + "\n").getBytes());
                     byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());

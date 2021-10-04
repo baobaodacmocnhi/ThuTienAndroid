@@ -441,6 +441,9 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                                 enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectChild.getString("TienDuTruoc_DCHD")));
                                             }
                                         }
+                                        if (jsonObjectChild.has("ChoDCHD") == true)
+                                            enChild.setChoDCHD(Boolean.parseBoolean(jsonObjectChild.getString("ChoDCHD")));
+
                                         //update parent
                                         if (jsonObjectChild.has("MaKQDN") == true)
                                             enParent.setMaKQDN(jsonObjectChild.getString("MaKQDN").replace("null", ""));

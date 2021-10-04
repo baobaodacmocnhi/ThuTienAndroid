@@ -495,6 +495,9 @@ public class ActivityDongTien extends AppCompatActivity {
                                 enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectHoaDonTon.getString("TienDuTruoc_DCHD")));
                             }
                         }
+                        if (jsonObjectHoaDonTon.has("ChoDCHD") == true) {
+                            enChild.setChoDCHD(Boolean.parseBoolean(jsonObjectHoaDonTon.getString("ChoDCHD")));
+                        }
                         CLocal.listDongNuocView.get(STT).getLstHoaDon().add(enChild);
                     }
                 }

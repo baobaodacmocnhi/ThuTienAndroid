@@ -505,6 +505,8 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                                             enChild.setTienDuTruocDCHD(Integer.parseInt(jsonObjectChild.getString("TienDuTruoc_DCHD")));
                                         }
                                     }
+                                    if (jsonObjectChild.has("ChoDCHD") == true)
+                                        enChild.setChoDCHD(Boolean.parseBoolean(jsonObjectChild.getString("ChoDCHD")));
                                     //update parent
 
                                     listChild.add(enChild);

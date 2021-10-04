@@ -38,6 +38,7 @@ public class CEntityChild {
     private String TBDongNuoc_NgayHen;
     private boolean DCHD;
     private int TienDuTruocDCHD;
+    private boolean ChoDCHD;
 
     public CEntityChild() {
         MaHD = "";
@@ -77,6 +78,7 @@ public class CEntityChild {
         TBDongNuoc_NgayHen = "";
         DCHD = false;
         TienDuTruocDCHD = 0;
+        ChoDCHD = false;
     }
 
     public String getMaHD() {
@@ -373,6 +375,14 @@ public class CEntityChild {
 
     public void setTienDuTruocDCHD(int tienDuTruocDCHD) {
         TienDuTruocDCHD = tienDuTruocDCHD;
+    }
+
+    public boolean isChoDCHD() {
+        return ChoDCHD;
+    }
+
+    public void setChoDCHD(boolean ChoDCHD) {
+        this.ChoDCHD = ChoDCHD;
     }
 
 }
