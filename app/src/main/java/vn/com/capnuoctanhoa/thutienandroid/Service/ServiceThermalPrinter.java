@@ -682,8 +682,7 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
-                    if (entityChild.isChoDCHD() == true)
-                        printEZ("(KHÁCH HÀNG ĐANG KNCS)", 4, toadoY, 20, 2, 1);
+                    
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -746,8 +745,7 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
-                    if (entityChild.isChoDCHD() == true)
-                        printEZ("(KHÁCH HÀNG ĐANG KNCS)", 4, toadoY, 20, 2, 1);
+                    
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -1720,8 +1718,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
-                    if (entityChild.isChoDCHD() == true)
-                        byteStream.write("(KHÁCH HÀNG ĐANG KNCS)\n".getBytes());
+                    
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
@@ -1816,8 +1813,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
-                    if (entityChild.isChoDCHD() == true)
-                        byteStream.write("(KHÁCH HÀNG ĐANG KNCS)\n".getBytes());
+                    
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
