@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
 //                builder.setNegativeButton("Cập Nhật", new DialogInterface.OnClickListener() {
 //                    @Override
 //                    public void onClick(DialogInterface dialogInterface, int i) {
-////                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://113.161.88.180:1989/app/thutien.apk"));
+////                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://113.161.88.180:81/app/thutien.apk"));
 ////                        startActivity(browserIntent);
 ////                        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
 ////                            MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 ////                        }
 //                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
 //                            MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-//                            myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+//                            myAsyncTask.execute("http://113.161.88.180:81/app/thutien.apk");
 //                        } else
 //                            CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
 //                    }
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
 //                btnNegative.setLayoutParams(layoutParams);
                 if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
                     MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                    myAsyncTask.execute("http://113.161.88.180:81/app/thutien.apk");
                 } else
                     CLocal.showPopupMessage(MainActivity.this, "Bạn chưa cấp quyền cho App", "center");
             }
@@ -639,7 +639,7 @@ public class MainActivity extends AppCompatActivity {
             case CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                    myAsyncTask.execute("http://113.161.88.180:1989/app/thutien.apk");
+                    myAsyncTask.execute("http://113.161.88.180:81/app/thutien.apk");
                 } else {
                     //not granted
                 }
