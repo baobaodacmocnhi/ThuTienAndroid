@@ -26,7 +26,7 @@ public class CWebservice {
 
         envelope.setOutputSoapObject(request);
 
-        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 3);
+        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 5);
         Object response = null;
         try {
             httpTransport.call(SOAP_ACTION, envelope);
