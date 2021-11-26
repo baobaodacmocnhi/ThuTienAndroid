@@ -877,7 +877,7 @@ public class ServiceThermalPrinter extends Service {
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                         if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
-                            printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 3, toadoY, 0, 1, 1);
+                            printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                             TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                         }
@@ -994,7 +994,7 @@ public class ServiceThermalPrinter extends Service {
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                         if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
-                            printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ"), 3, toadoY, 0, 1, 1);
+                            printEZ("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ"), 3, toadoY, 0, 1, 1);
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                             TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                         }
@@ -1007,7 +1007,7 @@ public class ServiceThermalPrinter extends Service {
                         printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
-                    printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.", 1, toadoY, 0, 1, 1);
+                    printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ. (nếu khách hàng bị khóa nước)", 1, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
                         printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
@@ -1951,7 +1951,7 @@ public class ServiceThermalPrinter extends Service {
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                         if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
-                            byteStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
+                            byteStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ") + "\n").getBytes());
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                             TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                         }
@@ -2057,7 +2057,7 @@ public class ServiceThermalPrinter extends Service {
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                         if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
-                            byteStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(entityParent.getLstHoaDon().get(i).getTongCong(), "đ") + "\n").getBytes());
+                            byteStream.write(("Kỳ : " + entityParent.getLstHoaDon().get(i).getKy() + "   " + CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ") + "\n").getBytes());
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                             TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
                         }
@@ -2074,7 +2074,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Phí mở nước: ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write((CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ.\n").getBytes());
+                    byteStream.write((CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ. (nếu khách hàng bị khóa nước)\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(setTextStyle(true, 1, 1));
