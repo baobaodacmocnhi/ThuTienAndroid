@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
+
+        storeFile file('D:\\Projects\\ThuTienAndroid\\thutienandroidkey.jks')
+            storePassword 'TanHoa@2022'
+            keyAlias 'release'
+            keyPassword 'TanHoa@2022'
         }
     }
     compileSdkVersion 30
@@ -13,6 +18,7 @@ android {
         versionCode 1
         versionName "16.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
