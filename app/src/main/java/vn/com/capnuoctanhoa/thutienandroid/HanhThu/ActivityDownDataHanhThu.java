@@ -47,7 +47,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
     private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutTo, layoutNhanVien;
     private ConstraintLayout layoutMay;
-    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien;
+    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien,spnName_Nam;
     private String selectedMaNV = "", LoaiDownData = "";
     private EditText edtTuMay, edtDenMay;
 
@@ -75,6 +75,20 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
 //        } catch (Exception ex) {
 //        }
 
+        try {
+            if (CLocal.jsonNam != null && CLocal.jsonNam.length() > 0) {
+                spnName_Nam = new ArrayList<>();
+                for (int i = 0; i < CLocal.jsonNam.length(); i++) {
+                    JSONObject jsonObject = CLocal.jsonNam.getJSONObject(i);
+                    spnName_Nam.add(jsonObject.getString("NAM"));
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_Nam);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnNam.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //cast to an ArrayAdapter
         ArrayAdapter spnNamAdapter = (ArrayAdapter) spnNam.getAdapter();
         int spnNamPosition = spnNamAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));

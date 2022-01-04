@@ -30,7 +30,8 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import vn.com.capnuoctanhoa.thutienandroid.HanhThu.ActivityHoaDonDienTu_ThuTien;
+import androidx.core.content.FileProvider;
+import vn.com.capnuoctanhoa.thutienandroid.MainActivity;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 
 import android.telephony.TelephonyManager;
@@ -94,7 +95,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien;
+    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien, jsonNam;
     public static String MaNV, HoTen, MaTo, DienThoai, Zalo, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
@@ -114,6 +115,7 @@ public class CLocal {
         editor.putString("jsonHanhThu", "");
         editor.putString("jsonDongNuoc", "");
         editor.putString("jsonMessage", "");
+        editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
         editor.putBoolean("Admin", false);
@@ -134,15 +136,35 @@ public class CLocal {
         MaNV = HoTen = MaTo = DienThoai = Zalo = IDMobile = "";
         Admin = HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
         SyncTrucTiep = true;
-        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = null;
+        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = jsonNam = null;
         listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
+    }
+
+    public static String creatPathFile(Activity activity, String path, String filename, String filetype) {
+        File filesDir = activity.getExternalFilesDir(path);
+        File photoFile = null;
+        try {
+            photoFile = File.createTempFile(filename, "." + filetype, filesDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (Build.VERSION.SDK_INT < 21) {
+            // Từ android 5.0 trở xuống. khi ta sử dụng FileProvider.getUriForFile() sẽ trả về ngoại lệ FileUriExposedException
+            // Vì vậy mình sử dụng Uri.fromFile đề lấy ra uri cho file ảnh
+            photoFile = new File(Environment.getExternalStorageDirectory() + "/TanHoa/", filename + "." + filetype);
+        } else {
+            // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
+            // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
+            FileProvider.getUriForFile(activity, "thutien_file_provider", photoFile);
+        }
+        return photoFile.getAbsolutePath();
     }
 
     public static void initialPhiMoNuoc() {
         //add cứng phí mở nước
         phiMoNuoc = new HashMap<>();
-        phiMoNuoc.put("214.000", Arrays.asList("15", "25"));
-        phiMoNuoc.put("1.256.000", Arrays.asList("40", "50", "80", "100"));
+        phiMoNuoc.put("264.000", Arrays.asList("15", "25"));
+        phiMoNuoc.put("1.552.000", Arrays.asList("40", "50", "80", "100"));
     }
 
     public static String getPhiMoNuoc(String Co) {

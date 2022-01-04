@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,10 +45,12 @@ import org.json.JSONArray;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,6 +58,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import vn.com.capnuoctanhoa.thutienandroid.Admin.ActivityAdmin;
+import vn.com.capnuoctanhoa.thutienandroid.DongNuoc.ActivityDongNuoc;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceFirebaseMessaging;
 import vn.com.capnuoctanhoa.thutienandroid.Service.ServiceThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -221,16 +226,16 @@ public class MainActivity extends AppCompatActivity {
             CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
 
             FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                        @Override
-                        public void onComplete(@NonNull Task<String> task) {
-                            // Get new FCM registration token
-                            String deviceToken = task.getResult();
-                            if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
-                                ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
-                                serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
-                            }
-                        }
-                    });
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    // Get new FCM registration token
+                    String deviceToken = task.getResult();
+                    if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
+                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
+                        serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
+                    }
+                }
+            });
 
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
 //                CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
@@ -287,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                 CLocal.HanhThu = CLocal.sharedPreferencesre.getBoolean("HanhThu", false);
                 CLocal.DongNuoc = CLocal.sharedPreferencesre.getBoolean("DongNuoc", false);
+                CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.drawable.ic_login);
@@ -466,16 +472,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             int count;
             try {
-                File folder = new File(CLocal.pathRoot);
-                boolean success = true;
-                if (!folder.exists()) {
-                    success = folder.mkdirs();
-                }
-                if (success) {
-                    // Do something on success
-                } else {
-                    // Do something else on failure
-                }
+
                 URL url = new URL(strings[0]);
                 URLConnection conection = url.openConnection();
                 conection.connect();
@@ -490,7 +487,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Output stream
                 //extension must change (mp3,mp4,zip,apk etc.)
-                pathdownloaded = CLocal.pathRoot + fileName[0] + "." + fileName[1];
+                pathdownloaded = CLocal.creatPathFile(MainActivity.this, CLocal.pathRoot, fileName[0], fileName[1]);
+
                 OutputStream output = new FileOutputStream(pathdownloaded);
 
                 byte data[] = new byte[1024];
@@ -632,91 +630,96 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case CMarshMallowPermission.READ_EXTERNAL_STORAGE_REQUEST_CODE:
-            case CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
-                    myAsyncTask.execute("http://113.161.88.180:81/app/thutien.apk");
-                } else {
-                    //not granted
-                }
-                break;
-            case CMarshMallowPermission.REQUEST_INSTALL_PACKAGES_REQUEST_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    installapk();
-                } else {
-                    //not granted
-                }
-                break;
-            case CMarshMallowPermission.APP_PERMISSIONS_REQUEST_CODE:
-                HashMap<String, Integer> permissionResults = new HashMap<>();
-                int deniedCount = 0;
+        try {
+            switch (requestCode) {
+                case CMarshMallowPermission.READ_EXTERNAL_STORAGE_REQUEST_CODE:
+                case CMarshMallowPermission.WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
+                        myAsyncTask.execute("http://113.161.88.180:81/app/thutien.apk");
+                    } else {
+                        //not granted
+                    }
+                    break;
+                case CMarshMallowPermission.INSTALL_PACKAGES_REQUEST_CODE:
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        installapk();
+                    } else {
+                        //not granted
+                    }
+                    break;
+                case CMarshMallowPermission.APP_PERMISSIONS_REQUEST_CODE:
+                    HashMap<String, Integer> permissionResults = new HashMap<>();
+                    int deniedCount = 0;
 
-                //gather permission grant results
-                for (int i = 0; i < grantResults.length; i++)
-                    //add only permissions which are denied
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        permissionResults.put(permissions[i], grantResults[i]);
-                        deniedCount++;
-                    }
-                //check if all permissions are granted
-                if (deniedCount == 0) {
-                    //proceed ahead with the app
-                }
-                //alleast one or all permissions are denied
-                else {
-                    for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
-                        String permName = entry.getKey();
-                        int permResult = entry.getValue();
-                        //permissions is denied (this is the first time, when "never ask again" is not checked)
-                        //so ask again explaining to usage of permission
-                        //shouldShowRequestPermissionRationale will return true
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName)) {
-                            //show dialog of explanation
-                            showDialog("", "App cần cấp Tất Cả Quyền để hoạt động ổn định", "Yes, Cấp Quyền", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    cMarshMallowPermission.checkAllPermissionForAPP();
-                                }
-                            }, "No, Đóng App", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            }, false);
+                    //gather permission grant results
+                    for (int i = 0; i < grantResults.length; i++)
+                        //add only permissions which are denied
+                        if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                            permissionResults.put(permissions[i], grantResults[i]);
+                            deniedCount++;
                         }
-                        //permissions is denied (and never ask again is checked)
-                        //shouldShowRequestPermissionRationale will return false
-                        else {
-                            //ask user to go to settings and manually allow permissions
-                            showDialog("", "Bạn đã Từ Chối Cấp Quyền. Đồng ý Tất Cả Quyền tại [Cài Đặt] > [Quyền Ứng Dụng]", "Đi đến Cài Đặt", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    //go to app settings
-                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS, Uri.fromParts("package", getPackageName(), null));
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }, "No, Đóng App", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            }, false);
+                    //check if all permissions are granted
+                    if (deniedCount == 0) {
+                        //proceed ahead with the app
+                    }
+                    //alleast one or all permissions are denied
+                    else {
+                        for (Map.Entry<String, Integer> entry : permissionResults.entrySet()) {
+                            String permName = entry.getKey();
+                            int permResult = entry.getValue();
+                            //permissions is denied (this is the first time, when "never ask again" is not checked)
+                            //so ask again explaining to usage of permission
+                            //shouldShowRequestPermissionRationale will return true
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName)) {
+                                //show dialog of explanation
+                                showDialog("", "App cần cấp Tất Cả Quyền để hoạt động ổn định", "Yes, Cấp Quyền", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        cMarshMallowPermission.checkAllPermissionForAPP();
+                                    }
+                                }, "No, Đóng App", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }, false);
+                            }
+                            //permissions is denied (and never ask again is checked)
+                            //shouldShowRequestPermissionRationale will return false
+                            else {
+                                //ask user to go to settings and manually allow permissions
+                                showDialog("", "Bạn đã Từ Chối Cấp Quyền. Đồng ý Tất Cả Quyền tại [Cài Đặt] > [Quyền Ứng Dụng]", "Đi đến Cài Đặt", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        //go to app settings
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS, Uri.fromParts("package", getPackageName(), null));
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }, "No, Đóng App", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }, false);
+                            }
                         }
                     }
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                    break;
+                default:
+                    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        } catch (Exception ex) {
+            throw ex;
         }
     }
 
