@@ -458,6 +458,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 }
                             if(MaHDs.equals("")==true)
                             {
+                                results = new String[]{"true"," "};
                                 if (CLocal.serviceThermalPrinter != null)
                                     CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
                             }
@@ -497,6 +498,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 }
                             if(MaHDs.equals("")==true)
                             {
+                                results = new String[]{"true"," "};
                                 if (CLocal.serviceThermalPrinter != null)
                                     CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listDongNuocView.get(STT));
                             }
