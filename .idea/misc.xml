@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_danh_sach_dong_nuoc.xml" value="0.35507246376811596" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_dong_nuoc.xml" value="0.17755825734549138" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_dong_tien.xml" value="0.17755825734549138" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_down_data_hanh_thu.xml" value="0.21979166666666666" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_giao.xml" value="0.35507246376811596" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_thu_ho.xml" value="0.35507246376811596" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_ton.xml" value="0.35507246376811596" />
       </map>
     </option>
   </component>

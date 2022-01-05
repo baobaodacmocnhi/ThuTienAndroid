@@ -682,7 +682,7 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
-                    
+
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -745,7 +745,7 @@ public class ServiceThermalPrinter extends Service {
                     printTop_EZ();
                     printEZ("GIẤY BÁO TIỀN NƯỚC", 4, toadoY, 60, 2, 1);
                     printEZ("(KHÔNG THAY THẾ HÓA ĐƠN)", 4, toadoY, 20, 2, 1);
-                    
+
                     printEZ("Kỳ: " + entityChild.getKy(), 4, toadoY, 130, 2, 1);
                     printEZ("Khách hàng: " + entityParent.getHoTen(), 3, toadoY, 0, 1, 1);
                     printEZ("Địa chỉ: " + entityParent.getDiaChi(), 3, toadoY, 0, 1, 1);
@@ -1005,7 +1005,12 @@ public class ServiceThermalPrinter extends Service {
                         printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)), 1, toadoY, 0, 1, 1);
                     }
                     printDotFeed_EZ();
-                    printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ. (nếu khách hàng bị khóa nước)", 1, toadoY, 0, 1, 1);
+                    String Co = "";
+                    if (entityParent.getLstHoaDon().get(0).getCo().equals("") == true)
+                        Co = entityParent.getCo();
+                    else
+                        Co = entityParent.getLstHoaDon().get(0).getCo();
+                    printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(Co) + "đ. (nếu khách hàng bị khóa nước)", 1, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
                         printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
@@ -1718,7 +1723,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
-                    
+
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
@@ -1813,7 +1818,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 2));
                     byteStream.write("GIẤY BÁO TIỀN NƯỚC\n".getBytes());
                     byteStream.write("(KHÔNG THAY THẾ HÓA ĐƠN)\n".getBytes());
-                    
+
                     byteStream.write(("Kỳ: " + entityChild.getKy() + "\n").getBytes());
                     byteStream.write(printLineFeed(1));
                     byteStream.write(setTextAlign(0));
@@ -2068,9 +2073,14 @@ public class ServiceThermalPrinter extends Service {
                         byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n").getBytes());
                     }
                     byteStream.write(printDotFeed_ESC());
+                    String Co = "";
+                    if (entityParent.getLstHoaDon().get(0).getCo().equals("") == true)
+                        Co = entityParent.getCo();
+                    else
+                        Co = entityParent.getLstHoaDon().get(0).getCo();
                     byteStream.write(("Phí mở nước: ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write((CLocal.getPhiMoNuoc(entityParent.getLstHoaDon().get(0).getCo()) + "đ. (nếu khách hàng bị khóa nước)\n").getBytes());
+                    byteStream.write((CLocal.getPhiMoNuoc(Co) + "đ. (nếu khách hàng bị khóa nước)\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(setTextStyle(true, 1, 1));

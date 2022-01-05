@@ -51,7 +51,7 @@ public class FragmentTon extends Fragment {
     private FloatingActionButton floatingActionButton;
     private TextView txtTongHD, txtTongCong;
     private int layoutAutoHide_Height;
-    private ArrayList<String> spnID_To, spnName_To;
+    private ArrayList<String> spnID_To, spnName_To,spnName_Nam;
     private String selectedTo = "";
     private long TongHD, TongCong;
     private ArrayList<CViewParent> list;
@@ -79,6 +79,20 @@ public class FragmentTon extends Fragment {
         layoutAutoHide = (CardView) rootView.findViewById(R.id.layoutAutoHide);
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.floatingActionButton);
 
+        try {
+            if (CLocal.jsonNam != null && CLocal.jsonNam.length() > 0) {
+                spnName_Nam = new ArrayList<>();
+                for (int i = 0; i < CLocal.jsonNam.length(); i++) {
+                    JSONObject jsonObject = CLocal.jsonNam.getJSONObject(i);
+                    spnName_Nam.add(jsonObject.getString("NAM"));
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spnName_Nam);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnNam.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //cast to an ArrayAdapter
         ArrayAdapter spnNamAdapter = (ArrayAdapter) spnNam.getAdapter();
         int spnNamPosition = spnNamAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));

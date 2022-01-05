@@ -130,52 +130,52 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
             }
         });
 
-        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
-                popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        int id = menuItem.getItemId();
-                        TextView STT = (TextView) view.findViewById(R.id.lvSTT);
-                        int i = Integer.parseInt(STT.getText().toString()) - 1;
-                        CLocal.indexPosition = i;
-                        Intent intent;
-                        switch (id) {
-                            case R.id.action_DongNuoc1:
-                                intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
-                                intent.putExtra("STT", String.valueOf(i));
-                                startActivity(intent);
-                                break;
-                            case R.id.action_DongNuoc2:
-                                intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
-                                intent.putExtra("STT", String.valueOf(i));
-                                startActivity(intent);
-                                break;
-                            case R.id.action_MoNuoc:
-                                intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
-                                intent.putExtra("STT", String.valueOf(i));
-                                startActivity(intent);
-                                break;
-                            case R.id.action_DongTien:
-                                intent = new Intent(getApplicationContext(), ActivityDongTien.class);
-                                intent.putExtra("STT", String.valueOf(i));
-                                startActivity(intent);
-                                break;
-                            case R.id.action_TBDongNuoc:
-                                if (CLocal.serviceThermalPrinter != null)
-                                    CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listDongNuocView.get(i));
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
-                return false;
-            }
-        });
+//        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
+//                PopupMenu popup = new PopupMenu(getApplicationContext(), view);
+//                popup.getMenuInflater().inflate(R.menu.menu_dongnuoc, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem menuItem) {
+//                        int id = menuItem.getItemId();
+//                        TextView STT = (TextView) view.findViewById(R.id.lvSTT);
+//                        int i = Integer.parseInt(STT.getText().toString()) - 1;
+//                        CLocal.indexPosition = i;
+//                        Intent intent;
+//                        switch (id) {
+//                            case R.id.action_DongNuoc1:
+//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc.class);
+//                                intent.putExtra("STT", String.valueOf(i));
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_DongNuoc2:
+//                                intent = new Intent(getApplicationContext(), ActivityDongNuoc2.class);
+//                                intent.putExtra("STT", String.valueOf(i));
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_MoNuoc:
+//                                intent = new Intent(getApplicationContext(), ActivityMoNuoc.class);
+//                                intent.putExtra("STT", String.valueOf(i));
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_DongTien:
+//                                intent = new Intent(getApplicationContext(), ActivityDongTien.class);
+//                                intent.putExtra("STT", String.valueOf(i));
+//                                startActivity(intent);
+//                                break;
+//                            case R.id.action_TBDongNuoc:
+//                                if (CLocal.serviceThermalPrinter != null)
+//                                    CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listDongNuocView.get(i));
+//                                break;
+//                        }
+//                        return true;
+//                    }
+//                });
+//                popup.show();
+//                return false;
+//            }
+//        });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
