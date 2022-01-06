@@ -95,9 +95,6 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkKhoaKhac = (CheckBox) findViewById(R.id.chkKhoaKhac);
 
-//        final MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
-//        myAsyncTask_thermal.execute();
-
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,20 +166,18 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-//                    thermalPrinter = new ThermalPrinter(ActivityDongNuoc2.this);
                         if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
-//                        thermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
-                            if(CLocal.serviceThermalPrinter !=null)
-                            CLocal.serviceThermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                            if(CLocal.serviceThermalPrinter !=null) {
+                                try {
+                                    CLocal.serviceThermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
             }
         });
 
         try {
-//            String MaDN = getIntent().getStringExtra("MaDN");
-//            if (MaDN.equals("") == false) {
-//                fillDongNuoc(MaDN);
-//            }
             STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
                 fillDongNuoc(STT);

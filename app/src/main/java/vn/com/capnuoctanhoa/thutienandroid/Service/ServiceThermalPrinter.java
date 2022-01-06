@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -313,7 +314,7 @@ public class ServiceThermalPrinter extends Service {
 
     //region Method printer
 
-    public void printThuTien(CEntityParent entityParent) {
+    public void printThuTien(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connected(mSocket);
@@ -326,11 +327,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printThuTien(CEntityParent entityParent, CEntityChild entityChild) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connected(mSocket);
@@ -343,11 +344,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao(CEntityParent entityParent) {
+    public void printPhieuBao(CEntityParent entityParent) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -360,11 +361,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT(CEntityParent entityParent) {
+    public void printPhieuBaoCT(CEntityParent entityParent) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -377,11 +378,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -394,11 +395,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBaoCT(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -411,11 +412,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao2(CEntityParent entityParent) {
+    public void printPhieuBao2(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -428,11 +429,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printTBDongNuoc(CEntityParent entityParent) {
+    public void printTBDongNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -445,11 +446,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printDongNuoc(CEntityParent entityParent) {
+    public void printDongNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -462,11 +463,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printDongNuoc2(CEntityParent entityParent) {
+    public void printDongNuoc2(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -479,11 +480,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printMoNuoc(CEntityParent entityParent) {
+    public void printMoNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -496,11 +497,11 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhiMoNuoc(CEntityParent entityParent) {
+    public void printPhiMoNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
@@ -513,7 +514,7 @@ public class ServiceThermalPrinter extends Service {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -521,14 +522,14 @@ public class ServiceThermalPrinter extends Service {
 
     //region EZ method
 
-    public void printThuTien_EZ(CEntityParent entityParent) {
+    public void printThuTien_EZ(CEntityParent entityParent) throws IOException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).isDangNgan_DienThoai() == true) {
                     printThuTien_EZ(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -539,11 +540,11 @@ public class ServiceThermalPrinter extends Service {
 //                    printThuTien_EZAppend(entityParent, entityParent.getLstHoaDon().get(i));
 //                }
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printThuTien_EZ(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printThuTien_EZ(CEntityParent entityParent, CEntityChild entityChild) throws IOException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.isDangNgan_DienThoai() == true) {
@@ -590,7 +591,7 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -638,29 +639,29 @@ public class ServiceThermalPrinter extends Service {
 //                }
 //            }
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printPhieuBao_EZ(CEntityParent entityParent) {
+    public void printPhieuBao_EZ(CEntityParent entityParent) throws IOException, ParseException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_EZ(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT_EZ(CEntityParent entityParent) {
+    public void printPhieuBaoCT_EZ(CEntityParent entityParent) throws IOException, ParseException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBaoCT_EZ(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -671,11 +672,11 @@ public class ServiceThermalPrinter extends Service {
 //                    printPhieuBao_EZAppend(entityParent, entityParent.getLstHoaDon().get(i));
 //                }
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printPhieuBao_EZ(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBao_EZ(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
@@ -734,11 +735,11 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT_EZ(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBaoCT_EZ(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
@@ -801,7 +802,7 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -849,11 +850,11 @@ public class ServiceThermalPrinter extends Service {
 //                }
 //            }
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printPhieuBao2_EZ(CEntityParent entityParent) {
+    public void printPhieuBao2_EZ(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {
                 if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
@@ -914,7 +915,7 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -964,11 +965,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printTBDongNuoc_EZ(CEntityParent entityParent) {
+    public void printTBDongNuoc_EZ(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {
                 if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay().equals("") == false) {
@@ -1031,7 +1032,7 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1081,11 +1082,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printDongNuoc_EZ(CEntityParent entityParent) {
+    public void printDongNuoc_EZ(CEntityParent entityParent) throws IOException {
         try {
             printTop_EZ();
             printEZ("BIÊN BẢN TẠM", 4, toadoY, 80, 2, 1);
@@ -1133,7 +1134,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1186,11 +1187,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printDongNuoc2_EZ(CEntityParent entityParent) {
+    public void printDongNuoc2_EZ(CEntityParent entityParent) throws IOException {
         try {
             printTop_EZ();
             printEZ("BIÊN BẢN TẠM", 4, toadoY, 80, 2, 1);
@@ -1238,7 +1239,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1291,11 +1292,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printMoNuoc_EZ(CEntityParent entityParent) {
+    public void printMoNuoc_EZ(CEntityParent entityParent) throws IOException {
         try {
             printTop_EZ();
             printEZ("BIÊN BẢN MỞ NƯỚC", 4, toadoY, 60, 2, 1);
@@ -1333,7 +1334,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1376,11 +1377,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    public void printPhiMoNuoc_EZ(CEntityParent entityParent) {
+    public void printPhiMoNuoc_EZ(CEntityParent entityParent) throws IOException {
         try {
             printTop_EZ();
             printEZ("BIÊN NHẬN", 4, toadoY, 130, 2, 1);
@@ -1411,7 +1412,7 @@ public class ServiceThermalPrinter extends Service {
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+
         }
     }
 
@@ -1447,11 +1448,11 @@ public class ServiceThermalPrinter extends Service {
 //            outputStream.write(stringBuilder.toString().getBytes());
 //            outputStream.flush();
 //        } catch (Exception ex) {
-//            ex.printStackTrace();
+//            throw ex;
 //        }
 //    }
 
-    private void printTop_EZ() {
+    private void printTop_EZ() throws IOException {
         try {
             toadoY = 0;
             resetPrinter();
@@ -1461,11 +1462,11 @@ public class ServiceThermalPrinter extends Service {
             printEZ("95 PHẠM HỮU CHÍ, P12, Q5", 3, toadoY, 40, 1, 1);
             printEZ("Tổng đài: 1900.6489", 3, toadoY, 80, 1, 1);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    private void printTop_EZAppend() {
+    private void printTop_EZAppend() throws IOException {
         try {
             toadoY = 0;
             resetPrinter();
@@ -1477,7 +1478,7 @@ public class ServiceThermalPrinter extends Service {
             stringBuilder.append(printEZAppend("95 PHẠM HỮU CHÍ, P12, Q5", 3, toadoY, 40, 1, 1));
             stringBuilder.append(printEZAppend("Tổng đài: 1900.6489", 3, toadoY, 80, 1, 1));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1490,7 +1491,7 @@ public class ServiceThermalPrinter extends Service {
         return printEZAppend("------------------------------------------------------", 1, toadoY, 0, 1, 1);
     }
 
-    private void printEnd_EZ() {
+    private void printEnd_EZ() throws IOException {
         printEZ("  ", 1, toadoY + 60, 0, 1, 1);
     }
 
@@ -1552,7 +1553,7 @@ public class ServiceThermalPrinter extends Service {
     }
 
     //print custom
-    private void printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) {
+    private void printEZ(String content, int boldNumber, int toadoY, int toadoX, int heightFont, int widthFont) throws IOException {
         try {
             ArrayList<String> valuesOutput = new ArrayList();
             String valueOutput = "";
@@ -1588,7 +1589,7 @@ public class ServiceThermalPrinter extends Service {
             stringBuilder.append("}");
             outputStream.write(stringBuilder.toString().getBytes());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -1597,18 +1598,18 @@ public class ServiceThermalPrinter extends Service {
     //region ESC/P Command
     ByteArrayOutputStream byteStream;
 
-    public void printThuTien_ESC(CEntityParent entityParent) {
+    public void printThuTien_ESC(CEntityParent entityParent) throws IOException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).isDangNgan_DienThoai() == true) {
                     printThuTien_ESC(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printThuTien_ESC(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printThuTien_ESC(CEntityParent entityParent, CEntityChild entityChild) throws IOException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.isDangNgan_DienThoai() == true) {
@@ -1688,33 +1689,33 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao_ESC(CEntityParent entityParent) {
+    public void printPhieuBao_ESC(CEntityParent entityParent) throws IOException, ParseException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBao_ESC(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT_ESC(CEntityParent entityParent) {
+    public void printPhieuBaoCT_ESC(CEntityParent entityParent) throws IOException, ParseException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                 if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
                     printPhieuBaoCT_ESC(entityParent, entityParent.getLstHoaDon().get(i));
                 }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
@@ -1805,11 +1806,11 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBaoCT_ESC(CEntityParent entityParent, CEntityChild entityChild) {
+    public void printPhieuBaoCT_ESC(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (entityParent != null && entityChild != null) {
                 if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
@@ -1904,11 +1905,11 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhieuBao2_ESC(CEntityParent entityParent) {
+    public void printPhieuBao2_ESC(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {
                 if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
@@ -2005,11 +2006,11 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printTBDongNuoc_ESC(CEntityParent entityParent) {
+    public void printTBDongNuoc_ESC(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {
                 if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay().equals("") == false) {
@@ -2109,11 +2110,11 @@ public class ServiceThermalPrinter extends Service {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printDongNuoc_ESC(CEntityParent entityParent) {
+    public void printDongNuoc_ESC(CEntityParent entityParent) throws IOException {
         try {
             printTop_ESC();
             byteStream.write(printLineFeed(1));
@@ -2188,11 +2189,11 @@ public class ServiceThermalPrinter extends Service {
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printDongNuoc2_ESC(CEntityParent entityParent) {
+    public void printDongNuoc2_ESC(CEntityParent entityParent) throws IOException {
         try {
             printTop_ESC();
             byteStream.write(printLineFeed(1));
@@ -2267,11 +2268,11 @@ public class ServiceThermalPrinter extends Service {
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printMoNuoc_ESC(CEntityParent entityParent) {
+    public void printMoNuoc_ESC(CEntityParent entityParent) throws IOException {
         try {
             printTop_ESC();
             byteStream.write(printLineFeed(1));
@@ -2329,11 +2330,11 @@ public class ServiceThermalPrinter extends Service {
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    public void printPhiMoNuoc_ESC(CEntityParent entityParent) {
+    public void printPhiMoNuoc_ESC(CEntityParent entityParent) throws IOException {
         try {
             printTop_ESC();
             byteStream.write(printLineFeed(1));
@@ -2386,11 +2387,11 @@ public class ServiceThermalPrinter extends Service {
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 
-    private void printTop_ESC() {
+    private void printTop_ESC() throws IOException {
         try {
             resetPrinter();
             byteStream = new ByteArrayOutputStream();
@@ -2401,7 +2402,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write("95 PHẠM HỮU CHÍ, P12, Q5\n".getBytes());
             byteStream.write("Tổng đài: 1900.6489\n".getBytes());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw ex;
         }
     }
 

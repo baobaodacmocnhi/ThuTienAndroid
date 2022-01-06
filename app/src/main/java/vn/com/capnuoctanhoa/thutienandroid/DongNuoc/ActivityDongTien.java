@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -154,9 +155,18 @@ public class ActivityDongTien extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (CLocal.serviceThermalPrinter != null) {
-                    CLocal.serviceThermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
-                    if (CLocal.listDongNuocView.get(STT).isDongPhi() == true)
-                        CLocal.serviceThermalPrinter.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+                    try {
+                        CLocal.serviceThermalPrinter.printThuTien(CLocal.listDongNuocView.get(STT));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (CLocal.listDongNuocView.get(STT).isDongPhi() == true) {
+                        try {
+                            CLocal.serviceThermalPrinter.printPhiMoNuoc(CLocal.listDongNuocView.get(STT));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         });
@@ -174,8 +184,13 @@ public class ActivityDongTien extends AppCompatActivity {
                 if (selectedMaHDs.equals("") == false) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute(new String[]{"PhieuBao2", "2"});
-                } else if (CLocal.serviceThermalPrinter != null)
-                    CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                } else if (CLocal.serviceThermalPrinter != null) {
+                    try {
+                        CLocal.serviceThermalPrinter.printPhieuBao2(CLocal.listDongNuocView.get(STT));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -202,10 +217,6 @@ public class ActivityDongTien extends AppCompatActivity {
         });
 
         try {
-//            String MaDN = getIntent().getStringExtra("MaDN");
-//            if (MaDN.equals("") == false) {
-//                fillDongNuoc(MaDN);
-//            }
             STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
                 fillDongNuoc(STT);
@@ -215,7 +226,6 @@ public class ActivityDongTien extends AppCompatActivity {
 
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute("GetHoaDonTon");
-
     }
 
     @Override

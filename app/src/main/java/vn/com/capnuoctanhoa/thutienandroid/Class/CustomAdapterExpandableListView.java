@@ -456,14 +456,11 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     else
                                         MaHDs += "," + CLocal.listHanhThuView.get(STT).getLstHoaDon().get(j).getMaHD();
                                 }
-                            if(MaHDs.equals("")==true)
-                            {
-                                results = new String[]{"true"," "};
+                            if (MaHDs.equals("") == true) {
+                                results = new String[]{"true", " "};
                                 if (CLocal.serviceThermalPrinter != null)
                                     CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
-                            }
-                            else
-                            {
+                            } else {
                                 Date dt2 = dateCapNhat;
                                 Calendar c2 = Calendar.getInstance();
                                 c2.setTime(dt2);
@@ -482,9 +479,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                         CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listHanhThuView.get(STT));
                                 }
                             }
-                        }
-                        else
-                        if (strings[0].equals("DongNuoc") == true) {
+                        } else if (strings[0].equals("DongNuoc") == true) {
                             for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)
                                 if (CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isGiaiTrach() == false
                                         && CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).isThuHo() == false
@@ -496,14 +491,12 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     else
                                         MaHDs += "," + CLocal.listDongNuocView.get(STT).getLstHoaDon().get(j).getMaHD();
                                 }
-                            if(MaHDs.equals("")==true)
-                            {
-                                results = new String[]{"true"," "};
-                                if (CLocal.serviceThermalPrinter != null)
+                            if (MaHDs.equals("") == true) {
+                                results = new String[]{"true", " "};
+                                if (CLocal.serviceThermalPrinter != null) {
                                     CLocal.serviceThermalPrinter.printTBDongNuoc(CLocal.listDongNuocView.get(STT));
-                            }
-                            else
-                            {
+                                }
+                            } else {
                                 Date dt2 = dateCapNhat;
                                 Calendar c2 = Calendar.getInstance();
                                 c2.setTime(dt2);
@@ -561,7 +554,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
 
                 return results;
             } catch (Exception ex) {
-                return new String[]{"false;" + ex.getMessage()};
+                return new String[]{"false", ex.getMessage()};
             }
         }
 

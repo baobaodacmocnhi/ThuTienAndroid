@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -78,7 +80,7 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void reInBienNhan_Direct(final String Loai, final CEntityParent entityParent) {
+    private void reInBienNhan_Direct(final String Loai, final CEntityParent entityParent) throws IOException, ParseException {
         switch (Loai) {
 
             case "PhieuBao":

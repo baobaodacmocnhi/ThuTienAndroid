@@ -162,20 +162,18 @@ public class ActivityMoNuoc extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-//                    thermalPrinter = new ThermalPrinter(ActivityMoNuoc.this);
                     if (CLocal.listDongNuocView.get(STT).isMoNuoc() == true)
-//                        thermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
-                        if(CLocal.serviceThermalPrinter !=null)
-                        CLocal.serviceThermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
+                        if(CLocal.serviceThermalPrinter !=null) {
+                            try {
+                                CLocal.serviceThermalPrinter.printMoNuoc(CLocal.listDongNuocView.get(STT));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
             }
         });
 
         try {
-//            String MaDN = getIntent().getStringExtra("MaDN");
-//            if (MaDN.equals("") == false) {
-//                fillDongNuoc(MaDN);
-//            }
             STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
                 fillDongNuoc(STT);

@@ -32,6 +32,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -275,7 +277,13 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                             .setCancelable(false)
                                                             .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                                                                 public void onClick(DialogInterface dialog, int id) {
-                                                                    reInBienNhan_Direct("DangNgan", CLocal.listHanhThuView.get(STT));
+                                                                    try {
+                                                                        reInBienNhan_Direct("DangNgan", CLocal.listHanhThuView.get(STT));
+                                                                    } catch (IOException e) {
+                                                                        e.printStackTrace();
+                                                                    } catch (ParseException e) {
+                                                                        e.printStackTrace();
+                                                                    }
                                                                 }
                                                             })
                                                             .setPositiveButton("No", new DialogInterface.OnClickListener() {
@@ -321,8 +329,13 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                                                     MyAsyncTask_XuLyGianTiep myAsyncTask_xuLyGianTiep = new MyAsyncTask_XuLyGianTiep();
                                                     myAsyncTask_xuLyGianTiep.execute(new String[]{CLocal.listHanhThuView.get(STT).getXuLy(), String.valueOf(STT)});
                                                     flag = false;
-                                                    if (CLocal.serviceThermalPrinter != null)
-                                                        CLocal.serviceThermalPrinter.printThuTien(CLocal.listHanhThuView.get(STT));
+                                                    if (CLocal.serviceThermalPrinter != null) {
+                                                        try {
+                                                            CLocal.serviceThermalPrinter.printThuTien(CLocal.listHanhThuView.get(STT));
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
                                                     CLocal.showToastMessage(ActivityHoaDonDienTu_ThuTien.this, "Thành Công");
                                                     btnSau.performClick();
                                                 } else
@@ -853,21 +866,43 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                         switch (Loai) {
                             case "DangNgan":
                                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
-                                    if (CLocal.serviceThermalPrinter != null)
-                                        CLocal.serviceThermalPrinter.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
+                                    if (CLocal.serviceThermalPrinter != null) {
+                                        try {
+                                            CLocal.serviceThermalPrinter.printThuTien(entityParent, entityParent.getLstHoaDon().get(j));
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 break;
                             case "PhieuBao":
                                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
-                                    if (CLocal.serviceThermalPrinter != null)
-                                        CLocal.serviceThermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                                    if (CLocal.serviceThermalPrinter != null) {
+                                        try {
+                                            CLocal.serviceThermalPrinter.printPhieuBao(entityParent, entityParent.getLstHoaDon().get(j));
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 break;
                             case "PhieuBao2":
-                                if (CLocal.serviceThermalPrinter != null)
-                                    CLocal.serviceThermalPrinter.printPhieuBao2(entityParent);
+                                if (CLocal.serviceThermalPrinter != null) {
+                                    try {
+                                        CLocal.serviceThermalPrinter.printPhieuBao2(entityParent);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             case "TBDongNuoc":
-                                if (CLocal.serviceThermalPrinter != null)
-                                    CLocal.serviceThermalPrinter.printTBDongNuoc(entityParent);
+                                if (CLocal.serviceThermalPrinter != null) {
+                                    try {
+                                        CLocal.serviceThermalPrinter.printTBDongNuoc(entityParent);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -881,7 +916,7 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
         alert.show();
     }
 
-    private void reInBienNhan_Direct(final String Loai, final CEntityParent entityParent) {
+    private void reInBienNhan_Direct(final String Loai, final CEntityParent entityParent) throws IOException, ParseException {
         switch (Loai) {
             case "DangNgan":
                 for (int j = 0; j < entityParent.getLstHoaDon().size(); j++)
