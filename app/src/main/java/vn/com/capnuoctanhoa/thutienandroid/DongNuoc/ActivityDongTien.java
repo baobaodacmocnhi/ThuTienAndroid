@@ -367,6 +367,8 @@ public class ActivityDongTien extends AppCompatActivity {
                             CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setThueGTGT(jsonObjectHoaDonTon.getString("ThueGTGT"));
                         if (jsonObjectHoaDonTon.has("PhiBVMT") == true)
                             CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setPhiBVMT(jsonObjectHoaDonTon.getString("PhiBVMT"));
+                        if (jsonObjectHoaDonTon.has("PhiBVMT_Thue") == true)
+                            CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setPhiBVMT_Thue(jsonObjectHoaDonTon.getString("PhiBVMT_Thue"));
                         CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setTongCong(jsonObjectHoaDonTon.getString("TongCong"));
                         if (jsonObjectHoaDonTon.has("GiaBieu") == true)
                             CLocal.listDongNuocView.get(STT).getLstHoaDon().get(index).setGiaBieu(jsonObjectHoaDonTon.getString("GiaBieu"));

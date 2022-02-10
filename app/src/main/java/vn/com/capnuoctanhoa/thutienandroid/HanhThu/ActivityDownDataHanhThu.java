@@ -47,7 +47,7 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
     private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutTo, layoutNhanVien;
     private ConstraintLayout layoutMay;
-    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien,spnName_Nam;
+    private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien, spnName_Nam;
     private String selectedMaNV = "", LoaiDownData = "";
     private EditText edtTuMay, edtDenMay;
 
@@ -395,6 +395,8 @@ public class ActivityDownDataHanhThu extends AppCompatActivity {
                                         enChild.setGiaBan(jsonObjectChild.getString("GiaBan"));
                                         enChild.setThueGTGT(jsonObjectChild.getString("ThueGTGT"));
                                         enChild.setPhiBVMT(jsonObjectChild.getString("PhiBVMT"));
+                                        if (jsonObjectChild.has("PhiBVMT_Thue") == true)
+                                            enChild.setPhiBVMT_Thue(jsonObjectChild.getString("PhiBVMT_Thue"));
                                         enChild.setTongCong(jsonObjectChild.getString("TongCong"));
                                         if (jsonObjectChild.has("ChiTietTienNuoc") == true)
                                             enChild.setChiTietTienNuoc(jsonObjectChild.getString("ChiTietTienNuoc"));
