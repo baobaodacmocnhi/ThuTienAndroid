@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.21875" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_danh_sach_dong_nuoc.xml" value="0.35507246376811596" />
-        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_dong_nuoc.xml" value="0.17755825734549138" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_dong_nuoc.xml" value="0.25" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_dong_tien.xml" value="0.17755825734549138" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_down_data_hanh_thu.xml" value="0.21979166666666666" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_hoa_don_dien_tu_danh_sach.xml" value="0.33" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_hoa_don_dien_tu_thu_tien.xml" value="0.25" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/activity_main.xml" value="0.31979166666666664" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/custom_listview_parent.xml" value="0.14447463768115942" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_giao.xml" value="0.35507246376811596" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_thu_ho.xml" value="0.35507246376811596" />
         <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/layout/fragment_ton.xml" value="0.35507246376811596" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/menu/menu_search.xml" value="0.20260416666666667" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/menu/menu_search_luu.xml" value="0.20260416666666667" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/menu/menu_thutien.xml" value="0.1" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/menu/menubar_main.xml" value="0.20260416666666667" />
+        <entry key="..\:/Projects/ThuTienAndroid/app/src/main/res/menu/menubar_thutien.xml" value="0.20260416666666667" />
       </map>
     </option>
   </component>
