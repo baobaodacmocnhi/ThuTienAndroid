@@ -110,6 +110,9 @@
         <item>Thời Gian Tăng</item>
         <item>Thời Gian Giảm</item>
     </string-array>
-
+    <string-array name="dongnuoc_niemchi_mausac_array">
+        <item>Xanh</item>
+        <item>Vàng</item>
+    </string-array>
 
 </resources>

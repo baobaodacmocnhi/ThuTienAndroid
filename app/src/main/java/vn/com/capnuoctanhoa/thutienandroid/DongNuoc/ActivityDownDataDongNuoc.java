@@ -74,10 +74,12 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     spnName_To = new ArrayList<>();
                     for (int i = 0; i < CLocal.jsonTo.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
-                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                            spnID_To.add(jsonObject.getString("MaTo"));
-                            spnName_To.add(jsonObject.getString("TenTo"));
-                        }
+//                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+//                            spnID_To.add(jsonObject.getString("MaTo"));
+//                            spnName_To.add(jsonObject.getString("TenTo"));
+//                        }
+                        spnID_To.add(jsonObject.getString("MaTo"));
+                        spnName_To.add(jsonObject.getString("TenTo"));
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_To);
@@ -402,6 +404,7 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             enParent.setNgayDN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoDN(jsonObject.getString("ChiSoDN").replace("null", ""));
                         enParent.setNiemChi(jsonObject.getString("NiemChi").replace("null", ""));
+                        enParent.setMauSac(jsonObject.getString("MauSac").replace("null", ""));
                         enParent.setKhoaKhac_GhiChu(jsonObject.getString("KhoaKhac_GhiChu").replace("null", ""));
                         enParent.setHieu(jsonObject.getString("Hieu"));
                         enParent.setCo(jsonObject.getString("Co"));
@@ -414,9 +417,12 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                             enParent.setNgayDN1(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayDN1").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoDN1(jsonObject.getString("ChiSoDN1").replace("null", ""));
                         enParent.setNiemChi1(jsonObject.getString("NiemChi1").replace("null", ""));
+                        enParent.setMauSac1(jsonObject.getString("MauSac1").replace("null", ""));
                         if (jsonObject.getString("NgayMN").replace("null", "").equals("") == false)
                             enParent.setNgayMN(CLocal.convertTimestampToDate(Long.parseLong(jsonObject.getString("NgayMN").replace("null", "").replace("/Date(", "").replace(")/", ""))));
                         enParent.setChiSoMN(jsonObject.getString("ChiSoMN").replace("null", ""));
+                        enParent.setNiemChiMN(jsonObject.getString("NiemChiMN").replace("null", ""));
+                        enParent.setMauSacMN(jsonObject.getString("MauSacMN").replace("null", ""));
                         if (jsonObject.has("MaKQDN") == true)
                             enParent.setMaKQDN(jsonObject.getString("MaKQDN"));
                         if (jsonObject.has("DiaChiDHN") == true)

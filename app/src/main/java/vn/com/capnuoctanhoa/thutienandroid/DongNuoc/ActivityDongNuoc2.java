@@ -11,12 +11,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,9 +47,9 @@ import vn.com.capnuoctanhoa.thutienandroid.R;
 
 public class ActivityDongNuoc2 extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
-//    private ImageView imgThumb;
+    //    private ImageView imgThumb;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
-    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
+    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri, spnMauSac;
     private Button btnDongNuoc, btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
@@ -82,7 +86,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
         spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
         spnViTri = (Spinner) findViewById(R.id.spnViTri);
-
+        spnMauSac = (Spinner) findViewById(R.id.spnMauSac);
 //        imgThumb = (ImageView) findViewById(R.id.imgThumb);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         lstCapture = new ArrayList<Bitmap>();
@@ -166,14 +170,14 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
-                            if(CLocal.serviceThermalPrinter !=null) {
-                                try {
-                                    CLocal.serviceThermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                if (CLocal.listDongNuocView.get(STT).isDongNuoc2() == true)
+                    if (CLocal.serviceThermalPrinter != null) {
+                        try {
+                            CLocal.serviceThermalPrinter.printDongNuoc(CLocal.listDongNuocView.get(STT));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
         });
 
@@ -308,6 +312,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                     edtNgayDN.setText(en.getNgayDN());
                     edtChiSoDN.setText(en.getChiSoDN());
                     edtNiemChi.setText(en.getNiemChi());
+                    setSpinnerSelection(spnMauSac, en.getMauSac());
                 } else {
                     SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                     edtNgayDN.setText(currentDate.format(new Date()));
@@ -387,30 +392,31 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
                         return "ĐÃ NHẬP RỒI";
 
                     String imgString = "";
-                    if (lstCapture.size() >0) {
+                    if (lstCapture.size() > 0) {
 //                        Bitmap reizeImage = Bitmap.createScaledBitmap(((BitmapDrawable) imgThumb.getDrawable()).getBitmap(), 1024, 1024, false);
-                        for (int i=0;i<lstCapture.size();i++)
-                        {
+                        for (int i = 0; i < lstCapture.size(); i++) {
                             Bitmap reizeImage = Bitmap.createScaledBitmap(lstCapture.get(i), 1024, 1024, false);
                             if (imgString.equals("") == true)
-                                imgString +=  CLocal.convertBitmapToString(reizeImage);
+                                imgString += CLocal.convertBitmapToString(reizeImage);
                             else
-                                imgString += ";" +  CLocal.convertBitmapToString(reizeImage);
+                                imgString += ";" + CLocal.convertBitmapToString(reizeImage);
                         }
 //                        Bitmap reizeImage = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
 //                        imgString = CLocal.convertBitmapToString(reizeImage);
                     }
                     String result = ws.themDongNuoc2(edtMaDN.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
-                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(), CLocal.MaNV);
+                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), spnMauSac.getSelectedItem().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
                         CLocal.listDongNuocView.get(STT).setNgayDN1(CLocal.listDongNuocView.get(STT).getNgayDN());
                         CLocal.listDongNuocView.get(STT).setChiSoDN1(CLocal.listDongNuocView.get(STT).getChiSoDN());
                         CLocal.listDongNuocView.get(STT).setNiemChi1(CLocal.listDongNuocView.get(STT).getNiemChi());
+                        CLocal.listDongNuocView.get(STT).setMauSac1(CLocal.listDongNuocView.get(STT).getMauSac());
                         //
                         CLocal.listDongNuocView.get(STT).setDongNuoc2(true);
                         CLocal.listDongNuocView.get(STT).setNgayDN(edtNgayDN.getText().toString());
                         CLocal.listDongNuocView.get(STT).setChiSoDN(edtChiSoDN.getText().toString());
                         CLocal.listDongNuocView.get(STT).setNiemChi(edtNiemChi.getText().toString());
+                        CLocal.listDongNuocView.get(STT).setMauSac(spnMauSac.getSelectedItem().toString());
                         return "THÀNH CÔNG";
                     } else
                         return "THẤT BẠI";
@@ -429,7 +435,7 @@ public class ActivityDongNuoc2 extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            CLocal.showPopupMessage(ActivityDongNuoc2.this, s,"center");
+            CLocal.showPopupMessage(ActivityDongNuoc2.this, s, "center");
         }
 
     }

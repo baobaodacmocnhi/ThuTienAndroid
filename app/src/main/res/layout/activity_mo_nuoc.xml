@@ -62,6 +62,51 @@
                 app:layout_constraintTop_toTopOf="@+id/edtNgayMN" />
 
             <TextView
+                android:id="@+id/textView75"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Niêm Chì"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
+
+            <EditText
+                android:id="@+id/edtNiemChi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:ems="5"
+                android:inputType="number"
+
+                app:layout_constraintStart_toEndOf="@+id/textView75"
+                app:layout_constraintTop_toBottomOf="@+id/edtNgayMN" />
+
+            <TextView
+                android:id="@+id/textView76"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Màu Sắc"
+                app:layout_constraintStart_toEndOf="@+id/edtNiemChi"
+                app:layout_constraintTop_toTopOf="@+id/spnMauSac" />
+
+            <Spinner
+                android:id="@+id/spnMauSac"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:entries="@array/dongnuoc_niemchi_mausac_array"
+                app:layout_constraintStart_toEndOf="@+id/textView76
+"
+                app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
+
+            <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -305,7 +350,7 @@
                 android:textSize="14sp"
                 android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/spnChiKhoaGoc"
-                app:layout_constraintTop_toBottomOf="@+id/edtNgayMN" />
+                app:layout_constraintTop_toBottomOf="@+id/edtNiemChi" />
 
             <TextView
                 android:id="@+id/textView12"

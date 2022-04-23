@@ -30,6 +30,7 @@ public class CEntityParent {
     private boolean ButChi;
     private boolean KhoaTu;
     private String NiemChi;
+    private String MauSac;
     private boolean KhoaKhac;
     private String KhoaKhac_GhiChu;
     private String Hieu;
@@ -42,8 +43,11 @@ public class CEntityParent {
     private String NgayDN1;
     private String ChiSoDN1;
     private String NiemChi1;
+    private String MauSac1;
     private String NgayMN;
     private String ChiSoMN;
+    private String NiemChiMN;
+    private String MauSacMN;
     private boolean Sync;
     private String XuLy;
     private ArrayList<CEntityChild> lstHoaDon;
@@ -54,6 +58,38 @@ public class CEntityParent {
     private String CuaHangThuHo1;
     private String CuaHangThuHo2;
     private String CreateDate;
+
+    public String getMauSac() {
+        return MauSac;
+    }
+
+    public void setMauSac(String mauSac) {
+        MauSac = mauSac;
+    }
+
+    public String getMauSac1() {
+        return MauSac1;
+    }
+
+    public void setMauSac1(String mauSac1) {
+        MauSac1 = mauSac1;
+    }
+
+    public String getNiemChiMN() {
+        return NiemChiMN;
+    }
+
+    public void setNiemChiMN(String niemChiMN) {
+        NiemChiMN = niemChiMN;
+    }
+
+    public String getMauSacMN() {
+        return MauSacMN;
+    }
+
+    public void setMauSacMN(String mauSacMN) {
+        MauSacMN = mauSacMN;
+    }
 
     public CEntityParent() {
         ID = "";
@@ -83,6 +119,7 @@ public class CEntityParent {
         ButChi = false;
         KhoaTu = false;
         NiemChi = "";
+        MauSac = "";
         KhoaKhac = false;
         KhoaKhac_GhiChu = "";
         Hieu = "";
@@ -95,17 +132,20 @@ public class CEntityParent {
         NgayDN1 = "";
         ChiSoDN1 = "";
         NiemChi1 = "";
+        MauSac1 = "";
         NgayMN = "";
         ChiSoMN = "";
+        NiemChiMN = "";
+        MauSacMN = "";
         Sync = false;
         XuLy = "";
         lstHoaDon = new ArrayList<CEntityChild>();
         DCHD = false;
         XoaDCHD = false;
         DongA = false;
-        CuaHangThuHo1="";
-        CuaHangThuHo2="";
-        CreateDate="";
+        CuaHangThuHo1 = "";
+        CuaHangThuHo2 = "";
+        CreateDate = "";
     }
 
     public String getID() {
@@ -533,6 +573,7 @@ public class CEntityParent {
         ButChi = entityParent.isButChi();
         KhoaTu = entityParent.isKhoaTu();
         NiemChi = entityParent.getNiemChi();
+        MauSac = entityParent.getMauSac();
         KhoaKhac = entityParent.isKhoaKhac();
         KhoaKhac_GhiChu = entityParent.getKhoaKhac_GhiChu();
         Hieu = entityParent.getHieu();
@@ -545,19 +586,20 @@ public class CEntityParent {
         NgayDN1 = entityParent.getNgayDN1();
         ChiSoDN1 = entityParent.getChiSoDN1();
         NiemChi1 = entityParent.getNiemChi1();
+        MauSac1 = entityParent.getMauSac1();
         NgayMN = entityParent.getNgayMN();
         ChiSoMN = entityParent.getChiSoMN();
+        NiemChiMN = entityParent.getNiemChiMN();
         Sync = entityParent.isSync();
         XuLy = entityParent.getXuLy();
         lstHoaDon = entityParent.getLstHoaDon();
         DCHD = entityParent.isDCHD();
         XoaDCHD = entityParent.isXoaDCHD();
         DongA = entityParent.isDongA();
-        CuaHangThuHo1=entityParent.getCuaHangThuHo1();
-        CuaHangThuHo2=entityParent.getCuaHangThuHo2();
-        CreateDate=entityParent.getCreateDate();
+        CuaHangThuHo1 = entityParent.getCuaHangThuHo1();
+        CuaHangThuHo2 = entityParent.getCuaHangThuHo2();
+        CreateDate = entityParent.getCreateDate();
     }
-
 
 
 }

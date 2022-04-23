@@ -50,7 +50,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
     private ImageButton ibtnChupHinh;
     private ImageView imgviewUpdateDiaChiDHN;
     private EditText edtMaDN, edtDanhBo, edtMLT, edtHoTen, edtDiaChi, edtDiaChiDHN, edtNgayDN, edtChiSoDN, edtNiemChi, edtHieu, edtCo, edtSoThan, edtLyDo, edtKhoaKhac_GhiChu;
-    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri;
+    private Spinner spnChiMatSo, spnChiKhoaGoc, spnViTri, spnMauSac;
     private Button btnDongNuoc, btnIn;
     private CheckBox chkButChi, chkKhoaTu, chkKhoaKhac;
     private String imgPath;
@@ -88,7 +88,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
         spnChiMatSo = (Spinner) findViewById(R.id.spnChiMatSo);
         spnChiKhoaGoc = (Spinner) findViewById(R.id.spnChiKhoaGoc);
         spnViTri = (Spinner) findViewById(R.id.spnViTri);
-
+        spnMauSac = (Spinner) findViewById(R.id.spnMauSac);
 //        imgThumb = (ImageView) findViewById(R.id.imgThumb);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         lstCapture = new ArrayList<Bitmap>();
@@ -368,6 +368,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         edtNgayDN.setText(en.getNgayDN());
                         edtChiSoDN.setText(en.getChiSoDN());
                         edtNiemChi.setText(en.getNiemChi());
+                        setSpinnerSelection(spnMauSac, en.getMauSac());
                     } else {
                         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         edtNgayDN.setText(currentDate.format(new Date()));
@@ -376,6 +377,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     edtNgayDN.setText(en.getNgayDN1());
                     edtChiSoDN.setText(en.getChiSoDN1());
                     edtNiemChi.setText(en.getNiemChi1());
+                    setSpinnerSelection(spnMauSac, en.getMauSac1());
                 }
             }
         } catch (Exception ex) {
@@ -464,7 +466,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                     }
 
                     String result = ws.themDongNuoc(edtMaDN.getText().toString(), edtDanhBo.getText().toString(), edtMLT.getText().toString(), edtHoTen.getText().toString(), edtDiaChi.getText().toString(), imgString, edtNgayDN.getText().toString(), edtChiSoDN.getText().toString(),
-                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(),
+                            String.valueOf(chkButChi.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtNiemChi.getText().toString(), spnMauSac.getSelectedItem().toString(), String.valueOf(chkKhoaKhac.isChecked()), edtKhoaKhac_GhiChu.getText().toString(),
                             edtHieu.getText().toString(), edtCo.getText().toString(), edtSoThan.getText().toString(), spnChiMatSo.getSelectedItem().toString(), spnChiKhoaGoc.getSelectedItem().toString(), spnViTri.getSelectedItem().toString(), edtLyDo.getText().toString(), CLocal.MaNV);
                     if (Boolean.parseBoolean(result) == true) {
                         CLocal.listDongNuocView.get(STT).setDongNuoc(true);
@@ -473,6 +475,7 @@ public class ActivityDongNuoc extends AppCompatActivity {
                         CLocal.listDongNuocView.get(STT).setButChi(chkButChi.isChecked());
                         CLocal.listDongNuocView.get(STT).setKhoaTu(chkKhoaTu.isChecked());
                         CLocal.listDongNuocView.get(STT).setNiemChi(edtNiemChi.getText().toString());
+                        CLocal.listDongNuocView.get(STT).setMauSac(spnMauSac.getSelectedItem().toString());
                         CLocal.listDongNuocView.get(STT).setKhoaKhac(chkKhoaKhac.isChecked());
                         CLocal.listDongNuocView.get(STT).setKhoaKhac_GhiChu(edtKhoaKhac_GhiChu.getText().toString());
                         CLocal.listDongNuocView.get(STT).setChiMatSo(spnChiMatSo.getSelectedItem().toString());

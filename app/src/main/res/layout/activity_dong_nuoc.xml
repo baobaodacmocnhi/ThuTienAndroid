@@ -33,8 +33,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDongNuoc">
+        app:layout_constraintTop_toBottomOf="@+id/btnDongNuoc"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -84,7 +86,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="Bứt Chì"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtNgayDN" />
+                app:layout_constraintTop_toBottomOf="@+id/edtNiemChi" />
 
             <CheckBox
                 android:id="@+id/chkKhoaTu"
@@ -103,7 +105,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:text="Khóa Khác"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/chkKhoaTu"
                 app:layout_constraintTop_toTopOf="@+id/edtKhoaKhac_GhiChu" />
 
             <EditText
@@ -117,6 +119,27 @@
 
                 app:layout_constraintStart_toEndOf="@+id/textView37"
                 app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Màu Sắc"
+                app:layout_constraintStart_toEndOf="@+id/edtNiemChi"
+                app:layout_constraintTop_toTopOf="@+id/spnMauSac" />
+
+            <Spinner
+                android:id="@+id/spnMauSac"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:entries="@array/dongnuoc_niemchi_mausac_array"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
 
             <EditText
                 android:id="@+id/edtKhoaKhac_GhiChu"
@@ -141,7 +164,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Niêm Chì"
-                app:layout_constraintStart_toEndOf="@+id/chkKhoaTu"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtNiemChi" />
 
             <Spinner
