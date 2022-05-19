@@ -123,13 +123,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
-//                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-//                    @Override
-//                    public void onSuccess(InstanceIdResult instanceIdResult) {
-//                        String deviceToken = instanceIdResult.getToken();
-//                        CLocal.showPopupMessage1(MainActivity.this,deviceToken);
-//                    }
-//                });
             }
         });
 
@@ -238,19 +231,12 @@ public class MainActivity extends AppCompatActivity {
             });
 
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
-//                CLocal.jsonHanhThu = new JSONArray(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""));
-//                if (CLocal.jsonHanhThu.length() > 1000)
-//                    CLocal.jsonHanhThu = null;
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
                 if (CLocal.listHanhThu.size() > 2000)
                     CLocal.listHanhThu = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
-//                CLocal.jsonDongNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""));
-//                CLocal.jsonDongNuocChild = new JSONArray(CLocal.sharedPreferencesre.getString("jsonDongNuocChild", ""));
-//                if(CLocal.jsonDongNuoc.length()>1000)
-//                    CLocal.jsonDongNuoc=null;
                 CLocal.listDongNuoc = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
                 if (CLocal.listDongNuoc.size() > 2000)

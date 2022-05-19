@@ -18,7 +18,7 @@ private WebView webView;
         webView = (WebView) findViewById(R.id.webView);
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://113.161.88.180:8585/mHome.aspx");
+        webView.loadUrl("https://crm.cskhtanhoa.com.vn:8443/index.php/user");
     }
 
     @Override
