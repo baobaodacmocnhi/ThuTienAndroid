@@ -163,7 +163,7 @@ public class CLocal {
     public static void initialPhiMoNuoc() {
         //add cứng phí mở nước
         phiMoNuoc = new HashMap<>();
-        phiMoNuoc.put("259.000", Arrays.asList("15", "25"));
+        phiMoNuoc.put("235.000", Arrays.asList("15", "25"));
         phiMoNuoc.put("1.524.000", Arrays.asList("40", "50", "80", "100"));
     }
 

@@ -333,6 +333,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+            if (CLocal.checkBluetoothAvaible() == false) {
+                CLocal.openBluetoothSettings(MainActivity.this);
+            } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+                Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
+                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                startService(intent2);
+                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+            }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu, this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menubar_main, menu);
