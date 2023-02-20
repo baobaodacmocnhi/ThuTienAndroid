@@ -464,8 +464,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 Date dt2 = dateCapNhat;
                                 Calendar c2 = Calendar.getInstance();
                                 c2.setTime(dt2);
-//                        c2.add(Calendar.DATE, 3);
-                                c2 = CLocal.GetToDate(c2, 25);
+                                c2 = CLocal.GetToDate(c2, 2);
                                 dt2 = c2.getTime();
                                 result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
                                 results = result.split(";");
@@ -500,8 +499,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 Date dt2 = dateCapNhat;
                                 Calendar c2 = Calendar.getInstance();
                                 c2.setTime(dt2);
-//                        c2.add(Calendar.DATE, 3);
-                                c2 = CLocal.GetToDate(c2, 25);
+                                c2 = CLocal.GetToDate(c2, 2);
                                 dt2 = c2.getTime();
                                 result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
                                 results = result.split(";");
