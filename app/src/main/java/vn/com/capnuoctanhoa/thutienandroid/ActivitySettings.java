@@ -70,10 +70,10 @@ public class ActivitySettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
-//               setClipboard(getApplicationContext(),edtIDMobile.getText().toString());
-//               CLocal.showToastMessage(getApplicationContext(),"Copied");
-                CLocation cLocation = new CLocation(ActivitySettings.this);
-                CLocal.showPopupMessage(ActivitySettings.this, cLocation.getCurrentLocation(), "center");
+                setClipboard(getApplicationContext(), edtIDMobile.getText().toString());
+                CLocal.showToastMessage(getApplicationContext(), "Copied");
+//                CLocation cLocation = new CLocation(ActivitySettings.this);
+//                CLocal.showPopupMessage(ActivitySettings.this, cLocation.getCurrentLocation(), "center");
             }
         });
 
