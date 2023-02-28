@@ -466,7 +466,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 c2.setTime(dt2);
                                 c2 = CLocal.GetToDate(c2, 2);
                                 dt2 = c2.getTime();
-                                result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
+                                result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listHanhThuView.get(STT).getMaKQDN(), "false", cLocation.getCurrentLocation());
                                 results = result.split(";");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     for (int j = 0; j < CLocal.listHanhThuView.get(STT).getLstHoaDon().size(); j++)
@@ -501,7 +501,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                 c2.setTime(dt2);
                                 c2 = CLocal.GetToDate(c2, 2);
                                 dt2 = c2.getTime();
-                                result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false", cLocation.getLocation());
+                                result = ws.XuLy_HoaDonDienTu("TBDongNuoc", CLocal.MaNV, MaHDs, CLocal.DateFormat.format(dateCapNhat), CLocal.DateFormat.format(dt2), CLocal.listDongNuocView.get(STT).getMaKQDN(), "false", cLocation.getCurrentLocation());
                                 results = result.split(";");
                                 if (Boolean.parseBoolean(results[0]) == true) {
                                     for (int j = 0; j < CLocal.listDongNuocView.get(STT).getLstHoaDon().size(); j++)

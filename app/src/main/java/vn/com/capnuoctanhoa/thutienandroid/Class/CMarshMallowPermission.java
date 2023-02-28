@@ -19,6 +19,7 @@ public class CMarshMallowPermission {
     public static final int APP_PERMISSIONS_REQUEST_CODE = 0;
     private String[] appPermissions = {Manifest.permission.CAMERA
             , Manifest.permission.ACCESS_FINE_LOCATION
+            , Manifest.permission.ACCESS_COARSE_LOCATION
             , Manifest.permission.READ_EXTERNAL_STORAGE
             , Manifest.permission.WRITE_EXTERNAL_STORAGE
             , Manifest.permission.READ_PHONE_STATE};
@@ -132,12 +133,11 @@ public class CMarshMallowPermission {
 
     public boolean checkPermissionForLocation() {
         if (checkVersionMarshmallow()) {
-            int result = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION);
-            if (result == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 return true;
-            } else {
+            } else
                 return false;
-            }
         } else
             return false;
     }

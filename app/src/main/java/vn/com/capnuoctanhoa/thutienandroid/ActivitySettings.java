@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 
 import vn.com.capnuoctanhoa.thutienandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
 
 public class ActivitySettings extends AppCompatActivity {
     private EditText edtMayInDaChon, edtIDMobile;
@@ -69,8 +70,10 @@ public class ActivitySettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
-               setClipboard(getApplicationContext(),edtIDMobile.getText().toString());
-               CLocal.showToastMessage(getApplicationContext(),"Copied");
+//               setClipboard(getApplicationContext(),edtIDMobile.getText().toString());
+//               CLocal.showToastMessage(getApplicationContext(),"Copied");
+                CLocation cLocation = new CLocation(ActivitySettings.this);
+                CLocal.showPopupMessage(ActivitySettings.this, cLocation.getCurrentLocation(), "center");
             }
         });
 
@@ -176,7 +179,7 @@ public class ActivitySettings extends AppCompatActivity {
     }
 
     private void setClipboard(Context context, String text) {
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
         } else {

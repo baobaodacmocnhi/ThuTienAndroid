@@ -16,64 +16,73 @@ public class CLocation implements LocationListener {
     private CMarshMallowPermission cMarshMallowPermission;
     private boolean isGPSEnabled = false;
     private boolean isNetworkEnabled = false;
-    private Location location;
-
-
+    private Location currentLocation, locationByGps, locationByNetwork;
     private LocationManager locationManager;
-
     private double longitude;
     private double latitude;
-    private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 0;
+    private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 1;
     private static final long MIN_DISTANCE_FOR_UPDATE = 5;
 
-
     public CLocation(Activity activity) {
-        mActivity = activity;
-        cMarshMallowPermission = new CMarshMallowPermission(mActivity);
-        getLocation();
-    }
-
-    public String getLocation() {
         try {
-            if (cMarshMallowPermission.checkPermissionForLocation() == false)
-                cMarshMallowPermission.requestPermissionForLocation();
+            mActivity = activity;
+            cMarshMallowPermission = new CMarshMallowPermission(mActivity);
+//            if (cMarshMallowPermission.checkPermissionForLocation() == false)
+//                cMarshMallowPermission.requestPermissionForLocation();
             if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 cMarshMallowPermission.requestPermissionForLocation();
             }
             locationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!isGPSEnabled) {
-                CLocal.openGPSSettings(mActivity);
-            } else {
-                if (isGPSEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (location != null)
-                            return location.getLatitude() + "," + location.getLongitude();
-                        else
-                            return "";
-                    }
-                }
-//                else if (isNetworkEnabled) {
-//                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
-//                    if (locationManager != null) {
-//                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                    }
-//                }
+            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (isGPSEnabled) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, locationListenerGps);
+            }
+            if (isNetworkEnabled) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, locationListenerNetwork);
             }
         } catch (Exception ex) {
+            CLocal.showToastMessage(mActivity, ex.getMessage());
         }
-        return "";
+    }
+
+    public String getCurrentLocation() {
+        try {
+            cMarshMallowPermission = new CMarshMallowPermission(mActivity);
+//            if (cMarshMallowPermission.checkPermissionForLocation() == false)
+//                cMarshMallowPermission.requestPermissionForLocation();
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                cMarshMallowPermission.requestPermissionForLocation();
+            }
+            locationByGps = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            locationByNetwork = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (locationByGps != null && locationByNetwork != null) {
+                if (locationByGps.getAccuracy() > locationByNetwork.getAccuracy()) {
+                    currentLocation = locationByGps;
+                } else {
+                    currentLocation = locationByNetwork;
+                }
+            } else {
+                if(locationByGps != null)
+                    currentLocation = locationByGps;
+                else
+                if(locationByNetwork != null)
+                    currentLocation = locationByNetwork;
+            }
+            if (currentLocation != null) {
+                return currentLocation.getLatitude() + "," + currentLocation.getLongitude();
+            } else
+                return "";
+        } catch (Exception ex) {
+            return "";
+        }
     }
 
     LocationListener locationListenerGps = new LocationListener() {
         public void onLocationChanged(Location location) {
-            setLocation(location);
-            locationManager.removeUpdates(this);
-            locationManager.removeUpdates(locationListenerNetwork);
+            locationByGps = location;
+//            locationManager.removeUpdates(this);
+//            locationManager.removeUpdates(locationListenerNetwork);
         }
 
         public void onProviderDisabled(String provider) {
@@ -88,9 +97,9 @@ public class CLocation implements LocationListener {
 
     LocationListener locationListenerNetwork = new LocationListener() {
         public void onLocationChanged(Location location) {
-            setLocation(location);
-            locationManager.removeUpdates(this);
-            locationManager.removeUpdates(locationListenerGps);
+            locationByNetwork = location;
+//            locationManager.removeUpdates(this);
+//            locationManager.removeUpdates(locationListenerGps);
         }
 
         public void onProviderDisabled(String provider) {
@@ -103,20 +112,20 @@ public class CLocation implements LocationListener {
         }
     };
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     public double getLatitude() {
-        if (this.location != null) {
-            latitude = this.location.getLatitude();
+        if (this.currentLocation != null) {
+            latitude = this.currentLocation.getLatitude();
         }
         return latitude;
     }
 
     public double getLongitude() {
-        if (this.location != null) {
-            longitude = this.location.getLongitude();
+        if (this.currentLocation != null) {
+            longitude = this.currentLocation.getLongitude();
         }
         return longitude;
     }

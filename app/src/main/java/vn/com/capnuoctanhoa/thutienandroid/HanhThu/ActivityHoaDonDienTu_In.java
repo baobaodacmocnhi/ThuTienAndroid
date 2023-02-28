@@ -128,7 +128,7 @@ public class ActivityHoaDonDienTu_In extends AppCompatActivity {
                                                 && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isTamThu() == false
                                                 && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false
                                                 && CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getInPhieuBao_Ngay().equals("") == true) {
-                                            result = ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), String.valueOf(XoaDCHD), cLocation.getLocation());
+                                            result = ws.XuLy_HoaDonDienTu("PhieuBao", CLocal.MaNV, CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).getMaHD(), currentDate.format(dateCapNhat), "", CLocal.listHanhThuView.get(i).getMaKQDN(), String.valueOf(XoaDCHD), cLocation.getCurrentLocation());
                                             results = result.split(",");
                                             if (Boolean.parseBoolean(results[0]) == true) {
                                                 CLocal.listHanhThuView.get(i).getLstHoaDon().get(j).setInPhieuBao_Ngay(currentDate.format(dateCapNhat));
