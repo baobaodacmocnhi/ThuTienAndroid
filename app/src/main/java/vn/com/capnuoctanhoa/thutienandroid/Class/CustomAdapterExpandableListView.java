@@ -34,13 +34,14 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
     private ArrayList<CViewParent> mOriginalValues;
     private ArrayList<CViewParent> mDisplayedValues;
     private String action;
-    private CLocation cLocation = new CLocation(activity);
+    private CLocation cLocation;
 
 
     public CustomAdapterExpandableListView(Activity activity, ArrayList<CViewParent> mDisplayedValues, String action) {
         this.activity = activity;
         this.mDisplayedValues = mDisplayedValues;
         this.action = action;
+        this.cLocation = new CLocation(activity);
     }
 
     @Override
