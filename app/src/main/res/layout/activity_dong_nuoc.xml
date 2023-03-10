@@ -115,7 +115,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:ems="5"
-                android:inputType="number"
+                android:inputType="text"
 
                 app:layout_constraintStart_toEndOf="@+id/textView37"
                 app:layout_constraintTop_toBottomOf="@+id/edtChiSoDN" />
@@ -472,7 +472,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:ems="6"
-                android:inputType="textPersonName"
+                android:inputType="text"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
