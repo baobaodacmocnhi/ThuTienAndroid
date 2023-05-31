@@ -457,7 +457,7 @@
             android:layout_marginRight="8dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            android:text="2"
+            android:text="0"
             android:textColor="@color/colorDanhBo"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnPhieuBao2"
