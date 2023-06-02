@@ -23,8 +23,8 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
 
 public class ActivitySettings extends AppCompatActivity {
-    private EditText edtMayInDaChon, edtIDMobile;
-    private Button btnGetThermal, btnGetIDMobile;
+    private EditText edtMayInDaChon, edtIDMobile,edtSoTien;
+    private Button btnGetThermal, btnGetIDMobile,btnSave;
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
@@ -40,8 +40,10 @@ public class ActivitySettings extends AppCompatActivity {
 
         edtMayInDaChon = (EditText) findViewById(R.id.edtMayInDaChon);
         edtIDMobile = (EditText) findViewById(R.id.edtIDMobile);
+        edtSoTien = (EditText) findViewById(R.id.edtSoTien);
         btnGetThermal = (Button) findViewById(R.id.btnGetThermal);
         btnGetIDMobile = (Button) findViewById(R.id.btnGetIDMobile);
+        btnSave = (Button) findViewById(R.id.btnSave);
         lstView = (ListView) findViewById(R.id.lstView);
         radTrucTiep = (RadioButton) findViewById(R.id.radTrucTiep);
         radGianTiep = (RadioButton) findViewById(R.id.radGianTiep);
@@ -74,6 +76,15 @@ public class ActivitySettings extends AppCompatActivity {
                 CLocal.showToastMessage(getApplicationContext(), "Copied");
 //                CLocation cLocation = new CLocation(ActivitySettings.this);
 //                CLocal.showPopupMessage(ActivitySettings.this, cLocation.getCurrentLocation(), "center");
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                editor.putInt("SoTien", Integer.parseInt(edtSoTien.getText().toString()));
+                editor.commit();
             }
         });
 

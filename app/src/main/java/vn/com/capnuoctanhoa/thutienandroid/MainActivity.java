@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
             CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
-
+            CLocal.SoTien = CLocal.sharedPreferencesre.getInt("SoTien", 0);
             btnAdmin.setVisibility(View.GONE);
             imgbtnQuanLy.setVisibility(View.GONE);
             txtQuanLy.setVisibility(View.GONE);

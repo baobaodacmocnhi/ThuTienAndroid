@@ -73,7 +73,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
 
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
-        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+//        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ExpandableListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
@@ -409,13 +409,27 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                         }
                     }
                     break;
-                case "HĐ Giấy":
+                case "HĐ Cơ Quan":
                     if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
                         for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
                             boolean flag = false;
                             for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
-                                String[] Kys = CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getKy().split("/");
-                                if (Integer.parseInt(Kys[1]) < 2020 || (Integer.parseInt(Kys[1]) == 2020 && Integer.parseInt(Kys[0]) <= 6))
+                                if (Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getGiaBieu()) > 20)
+                                    flag = true;
+                            }
+                            if (flag == true) {
+                                CLocal.listHanhThuView.add(CLocal.listHanhThu.get(i));
+                                addViewParent(CLocal.listHanhThu.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "HĐ Tiền Lớn":
+                    if (CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+                        for (int i = 0; i < CLocal.listHanhThu.size(); i++) {
+                            boolean flag = false;
+                            for (int j = 0; j < CLocal.listHanhThu.get(i).getLstHoaDon().size(); j++) {
+                                if (Integer.parseInt(CLocal.listHanhThu.get(i).getLstHoaDon().get(j).getTongCong()) >= CLocal.SoTien)
                                     flag = true;
                             }
                             if (flag == true) {

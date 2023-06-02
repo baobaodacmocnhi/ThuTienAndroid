@@ -101,7 +101,7 @@ public class CLocal {
     public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
     public static Map<String, List<String>> phiMoNuoc;
     public static ServiceThermalPrinter serviceThermalPrinter;
-    public static int indexPosition = 0;
+    public static int indexPosition = 0, SoTien = 0;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
