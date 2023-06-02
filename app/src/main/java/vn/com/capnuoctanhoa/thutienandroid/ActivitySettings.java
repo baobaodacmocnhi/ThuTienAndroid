@@ -23,8 +23,8 @@ import vn.com.capnuoctanhoa.thutienandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CLocation;
 
 public class ActivitySettings extends AppCompatActivity {
-    private EditText edtMayInDaChon, edtIDMobile,edtSoTien;
-    private Button btnGetThermal, btnGetIDMobile,btnSave;
+    private EditText edtMayInDaChon, edtIDMobile, edtSoTien;
+    private Button btnGetThermal, btnGetIDMobile, btnSave;
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
@@ -54,7 +54,7 @@ public class ActivitySettings extends AppCompatActivity {
         edtMayInDaChon.setText(CLocal.ThermalPrinter);
 
         edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
-
+        edtSoTien.setText(String.valueOf(CLocal.SoTien));
         btnGetThermal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
