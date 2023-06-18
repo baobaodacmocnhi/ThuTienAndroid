@@ -500,7 +500,7 @@ public class ThermalPrinter {
                     }
                     printEZ("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1);
                     String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
-                    printEZ("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1);
+                    printEZ("Quý khách vui lòng thanh toán tiền nước từ ngày " + str[0], 1, toadoY, 0, 1, 1);
                     printEZ("Trân trọng kính chào.", 1, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1);
@@ -544,7 +544,7 @@ public class ThermalPrinter {
                     }
                     stringBuilder.append(printEZAppend("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()), 1, toadoY, 0, 1, 1));
                     String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
-                    stringBuilder.append(printEZAppend("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0], 1, toadoY, 0, 1, 1));
+                    stringBuilder.append(printEZAppend("Quý khách vui lòng thanh toán tiền nước từ ngày " + str[0], 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printEZAppend("Trân trọng kính chào.", 1, toadoY, 0, 1, 1));
                     stringBuilder.append(printDotFeed_EZAppend());
                     stringBuilder.append(printEZAppend("Nhân viên: " + CLocal.HoTen, 1, toadoY, 0, 1, 1));
@@ -1390,7 +1390,7 @@ public class ThermalPrinter {
             byteStream.write(setTextStyle(false, 1, 1));
             byteStream.write(("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()) + "\n").getBytes());
             String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
-            byteStream.write(("Quý khách vui lòng thanh toán tiền nước trong 07 ngày kể từ ngày " + str[0] + "\n").getBytes());
+            byteStream.write(("Quý khách vui lòng thanh toán tiền nước từ ngày " + str[0] + "\n").getBytes());
             byteStream.write("Trân trọng kính chào.\n".getBytes());
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());

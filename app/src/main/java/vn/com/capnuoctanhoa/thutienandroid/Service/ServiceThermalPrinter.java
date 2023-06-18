@@ -585,7 +585,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("In hóa đơn https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
-                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+//                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
                 }
@@ -730,7 +730,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
-                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+//                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
                 }
@@ -798,7 +798,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
-                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+//                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
                 }
@@ -911,7 +911,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
-                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+//                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
                 }
@@ -1029,7 +1029,7 @@ public class ServiceThermalPrinter extends Service {
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
                     printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
-                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
+//                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
                 }
@@ -1685,8 +1685,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write("In hóa đơn https://www.cskhtanhoa.com.vn/hddt\n".getBytes());
                     byteStream.write(setTextAlign(1));
                     byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
                     outputStream.write(byteStream.toByteArray());
                     outputStream.flush();
@@ -1803,8 +1803,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write("https://www.cskhtanhoa.com.vn\n".getBytes());
                     byteStream.write(setTextAlign(1));
                     byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
                     outputStream.write(byteStream.toByteArray());
                     outputStream.flush();
@@ -1903,8 +1903,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write("https://www.cskhtanhoa.com.vn\n".getBytes());
                     byteStream.write(setTextAlign(1));
                     byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
                     outputStream.write(byteStream.toByteArray());
                     outputStream.flush();
@@ -2004,8 +2004,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
                     byteStream.write(setTextAlign(1));
                     byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
                     outputStream.write(byteStream.toByteArray());
                     outputStream.flush();
@@ -2109,8 +2109,8 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
                     byteStream.write(setTextAlign(1));
                     byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
-                    byteStream.write(setTextStyle(true, 1, 1));
-                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
                     outputStream.write(byteStream.toByteArray());
                     outputStream.flush();
