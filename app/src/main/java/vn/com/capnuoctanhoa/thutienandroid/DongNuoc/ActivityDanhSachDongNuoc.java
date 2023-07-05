@@ -61,7 +61,7 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
 
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
-        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+//        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ExpandableListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtTongCong = (TextView) findViewById(R.id.txtTongCong);
@@ -344,6 +344,21 @@ public class ActivityDanhSachDongNuoc extends AppCompatActivity {
                             if (CLocal.listDongNuoc.get(i).isDongNuoc() == false && CLocal.listDongNuoc.get(i).isGiaiTrach() == false
                                     && CLocal.listDongNuoc.get(i).isThuHo() == false && CLocal.listDongNuoc.get(i).isTamThu() == false
                                     && currentDate.compareTo(NgayHen) >= 0) {
+                                CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
+                                addEntityParent(CLocal.listDongNuoc.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "HĐ Tiền Lớn":
+                    if (CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
+                        for (int i = 0; i < CLocal.listDongNuoc.size(); i++) {
+                            boolean flag = false;
+                            for (int j = 0; j < CLocal.listDongNuoc.get(i).getLstHoaDon().size(); j++) {
+                                if (Integer.parseInt(CLocal.listDongNuoc.get(i).getLstHoaDon().get(j).getTongCong()) >= CLocal.SoTien)
+                                    flag = true;
+                            }
+                            if (flag == true) {
                                 CLocal.listDongNuocView.add(CLocal.listDongNuoc.get(i));
                                 addEntityParent(CLocal.listDongNuoc.get(i));
                             }

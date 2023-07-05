@@ -584,7 +584,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("In hóa đơn https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
 //                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
@@ -631,7 +631,7 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printDotFeed_EZAppend());
 //                    stringBuilder.append(printEZAppend("Quý khách muốn in hóa đơn vui lòng vào trang website Công ty: https://www.cskhtanhoa.com.vn/hddt", 1, toadoY, 0, 1, 1));
-//                    stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//                    stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //                    stringBuilder.append(printEnd_EZAppend());
 //                    stringBuilder.append("}");
 //                    outputStream.write(stringBuilder.toString().getBytes());
@@ -712,7 +712,7 @@ public class ServiceThermalPrinter extends Service {
                     Date dateLap = CLocal.DateFormat.parse(entityChild.getInPhieuBao_Ngay());
                     Calendar c = Calendar.getInstance();
                     c.setTime(dateLap);
-                    c.add(Calendar.DATE, 7);
+                    c.add(Calendar.DATE, 3);
                     dateLap = c.getTime();
                     printEZ("Qúy Khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dateLap), 1, toadoY, 0, 1, 1);
                     //
@@ -729,7 +729,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
 //                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
@@ -797,7 +797,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
 //                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
@@ -844,7 +844,7 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
 //                    stringBuilder.append(printDotFeed_EZAppend());
 //                    stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//                    stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//                    stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //                    stringBuilder.append(printEnd_EZAppend());
 //                    stringBuilder.append("}");
 //                    outputStream.write(stringBuilder.toString().getBytes());
@@ -894,9 +894,9 @@ public class ServiceThermalPrinter extends Service {
                     Date dt = new Date();
                     Calendar c = Calendar.getInstance();
                     c.setTime(dt);
-                    c.add(Calendar.DATE, Integer.parseInt("3"));
+                    c.add(Calendar.DATE, 3);
                     dt = c.getTime();
-                    printEZ("Quý khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dt) + " để được cấp nước liên tục.", 3, toadoY, 0, 1, 1);
+                    printEZ("Ghi chú: Quý khách vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormatShort.format(dt) + ". Nếu đã thanh toán vui lòng bỏ qua thông báo này", 3, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
                         printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
@@ -910,7 +910,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
 //                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
@@ -961,7 +961,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -990,7 +990,7 @@ public class ServiceThermalPrinter extends Service {
                         printEZ("Code F Tạm Tính", 1, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().split(" ");
-                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên từ ngày: " + str[0], 3, toadoY, 0, 1, 1);
+                    printEZ("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên từ ngày " + str[0], 3, toadoY, 0, 1, 1);
                     printEZ("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:", 1, toadoY, 0, 1, 1);
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
@@ -1014,7 +1014,7 @@ public class ServiceThermalPrinter extends Service {
                     else
                         Co = entityParent.getLstHoaDon().get(0).getCo();
                     printEZ("Phí mở nước: " + CLocal.getPhiMoNuoc(Co) + "đ. (nếu khách hàng bị khóa nước)", 1, toadoY, 0, 1, 1);
-                    printEZ("Nếu Quý khách hàng thanh toán tiền nước trước thời gian trên, vui lòng bỏ qua thông báo này. Trân trọng.", 1, toadoY, 0, 1, 1);
+                    printEZ("Ghi chú: Quý khách thanh toán tiền nước trước ngày "+ str[0]+". Nếu đã thanh toán vui lòng bỏ qua thông báo này.", 1, toadoY, 0, 1, 1);
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         printEZ("Dịch vụ Thu Hộ:", 3, toadoY, 0, 1, 1);
                         printEZ(entityParent.getCuaHangThuHo1(), 3, toadoY, 0, 1, 1);
@@ -1028,7 +1028,7 @@ public class ServiceThermalPrinter extends Service {
                     printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
                     printDotFeed_EZ();
                     printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-                    printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+                    printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
 //                    printEZ("Từ kỳ 04/2022 không thu tiền nước tại nhà", 3, toadoY, 0, 1, 1);
                     printEnd_EZ();
                     outputStream.flush();
@@ -1053,7 +1053,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3", 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            String[] str = entityParent.getLstHoaDon().get(0).getTBDongNuoc_NgayHen().split(" ");
-//            stringBuilder.append(printEZAppend("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày: " + str[0], 3, toadoY, 0, 1, 1));
+//            stringBuilder.append(printEZAppend("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên vào ngày " + str[0], 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printEZAppend("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:", 1, toadoY, 0, 1, 1));
 //            int TongCong = 0, TienDu = 0;
 //            for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
@@ -1079,7 +1079,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -1133,7 +1133,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-            printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+            printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
@@ -1184,7 +1184,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -1238,7 +1238,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-            printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+            printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
@@ -1289,7 +1289,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -1333,7 +1333,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printEnd_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-            printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+            printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
@@ -1374,7 +1374,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -1411,7 +1411,7 @@ public class ServiceThermalPrinter extends Service {
             printEZ("Ngày in: " + CLocal.getTime(), 3, toadoY, 0, 1, 1);
             printDotFeed_EZ();
             printEZ("https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1);
-            printEZ("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1);
+            printEZ("XIN CẢM ƠN", 1, toadoY, 50, 1, 1);
             printEnd_EZ();
             outputStream.flush();
         } catch (Exception ex) {
@@ -1445,7 +1445,7 @@ public class ServiceThermalPrinter extends Service {
 //            stringBuilder.append(printEZAppend("Ngày in: " + CLocal.getTime(), 1, toadoY, 0, 1, 1));
 //            stringBuilder.append(printDotFeed_EZAppend());
 //            stringBuilder.append(printEZAppend("Website Công ty: https://www.cskhtanhoa.com.vn", 1, toadoY, 0, 1, 1));
-//            stringBuilder.append(printEZAppend("XIN CẢM ƠN QUÝ KHÁCH", 1, toadoY, 50, 1, 1));
+//            stringBuilder.append(printEZAppend("XIN CẢM ƠN", 1, toadoY, 50, 1, 1));
 //            stringBuilder.append(printEnd_EZAppend());
 //            stringBuilder.append("}");
 //            outputStream.write(stringBuilder.toString().getBytes());
@@ -1684,7 +1684,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("In hóa đơn https://www.cskhtanhoa.com.vn/hddt\n".getBytes());
                     byteStream.write(setTextAlign(1));
-                    byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    byteStream.write("XIN CẢM ƠN\n".getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
 //                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
@@ -1780,7 +1780,7 @@ public class ServiceThermalPrinter extends Service {
                     Date dateLap = CLocal.DateFormat.parse(entityChild.getInPhieuBao_Ngay());
                     Calendar c = Calendar.getInstance();
                     c.setTime(dateLap);
-                    c.add(Calendar.DATE, 7);
+                    c.add(Calendar.DATE, 3);
                     dateLap = c.getTime();
                     byteStream.write(("QK vui lòng thanh toán tiền nước trước ngày " + CLocal.DateFormat.format(dateLap) + "\n").getBytes());
                     //
@@ -1802,7 +1802,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("https://www.cskhtanhoa.com.vn\n".getBytes());
                     byteStream.write(setTextAlign(1));
-                    byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    byteStream.write("XIN CẢM ƠN\n".getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
 //                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
@@ -1902,7 +1902,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("https://www.cskhtanhoa.com.vn\n".getBytes());
                     byteStream.write(setTextAlign(1));
-                    byteStream.write("XIN CẢM ƠN QUÝ KHÁCH\n".getBytes());
+                    byteStream.write("XIN CẢM ƠN\n".getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
 //                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
@@ -1978,13 +1978,13 @@ public class ServiceThermalPrinter extends Service {
                     Date dt = new Date();
                     Calendar c = Calendar.getInstance();
                     c.setTime(dt);
-                    c.add(Calendar.DATE, Integer.parseInt("3"));
+                    c.add(Calendar.DATE, 3);
                     dt = c.getTime();
-                    byteStream.write(("Quý khách vui lòng thanh toán tiền nước trước ngày ").getBytes());
+                    byteStream.write(("Ghi chú: Quý khách vui lòng thanh toán tiền nước trước ngày ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((CLocal.DateFormatShort.format(dt)).getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write((" để được cấp nước liên tục.\n").getBytes());
+                    byteStream.write((". Nếu Quý khách đã thanh toán vui lòng bỏ qua thông báo này.\n").getBytes());
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(setTextStyle(true, 1, 1));
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
@@ -2003,7 +2003,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
                     byteStream.write(setTextAlign(1));
-                    byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+                    byteStream.write(("XIN CẢM ƠN\n").getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
 //                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
@@ -2056,7 +2056,7 @@ public class ServiceThermalPrinter extends Service {
                         byteStream.write(("Code F Tạm Tính\n").getBytes());
                     byteStream.write(printDotFeed_ESC());
                     String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().split(" ");
-                    byteStream.write(("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên từ ngày: ").getBytes());
+                    byteStream.write(("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên từ ngày ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((str[0] + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -2089,7 +2089,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((CLocal.getPhiMoNuoc(Co) + "đ. (nếu khách hàng bị khóa nước)\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Nếu Quý khách hàng thanh toán tiền nước trước thời gian trên, vui lòng bỏ qua thông báo này. Trân trọng.\n").getBytes());
+                    byteStream.write(("Ghi chú: Quý khách thanh toán tiền nước trước ngày "+str[0]+". Nếu đã thanh toán vui lòng bỏ qua thông báo này\n").getBytes());
                     if (entityParent.getCuaHangThuHo1().equals("") == false) {
                         byteStream.write(setTextStyle(true, 1, 1));
                         byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
@@ -2108,7 +2108,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
                     byteStream.write(setTextAlign(1));
-                    byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+                    byteStream.write(("XIN CẢM ƠN\n").getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
 //                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
                     byteStream.write(printLineFeed(3));
@@ -2191,7 +2191,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
-            byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+            byteStream.write(("XIN CẢM ƠN\n").getBytes());
             byteStream.write(printLineFeed(3));
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
@@ -2270,7 +2270,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
-            byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+            byteStream.write(("XIN CẢM ƠN\n").getBytes());
             byteStream.write(printLineFeed(3));
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
@@ -2332,7 +2332,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
-            byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+            byteStream.write(("XIN CẢM ƠN\n").getBytes());
             byteStream.write(printLineFeed(3));
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();
@@ -2389,7 +2389,7 @@ public class ServiceThermalPrinter extends Service {
             byteStream.write(printDotFeed_ESC());
             byteStream.write(("https://www.cskhtanhoa.com.vn\n").getBytes());
             byteStream.write(setTextAlign(1));
-            byteStream.write(("XIN CẢM ƠN QUÝ KHÁCH\n").getBytes());
+            byteStream.write(("XIN CẢM ƠN\n").getBytes());
             byteStream.write(printLineFeed(3));
             outputStream.write(byteStream.toByteArray());
             outputStream.flush();

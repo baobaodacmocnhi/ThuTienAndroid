@@ -100,6 +100,7 @@
         <item>Giải Trách</item>
         <item>Tạm Thu-Thu Hộ</item>
         <item>Sau 25 Ngày Lập TB</item>
+        <item>HĐ Tiền Lớn</item>
     </string-array>
     <string-array name="filter_thuho_array">
         <item>Tất Cả</item>
