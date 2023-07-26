@@ -221,7 +221,7 @@ public class CustomAdapterExpandableListView extends BaseExpandableListAdapter i
                                     break;
                                 case R.id.action_TBDongNuoc:
                                     MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_extra = new MyAsyncTask_XuLyTrucTiep_Extra();
-                                    myAsyncTask_xuLyTrucTiep_extra.execute(new String[]{"DongNuoc", "TBDongNuoc", String.valueOf(i), "2"});
+                                    myAsyncTask_xuLyTrucTiep_extra.execute(new String[]{"DongNuoc", "TBDongNuoc", String.valueOf(i), "0"});
                                     break;
                             }
                             return true;
