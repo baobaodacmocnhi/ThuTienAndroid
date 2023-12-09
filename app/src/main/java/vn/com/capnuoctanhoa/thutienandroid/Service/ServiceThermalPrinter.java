@@ -438,11 +438,17 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printTBDongNuoc_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
                     printTBDongNuoc_ESC(entityParent);
+                    break;
+                case "Honeywell45":
+                    printTBDongNuoc_ESC(entityParent);
+                    break;
+                case "ER58":
+                    printTBDongNuoc_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printTBDongNuoc_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {

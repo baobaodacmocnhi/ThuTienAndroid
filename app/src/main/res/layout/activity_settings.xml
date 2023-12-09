@@ -6,6 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ActivitySettings">
 
+    <RadioGroup
+        android:id="@+id/radGroupMethodPrinter"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/textView62"
+        app:layout_constraintTop_toBottomOf="@+id/lstView">
+
+        <RadioButton
+            android:id="@+id/radHoneywell31"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Honeywell 31 (ESC)" />
+
+        <RadioButton
+            android:id="@+id/radHoneywell45"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="Honeywell 45 (ESC)" />
+
+        <RadioButton
+            android:id="@+id/radER58"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="ER-58 (ESC)" />
+
+        <RadioButton
+            android:id="@+id/radIntermec"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Intermec (EZ)" />
+
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView77"
         android:layout_width="wrap_content"
@@ -28,10 +71,12 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toStartOf="@+id/btnGetIDMobile"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView77"
-        app:layout_constraintTop_toTopOf="@+id/btnGetIDMobile" />
+        app:layout_constraintTop_toTopOf="@+id/btnGetIDMobile"
+        tools:ignore="SpeakableTextPresentCheck"/>
 
     <Button
         android:id="@+id/btnGetIDMobile"
@@ -95,7 +140,7 @@
         <RadioButton
             android:id="@+id/radTrucTiep"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:checked="true"
             android:text="Trực Tiếp" />
@@ -105,7 +150,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gián Tiếp"/>
+            android:text="Gián Tiếp"
+            android:visibility="invisible" />
     </RadioGroup>
 
     <TextView
@@ -131,9 +177,11 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView60"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal"
+        tools:ignore="SpeakableTextPresentCheck"/>
 
     <TextView
         android:id="@+id/textView62"
@@ -146,34 +194,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/radGroupMethodPrinter" />
-
-    <RadioGroup
-        android:id="@+id/radGroupMethodPrinter"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/textView62"
-        app:layout_constraintTop_toBottomOf="@+id/lstView">
-
-        <RadioButton
-            android:id="@+id/radESC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="ESC" />
-
-        <RadioButton
-            android:id="@+id/radEZ"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="EZ" />
-
-    </RadioGroup>
 
     <TextView
         android:id="@+id/textView1"
@@ -197,9 +217,12 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toStartOf="@+id/btnSave"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView1"
-        app:layout_constraintTop_toTopOf="@+id/btnSave" />
+        app:layout_constraintTop_toTopOf="@+id/btnSave"
+        tools:ignore="SpeakableTextPresentCheck"/>
 
     <Button
         android:id="@+id/btnSave"

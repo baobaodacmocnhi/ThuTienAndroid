@@ -123,17 +123,11 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
-        editor.putString("ThermalPrinter", "");
-        editor.putString("MethodPrinter", "ESC");
         editor.putBoolean("SyncTrucTiep", true);
         editor.putBoolean("InPhieuBao", false);
-        editor.putBoolean("TestApp", false);
         editor.putBoolean("SyncNopTien", false);
         editor.commit();
-        editor.remove("jsonHanhThu_HoaDonDienTu").commit();
-        editor.remove("jsonDongNuocChild").commit();
-        ThermalPrinter = "";
-        MaNV = HoTen = MaTo = DienThoai = Zalo = IDMobile = "";
+        MaNV = HoTen = MaTo = DienThoai = Zalo = IDMobile = ThermalPrinter = "";
         Admin = HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
         SyncTrucTiep = true;
         jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = jsonNam = null;

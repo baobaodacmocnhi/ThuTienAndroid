@@ -28,7 +28,7 @@ public class ActivitySettings extends AppCompatActivity {
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
-    private RadioButton radTrucTiep, radGianTiep, radEZ, radESC;
+    private RadioButton radTrucTiep, radGianTiep, radIntermec, radHoneywell3l, radHoneywell45, radER58;
     private RadioGroup radGroupSync, radGroupMethodPrinter;
 
     @Override
@@ -48,8 +48,10 @@ public class ActivitySettings extends AppCompatActivity {
         radTrucTiep = (RadioButton) findViewById(R.id.radTrucTiep);
         radGianTiep = (RadioButton) findViewById(R.id.radGianTiep);
         radGroupSync = (RadioGroup) findViewById(R.id.radGroupSync);
-        radEZ = (RadioButton) findViewById(R.id.radEZ);
-        radESC = (RadioButton) findViewById(R.id.radESC);
+        radIntermec = (RadioButton) findViewById(R.id.radIntermec);
+        radHoneywell3l = (RadioButton) findViewById(R.id.radHoneywell31);
+        radHoneywell45 = (RadioButton) findViewById(R.id.radHoneywell45);
+        radER58 = (RadioButton) findViewById(R.id.radER58);
         radGroupMethodPrinter = (RadioGroup) findViewById(R.id.radGroupMethodPrinter);
         edtMayInDaChon.setText(CLocal.ThermalPrinter);
 
@@ -106,15 +108,21 @@ public class ActivitySettings extends AppCompatActivity {
 
         if (CLocal.SyncTrucTiep == true)
             radTrucTiep.setChecked(true);
-        else
-            radGianTiep.setChecked(true);
+//        else
+//            radGianTiep.setChecked(true);
 
         switch (CLocal.MethodPrinter) {
-            case "EZ":
-                radEZ.setChecked(true);
+            case "Intermec":
+                radIntermec.setChecked(true);
                 break;
-            case "ESC":
-                radESC.setChecked(true);
+            case "Honeywell31":
+                radHoneywell3l.setChecked(true);
+                break;
+            case "Honeywell45":
+                radHoneywell45.setChecked(true);
+                break;
+            case "ER58":
+                radER58.setChecked(true);
                 break;
         }
 
@@ -146,14 +154,19 @@ public class ActivitySettings extends AppCompatActivity {
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 switch (index) {
                     case 0: // first button
-                        CLocal.MethodPrinter = "ESC";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        CLocal.MethodPrinter = "Honeywell31";
                         break;
                     case 1: // secondbutton
-                        CLocal.MethodPrinter = "EZ";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        CLocal.MethodPrinter = "Honeywell45";
+                        break;
+                    case 2: // thirdbutton
+                        CLocal.MethodPrinter = "ER58";
+                        break;
+                    case 3: // thirdbutton
+                        CLocal.MethodPrinter = "Intermec";
                         break;
                 }
+                editor.putString("MethodPrinter", CLocal.MethodPrinter);
                 editor.commit();
             }
         });

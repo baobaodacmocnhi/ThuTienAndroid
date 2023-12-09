@@ -242,14 +242,13 @@ public class MainActivity extends AppCompatActivity {
                 if (CLocal.listDongNuoc.size() > 2000)
                     CLocal.listDongNuoc = null;
             }
-            if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
+            if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false)
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
-            }
-            if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
+            if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false)
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
-            }
-
-            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
+            else
+                CLocal.ThermalPrinter = "";
+            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
             CLocal.SoTien = CLocal.sharedPreferencesre.getInt("SoTien", 0);
             btnAdmin.setVisibility(View.GONE);
@@ -374,7 +373,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateApp(String versionServer) {
         try {
             String versionDevice = packageInfo.versionName;
-            if (versionServer.equals("") == false && versionServer.equals("False") == false && versionServer.equals("java.net.ConnectException: Connection refused") == false && versionDevice.equals(versionServer) == false) {
+            if (!versionServer.equals("") && !versionServer.equals("False")
+                    && !versionServer.equals("java.net.ConnectException: Connection refused") && !versionServer.contains("Failed to connect to service.capnuoctanhoa.com.vn")
+                    && !versionDevice.equals(versionServer)) {
 //                AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //                builder.setTitle("Cập nhật");
 //                builder.setMessage("Đã có phiên bản mới, Bạn hãy cập nhật");
