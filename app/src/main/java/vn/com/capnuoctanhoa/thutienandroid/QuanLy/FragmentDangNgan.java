@@ -98,7 +98,6 @@ public class FragmentDangNgan extends Fragment {
 
                         spnID_To.add(jsonObject.getString("MaTo"));
                         spnName_To.add(jsonObject.getString("TenTo"));
-
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spnName_To);

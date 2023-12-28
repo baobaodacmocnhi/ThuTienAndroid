@@ -90,6 +90,20 @@ public class FragmentTon extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spnName_Nam);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnNam.setAdapter(adapter);
+            //loaddata đợt
+            if (CLocal.IDPhong.equals("1")) {
+                //tân bình
+                ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTB_array, android.R.layout.simple_spinner_item);
+                adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnFromDot.setAdapter(adapterDot);
+                spnToDot.setAdapter(adapterDot);
+            } else if (CLocal.IDPhong.equals("2")) {
+                //tân phú
+                ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTP_array, android.R.layout.simple_spinner_item);
+                adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnFromDot.setAdapter(adapterDot);
+                spnToDot.setAdapter(adapterDot);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

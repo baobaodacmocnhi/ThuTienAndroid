@@ -1591,7 +1591,7 @@ public class ServiceThermalPrinter extends Service {
             stringBuilder.append("EZ{PRINT:");
             for (int j = 0; j < valuesOutput.size(); j++) {
                 for (int i = 0; i < boldNumber; i++) {
-                    stringBuilder.append("@" + toadoY + "," + toadoX++ + ":FONTP,HMULT" + heightFont + ",VMULT" + widthFont + "|" + valuesOutput.get(j) + "|");
+                    stringBuilder.append("@" + toadoY + "," + toadoX++ + ":TIMNR,HMULT" + heightFont + ",VMULT" + widthFont + "|" + valuesOutput.get(j) + "|");
                 }
                 toadoY += 30;
             }
