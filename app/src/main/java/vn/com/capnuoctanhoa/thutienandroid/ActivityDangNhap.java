@@ -154,12 +154,12 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putString("jsonMessage", "");
                             editor.putString("jsonNam", ws.getDS_Nam());
                             if (Boolean.parseBoolean(jsonObject.getString("Doi")) == true) {
-                                editor.putString("jsonTo", ws.getDSTo());
-                                editor.putString("jsonNhanVien", ws.getDS_NhanVien());
+                                editor.putString("jsonTo", ws.getDS_To(jsonObject.getString("IDPhong")));
+                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_Doi(jsonObject.getString("IDPhong")));
                             } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true) {
-                                editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
+                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_To(jsonObject.getString("MaTo")));
                             } else if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_HanhThu());
+                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_HanhThu_Doi(jsonObject.getString("IDPhong")));
                             }
                             editor.putBoolean("InPhieuBao", Boolean.parseBoolean(jsonObject.getString("InPhieuBao")));
                             editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
