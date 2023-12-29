@@ -74,12 +74,12 @@ public class ActivityDownDataDongNuoc extends AppCompatActivity {
                     spnName_To = new ArrayList<>();
                     for (int i = 0; i < CLocal.jsonTo.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
-//                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-//                            spnID_To.add(jsonObject.getString("MaTo"));
-//                            spnName_To.add(jsonObject.getString("TenTo"));
-//                        }
-                        spnID_To.add(jsonObject.getString("MaTo"));
-                        spnName_To.add(jsonObject.getString("TenTo"));
+                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+                            spnID_To.add(jsonObject.getString("MaTo"));
+                            spnName_To.add(jsonObject.getString("TenTo"));
+                        }
+//                        spnID_To.add(jsonObject.getString("MaTo"));
+//                        spnName_To.add(jsonObject.getString("TenTo"));
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_To);

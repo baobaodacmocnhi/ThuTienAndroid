@@ -189,7 +189,7 @@ public class CWebservice {
     }
 
     public String getDS_To(String IDPhong) {
-        String SOAP_ACTION = "http://tempuri.org/GetDSTo";
+        String SOAP_ACTION = "http://tempuri.org/getDS_To";
         String OPERATION_NAME = "getDS_To";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
@@ -203,7 +203,7 @@ public class CWebservice {
     }
 
     public String getDS_NhanVien_HanhThu_Doi(String IDPhong) {
-        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien_HanhThu";
+        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien_HanhThu_Doi";
         String OPERATION_NAME = "getDS_NhanVien_HanhThu_Doi";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
@@ -217,7 +217,7 @@ public class CWebservice {
     }
 
     public String getDS_NhanVien_To(String MaTo) {
-        String SOAP_ACTION = "http://tempuri.org/GetDSNhanVienTo";
+        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien_To";
         String OPERATION_NAME = "getDS_NhanVien_To";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
@@ -231,7 +231,7 @@ public class CWebservice {
     }
 
     public String getDS_NhanVien_Doi(String IDPhong) {
-        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien";
+        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien_Doi";
         String OPERATION_NAME = "getDS_NhanVien_Doi";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 

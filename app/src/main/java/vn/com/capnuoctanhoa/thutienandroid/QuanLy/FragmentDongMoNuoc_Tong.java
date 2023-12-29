@@ -100,10 +100,10 @@ public class FragmentDongMoNuoc_Tong extends Fragment {
                     spnName_To.add("Tất Cả");
                     for (int i = 0; i < CLocal.jsonTo.length(); i++) {
                         JSONObject jsonObject = CLocal.jsonTo.getJSONObject(i);
-
-                        spnID_To.add(jsonObject.getString("MaTo"));
-                        spnName_To.add(jsonObject.getString("TenTo"));
-
+                        if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
+                            spnID_To.add(jsonObject.getString("MaTo"));
+                            spnName_To.add(jsonObject.getString("TenTo"));
+                        }
                     }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, spnName_To);

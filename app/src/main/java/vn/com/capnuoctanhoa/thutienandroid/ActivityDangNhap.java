@@ -159,7 +159,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                             } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true) {
                                 editor.putString("jsonNhanVien", ws.getDS_NhanVien_To(jsonObject.getString("MaTo")));
                             } else if (Boolean.parseBoolean(jsonObject.getString("DongNuoc")) == true) {
-                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_HanhThu_Doi(jsonObject.getString("IDPhong")));
+//                                editor.putString("jsonNhanVien", ws.getDS_NhanVien_HanhThu_Doi(jsonObject.getString("IDPhong")));
                             }
                             editor.putBoolean("InPhieuBao", Boolean.parseBoolean(jsonObject.getString("InPhieuBao")));
                             editor.putBoolean("TestApp", Boolean.parseBoolean(jsonObject.getString("TestApp")));
