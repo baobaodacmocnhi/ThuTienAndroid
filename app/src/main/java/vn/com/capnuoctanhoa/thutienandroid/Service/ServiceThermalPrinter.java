@@ -353,11 +353,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printPhieuBao_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printPhieuBao_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printPhieuBao_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {
@@ -387,11 +389,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printPhieuBao_EZ(entityParent, entityChild);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printPhieuBao_ESC(entityParent, entityChild);
+                    break;
+                case "Intermec":
+                    printPhieuBao_EZ(entityParent, entityChild);
                     break;
             }
         } catch (Exception ex) {
@@ -421,11 +425,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printPhieuBao2_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printPhieuBao2_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printPhieuBao2_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {
@@ -439,11 +445,7 @@ public class ServiceThermalPrinter extends Service {
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
-                    printTBDongNuoc_ESC(entityParent);
-                    break;
                 case "Honeywell45":
-                    printTBDongNuoc_ESC(entityParent);
-                    break;
                 case "ER58":
                     printTBDongNuoc_ESC(entityParent);
                     break;
@@ -461,11 +463,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printDongNuoc_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printDongNuoc_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printDongNuoc_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {
@@ -495,11 +499,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printMoNuoc_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printMoNuoc_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printMoNuoc_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {
@@ -512,11 +518,13 @@ public class ServiceThermalPrinter extends Service {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
-                case "EZ":
-                    printPhiMoNuoc_EZ(entityParent);
-                    break;
-                case "ESC":
+                case "Honeywell31":
+                case "Honeywell45":
+                case "ER58":
                     printPhiMoNuoc_ESC(entityParent);
+                    break;
+                case "Intermec":
+                    printPhiMoNuoc_EZ(entityParent);
                     break;
             }
         } catch (Exception ex) {
