@@ -1958,7 +1958,7 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getMLT()).getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
-                    byteStream.write(("Code: ").getBytes());
+                    byteStream.write(("   Code: ").getBytes());
                     byteStream.write(setTextStyle(true, 1, 1));
                     byteStream.write((entityParent.getLstHoaDon().get(0).getCode() + "\n").getBytes());
                     byteStream.write(setTextStyle(false, 1, 1));
@@ -1969,7 +1969,7 @@ public class ServiceThermalPrinter extends Service {
 //                        byteStream.write(("Code F Tạm Tính\n").getBytes());
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("Hóa đơn:\n").getBytes());
-                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(setTextStyle(true, 1, 1));
                     int TongCong = 0, TienDu = 0;
                     for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
                         if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
