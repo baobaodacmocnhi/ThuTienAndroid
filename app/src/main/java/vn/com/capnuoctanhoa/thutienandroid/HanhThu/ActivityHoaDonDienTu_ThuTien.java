@@ -1126,7 +1126,6 @@ public class ActivityHoaDonDienTu_ThuTien extends AppCompatActivity {
                 CLocal.updateTinhTrangParent(CLocal.listHanhThuView, STT);
                 CLocal.updateTinhTrangParent(CLocal.listHanhThu, CLocal.listHanhThuView.get(STT));
                 return results;
-
             } catch (Exception ex) {
                 return new String[]{"false", ex.getMessage()};
             }

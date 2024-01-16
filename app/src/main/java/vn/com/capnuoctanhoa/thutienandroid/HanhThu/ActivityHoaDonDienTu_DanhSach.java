@@ -179,6 +179,9 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
                         case "Thời Gian Giảm":
                             Collections.sort(listParent, new CSort("ModifyDate", 1));
                             break;
+                        case "Số Tiền Giảm":
+                            Collections.sort(listParent, new CSort("TongCong", 1));
+                            break;
                         default:
                             Collections.sort(listParent, new CSort("", -1));
                             break;
@@ -489,6 +492,7 @@ public class ActivityHoaDonDienTu_DanhSach extends AppCompatActivity {
             enViewParent.setListChild(listChild);
             enViewParent.setRow1b(String.valueOf(listChild.size()) + " HĐ: " + CLocal.formatMoney(TongCongChild.toString(), "đ"));
             enViewParent.setRow2b(enParent.getTinhTrang());
+            enViewParent.setTongCong(TongCongChild.toString());
             TongDC++;
 
             listParent.add(enViewParent);

@@ -123,6 +123,7 @@
         <item>MLT</item>
         <item>Thời Gian Tăng</item>
         <item>Thời Gian Giảm</item>
+        <item>Số Tiền Giảm</item>
     </string-array>
     <string-array name="dongnuoc_niemchi_mausac_array">
         <item>Xanh</item>
