@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,6 +26,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.IBinder;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -1181,6 +1184,37 @@ public class CLocal {
             SoNgayCongThem--;
         }
         return FromDate;
+    }
+
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
+    private static ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            ServiceThermalPrinter.LocalBinder binder = (ServiceThermalPrinter.LocalBinder) service;
+            CLocal.serviceThermalPrinter = binder.getService();
+//            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+//            mBound = false;
+        }
+    };
+
+    public static void runServiceThermalPrinter(Activity activity) {
+        if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+            if (CLocal.checkBluetoothAvaible() == false) {
+                CLocal.openBluetoothSettings(activity);
+            } else if (CLocal.checkServiceRunning(activity, ServiceThermalPrinter.class) == false) {
+                Intent intent2 = new Intent(activity, ServiceThermalPrinter.class);
+//                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                activity.startService(intent2);
+                activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+            }
     }
 
 }

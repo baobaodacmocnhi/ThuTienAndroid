@@ -201,11 +201,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         txtVersion.setText("V" + packageInfo.versionName);
-        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
-            MyAsyncTask myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute("Version");
-        }
-
     }
 
     @Override
@@ -229,7 +224,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
+            if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("Version");
+            }
             if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
                 CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
@@ -271,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
                     MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
                     myAsyncTask_dangXuat.execute("DangXuat");
                 }
-
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
@@ -318,15 +315,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
-                if (CLocal.checkBluetoothAvaible() == false) {
-                    CLocal.openBluetoothSettings(MainActivity.this);
-                } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
-                    Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
-                    intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-                    startService(intent2);
-                    bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-                }
-
+//                if (CLocal.checkBluetoothAvaible() == false) {
+//                    CLocal.openBluetoothSettings(MainActivity.this);
+//                } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+//                    Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
+//                    intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+//                    startService(intent2);
+//                    bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+//                }
+                    CLocal.runServiceThermalPrinter(MainActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -336,14 +333,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
-            if (CLocal.checkBluetoothAvaible() == false) {
-                CLocal.openBluetoothSettings(MainActivity.this);
-            } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
-                Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
-                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-                startService(intent2);
-                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-            }
+//            if (CLocal.checkBluetoothAvaible() == false) {
+//                CLocal.openBluetoothSettings(MainActivity.this);
+//            } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+//                Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
+//                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+//                startService(intent2);
+//                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+//            }
+        CLocal.runServiceThermalPrinter(MainActivity.this);
     }
 
     @Override
