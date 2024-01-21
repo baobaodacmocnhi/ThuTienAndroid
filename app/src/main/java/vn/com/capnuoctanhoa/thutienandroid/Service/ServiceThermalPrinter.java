@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -17,12 +18,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import java.util.Vector;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.thutienandroid.Class.CEntityParent;
@@ -33,29 +36,23 @@ public class ServiceThermalPrinter extends Service {
     }
 
     private BluetoothAdapter mBluetoothAdapter;
-    public static String B_DEVICE = "MY_DEVICE";
     public static final String B_UUID = "00001101-0000-1000-8000-00805f9b34fb";
-
     public static final int STATE_NONE = 0;
-    public static final int STATE_LISTEN = 1;
+    //    public static final int STATE_LISTEN = 1;
     public static final int STATE_CONNECTING = 2;
     public static final int STATE_CONNECTED = 3;
-
     private ConnectBtThread mConnectThread;
     private ConnectedBtThread mConnectedThread;
-
     private static Handler mHandler = null;
     public static int mState = STATE_NONE;
-    public static String deviceName;
     public static BluetoothSocket mSocket = null;
     public static BluetoothDevice mDevice = null;
-    public Vector<Byte> packData = new Vector<>(2048);
+    //    public Vector<Byte> packData = new Vector<>(2048);
     private final IBinder mBinder = new LocalBinder();
     public InputStream inS;
     public static OutputStream outputStream;
 
-//IBinder mIBinder = new LocalBinder();
-
+    //IBinder mIBinder = new LocalBinder();
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -85,9 +82,9 @@ public class ServiceThermalPrinter extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        B_DEVICE = intent.getStringExtra("ThermalPrinter");
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        connectToDevice(B_DEVICE);
+//        B_DEVICE = intent.getStringExtra("ThermalPrinter");
+//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        connectToDevice(CLocal.ThermalPrinter);
         return START_STICKY;
     }
 
@@ -348,15 +345,18 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void printPhieuBao(CEntityParent entityParent) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
-                case "Honeywell45":
                 case "ER58":
-                    printPhieuBao_ESC(entityParent);
+                    printPhieuBao_ESC(entityParent, 31);
+                    break;
+                case "Honeywell45":
+                    printPhieuBao_ESC(entityParent, 45);
                     break;
                 case "Intermec":
                     printPhieuBao_EZ(entityParent);
@@ -370,7 +370,7 @@ public class ServiceThermalPrinter extends Service {
     public void printPhieuBaoCT(CEntityParent entityParent) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
                     printPhieuBaoCT_EZ(entityParent);
@@ -387,7 +387,7 @@ public class ServiceThermalPrinter extends Service {
     public void printPhieuBao(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
                 case "Honeywell45":
@@ -406,7 +406,7 @@ public class ServiceThermalPrinter extends Service {
     public void printPhieuBaoCT(CEntityParent entityParent, CEntityChild entityChild) throws IOException, ParseException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
                     printPhieuBaoCT_EZ(entityParent, entityChild);
@@ -420,15 +420,18 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void printPhieuBao2(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
-                case "Honeywell45":
                 case "ER58":
-                    printPhieuBao2_ESC(entityParent);
+                    printPhieuBao2_ESC(entityParent, 31);
+                    break;
+                case "Honeywell45":
+                    printPhieuBao2_ESC(entityParent, 45);
                     break;
                 case "Intermec":
                     printPhieuBao2_EZ(entityParent);
@@ -439,15 +442,18 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void printTBDongNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
-                case "Honeywell45":
                 case "ER58":
-                    printTBDongNuoc_ESC(entityParent);
+                    printTBDongNuoc_ESC(entityParent,31);
+                    break;
+                case "Honeywell45":
+                    printTBDongNuoc_ESC(entityParent,45);
                     break;
                 case "Intermec":
                     printTBDongNuoc_EZ(entityParent);
@@ -461,7 +467,7 @@ public class ServiceThermalPrinter extends Service {
     public void printDongNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
                 case "Honeywell45":
@@ -480,7 +486,7 @@ public class ServiceThermalPrinter extends Service {
     public void printDongNuoc2(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "EZ":
                     printDongNuoc2_EZ(entityParent);
@@ -497,7 +503,7 @@ public class ServiceThermalPrinter extends Service {
     public void printMoNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
                 case "Honeywell45":
@@ -516,7 +522,7 @@ public class ServiceThermalPrinter extends Service {
     public void printPhiMoNuoc(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell31":
                 case "Honeywell45":
@@ -1722,6 +1728,18 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void printPhieuBao_ESC(CEntityParent entityParent, int charWidth) throws IOException, ParseException {
+        try {
+            for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                if (entityParent.getLstHoaDon().get(i).getInPhieuBao_Ngay().equals("") == false) {
+                    printPhieuBao_ESC(entityParent, entityParent.getLstHoaDon().get(i), charWidth);
+                }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     public void printPhieuBaoCT_ESC(CEntityParent entityParent) throws IOException, ParseException {
         try {
             for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
@@ -1815,6 +1833,98 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write("https://cskhtanhoa.com.vn\n".getBytes());
+//                    byteStream.write(setTextAlign(1));
+//                    byteStream.write("XIN CẢM ƠN\n".getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+                    byteStream.write(printLineFeed(3));
+                    outputStream.write(byteStream.toByteArray());
+                    outputStream.flush();
+                }
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void printPhieuBao_ESC(CEntityParent entityParent, CEntityChild entityChild, int charWidth) throws IOException, ParseException {
+        try {
+            if (entityParent != null && entityChild != null) {
+                if (entityChild.getInPhieuBao_Ngay().equals("") == false && entityChild.isTamThu() == false && entityChild.isThuHo() == false) {
+                    printTop_ESC();
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(breakLine(escpStyle("GIẤY BÁO TIỀN NƯỚC (KHÔNG THAY THẾ HÓA ĐƠN)\n", 0b11000), charWidth).getBytes());
+                    byteStream.write(breakLine(escpStyle("Kỳ: " + entityChild.getKy() + "\n", 0b11000), charWidth).getBytes());
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextAlign(0));
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Khách hàng: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getHoTen() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Địa chỉ: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(escpStyle(entityParent.getDanhBo() + "\n", 0b11000).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("MLT: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getMLT()).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("   Code: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityChild.getCode() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Giá biểu: " + entityChild.getGiaBieu() + "   Định mức: " + entityChild.getDinhMuc() + "\n").getBytes());
+                    byteStream.write(("Từ: " + entityChild.getTuNgay() + "  Đến: " + entityChild.getDenNgay() + "\n").getBytes());
+                    if (entityChild.getCode().equals("F") == false)
+                        byteStream.write(("CSC: " + entityChild.getCSC() + "  CSM: " + entityChild.getCSM() + "\n").getBytes());
+                    else
+                        byteStream.write(("Code F Tạm Tính\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(escpStyle(pad("Tiêu thụ: ", entityChild.getTieuThu() + "m3\n", ' ', charWidth), 0b11000).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(pad("Tiền nước: ", CLocal.formatMoney(String.valueOf(entityChild.getGiaBan()), "đ") + "\n", ' ', charWidth).getBytes());
+                    byteStream.write(pad("Thuế GTGT: ", CLocal.formatMoney(String.valueOf(entityChild.getThueGTGT()), "đ") + "\n", ' ', charWidth).getBytes());
+                    byteStream.write(pad("Tiền DV thoát nước: ", CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT()), "đ") + "\n", ' ', charWidth).getBytes());
+                    byteStream.write(pad("Thuế DV thoát nước: ", CLocal.formatMoney(String.valueOf(entityChild.getPhiBVMT_Thue()), "đ") + "\n", ' ', charWidth).getBytes());
+                    byteStream.write(escpStyle(pad("Tổng cộng: ", CLocal.formatMoney(String.valueOf(Integer.parseInt(entityChild.getTongCong()) + entityChild.getTienDuTruocDCHD()), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                    if (entityChild.getTienDuTruocDCHD() > 0) {
+                        byteStream.write(escpStyle(pad("Tiền dư: ", CLocal.formatMoney(String.valueOf(entityChild.getTienDuTruocDCHD()), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                        byteStream.write(escpStyle(pad("Tổng cộng tiền thanh toán: ", CLocal.formatMoney(entityChild.getTongCong(), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(breakLine("Bằng chữ: " + CLocal.ConvertMoneyToWord(entityChild.getTongCong()) + "\n", charWidth).getBytes());
+                    String[] str = entityChild.getInPhieuBao_Ngay().split(" ");
+                    Date dateLap = CLocal.DateFormat.parse(entityChild.getInPhieuBao_Ngay());
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dateLap);
+                    c.add(Calendar.DATE, 3);
+                    dateLap = c.getTime();
+                    byteStream.write(("Qúy khách vui lòng thanh toán tiền nước trước ngày " + escpStyle(CLocal.DateFormatShort.format(dateLap), 0b01000) + "\n").getBytes());
+                    //
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
+                        byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo1() + "\n", charWidth).getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo2() + "\n", charWidth).getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    byteStream.write(("Điện thoại/Zalo: " + CLocal.DienThoai + "\n").getBytes());
+//                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(("Ngày gửi: " + entityChild.getInPhieuBao_Ngay() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write("Website: https://cskhtanhoa.com.vn\n".getBytes());
 //                    byteStream.write(setTextAlign(1));
 //                    byteStream.write("XIN CẢM ƠN\n".getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
@@ -2030,6 +2140,104 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void printPhieuBao2_ESC(CEntityParent entityParent, int charWidth) throws IOException {
+        try {
+            if (entityParent != null) {
+                if (entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == false) {
+                    printTop_ESC();
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(breakLine("THÔNG BÁO TIỀN NƯỚC CHƯA THANH TOÁN (KHÔNG THAY THẾ HÓA ĐƠN)", charWidth).getBytes());
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextAlign(0));
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Kính gửi: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getHoTen() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Địa chỉ: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 2));
+                    byteStream.write(escpStyle(entityParent.getDanhBo() + "\n", 0b11000).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("MLT: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getMLT()).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("   Code: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getLstHoaDon().get(0).getCode() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+//                    byteStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc() + "\n").getBytes());
+//                    if (entityParent.getLstHoaDon().get(0).getCode().equals("F") == false)
+//                        byteStream.write(("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3\n").getBytes());
+//                    else
+//                        byteStream.write(("Code F Tạm Tính\n").getBytes());
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Hóa đơn:\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    int TongCong = 0, TienDu = 0;
+                    for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                        if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
+                            byteStream.write(pad("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ"), ' ', charWidth).getBytes());
+                            TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
+                            TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
+                        }
+                    byteStream.write(pad("Tổng cộng: ", CLocal.formatMoney(String.valueOf(TongCong), "đ"), ' ', charWidth).getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    if (TienDu > 0) {
+                        byteStream.write(pad("Tiền dư: ", CLocal.formatMoney(String.valueOf(TienDu), "đ"), ' ', charWidth).getBytes());
+                        byteStream.write(pad("Tổng cộng tiền thanh toán: ", CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ"), ' ', charWidth).getBytes());
+                        byteStream.write(setTextStyle(false, 1, 1));
+                        byteStream.write(breakLine("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong - TienDu)) + "\n", charWidth).getBytes());
+                    } else {
+                        byteStream.write(setTextStyle(false, 1, 1));
+                        byteStream.write(breakLine("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n", charWidth).getBytes());
+                    }
+//                    String[] str = entityParent.getLstHoaDon().get(0).getInPhieuBao2_NgayHen().split(" ");
+                    byteStream.write(printDotFeed_ESC());
+                    Date dt = new Date();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dt);
+                    c.add(Calendar.DATE, 3);
+                    dt = c.getTime();
+                    byteStream.write(breakLine(escpStyle("Ghi chú:", 0b01000) + " Quý khách vui lòng thanh toán tiền nước trước ngày " + escpStyle(CLocal.DateFormatShort.format(dt), 0b01000) + ". Nếu Quý khách đã thanh toán vui lòng bỏ qua thông báo này.\n", charWidth).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
+                        byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo1() + "\n", charWidth).getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo2() + "\n", charWidth).getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    byteStream.write(("Điện thoại/Zalo: " + CLocal.DienThoai + "\n").getBytes());
+//                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(0).getInPhieuBao2_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Website: https://cskhtanhoa.com.vn\n").getBytes());
+//                    byteStream.write(setTextAlign(1));
+//                    byteStream.write(("XIN CẢM ƠN\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+                    byteStream.write(printLineFeed(3));
+                    outputStream.write(byteStream.toByteArray());
+                    outputStream.flush();
+                }
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
     public void printTBDongNuoc_ESC(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {
@@ -2121,6 +2329,104 @@ public class ServiceThermalPrinter extends Service {
                     byteStream.write(setTextStyle(false, 1, 1));
                     byteStream.write(printDotFeed_ESC());
                     byteStream.write(("https://cskhtanhoa.com.vn\n").getBytes());
+//                    byteStream.write(setTextAlign(1));
+//                    byteStream.write(("XIN CẢM ƠN\n").getBytes());
+//                    byteStream.write(setTextStyle(true, 1, 1));
+//                    byteStream.write(("Từ kỳ 04/2022 không thu tiền nước tại nhà\n").getBytes());
+                    byteStream.write(printLineFeed(3));
+                    outputStream.write(byteStream.toByteArray());
+                    outputStream.flush();
+                }
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void printTBDongNuoc_ESC(CEntityParent entityParent, int charWidth) throws IOException {
+        try {
+            if (entityParent != null) {
+                if (entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay().equals("") == false) {
+                    printTop_ESC();
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(breakLine(escpStyle("THÔNG BÁO NGƯNG CUNG CẤP NƯỚC (KHÔNG THAY THẾ HÓA ĐƠN)\n", 0b11000), charWidth).getBytes());
+                    byteStream.write(printLineFeed(1));
+                    byteStream.write(setTextAlign(0));
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Kính gửi: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getHoTen() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Địa chỉ: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getDiaChi() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Danh bộ (Mã KH): ").getBytes());
+                    byteStream.write(escpStyle(entityParent.getDanhBo() + "\n", 0b11000).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("MLT: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getMLT()).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(("Code: ").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write((entityParent.getLstHoaDon().get(0).getCode() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+//                    byteStream.write(("Giá biểu: " + entityParent.getLstHoaDon().get(0).getGiaBieu() + "   Định mức: " + entityParent.getLstHoaDon().get(0).getDinhMuc() + "\n").getBytes());
+//                    if (entityParent.getLstHoaDon().get(0).getCode().equals("F") == false)
+//                        byteStream.write(("CSC: " + entityParent.getLstHoaDon().get(0).getCSC() + "  CSM: " + entityParent.getLstHoaDon().get(0).getCSM() + "  Tiêu thụ: " + entityParent.getLstHoaDon().get(0).getTieuThu() + "m3\n").getBytes());
+//                    else
+//                        byteStream.write(("Code F Tạm Tính\n").getBytes());
+                    byteStream.write(printDotFeed_ESC());
+                    String[] str = entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_NgayHen().split(" ");
+                    byteStream.write(breakLine("Công ty sẽ tạm ngưng cung cấp nước tại địa chỉ trên từ ngày " + escpStyle(str[0], 0b01000), charWidth).getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(breakLine("Lý do: Quý khách chưa thanh toán hóa đơn tiền nước:\n", charWidth).getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    int TongCong = 0, TienDu = 0;
+                    for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
+                        if (entityParent.getLstHoaDon().get(i).isTamThu() == false && entityParent.getLstHoaDon().get(i).isThuHo() == false) {
+                            byteStream.write(pad("Kỳ: " + entityParent.getLstHoaDon().get(i).getKy(), CLocal.formatMoney(String.valueOf(Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD()), "đ") + "\n", ' ', charWidth).getBytes());
+                            TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong()) + entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
+                            TienDu += entityParent.getLstHoaDon().get(i).getTienDuTruocDCHD();
+                        }
+                    byteStream.write(escpStyle(pad("Tổng cộng: ", CLocal.formatMoney(String.valueOf(TongCong), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                    if (TienDu > 0) {
+                        byteStream.write(escpStyle(pad("Tiền dư: ", CLocal.formatMoney(String.valueOf(TienDu), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                        byteStream.write(escpStyle(pad("Tổng cộng tiền thanh toán: ", CLocal.formatMoney(String.valueOf(TongCong - TienDu), "đ") + "\n", ' ', charWidth), 0b11000).getBytes());
+                        byteStream.write(setTextStyle(false, 1, 1));
+                        byteStream.write(breakLine("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong - TienDu)) + "\n", charWidth).getBytes());
+                    } else {
+                        byteStream.write(setTextStyle(false, 1, 1));
+                        byteStream.write(breakLine("Bằng chữ: " + CLocal.ConvertMoneyToWord(String.valueOf(TongCong)) + "\n", charWidth).getBytes());
+                    }
+                    byteStream.write(printDotFeed_ESC());
+                    String Co = "";
+                    if (entityParent.getLstHoaDon().get(0).getCo().equals("") == true)
+                        Co = entityParent.getCo();
+                    else
+                        Co = entityParent.getLstHoaDon().get(0).getCo();
+                    byteStream.write(escpStyle(pad("Phí mở nước: ", CLocal.getPhiMoNuoc(Co) + "đ", ' ', charWidth), 0b01000).getBytes());
+                    byteStream.write(escpStyle("(nếu khách hàng bị khóa nước)\n", 0b01000).getBytes());
+                    byteStream.write((escpStyle("Ghi chú:", 0b01000) + " Quý khách thanh toán tiền nước trước ngày " + escpStyle(str[0], 0b01000) + ". Nếu đã thanh toán vui lòng bỏ qua thông báo này\n").getBytes());
+                    if (entityParent.getCuaHangThuHo1().equals("") == false) {
+                        byteStream.write(setTextStyle(true, 1, 1));
+                        byteStream.write(("Dịch vụ Thu Hộ:\n").getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo1() + "\n", charWidth).getBytes());
+                        byteStream.write(breakLine(entityParent.getCuaHangThuHo2() + "\n", charWidth).getBytes());
+                    }
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Nhân viên: " + CLocal.HoTen + "\n").getBytes());
+                    byteStream.write(("Điện thoại/Zalo: " + CLocal.DienThoai + "\n").getBytes());
+//                    byteStream.write(("Zalo: " + CLocal.Zalo + "\n").getBytes());
+                    byteStream.write(setTextStyle(true, 1, 1));
+                    byteStream.write(("Ngày lập: " + entityParent.getLstHoaDon().get(entityParent.getLstHoaDon().size() - 1).getTBDongNuoc_Ngay() + "\n").getBytes());
+                    byteStream.write(("Ngày in: " + CLocal.getTime() + "\n").getBytes());
+                    byteStream.write(setTextStyle(false, 1, 1));
+                    byteStream.write(printDotFeed_ESC());
+                    byteStream.write(("Website: https://cskhtanhoa.com.vn\n").getBytes());
 //                    byteStream.write(setTextAlign(1));
 //                    byteStream.write(("XIN CẢM ƠN\n").getBytes());
 //                    byteStream.write(setTextStyle(true, 1, 1));
@@ -2427,6 +2733,74 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private int escpLength(String str) {
+        if (str == null)
+            return 0;
+        return str.length() - (int) str.chars().filter(ch -> ch == 0x1B).count() * 3;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private String pad(String left, String right, char pad, int space) {
+        if (left == null)
+            left = "";
+        if (right == null)
+            right = "";
+        else
+            right += "  ";
+        int leftLength = escpLength(left),
+                rightLength = escpLength(right);
+        int padLength = space - leftLength - rightLength;
+        if (padLength > 0) {
+            char[] padChar = new char[padLength];
+            Arrays.fill(padChar, pad);
+            return left + (new String(padChar)) + right;
+        } else if (padLength < 0) {
+            return breakLine(left + right, space);
+        } else
+            return left + right;
+    }
+
+    private String breakLine(String text, int lineLimit) {
+        try {
+            char ESC = 0x1B;
+            if (text == null || text.trim().isEmpty())
+                return "";
+            StringBuilder sb = new StringBuilder(text);
+            for (int i = 0, lineLenth = 0, breakIdx = 0; i < sb.length(); i++) {
+                if (sb.charAt(i) == ESC) {
+                    i += 2;
+                    continue;
+                } else if (sb.charAt(i) == ' ')
+                    breakIdx = i;
+                else if (sb.charAt(i) == '\n')
+                    lineLenth = 0;
+                if (lineLenth > lineLimit) {
+                    lineLenth = i - breakIdx;
+                    sb.replace(breakIdx, breakIdx + 1, "\n");
+                }
+                lineLenth++;
+            }
+            return sb.toString();
+        } catch (Exception ignored) {
+            return "";
+        }
+    }
+
+    private String escpStyle(String text, int style) {
+        //00000000: thường
+        //00000001: nhỏ
+        //00000010: nền đen
+        //00000100: đảo ngược
+        //00001000: đậm
+        //00010000: 2 x cao
+        //00100000: 2 x rộng
+        //01000000: gạch ngang chữ
+        //10000000: nền đen gạch ngang chữ
+        char ESC = 0x1B, CMD_STYLE = '!';
+        return "" + ESC + CMD_STYLE + (char) style + text + ESC + CMD_STYLE + (char) 0;
+    }
+
     //endregion
 
     public byte[] printDotFeed_ESC() {
@@ -2444,19 +2818,15 @@ public class ServiceThermalPrinter extends Service {
         if (n1 < 0) {
             n1 = 0;
         }
-
         if (n1 > 7) {
             n1 = 7;
         }
-
         if (n2 < 0) {
             n2 = 0;
         }
-
         if (n2 > 7) {
             n2 = 7;
         }
-
         byte extension = (byte) (n1 & 15 | n2 << 4 & 240);
         return new byte[]{27, 69, (byte) (bold ? 1 : 0), 29, 33, extension};
     }
