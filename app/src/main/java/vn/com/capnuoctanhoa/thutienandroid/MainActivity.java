@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+                CLocal.runServiceThermalPrinter(MainActivity.this);
 //                if (CLocal.checkBluetoothAvaible() == false) {
 //                    CLocal.openBluetoothSettings(MainActivity.this);
 //                } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
@@ -323,7 +324,6 @@ public class MainActivity extends AppCompatActivity {
 //                    startService(intent2);
 //                    bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
 //                }
-                    CLocal.runServiceThermalPrinter(MainActivity.this);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -333,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+            CLocal.runServiceThermalPrinter(MainActivity.this);
 //            if (CLocal.checkBluetoothAvaible() == false) {
 //                CLocal.openBluetoothSettings(MainActivity.this);
 //            } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
@@ -341,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
 //                startService(intent2);
 //                bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
 //            }
-        CLocal.runServiceThermalPrinter(MainActivity.this);
     }
 
     @Override
